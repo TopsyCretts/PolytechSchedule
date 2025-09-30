@@ -1,12 +1,12 @@
 @use "./helpers" as *;
 
 :root {
-  --color-light:  #F8F9FC;
+  --color-light: #f8f9fc;
   --color-bg: var(--color-light);
-  --color-accent: #186CCC;
+  --color-accent: #186ccc;
 
   @include dark-theme {
-    --color-bg: #0A0F2C;
-    --color-accent: #186CCC;
+    --color-bg: #0a0f2c;
+    --color-accent: #186ccc;
   }
 }
