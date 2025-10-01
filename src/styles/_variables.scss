@@ -1,2 +1,18 @@
+@use "./helpers" as *;
+
 :root {
+  --font-family-base: "Open Sans", sans-serif;
+  --letter-spacing: -0.01em;
+
+  --border-radius-small: #{rem(8)} ;
+  --border-radius: #{rem(12)};
+  --border-radius-medium: #{rem(16)};
+  --border-radius-large: #{rem(20)};
+
+  --container-width-small: #{rem(542)};
+  --container-width: #{rem(900)};
+  --container-width-large: #{rem(1360)};
+  --container-padding-x: #{rem(16)};
+
+  --transition-duration: 0.2s;
 }

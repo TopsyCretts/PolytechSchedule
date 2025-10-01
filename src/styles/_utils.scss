@@ -1,4 +1,24 @@
 @use "./helpers" as *;
 
+.container,
+.container-small,
+.container-large{
+  margin-inline: auto;
+  padding-inline: var(--container-padding-x);
+}
+
 .container {
+  width: calc(var(--container-width) + 2 * var(--container-padding-x));
+}
+
+.container-small{
+  width: calc(var(--container-width-small) + 2 * var(--container-padding-x));
+}
+
+.container-large {
+  width: calc(var(--container-width-large) + 2 * var(--container-padding-x));
+}
+
+.visually-hidden{
+  @include visually-hidden;
 }

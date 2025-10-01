@@ -148,7 +148,7 @@ button {
   (за исключением тех, у которых уже указан
   атрибут fill со значением 'none' или начинается с 'url')
  */
-:where([fill]:not([fill="none"], [fill^="url"])) {
+:where([fill]:not([fill=none], [fill^=url])) {
   fill: currentColor;
 }
 
@@ -157,7 +157,7 @@ button {
   (за исключением тех, у которых уже указан
   атрибут stroke со значением 'none')
  */
-:where([stroke]:not([stroke="none"], [stroke^="url"])) {
+:where([stroke]:not([stroke=none], [stroke^=url])) {
   stroke: currentColor;
 }
 
@@ -190,16 +190,153 @@ svg * {
     scroll-behavior: auto !important;
   }
 }
+@font-face {
+  font-family: "Open Sans", sans-serif;
+  src: url("src/assets/fonts/open-sans-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Open Sans", sans-serif;
+  src: url("src/assets/fonts/open-sans-semi-bold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Open Sans", sans-serif;
+  src: url("src/assets/fonts/open-sans-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 :root {
-  --color-light: #f8f9fc;
-  --color-bg: var(--color-light);
+  --color-light: #ffffff;
+  --color-light-alt: #f8f9fc;
+  --color-dark: #0A0F2C;
   --color-accent: #186ccc;
+  --color-accent-alt: #0D3A6A;
+  --color-gray: #718096;
+  --color-gray-light: #A0A5C0;
+  --color-gray-dark: #4A5568;
+  --color-green: #4CD964;
+  --color-yellow: #FFCC00;
+  --color-red: #FF4F45;
+  --color-orange: #EF7E1C;
+  --shadow: 0.125rem 0.125rem 0.25rem 0 rgb(16 72 136 / 0.2);
+  --blur-10: blur(10px);
+  --blur-20: blur(20px);
+  --border-light: 0.0625rem solid rgb(0 0 0 / 0.05);
+  --border-dark: 0.0625rem solid rgb(255 255 255 / 0.05);
+  --color-bg-themed: var(--color-light-alt);
+  --color-accent-themed: var(--color-accent);
+  --color-text-themed: var(--color-light);
+  --border-themed: var(--border-light);
+  color-scheme: dark light;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #0a0f2c;
-    --color-accent: #186ccc;
+    --color-bg-themed: var(--color-dark);
+    --color-accent-themed: var(--color-accent-alt);
+    --color-text-themed: var(--color-gray);
+    --border-themed: var(--border-dark);
   }
+}
+
+:root {
+  --font-family-base: "Open Sans", sans-serif;
+  --letter-spacing: -0.01em;
+  --border-radius-small: 0.5rem ;
+  --border-radius: 0.75rem;
+  --border-radius-medium: 1rem;
+  --border-radius-large: 1.25rem;
+  --container-width-small: 33.875rem;
+  --container-width: 56.25rem;
+  --container-width-large: 85rem;
+  --container-padding-x: 1rem;
+  --transition-duration: 0.2s;
+}
+
+.container,
+.container-small,
+.container-large {
+  margin-inline: auto;
+  padding-inline: var(--container-padding-x);
+}
+
+.container {
+  width: calc(var(--container-width) + 2 * var(--container-padding-x));
+}
+
+.container-small {
+  width: calc(var(--container-width-small) + 2 * var(--container-padding-x));
+}
+
+.container-large {
+  width: calc(var(--container-width-large) + 2 * var(--container-padding-x));
+}
+
+.visually-hidden {
+  position: absolute !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(100%) !important;
+}
+
+body {
+  font-family: var(--font-family-base), sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: var(--letter-spacing);
+}
+
+a,
+button,
+input,
+textarea,
+select,
+svg * {
+  transition-duration: var(--transition-duration);
+}
+
+h1,
+.h1 {
+  font-size: clamp(1.5rem, 1.3846153846rem + 0.5128205128vw, 2rem);
+  font-weight: 700;
+}
+
+h2, .h2,
+h3, .h3 {
+  font-size: clamp(1rem, 0.9423076923rem + 0.2564102564vw, 1.25rem);
+}
+
+h2,
+.h2 {
+  font-weight: 600;
+}
+
+h3,
+.h3 {
+  font-weight: 400;
+}
+
+.text-16 {
+  font-size: 1rem;
+}
+
+.text-14 {
+  font-size: 0.875rem;
+}
+
+.bold {
+  font-weight: 700;
 }
 
 /*# sourceMappingURL=main.css.map */

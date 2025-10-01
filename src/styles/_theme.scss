@@ -1,12 +1,40 @@
 @use "./helpers" as *;
 
 :root {
-  --color-light: #f8f9fc;
-  --color-bg: var(--color-light);
+  --color-light: #ffffff;
+  --color-light-alt: #f8f9fc;
+
+  --color-dark: #0A0F2C;
   --color-accent: #186ccc;
+  --color-accent-alt: #0D3A6A;
+
+  --color-gray: #718096;
+  --color-gray-light: #A0A5C0;
+  --color-gray-dark: #4A5568;
+
+  --color-green: #4CD964;
+  --color-yellow: #FFCC00;
+  --color-red: #FF4F45;
+  --color-orange: #EF7E1C;
+
+  --shadow: #{rem(2)} #{rem(2)} #{rem(4)} 0 rgb(16 72 136 / 0.2);
+  --blur-10: blur(10px);
+  --blur-20: blur(20px);
+
+  --border-light: #{rem(1)} solid rgb(0 0 0 / 0.05);
+  --border-dark: #{rem(1)} solid rgb(255 255 255 / 0.05);
+
+  --color-bg-themed: var(--color-light-alt);
+  --color-accent-themed: var(--color-accent);
+  --color-text-themed: var(--color-light);
+  --border-themed: var(--border-light);
+
+  color-scheme: dark light;
 
   @include dark-theme {
-    --color-bg: #0a0f2c;
-    --color-accent: #186ccc;
+    --color-bg-themed: var(--color-dark);
+    --color-accent-themed: var(--color-accent-alt);
+    --color-text-themed: var(--color-gray);
+    --border-themed: var(--border-dark);
   }
 }

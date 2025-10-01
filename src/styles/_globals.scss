@@ -1,42 +1,17 @@
 @use "./helpers" as *;
 
 body {
+  font-family: var(--font-family-base), sans-serif;
+  font-size: rem(16);
+  font-weight: 400;
+  letter-spacing: var(--letter-spacing);
 }
 
-h1,
-.h1,
-h2,
-.h2,
-h3,
-.h3,
-h4,
-.h4,
-h5,
-.h5,
-h6,
-.h6 {
-}
-
-h1,
-.h1 {
-}
-
-h2,
-.h2 {
-}
-
-h3,
-.h3 {
-}
-
-h4,
-.h4 {
-}
-
-h5,
-.h5 {
-}
-
-h6,
-.h6 {
+a,
+button,
+input,
+textarea,
+select,
+svg * {
+  transition-duration: var(--transition-duration);
 }
