@@ -1,0 +1,30 @@
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.spinner__svg {
+  width: 3.125rem;
+  height: 3.125rem;
+  animation: spin 1s infinite linear;
+}
+.spinner__path,
+.spinner__indicator {
+  stroke-width: 0.375rem;
+  stroke-linecap: round;
+}
+.spinner__path {
+  stroke: var(--color-blue-opacity-20);
+}
+.spinner__indicator {
+  stroke: var(--color-accent);
+  stroke-dasharray: 20 100;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/*# sourceMappingURL=Spinner.css.map */

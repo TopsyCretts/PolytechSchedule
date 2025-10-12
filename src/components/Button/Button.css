@@ -1,1 +1,40 @@
+.button {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: var(--border-themed);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  background-color: var(--color-light-opacity-10);
+  backdrop-filter: var(--blur-20);
+}
+.button svg * {
+  color: var(--color-icon-themed);
+}
+@media (hover: hover) {
+  .button:hover {
+    color: var(--color-light);
+    background-color: var(--color-accent-themed);
+  }
+  .button:hover svg * {
+    color: inherit;
+  }
+}
+@media (hover: none) {
+  .button:active {
+    color: var(--color-light);
+    background-color: var(--color-accent-themed);
+  }
+  .button:active svg * {
+    color: inherit;
+  }
+}
+.button--square {
+  width: var(--button-height);
+  height: var(--button-height);
+}
+
 /*# sourceMappingURL=Button.css.map */

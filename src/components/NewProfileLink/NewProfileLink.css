@@ -1,0 +1,11 @@
+.new-profile-link {
+  padding-inline: 0.5rem;
+  text-decoration: none;
+  color: var(--color-text-accent-themed);
+}
+.new-profile-link--active {
+  color: var(--color-light);
+  background-color: var(--color-orange-opacity-60);
+}
+
+/*# sourceMappingURL=NewProfileLink.css.map */

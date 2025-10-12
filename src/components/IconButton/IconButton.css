@@ -1,0 +1,11 @@
+.icon-button {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-text-themed);
+}
+
+/*# sourceMappingURL=IconButton.css.map */

@@ -1,0 +1,20 @@
+@use "../../styles/helpers" as *;
+
+.profile-creation {
+  @include border-shadow-themed(var(--border-radius-large), false);
+
+  margin-top: rem(30);
+  padding: rem(30);
+
+  &__loading-fallback,
+  &__retry-fallback {
+    height: rem(400);
+  }
+
+  &__body,
+  &__form {
+    display: flex;
+    flex-direction: column;
+    row-gap: rem(20);
+  }
+}

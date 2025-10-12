@@ -1,0 +1,21 @@
+.retry-fallback {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.retry-fallback__body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 0.9375rem;
+}
+.retry-fallback__button {
+  width: 100%;
+  padding-inline: 0.625rem;
+}
+.retry-fallback__title {
+  color: var(--color-text-accent-themed);
+}
+
+/*# sourceMappingURL=RetryFallback.css.map */

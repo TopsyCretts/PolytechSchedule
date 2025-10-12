@@ -4,7 +4,7 @@
   --font-family-base: "Open Sans", sans-serif;
   --letter-spacing: -0.01em;
 
-  --border-radius-small: #{rem(8)} ;
+  --border-radius-small: #{rem(8)};
   --border-radius: #{rem(12)};
   --border-radius-medium: #{rem(16)};
   --border-radius-large: #{rem(20)};
@@ -13,6 +13,13 @@
   --container-width: #{rem(900)};
   --container-width-large: #{rem(1360)};
   --container-padding-x: #{rem(16)};
+
+  --button-height: #{rem(44)};
+  --input-height: #{rem(60)};
+
+  --z-index-backdrop: 100;
+  --z-index-select: 200;
+  --z-index-pop-up: 300;
 
   --transition-duration: 0.2s;
 }

@@ -1,0 +1,32 @@
+@use "../../styles/helpers" as *;
+
+.spinner {
+  @include flex-center;
+
+  &__svg {
+    @include square(rem(50));
+
+    animation: spin 1s infinite linear;
+  }
+
+  &__path,
+  &__indicator {
+    stroke-width: rem(6);
+    stroke-linecap: round;
+  }
+
+  &__path {
+    stroke: var(--color-blue-opacity-20);
+  }
+
+  &__indicator {
+    stroke: var(--color-accent);
+    stroke-dasharray: 20 100;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}

@@ -1,0 +1,49 @@
+@use "../../styles/helpers" as *;
+
+.search-field {
+  display: flex;
+  flex-direction: column;
+
+  &__label {
+    margin-bottom: rem(15);
+    font-size: rem(20);
+    color: var(--color-text-accent-themed);
+  }
+
+  &__body {
+    @include border-shadow-themed(var(--border-radius));
+
+    display: flex;
+    align-items: center;
+    column-gap: rem(10);
+    height: var(--input-height);
+    padding-inline: rem(10);
+    color: var(--color-text-themed);
+    background-color: var(--color-light-opacity-10);
+  }
+
+  &__icon,
+  &__cross {
+    flex-shrink: 0;
+  }
+
+  &__icon {
+    @include square(rem(24));
+  }
+
+  &__input {
+    @include reset-button;
+
+    width: 100%;
+    height: 100%;
+    color: inherit;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__cross {
+    @include square(rem(20));
+  }
+}

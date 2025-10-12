@@ -7,10 +7,11 @@ h1,
   font-weight: 700;
 }
 
-h2, .h2,
-h3, .h3 {
+h2,
+.h2,
+h3,
+.h3 {
   @include fluid-text(20, 16);
-
 }
 
 h2,
@@ -31,6 +32,6 @@ h3,
   font-size: rem(14);
 }
 
-.bold{
+.bold {
   font-weight: 700;
 }

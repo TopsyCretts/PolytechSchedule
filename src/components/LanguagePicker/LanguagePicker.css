@@ -1,0 +1,9 @@
+.language-picker {
+  width: var(--button-height);
+  height: var(--button-height);
+}
+.language-picker .select__wrapper {
+  max-width: 12.5rem;
+}
+
+/*# sourceMappingURL=LanguagePicker.css.map */

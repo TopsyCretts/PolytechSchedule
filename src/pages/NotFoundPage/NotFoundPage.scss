@@ -1,0 +1,52 @@
+@use "../../styles/helpers" as *;
+
+.not-found-page {
+  @include flex-center;
+
+  width: 100%;
+  height: 100dvh;
+  text-align: center;
+
+  &__inner {
+    @include flex-center;
+
+    flex-direction: column;
+    row-gap: rem(30);
+
+    @include mobile {
+      row-gap: rem(10);
+    }
+  }
+
+  &__image {
+    width: fluid(578, 340);
+    height: auto;
+    min-height: rem(146);
+    filter: drop-shadow(0 0 rem(15) rgba(0, 89, 255, 0.5));
+  }
+
+  &__label {
+    font-weight: 400;
+  }
+
+  &__back-home {
+    display: flex;
+    flex-direction: column;
+    row-gap: rem(10);
+  }
+
+  &__home-link {
+    @include reset-button;
+    @include flex-center(true);
+
+    height: var(--button-height);
+    text-decoration: none;
+    color: var(--color-light);
+    background-color: var(--color-accent);
+    border-radius: var(--border-radius);
+
+    @include hover {
+      background-color: var(--color-orange);
+    }
+  }
+}

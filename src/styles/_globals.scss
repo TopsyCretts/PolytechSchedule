@@ -1,10 +1,14 @@
 @use "./helpers" as *;
 
 body {
+  height: 100%;
+  max-height: 100dvh;
   font-family: var(--font-family-base), sans-serif;
   font-size: rem(16);
   font-weight: 400;
   letter-spacing: var(--letter-spacing);
+  color: var(--color-text-themed);
+  background-color: var(--color-bg-themed);
 }
 
 a,
@@ -14,4 +18,20 @@ textarea,
 select,
 svg * {
   transition-duration: var(--transition-duration);
+}
+
+button {
+  user-select: none;
+}
+
+a {
+  &[class=""],
+  [class="active"],
+  &:not([class]) {
+    color: var(--color-blue);
+
+    @include hover {
+      color: var(--color-orange);
+    }
+  }
 }

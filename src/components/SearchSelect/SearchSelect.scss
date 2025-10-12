@@ -1,0 +1,45 @@
+@use "../../styles/helpers" as *;
+
+.search-select {
+  position: relative;
+  overflow: hidden;
+  scrollbar-gutter: auto;
+
+  &__list {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    scrollbar-gutter: stable;
+    row-gap: rem(10);
+    width: 100%;
+    height: rem(405);
+    max-height: rem(405);
+    margin-top: rem(15);
+    padding-bottom: rem(20);
+    scrollbar-width: thin;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      max-width: 100%;
+      height: rem(40);
+      background: linear-gradient(
+        180deg,
+        transparent 0%,
+        var(--color-bg-themed) 100%
+      );
+    }
+  }
+
+  &__empty-result {
+    @include flex-center;
+
+    width: 100%;
+    height: rem(405);
+    max-height: rem(405);
+    color: var(--color-text-accent-themed);
+  }
+}

@@ -1,0 +1,73 @@
+@use "../../styles/helpers" as *;
+
+.header {
+  margin-top: rem(30);
+
+  &__inner,
+  &__main {
+    @include border-shadow-themed(var(--border-radius-large), false);
+  }
+
+  &__attention {
+    @include flex-center;
+
+    margin-bottom: rem(8);
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 1;
+    height: rem(103);
+    transition-duration: var(--transition-duration);
+  }
+
+  &__main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: rem(68);
+    padding: rem(10) rem(12);
+    background-color: var(--header-bg-themed);
+    box-shadow: none;
+  }
+
+  &__controls {
+    @include flex-center;
+
+    column-gap: rem(10);
+  }
+
+  &__link {
+    @include flex-center(true);
+
+    height: 100%;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+
+    @include hover {
+      background-color: var(--color-accent-themed);
+    }
+  }
+
+  &__logo {
+    & .logo__image {
+      @include square(rem(44));
+    }
+
+    padding-right: rem(10);
+  }
+
+  &__extra {
+    position: absolute;
+    z-index: -1;
+    overflow: auto hidden;
+    width: 100%;
+    max-width: 100%;
+    height: rem(53);
+    margin-top: calc(-1 * var(--border-radius-large));
+    border-bottom-left-radius: var(--border-radius-large);
+    border-bottom-right-radius: var(--border-radius-large);
+    pointer-events: auto;
+    scrollbar-width: thin;
+  }
+}
