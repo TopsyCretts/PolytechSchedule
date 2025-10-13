@@ -26,7 +26,6 @@ const mapGroupsByIstituteToSearchItems = (
 
 const StudentProfileCreationForm = ({
   className,
-  onProfileCreation,
 }: ProfileCreationFormProps) => {
   const { t } = useTranslation()
 

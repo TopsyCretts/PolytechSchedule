@@ -1,4 +1,4 @@
-import { useProfiles } from "@/domain/hooks/useProfiles.ts"
+//import { useProfiles } from "@/domain/hooks/useProfiles.ts"
 import { useState } from "react"
 import SearchSelect from "@components/SearchSelect"
 import AccentButton from "@components/AccentButton"
@@ -21,13 +21,12 @@ const mapTeachersToSearchItems = (dto: TeacherDto[]): SearchItem[] => {
 
 const TeacherProfileCreationForm = ({
   className,
-  onProfileCreation,
 }: ProfileCreationFormProps) => {
   const { t } = useTranslation()
 
   const { data } = useGetTeachersQuery()
 
-  const { createTeacherProfile } = useProfiles()
+  //const { createTeacherProfile } = useProfiles()
 
   const [teacherName, setTeacherName] = useState<string | null>(null)
 

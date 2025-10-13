@@ -13,17 +13,17 @@ interface SearchScheduleProviderProps {
 const SearchScheduleContext = createContext<SearchContextValues | null>(null)
 
 const SearchScheduleProvider = ({ children }: SearchScheduleProviderProps) => {
-  const [teachers, setTeachers] = useState<SearchableState>({
+  const [teachers] = useState<SearchableState>({
     ...defaultSearchableState,
     searchItems: searchItemsTeacher,
   })
 
-  const [institutes, setInstitutes] = useState<SearchableState>({
+  const [institutes] = useState<SearchableState>({
     ...defaultSearchableState,
     searchItems: searchItemsTeacher,
   })
 
-  const [groups, setGroups] = useState<SearchableState>({
+  const [groups] = useState<SearchableState>({
     ...defaultSearchableState,
     searchItems: searchItemsGroups,
   })
