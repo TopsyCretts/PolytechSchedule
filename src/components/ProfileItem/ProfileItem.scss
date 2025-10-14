@@ -1,32 +1,18 @@
 @use "../../styles/helpers" as *;
 
 .profile-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: rem(2);
-  padding-inline: rem(8);
-  color: var(--color-text-accent-themed);
   border-right: var(--border-themed);
-  user-select: none;
-
-  &__link {
-    @include flex-center(true);
-
-    width: 100%;
-    height: 100%;
-    font-size: rem(16);
-    text-decoration: none;
-    color: inherit;
-  }
+  transition-duration: var(--transition-duration);
 
   &--active {
-    min-width: rem(150);
+    min-width: fit-content;
+    white-space: nowrap;
     color: var(--color-light);
     background-color: var(--selected-profile-bg);
 
     &::before {
       content: "";
+      margin-left: rem(5);
     }
 
     & .profile-item__cross,
@@ -36,6 +22,7 @@
   }
 
   &__cross {
+    margin-right: rem(5);
     color: inherit;
   }
 }

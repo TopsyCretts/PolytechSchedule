@@ -9,12 +9,9 @@ interface BaseProfile {
 
 interface StudentProfile extends BaseProfile {
   institute: string
-  group: string
 }
 
-interface TeacherProfile extends BaseProfile {
-  teacherName: string
-}
+type TeacherProfile = BaseProfile
 
 type Profile = StudentProfile | TeacherProfile
 

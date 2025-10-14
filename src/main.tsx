@@ -3,23 +3,23 @@ import { createRoot } from "react-dom/client"
 import App from "./App.tsx"
 import "./i18n.ts"
 import { ThemeProvider } from "@/hoc"
-import { SearchScheduleProvider } from "@/hoc/SearchScheduleProvider.tsx"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { QueryClientProvider } from "@tanstack/react-query"
 import Spinner from "@components/Spinner"
 import { ErrorBoundary } from "react-error-boundary"
-
-const queryClient = new QueryClient()
+import { mainContainer } from "@/mainContainer.ts"
+import { Provider } from "inversify-react"
+import { queryClient } from "@/api"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ErrorBoundary fallback={<h1>Something goes wrong!</h1>}>
       <Suspense fallback={<Spinner />}>
         <QueryClientProvider client={queryClient}>
-          <ThemeProvider>
-            <SearchScheduleProvider>
+          <Provider container={mainContainer}>
+            <ThemeProvider>
               <App />
-            </SearchScheduleProvider>
-          </ThemeProvider>
+            </ThemeProvider>
+          </Provider>
         </QueryClientProvider>
       </Suspense>
     </ErrorBoundary>

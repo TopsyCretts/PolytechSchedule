@@ -22,7 +22,7 @@ const SearchSelect = ({
 
   const handleItemSelection = (item: SearchItem) => {
     setSelectedItem(item)
-    onSelectedChange(item.searchableValue)
+    onSelectedChange(item)
     clearSearch()
   }
 

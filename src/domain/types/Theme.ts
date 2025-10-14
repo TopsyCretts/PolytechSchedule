@@ -7,7 +7,7 @@ type ThemeObject = {
 
 interface ThemeContextValues {
   theme: ThemeType
-  toggleTheme: (theme: ThemeType) => void
+  toggleTheme: (theme?: ThemeType) => void
   isDark: boolean
 }
 

@@ -38,6 +38,7 @@
     "vite-plugin-svgr": "^4.5.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.28.0",
     "@eslint/js": "^9.36.0",
     "@types/node": "^24.6.0",
     "@types/react": "^19.1.13",

@@ -1,5 +1,6 @@
 import type { InstituteDto } from "@/api/search-schedule/dto/InstitutesDto.ts"
 import type { SearchItem } from "@/domain/types/Search.ts"
+import type { GroupData } from "@/domain/models/Group.ts"
 
 type InstituteUi = SearchItem
 
@@ -27,15 +28,39 @@ type InstituteType =
   | "digital"
   | "collage"
 
-export const toInstituteUi = (dto: InstituteDto): InstituteUi => {
+interface InstituteData {
+  id: string
+  name: string
+  groups: GroupData[]
+}
+
+interface InstitutesData {
+  lastUpdate: number
+  institutes: InstituteData[]
+}
+
+const toInstituteData = (dto: InstituteDto): InstituteData => {
+  return {
+    id: dto.name,
+    name: dto.name,
+    groups: dto.groups.map((group) => {
+      return {
+        id: group,
+        name: group,
+      }
+    }),
+  }
+}
+
+const toInstituteUi = (data: InstituteData): InstituteUi => {
   let instituteType: InstituteType = "default"
   let searchItem: SearchItem = {
-    id: dto.name,
+    id: data.id,
     type: instituteType,
-    searchableValue: dto.name,
+    searchableValue: data.name,
   }
 
-  const instituteName = dto.name as InstituteName
+  const instituteName = data.name as InstituteName
 
   if (instituteName === undefined) {
     return searchItem
@@ -80,4 +105,12 @@ export const toInstituteUi = (dto: InstituteDto): InstituteUi => {
   return searchItem
 }
 
-export type { InstituteUi, InstituteType, InstituteName }
+export {
+  type InstituteUi,
+  type InstituteType,
+  type InstituteName,
+  type InstituteData,
+  type InstitutesData,
+  toInstituteData,
+  toInstituteUi,
+}

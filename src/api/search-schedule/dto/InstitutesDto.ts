@@ -5,7 +5,9 @@ interface InstitutesDto {
 
 interface InstituteDto {
   name: string
-  groups: string[]
+  groups: GroupDto[]
 }
 
-export type { InstituteDto, InstitutesDto }
+type GroupDto = string
+
+export type { InstituteDto, InstitutesDto, GroupDto }

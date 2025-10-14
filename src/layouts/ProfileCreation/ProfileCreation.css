@@ -5,6 +5,11 @@
   margin-top: 1.875rem;
   padding: 1.875rem;
 }
+@media (width <= 47.999375rem) {
+  .profile-creation {
+    padding: 0.9375rem;
+  }
+}
 .profile-creation__loading-fallback,
 .profile-creation__retry-fallback {
   height: 25rem;
@@ -14,6 +19,9 @@
   display: flex;
   flex-direction: column;
   row-gap: 1.25rem;
+}
+.profile-creation__next-button {
+  margin-top: 2.5rem;
 }
 
 /*# sourceMappingURL=ProfileCreation.css.map */

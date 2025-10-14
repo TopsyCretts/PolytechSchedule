@@ -13,7 +13,7 @@ interface SearchFieldProps {
 
 interface SearchFormProps extends SearchFieldProps {
   searchItems: SearchItem[]
-  onSelectedChange: (value: string | null) => void
+  onSelectedChange: (selectedItem: SearchItem | null) => void
 }
 
 interface SearchItem {

@@ -18,7 +18,7 @@ const ProfileCreation = () => {
     ]
   }, [t])
 
-  const [currentItem, setCurrentItem] = useState(items[0])
+  const [currentItem, setCurrentItem] = useState(items[1])
 
   return (
     <section className={clsx("container-small")}>

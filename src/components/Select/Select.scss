@@ -47,6 +47,7 @@
   &__group-title,
   &__item {
     padding-inline: rem(15);
+    user-select: none;
   }
 
   &__group {
@@ -61,6 +62,7 @@
   }
 
   &__item {
+    cursor: pointer;
     transition-duration: var(--transition-duration);
 
     @include hover {

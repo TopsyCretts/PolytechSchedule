@@ -1,4 +1,4 @@
-import type { ThemeIconProps } from "@components/ThemePicker/types"
+import type { ThemeIconProps } from "@components/ThemeToggler/types"
 import type { JSX } from "react"
 import MoonIcon from "@assets/icons/moon.svg?react"
 import SunIcon from "@assets/icons/sun.svg?react"

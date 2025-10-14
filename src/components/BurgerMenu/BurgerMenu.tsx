@@ -4,23 +4,32 @@ import { useTheme } from "@/domain/hooks"
 import { useCallback } from "react"
 import type { ThemeType } from "@/domain/types/Theme.ts"
 import Select from "@components/Select"
-import { themeArray } from "@/constants/contstants.ts"
-import "@components/ThemePicker/ThemePicker.scss"
-import { ThemeItem } from "@components/ThemePicker/utils"
+import {
+  LANGUAGE_SELECTABLE_VALUES,
+  themeArray,
+} from "@/constants/contstants.ts"
+import "@components/ThemeToggler/ThemeToggler.scss"
+import { ThemeItem } from "@components/ThemeToggler/utils"
 import BurgerIcon from "@assets/icons/burger.svg?react"
+import i18next from "i18next"
+import { useTranslation } from "react-i18next"
+import { STRINGS_RES } from "@/constants/strings.ts"
 
 interface BurgerMenuProps {
   className?: string
 }
 
-const values = ["Russian", "English"]
+const handleChangeLanguage = async (lngKey: string) => {
+  i18next.changeLanguage(lngKey).then()
+}
 
 const BurgerMenu = ({ className }: BurgerMenuProps) => {
+  const { t, i18n } = useTranslation()
   const { theme, toggleTheme } = useTheme()
 
   const handleThemeChange = useCallback((value: string) => {
     if ((value as ThemeType) !== undefined) {
-      toggleTheme(value as ThemeType)
+      toggleTheme()
     } else {
       throw TypeError(`${value} should be a "ThemeType" property"`)
     }
@@ -38,16 +47,13 @@ const BurgerMenu = ({ className }: BurgerMenuProps) => {
       <Select.Container>
         <Select.Header isCross>Menu</Select.Header>
         <Select.OptionsGroup
-          title="Language"
-          onOptionChange={() => {}}
-          initialSelectedOptionsKeys={[theme]}
-          values={values.map((value) => ({
-            key: value,
-            value: value,
-          }))}
+          title={t(STRINGS_RES.language_one)}
+          onOptionChange={handleChangeLanguage}
+          initialSelectedOptionsKeys={[i18n.language]}
+          values={[...LANGUAGE_SELECTABLE_VALUES]}
         />
         <Select.OptionsGroup
-          title="Theme"
+          title={t(STRINGS_RES.theme)}
           onOptionChange={handleThemeChange}
           initialSelectedOptionsKeys={[theme]}
           values={themeArray.map((value) => ({

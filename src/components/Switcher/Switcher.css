@@ -9,6 +9,7 @@
 .switcher__list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  column-gap: 0.375rem;
   height: 100%;
 }
 .switcher__item--selected .switcher__button {

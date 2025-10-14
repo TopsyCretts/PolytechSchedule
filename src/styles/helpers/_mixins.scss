@@ -91,3 +91,12 @@
 @mixin container-max-width($width, $padding-x) {
   max-width: calc($width + 2 * $padding-x);
 }
+
+@mixin text-overflow-ellipsis($line-clamp: 2) {
+  flex-shrink: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: #{$line-clamp};
+  -webkit-box-orient: vertical;
+}

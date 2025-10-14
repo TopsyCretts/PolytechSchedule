@@ -5,11 +5,15 @@ import AccentButton from "@components/AccentButton"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/constants/strings.ts"
 import type { ProfileCreationFormProps } from "@/layouts/ProfileCreation/types.ts"
-import { useGetTeachersQuery } from "@/api/search-schedule/service.ts"
-import type { TeacherDto } from "@/api/search-schedule/dto/TeachersDto.ts"
+import { useGetTeachersQuery } from "@/api/search-schedule/teachersService.ts"
 import type { SearchItem } from "@/domain/types/Search.ts"
+import { useInjection } from "inversify-react"
+import { TeachersStore } from "@/domain/teachers/TeachersStore.ts"
+import type { TeacherData } from "@/domain/models/Teachers.ts"
+import { getScheduleProfileRoute } from "@/routes/scheduleRoute.ts"
+import { useNavigate } from "react-router"
 
-const mapTeachersToSearchItems = (dto: TeacherDto[]): SearchItem[] => {
+const mapTeachersToSearchItems = (dto: TeacherData[]): SearchItem[] => {
   return dto.map((item) => {
     return {
       id: String(item.id),
@@ -24,28 +28,52 @@ const TeacherProfileCreationForm = ({
 }: ProfileCreationFormProps) => {
   const { t } = useTranslation()
 
-  const { data } = useGetTeachersQuery()
+  const navigate = useNavigate()
 
-  //const { createTeacherProfile } = useProfiles()
+  useGetTeachersQuery()
 
-  const [teacherName, setTeacherName] = useState<string | null>(null)
+  const { getTeachers: teachers } = useInjection<TeachersStore>(TeachersStore)
 
-  const handleTeacherSelection = (teacherName: string | null) => {
-    setTeacherName(teacherName)
+  if (teachers.length === 0) {
+    throw new Error("Teacher not found")
+  }
+
+  const [teacher, setTeacher] = useState<TeacherData | null>(null)
+
+  const handleTeacherSelection = (newTeacher: SearchItem | null) => {
+    if (newTeacher === null) {
+      setTeacher(newTeacher)
+    } else {
+      setTeacher({
+        id: newTeacher.id,
+        name: newTeacher.searchableValue,
+      })
+    }
+  }
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+    navigate(getScheduleProfileRoute(teacher!.id, "teacher"), {
+      replace: true,
+    })
   }
 
   return (
-    <form className={className}>
+    <form
+      className={className}
+      onSubmit={handleSubmit}
+    >
       <SearchSelect
         id={"teachers"}
         label={t(STRINGS_RES.teacher_other)}
-        searchItems={mapTeachersToSearchItems(data)}
+        searchItems={mapTeachersToSearchItems(teachers)}
         placeholder={t(STRINGS_RES.enter_the_name)}
         onSelectedChange={handleTeacherSelection}
       />
-      {teacherName !== null && (
+      {teacher !== null && (
         <AccentButton
           className={"profile-creation__next-button"}
+          type="submit"
           onClick={() => {}}
         >
           {t(STRINGS_RES.next)}

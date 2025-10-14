@@ -29,9 +29,16 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
     document.body.classList.toggle("dark-mode")
   }, [])
 
-  const toggleTheme = useCallback((newTheme: ThemeType) => {
-    saveNewThemeValue(newTheme)
-  }, [])
+  const toggleTheme = useCallback(
+    (newTheme?: ThemeType) => {
+      if (newTheme !== undefined) {
+        saveNewThemeValue(newTheme)
+        return
+      }
+      saveNewThemeValue(theme === "dark" ? "light" : "dark")
+    },
+    [saveNewThemeValue, theme]
+  )
 
   const value: ThemeContextValues = useMemo(() => {
     return {

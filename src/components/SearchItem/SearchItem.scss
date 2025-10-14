@@ -14,10 +14,13 @@
   &__heading,
   svg * {
     @include square(rem(24));
+
+    flex-shrink: 0;
   }
 
   &__title {
     @include fluid-text(16, 14);
+    @include text-overflow-ellipsis(2);
 
     margin-right: auto;
   }

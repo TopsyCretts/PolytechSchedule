@@ -1,19 +1,20 @@
 import "./SchedulePage.scss"
 import clsx from "clsx"
-import { useParams } from "react-router"
+import { useLoaderData } from "react-router"
+import type { profileLoader } from "@/routes/scheduleRoute.ts"
 
 interface SchedulePageProps {
   className?: string
 }
 
 const SchedulePage = ({ className }: SchedulePageProps) => {
-  const params = useParams()
+  const { profile } = useLoaderData<typeof profileLoader>()
 
   return (
     <>
       <title>Schedule</title>
       <div className={clsx(className, "schedule-page")}>
-        SchedulePage profile:{params.profileId}
+        SchedulePage profile:{profile.id}
       </div>
     </>
   )

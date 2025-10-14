@@ -148,7 +148,7 @@ button {
   (за исключением тех, у которых уже указан
   атрибут fill со значением 'none' или начинается с 'url')
  */
-:where([fill]:not([fill=none], [fill^=url])) {
+:where([fill]:not([fill="none"], [fill^="url"])) {
   fill: currentColor;
 }
 
@@ -157,7 +157,7 @@ button {
   (за исключением тех, у которых уже указан
   атрибут stroke со значением 'none')
  */
-:where([stroke]:not([stroke=none], [stroke^=url])) {
+:where([stroke]:not([stroke="none"], [stroke^="url"])) {
   stroke: currentColor;
 }
 
@@ -295,11 +295,15 @@ svg * {
 }
 
 .container-small {
-  max-width: calc(var(--container-width-small) + 2 * var(--container-padding-x));
+  max-width: calc(
+    var(--container-width-small) + 2 * var(--container-padding-x)
+  );
 }
 
 .container-large {
-  max-width: calc(var(--container-width-large) + 2 * var(--container-padding-x));
+  max-width: calc(
+    var(--container-width-large) + 2 * var(--container-padding-x)
+  );
 }
 
 .backdrop {
@@ -378,18 +382,21 @@ button {
 }
 
 a[class=""],
-a [class=active], a:not([class]) {
+a [class="active"],
+a:not([class]) {
   color: var(--color-blue);
 }
 @media (hover: hover) {
   a[class=""]:hover,
-  a [class=active]:hover, a:not([class]):hover {
+  a [class="active"]:hover,
+  a:not([class]):hover {
     color: var(--color-orange);
   }
 }
 @media (hover: none) {
   a[class=""]:active,
-  a [class=active]:active, a:not([class]):active {
+  a [class="active"]:active,
+  a:not([class]):active {
     color: var(--color-orange);
   }
 }

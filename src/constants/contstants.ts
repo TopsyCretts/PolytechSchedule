@@ -75,6 +75,17 @@ const LANGUAGES_MAP: Record<string, { nativeName: string }> = {
   fr: { nativeName: "Français" },
 } as const
 
+const LANGUAGES_KEYS = [...Object.keys(LANGUAGES_MAP)] as const
+
+const LANGUAGE_SELECTABLE_VALUES = [
+  ...LANGUAGES_KEYS.map((language) => {
+    return {
+      key: language,
+      value: LANGUAGES_MAP[language].nativeName,
+    }
+  }),
+] as const
+
 const defaultSearchableState: SearchableState = {
   isError: false,
   isLoading: true,
@@ -85,7 +96,6 @@ const DEFAULT_TEACHER_PROFILE: TeacherProfile = {
   id: "",
   name: "",
   scheduleType: "teacher",
-  teacherName: "",
   lastUsed: new Date(),
 }
 
@@ -94,13 +104,15 @@ const DEFAULT_STUDENT_PROFILE: StudentProfile = {
   name: "",
   scheduleType: "teacher",
   institute: "",
-  group: "",
   lastUsed: new Date(),
 }
 
 const PROFILES_KEY = "schedule-profiles"
 
-const ORIGINAL_SITE_LINK = "https://view.ystuty.ru"
+const ORIGINAL_SITE = {
+  hostname: "ypolytech.ru",
+  link: "https://ypolytech.ru",
+}
 
 export {
   themeArray,
@@ -110,5 +122,7 @@ export {
   DEFAULT_TEACHER_PROFILE,
   DEFAULT_STUDENT_PROFILE,
   LANGUAGES_MAP,
-  ORIGINAL_SITE_LINK,
+  LANGUAGES_KEYS,
+  LANGUAGE_SELECTABLE_VALUES,
+  ORIGINAL_SITE,
 }

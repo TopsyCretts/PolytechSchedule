@@ -2,8 +2,4 @@
 
 .burger-menu {
   @include square(var(--button-height));
-
-  & .select__wrapper {
-    min-width: rem(200);
-  }
 }

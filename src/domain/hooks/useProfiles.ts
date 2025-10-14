@@ -46,7 +46,6 @@ export const useProfiles = () => {
     name,
     scheduleType: "student",
     institute,
-    group,
     lastUsed: new Date(),
   })
 
@@ -56,7 +55,6 @@ export const useProfiles = () => {
       id: teacherName,
       name,
       scheduleType: "teacher",
-      teacherName,
       lastUsed: new Date(),
     }
     addProfile(newProfile)

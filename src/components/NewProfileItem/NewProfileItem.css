@@ -1,0 +1,9 @@
+.new-profile-item {
+  transition-duration: var(--transition-duration);
+}
+.new-profile-item--active {
+  color: var(--color-light);
+  background-color: var(--selected-profile-bg);
+}
+
+/*# sourceMappingURL=NewProfileItem.css.map */

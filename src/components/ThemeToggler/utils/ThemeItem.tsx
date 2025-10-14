@@ -1,4 +1,4 @@
-import type { ThemeItemProps } from "@components/ThemePicker/types"
+import type { ThemeItemProps } from "@components/ThemeToggler/types"
 import { ThemeIcon } from "./index"
 import { useTranslation } from "react-i18next"
 

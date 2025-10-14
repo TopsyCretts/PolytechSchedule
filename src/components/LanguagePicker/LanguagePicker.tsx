@@ -2,9 +2,11 @@ import "./LanguagePicker.scss"
 import clsx from "clsx"
 import Select from "@components/Select"
 import LanguageIcon from "@assets/icons/language.svg?react"
-import { LANGUAGES_MAP } from "@/constants/contstants.ts"
+import {
+  LANGUAGE_SELECTABLE_VALUES,
+  LANGUAGES_KEYS,
+} from "@/constants/contstants.ts"
 import i18next from "i18next"
-import { useMemo } from "react"
 import { STRINGS_RES } from "@/constants/strings.ts"
 import { useTranslation } from "react-i18next"
 
@@ -13,23 +15,12 @@ interface LanguagePickerProps {
   isHiding?: boolean
 }
 
-const LANGUAGES_KEYS = Object.keys(LANGUAGES_MAP)
+const handleChangeLanguage = async (lngKey: string) => {
+  i18next.changeLanguage(lngKey).then()
+}
 
 const LanguagePicker = ({ className, isHiding }: LanguagePickerProps) => {
   const { t, i18n } = useTranslation()
-
-  const selectValues = useMemo(() => {
-    return LANGUAGES_KEYS.map((language) => {
-      return {
-        key: language,
-        value: LANGUAGES_MAP[language].nativeName,
-      }
-    })
-  }, [])
-
-  const handleChangeLanguage = async (lngKey: string) => {
-    i18next.changeLanguage(lngKey).then()
-  }
 
   return (
     <Select
@@ -53,7 +44,7 @@ const LanguagePicker = ({ className, isHiding }: LanguagePickerProps) => {
           initialSelectedOptionsKeys={LANGUAGES_KEYS.filter(
             (key) => key === i18n.language
           )}
-          values={selectValues}
+          values={[...LANGUAGE_SELECTABLE_VALUES]}
           onOptionChange={handleChangeLanguage}
         />
       </Select.Container>

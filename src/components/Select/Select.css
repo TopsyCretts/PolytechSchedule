@@ -43,6 +43,7 @@
 .select__group-title,
 .select__item {
   padding-inline: 0.9375rem;
+  user-select: none;
 }
 .select__group {
   border-top: 0.0625rem solid var(--color-gray);
@@ -54,6 +55,7 @@
   counter-reset: custom-counter;
 }
 .select__item {
+  cursor: pointer;
   transition-duration: var(--transition-duration);
 }
 @media (hover: hover) {
