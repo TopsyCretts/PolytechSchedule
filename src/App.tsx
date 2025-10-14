@@ -31,7 +31,9 @@ const router = createBrowserRouter(
       />
       <Route
         path={"schedule/:profileId"}
-        loader={profileLoader}
+        loader={async ({ request, context, params }) =>
+          profileLoader({ request, context, params })
+        }
         element={<SchedulePage />}
         errorElement={<RouterErrorElement />}
       />

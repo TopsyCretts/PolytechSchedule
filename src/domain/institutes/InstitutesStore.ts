@@ -14,7 +14,7 @@ export class InstitutesStore {
     institutes: [],
   }
 
-  constructor() {
+  constructor () {
     makeAutoObservable(this, {}, { autoBind: true })
     this.init()
   }

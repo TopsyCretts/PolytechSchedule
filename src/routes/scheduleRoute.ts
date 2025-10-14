@@ -3,8 +3,21 @@ import type { ScheduleType } from "@/domain/models/Profile.ts"
 import { mainContainer } from "@/mainContainer.ts"
 import { ProfilesStore } from "@/domain/profiles/ProfilesStore.ts"
 import { APP_ROUTES, routeWithParams } from "@/routes/routes.ts"
+import { queryClient } from "@/api"
+import {
+  getGroupsByInstitutesQueryOptions
+} from "@/api/search-schedule/institutesService.ts"
+import {
+  getTeachersQueryOptions
+} from "@/api/search-schedule/teachersService.ts"
+import { InstitutesStore } from "@/domain/institutes/InstitutesStore.ts"
 
-const profileLoader = ({ request, params }: LoaderFunctionArgs) => {
+const profileLoader = async ({ request, params }: LoaderFunctionArgs) => {
+  const institutes = mainContainer.get(InstitutesStore).getInstitutes.institutes
+  if (institutes.length === 0) {
+    await queryClient.prefetchQuery(getGroupsByInstitutesQueryOptions())
+    await queryClient.prefetchQuery(getTeachersQueryOptions())
+  }
   const url = new URL(request.url)
   const searchParams = url.searchParams
   const type = searchParams.get("type")
