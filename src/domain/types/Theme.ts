@@ -7,8 +7,9 @@ type ThemeObject = {
 
 interface ThemeContextValues {
   theme: ThemeType
-  toggleTheme: (theme?: ThemeType) => void
   isDark: boolean
+  toggleTheme: () => void
+  changeTheme: (theme: ThemeType) => void
 }
 
 export type { ThemeType, ThemeObject, ThemeContextValues }

@@ -1,6 +1,6 @@
 import "./RetryFallback.scss"
 import clsx from "clsx"
-import AccentButton from "@components/AccentButton"
+import { AccentButton } from "@shared/ui"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/constants/strings.ts"
 

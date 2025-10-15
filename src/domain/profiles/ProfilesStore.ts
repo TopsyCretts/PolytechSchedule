@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify"
 import type {
   Profile,
-  ScheduleType,
+  ProfileType,
   StudentProfile,
   TeacherProfile,
 } from "@/domain/models/Profile.ts"
@@ -38,27 +38,29 @@ export class ProfilesStore {
     return this.profiles
   }
 
-  getOrCreateProfile(type: ScheduleType, newProfileId: string): Profile | null {
-    const id = String(newProfileId)
+  getOrCreateProfile(type: ProfileType, newProfileId: number): Profile | null {
     const existingProfile = this.getProfile(newProfileId)
     if (existingProfile !== null) {
       return existingProfile
     }
     switch (type) {
       case "student": {
-        const institute = this.institutesStore.getInstituteByGroupId(id)
-        if (institute !== null) {
-          const newProfile = createStudentProfile(id, institute)
+        const data = this.institutesStore.getInstituteByGroupId(newProfileId)
+        if (data !== null) {
+          const newProfile = createStudentProfile(
+            newProfileId,
+            data.group.name,
+            data.institute
+          )
           this.addProfile(newProfile)
           return newProfile
         }
         break
       }
       case "teacher": {
-        const teacher = this.teachersStore.getTeacherById(id)
-        console.log(teacher)
+        const teacher = this.teachersStore.getTeacherById(newProfileId)
         if (teacher !== null) {
-          const newProfile = createTeacherProfile(id, teacher.name)
+          const newProfile = createTeacherProfile(newProfileId, teacher.name)
           this.addProfile(newProfile)
           return newProfile
         }
@@ -68,7 +70,7 @@ export class ProfilesStore {
     return null
   }
 
-  getProfile(id: string): Profile | null {
+  getProfile(id: number): Profile | null {
     const existingProfile = this.profiles.find((profile) => profile.id === id)
     if (existingProfile !== undefined) {
       return existingProfile
@@ -77,23 +79,38 @@ export class ProfilesStore {
   }
 
   @action
-  addProfile(profile: Profile) {
-    this.profiles = [...this.profiles, profile]
+  addProfile(newProfile: Profile) {
+    const isProfileExists =
+      this.profiles.find((profile) => profile.id === newProfile.id) !==
+      undefined
+    if (isProfileExists) {
+      return
+    }
+    this.profiles = [...this.profiles, newProfile]
     this.saveProfilesToLocalStorage(this.profiles)
   }
 
   @action
-  removeProfile(profileId: string) {
+  removeProfileAndReturnClosest(profileId: number) {
     const index = this.profiles.findIndex((profile) => profile.id === profileId)
-    const nearestIndex = index - 1
+    const nearestLeftIndex = index - 1
 
     this.profiles = [
       ...this.profiles.filter((profile) => profile.id !== profileId),
     ]
+
+    const nearestRightIndexAfterRemove = index
+
     this.saveProfilesToLocalStorage(this.profiles)
-    if (nearestIndex >= 0) {
-      return this.profiles[nearestIndex]
+
+    if (nearestRightIndexAfterRemove < this.profiles.length) {
+      return this.profiles[nearestRightIndexAfterRemove]
     }
+
+    if (nearestLeftIndex >= 0) {
+      return this.profiles[nearestLeftIndex]
+    }
+
     return null
   }
 
@@ -103,25 +120,26 @@ export class ProfilesStore {
 }
 
 const createTeacherProfile = (
-  id: string,
+  id: number,
   teacherName: string
 ): TeacherProfile => {
   return {
     id: id,
     name: teacherName,
-    scheduleType: "teacher",
+    profileType: "teacher",
     lastUsed: new Date(),
   }
 }
 
 const createStudentProfile = (
-  id: string,
+  id: number,
+  name: string,
   institute: string
 ): StudentProfile => {
   return {
     id: id,
-    name: id,
-    scheduleType: "student",
+    name,
+    profileType: "student",
     institute: institute,
     lastUsed: new Date(),
   }

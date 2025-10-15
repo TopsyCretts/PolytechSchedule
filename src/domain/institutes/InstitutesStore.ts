@@ -3,7 +3,7 @@ import { action, computed, makeAutoObservable, observable } from "mobx"
 import { queryClient } from "@/api"
 import type { InstitutesData } from "@/domain/models/Institute.ts"
 import type { GroupData } from "@/domain/models/Group.ts"
-import { LocalStorageManager } from "@/domain/browserStorages"
+import { LocalStorageManager } from "@/domain/browser-storages"
 import { getGroupsByInstitutesQueryOptions } from "@/api/search-schedule/institutesService.ts"
 
 @injectable()
@@ -14,14 +14,37 @@ export class InstitutesStore {
     institutes: [],
   }
 
-  constructor () {
+  @observable
+  private readonly isInitialized: Promise<boolean>
+
+  private resolveInitialized!: (value: boolean) => void
+  private rejectInitialized!: () => void
+
+  constructor() {
+    this.isInitialized = new Promise<boolean>((resolve, reject) => {
+      this.resolveInitialized = resolve
+      this.rejectInitialized = reject
+    })
+
     makeAutoObservable(this, {}, { autoBind: true })
     this.init()
   }
 
   @action
-  init() {
-    queryClient.prefetchQuery(getGroupsByInstitutesQueryOptions()).then()
+  private init() {
+    queryClient
+      .prefetchQuery(getGroupsByInstitutesQueryOptions())
+      .catch(() => {
+        this.rejectInitialized()
+      })
+      .then(() => {
+        this.resolveInitialized(true)
+      })
+  }
+
+  @computed
+  get getIsInitialized() {
+    return this.isInitialized
   }
 
   @action
@@ -30,9 +53,9 @@ export class InstitutesStore {
     LocalStorageManager.saveInstitutesData(data)
   }
 
-  getGroupsByInstitute(instituteName: string): GroupData[] | null {
+  getGroupsByInstitute(instituteId: number): GroupData[] | null {
     const institute = this.institutesData.institutes.find(
-      (institute) => institute.name === instituteName
+      (institute) => institute.id === instituteId
     )
     if (institute === undefined) {
       return null
@@ -49,12 +72,11 @@ export class InstitutesStore {
     return this.institutesData
   }
 
-  getInstituteByGroupId(groupId: string) {
+  getInstituteByGroupId(groupId: number) {
     for (const institute of this.institutesData.institutes) {
-      const isInInstitute =
-        institute.groups.find((group) => group.id === groupId) !== undefined
-      if (isInInstitute) {
-        return institute.name
+      const group = institute.groups.find((group) => group.id === groupId)
+      if (group !== undefined) {
+        return { institute: institute.name, group }
       }
     }
     return null

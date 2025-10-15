@@ -4,7 +4,7 @@ import { useTheme } from "@/domain/hooks"
 import { ThemeIcon } from "@components/ThemeToggler/utils"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/constants/strings.ts"
-import Button from "@components/Button"
+import Button from "@shared/ui/Button"
 
 interface ThemePickerProps {
   className?: string
@@ -22,7 +22,7 @@ const ThemeToggler = ({ className, isHiding = false }: ThemePickerProps) => {
         isSquare={true}
         className={clsx(className, isHiding && "hidden-mobile-s")}
         title={t(STRINGS_RES.change_theme)}
-        onClick={() => toggleTheme(undefined)}
+        onClick={toggleTheme}
       >
         <ThemeIcon theme={theme} />
       </Button>

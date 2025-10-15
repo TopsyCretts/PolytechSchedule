@@ -17,7 +17,7 @@ interface SearchFormProps extends SearchFieldProps {
 }
 
 interface SearchItem {
-  id: string
+  id: string | number
   searchableValue: string
   type: SearchItemType
 }
@@ -34,12 +34,6 @@ interface SearchableState {
   searchItems: SearchItem[]
 }
 
-interface SearchContextValues {
-  institutes: SearchableState
-  teachers: SearchableState
-  groups: SearchableState
-}
-
 type SearchItemType = InstituteType | "group" | "teacher"
 
 export type {
@@ -48,5 +42,4 @@ export type {
   SearchItem,
   SearchListProps,
   SearchableState,
-  SearchContextValues,
 }

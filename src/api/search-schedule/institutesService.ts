@@ -1,4 +1,4 @@
-import { LocalStorageManager } from "@/domain/browserStorages"
+import { LocalStorageManager } from "@/domain/browser-storages"
 import { mainContainer } from "@/mainContainer.ts"
 import { InstitutesStore } from "@/domain/institutes/InstitutesStore.ts"
 import { getGroupsByInstitutes } from "@/api/search-schedule/requests.ts"

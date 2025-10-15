@@ -1,0 +1,34 @@
+@use "../../styles/helpers" as *;
+@use "../../styles/helpers/functions" as *;
+
+.web-loader-indicator {
+  @include flex-center;
+
+  position: fixed;
+  z-index: 9000;
+  width: 100vw;
+  height: 100vh;
+
+  &__body {
+    @include flex-center;
+
+    column-gap: rem(20);
+    padding-inline: rem(10);
+
+    @include mobile {
+      column-gap: rem(5);
+    }
+  }
+
+  &__logo {
+    @include fluid-text(40, 24);
+
+    & img {
+      @include square(fluid(90, 50));
+    }
+  }
+
+  &__spinner * {
+    @include square(fluid(70, 40));
+  }
+}

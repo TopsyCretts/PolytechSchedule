@@ -4,10 +4,14 @@ interface InstitutesDto {
 }
 
 interface InstituteDto {
+  id: number
   name: string
   groups: GroupDto[]
 }
 
-type GroupDto = string
+interface GroupDto {
+  groupId: number
+  name: string
+}
 
 export type { InstituteDto, InstitutesDto, GroupDto }

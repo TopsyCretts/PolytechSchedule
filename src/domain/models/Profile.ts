@@ -1,9 +1,9 @@
-type ScheduleType = "student" | "teacher"
+type ProfileType = "student" | "teacher"
 
 interface BaseProfile {
-  id: string
+  id: number
   name: string
-  scheduleType: ScheduleType
+  profileType: ProfileType
   lastUsed: Date
 }
 
@@ -15,16 +15,10 @@ type TeacherProfile = BaseProfile
 
 type Profile = StudentProfile | TeacherProfile
 
-interface ProfilesState {
-  profiles: Profile[]
-  activeProfileId: string | null
-}
-
 export type {
-  ScheduleType,
+  ProfileType,
   BaseProfile,
   StudentProfile,
   TeacherProfile,
   Profile,
-  ProfilesState,
 }

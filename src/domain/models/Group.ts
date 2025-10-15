@@ -1,5 +1,5 @@
 interface GroupData {
-  id: string
+  id: number
   name: string
 }
 

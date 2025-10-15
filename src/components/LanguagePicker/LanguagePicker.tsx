@@ -1,6 +1,6 @@
 import "./LanguagePicker.scss"
 import clsx from "clsx"
-import Select from "@components/Select"
+import { Select } from "@shared/ui"
 import LanguageIcon from "@assets/icons/language.svg?react"
 import {
   LANGUAGE_SELECTABLE_VALUES,

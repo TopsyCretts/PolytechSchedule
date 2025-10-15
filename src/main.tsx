@@ -4,16 +4,16 @@ import App from "./App.tsx"
 import "./i18n.ts"
 import { ThemeProvider } from "@/hoc"
 import { QueryClientProvider } from "@tanstack/react-query"
-import Spinner from "@components/Spinner"
 import { ErrorBoundary } from "react-error-boundary"
 import { mainContainer } from "@/mainContainer.ts"
 import { Provider } from "inversify-react"
 import { queryClient } from "@/api"
+import WebLoaderIndicator from "@components/WebLoaderIndicator/WebLoaderIndicator.tsx"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ErrorBoundary fallback={<h1>Something goes wrong!</h1>}>
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<WebLoaderIndicator />}>
         <QueryClientProvider client={queryClient}>
           <Provider container={mainContainer}>
             <ThemeProvider>

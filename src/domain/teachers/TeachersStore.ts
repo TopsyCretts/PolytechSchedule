@@ -1,6 +1,6 @@
 import { action, computed, makeAutoObservable, observable } from "mobx"
 import { queryClient } from "@/api"
-import { LocalStorageManager } from "@/domain/browserStorages"
+import { LocalStorageManager } from "@/domain/browser-storages"
 import { getTeachersQueryOptions } from "@/api/search-schedule/teachersService.ts"
 import type { TeacherData, TeachersData } from "@/domain/models/Teachers.ts"
 import { injectable } from "inversify"
@@ -13,14 +13,36 @@ export class TeachersStore {
     teachers: [],
   }
 
+  @observable
+  private readonly isInitialized: Promise<boolean>
+
+  private resolveInitialized!: (value: boolean) => void
+  private rejectInitialized!: () => void
+
   constructor() {
+    this.isInitialized = new Promise<boolean>((resolve, reject) => {
+      this.resolveInitialized = resolve
+      this.rejectInitialized = reject
+    })
     makeAutoObservable(this, {}, { autoBind: true })
     this.init()
   }
 
   @action
-  init() {
-    queryClient.ensureQueryData(getTeachersQueryOptions()).then()
+  private init() {
+    queryClient
+      .prefetchQuery(getTeachersQueryOptions())
+      .then(() => {
+        this.resolveInitialized(true)
+      })
+      .catch(() => {
+        this.rejectInitialized()
+      })
+  }
+
+  @computed
+  get getIsInitialized() {
+    return this.isInitialized
   }
 
   @action
@@ -29,7 +51,7 @@ export class TeachersStore {
     LocalStorageManager.saveTeachersData(data)
   }
 
-  getTeacherById(teacherId: string): TeacherData | null {
+  getTeacherById(teacherId: number): TeacherData | null {
     const teacher = this.teachersData.teachers.find(
       (teacher) => teacher.id === teacherId
     )

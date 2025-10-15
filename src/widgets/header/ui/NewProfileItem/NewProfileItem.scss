@@ -1,0 +1,10 @@
+@use "../../../../styles/helpers/index" as *;
+
+.new-profile-item {
+  transition-duration: var(--transition-duration);
+
+  &--active {
+    color: var(--color-light);
+    background-color: var(--selected-profile-bg);
+  }
+}

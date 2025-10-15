@@ -1,6 +1,6 @@
 import { getTeachers } from "@/api/search-schedule/requests.ts"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
-import { LocalStorageManager } from "@/domain/browserStorages"
+import { LocalStorageManager } from "@/domain/browser-storages"
 import { mainContainer } from "@/mainContainer.ts"
 import { TeachersStore } from "@/domain/teachers/TeachersStore.ts"
 import type { TeachersData } from "@/domain/models/Teachers.ts"
@@ -8,10 +8,11 @@ import type { TeachersData } from "@/domain/models/Teachers.ts"
 const getTeachersFromStorageOrRefetch = async () => {
   const savedData = await LocalStorageManager.getTeachersData()
   const now = Date.now()
+  const teachersStore = mainContainer.get<TeachersStore>(TeachersStore)
   if (savedData !== null && savedData.teachers.length > 0) {
     const isExpired = now - savedData.lastUpdate >= 24 * 60 * 60 * 1000
     if (!isExpired) {
-      mainContainer.get(TeachersStore).setTeachersData(savedData)
+      teachersStore.setTeachersData(savedData)
       return savedData.teachers
     }
   }
@@ -19,11 +20,9 @@ const getTeachersFromStorageOrRefetch = async () => {
   const dto = response.data
   const newData: TeachersData = {
     lastUpdate: now,
-    teachers: dto.items.map((item) => {
-      return { id: String(item.id), name: item.name }
-    }),
+    teachers: dto.items,
   }
-  mainContainer.get(TeachersStore).setTeachersData(newData)
+  teachersStore.setTeachersData(newData)
   return newData.teachers
 }
 

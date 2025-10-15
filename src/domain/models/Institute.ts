@@ -29,7 +29,7 @@ type InstituteType =
   | "collage"
 
 interface InstituteData {
-  id: string
+  id: number
   name: string
   groups: GroupData[]
 }
@@ -41,12 +41,12 @@ interface InstitutesData {
 
 const toInstituteData = (dto: InstituteDto): InstituteData => {
   return {
-    id: dto.name,
+    id: dto.id,
     name: dto.name,
     groups: dto.groups.map((group) => {
       return {
-        id: group,
-        name: group,
+        id: group.groupId,
+        name: group.name,
       }
     }),
   }

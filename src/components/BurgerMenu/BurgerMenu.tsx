@@ -3,7 +3,7 @@ import clsx from "clsx"
 import { useTheme } from "@/domain/hooks"
 import { useCallback } from "react"
 import type { ThemeType } from "@/domain/types/Theme.ts"
-import Select from "@components/Select"
+import { Select } from "@shared/ui"
 import {
   LANGUAGE_SELECTABLE_VALUES,
   themeArray,
@@ -25,15 +25,19 @@ const handleChangeLanguage = async (lngKey: string) => {
 
 const BurgerMenu = ({ className }: BurgerMenuProps) => {
   const { t, i18n } = useTranslation()
-  const { theme, toggleTheme } = useTheme()
+  const { theme, changeTheme } = useTheme()
 
-  const handleThemeChange = useCallback((value: string) => {
-    if ((value as ThemeType) !== undefined) {
-      toggleTheme()
-    } else {
-      throw TypeError(`${value} should be a "ThemeType" property"`)
-    }
-  }, [])
+  const handleThemeChange = useCallback(
+    (value: string) => {
+      const themeType = value as ThemeType
+      if (themeType !== undefined) {
+        changeTheme(themeType)
+      } else {
+        throw TypeError(`${value} should be a "ThemeType" property"`)
+      }
+    },
+    [changeTheme]
+  )
 
   return (
     <Select className={clsx(className, "burger-menu", "visible-mobile-s")}>
@@ -45,7 +49,7 @@ const BurgerMenu = ({ className }: BurgerMenuProps) => {
       </Select.ButtonToggler>
       <Select.Backdrop />
       <Select.Container>
-        <Select.Header isCross>Menu</Select.Header>
+        <Select.Header isCross>{t(STRINGS_RES.menu)}</Select.Header>
         <Select.OptionsGroup
           title={t(STRINGS_RES.language_one)}
           onOptionChange={handleChangeLanguage}

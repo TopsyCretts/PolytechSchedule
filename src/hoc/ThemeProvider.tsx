@@ -1,5 +1,11 @@
-import { createContext, useCallback, useEffect, useMemo, useState } from "react"
-import type { ThemeType, ThemeContextValues } from "@/domain/types/Theme.ts"
+import {
+  createContext,
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from "react"
+import type { ThemeContextValues, ThemeType } from "@/domain/types/Theme.ts"
 
 interface ThemeProviderProps {
   children: React.ReactNode
@@ -8,8 +14,12 @@ interface ThemeProviderProps {
 const ThemeContext = createContext<ThemeContextValues | null>(null)
 
 const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-  const storedTheme = localStorage.getItem("theme")
+  const isSystemDark = useMemo(() => {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+  }, [])
+  const storedTheme = useMemo(() => {
+    return localStorage.getItem("theme")
+  }, [])
   const [theme, setTheme] = useState<ThemeType>(() => {
     if (storedTheme && (storedTheme as ThemeType) !== undefined) {
       return storedTheme as ThemeType
@@ -17,11 +27,11 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
     return isSystemDark ? "dark" : "light"
   })
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if ((isSystemDark && storedTheme === null) || storedTheme === "dark") {
       document.body.classList.toggle("dark-mode", true)
     }
-  }, [])
+  }, [isSystemDark, storedTheme])
 
   const saveNewThemeValue = useCallback((newTheme: ThemeType) => {
     localStorage.setItem("theme", newTheme)
@@ -29,24 +39,20 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
     document.body.classList.toggle("dark-mode")
   }, [])
 
-  const toggleTheme = useCallback(
-    (newTheme?: ThemeType) => {
-      if (newTheme !== undefined) {
-        saveNewThemeValue(newTheme)
-        return
-      }
-      saveNewThemeValue(theme === "dark" ? "light" : "dark")
+  const toggleTheme = useCallback(() => {
+    saveNewThemeValue(theme === "dark" ? "light" : "dark")
+  }, [saveNewThemeValue, theme])
+
+  const changeTheme = useCallback(
+    (newTheme: ThemeType) => {
+      saveNewThemeValue(newTheme)
     },
-    [saveNewThemeValue, theme]
+    [saveNewThemeValue]
   )
 
   const value: ThemeContextValues = useMemo(() => {
-    return {
-      theme,
-      toggleTheme,
-      isDark: theme === "dark",
-    }
-  }, [theme, toggleTheme])
+    return { theme, isDark: theme === "dark", toggleTheme, changeTheme }
+  }, [theme, toggleTheme, changeTheme])
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }

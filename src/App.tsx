@@ -5,12 +5,14 @@ import {
   Route,
   RouterProvider,
 } from "react-router"
-import HomePage from "@/pages/HomePage"
-import LayOut from "@/layouts/LayOut/LayOut.tsx"
-import NotFoundPage from "@/pages/NotFoundPage"
-import SchedulePage from "@/pages/SchedulePage"
-import RouterErrorElement from "@components/RouterErrorElement"
-import { profileLoader } from "@/routes/scheduleRoute.ts"
+import { lazy } from "react"
+import { profileLoader } from "@/pages/schedule"
+
+const HomePage = lazy(() => import("@/pages/HomePage"))
+const LayOut = lazy(() => import("@/hoc/LayOut.tsx"))
+const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"))
+const SchedulePage = lazy(() => import("@/pages/schedule"))
+const RouterErrorElement = lazy(() => import("@components/RouterErrorElement"))
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,14 +32,6 @@ const router = createBrowserRouter(
         errorElement={<RouterErrorElement />}
       />
       <Route
-        path={"schedule/:profileId"}
-        loader={async ({ request, context, params }) =>
-          profileLoader({ request, context, params })
-        }
-        element={<SchedulePage />}
-        errorElement={<RouterErrorElement />}
-      />
-      <Route
         path={"not-found"}
         element={<NotFoundPage />}
         errorElement={<RouterErrorElement />}
@@ -50,6 +44,15 @@ const router = createBrowserRouter(
             replace
           />
         }
+      />
+      <Route
+        path={"schedule/:profileId"}
+        id={"schedule"}
+        loader={async ({ request, context, params }) =>
+          profileLoader({ request, context, params })
+        }
+        element={<SchedulePage />}
+        errorElement={<RouterErrorElement />}
       />
     </Route>
   )
