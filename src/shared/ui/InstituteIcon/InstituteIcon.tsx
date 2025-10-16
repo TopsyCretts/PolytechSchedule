@@ -1,7 +1,13 @@
-import clsx from "clsx"
+import DefaultLight from "@assets/icons/default-institute.svg?react"
+import ArchitectureLight from "@assets/icons/architecture-institute.svg?react"
+import ChemicalLight from "@assets/icons/chem-fac.svg?react"
+import CorrespondenceLight from "@assets/icons/correspondence.svg?react"
+import CivilLight from "@assets/icons/civil-transport-institute.svg?react"
+import MagicLight from "@assets/icons/magic-games-institute.svg?react"
+import EconomicLight from "@assets/icons/economics-management-institute.svg?react"
+import DigitalLight from "@assets/icons/digital-institute.svg?react"
+import CollageLight from "@assets/icons/collage.svg?react"
 import type { InstituteType } from "@/domain/models/Institute.ts"
-import { themedInstituteIcons } from "@/constants/contstants.ts"
-import { useTheme } from "@/domain/hooks"
 
 interface InstituteIconProps {
   className?: string
@@ -9,29 +15,24 @@ interface InstituteIconProps {
   width?: number
   height?: number
 }
+const iconMap = {
+  default: DefaultLight,
+  architecture: ArchitectureLight,
+  chemical: ChemicalLight,
+  correspondence: CorrespondenceLight,
+  civil: CivilLight,
+  magic: MagicLight,
+  economic: EconomicLight,
+  digital: DigitalLight,
+  collage: CollageLight,
+} as const
 
 const InstituteIcon = ({
   className,
   instituteType = "default",
-  height,
-  width,
 }: InstituteIconProps) => {
-  const { isDark } = useTheme()
-  return (
-    <img
-      className={clsx(className)}
-      alt=""
-      src={getInstituteIcon(instituteType, isDark)}
-      width={width}
-      height={height}
-      loading="lazy"
-    />
-  )
-}
-
-const getInstituteIcon = (institute: InstituteType, isDarkTheme: boolean) => {
-  const icon = themedInstituteIcons[institute]
-  return isDarkTheme ? icon.lightSrc : icon.darkSrc
+  const IconComponent = iconMap[instituteType] || iconMap.default
+  return <IconComponent className={className} />
 }
 
 export default InstituteIcon
