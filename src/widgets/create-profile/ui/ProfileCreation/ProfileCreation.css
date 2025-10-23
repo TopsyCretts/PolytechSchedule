@@ -1,7 +1,6 @@
 .profile-creation {
   border: var(--border-themed);
   border-radius: var(--border-radius-large);
-  backdrop-filter: blur(20px);
   box-shadow: var(--shadow-themed);
   margin-top: 1.875rem;
   padding: 1.875rem;

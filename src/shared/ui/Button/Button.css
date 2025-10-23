@@ -7,7 +7,6 @@
   align-items: center;
   border: var(--border-themed);
   border-radius: var(--border-radius);
-  backdrop-filter: blur(20px);
   box-shadow: var(--shadow);
   background-color: var(--color-light-opacity-10);
   backdrop-filter: var(--blur-20);

@@ -4,7 +4,6 @@
 .header__inner, .header__main {
   border: var(--border-themed);
   border-radius: var(--border-radius-large);
-  backdrop-filter: blur(20px);
   box-shadow: var(--shadow-themed);
 }
 .header__attention {

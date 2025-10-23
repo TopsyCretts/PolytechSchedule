@@ -80,7 +80,6 @@
 @mixin border-shadow-themed($borderRadius: 0, $isDarkShadowEnabled: true) {
   border: var(--border-themed);
   border-radius: $borderRadius;
-  backdrop-filter: blur(20px);
 
   @if $isDarkShadowEnabled {
     box-shadow: var(--shadow);

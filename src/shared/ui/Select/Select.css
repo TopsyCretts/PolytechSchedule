@@ -7,7 +7,6 @@
 .select__wrapper {
   border: var(--border-themed);
   border-radius: var(--border-radius);
-  backdrop-filter: blur(20px);
   box-shadow: var(--shadow);
   position: absolute;
   z-index: var(--z-index-select);
