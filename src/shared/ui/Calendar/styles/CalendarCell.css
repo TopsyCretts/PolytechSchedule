@@ -1,7 +1,6 @@
 .calendar-day {
   border: var(--border-themed);
   border-radius: var(--border-radius-medium);
-  backdrop-filter: blur(20px);
   box-shadow: var(--shadow-themed);
   width: 100%;
   height: 100%;

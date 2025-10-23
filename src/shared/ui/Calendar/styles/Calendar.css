@@ -2,7 +2,6 @@
   --calendarHeaderBorderColor: var(--select-active-bg);
   border: var(--border-themed);
   border-radius: var(--border-radius-medium);
-  backdrop-filter: blur(20px);
   box-shadow: var(--shadow-themed);
   --cellWidth: 6.25rem;
   --cellHeight: 8.125rem;

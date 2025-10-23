@@ -5,10 +5,36 @@
   column-gap: 1.875rem;
 }
 .month-switch__title {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
+  height: var(--button-height);
   column-gap: 0.625rem;
+}
+@media (width <= 47.999375rem) {
+  .month-switch__year {
+    padding-top: 0;
+  }
+}
+@media (width > 47.999375rem) {
+  .month-switch__year {
+    padding-top: 0.0625rem;
+  }
+}
+@media (width <= 87.56125rem) {
+  .month-switch__year {
+    padding-top: 0.125rem;
+  }
+}
+@media (width > 87.56125rem) {
+  .month-switch__year {
+    padding-top: 0.1875rem;
+  }
+}
+@media (width > 120.06125rem) {
+  .month-switch__year {
+    padding-top: 0.25rem;
+  }
 }
 .month-switch__right {
   rotate: 180deg;

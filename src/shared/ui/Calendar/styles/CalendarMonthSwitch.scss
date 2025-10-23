@@ -5,10 +5,35 @@
 
   column-gap: rem(30);
 
-  &__title {
-    @include flex-center;
+  &__title,
+  {
+    @include flex-center(true);
 
+    height: var(--button-height);
     column-gap: rem(10);
+  }
+
+  &__year{
+
+    @include mobile{
+      padding-top: 0;
+    }
+    @include mobile-above{
+      padding-top: rem(1);
+    }
+
+    @include laptop {
+      padding-top: rem(2);
+    }
+
+    @include laptop-above{
+      padding-top: rem(3);
+    }
+
+    @include desktop-above{
+      padding-top: rem(4);
+    }
+
   }
 
   &__right {
