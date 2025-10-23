@@ -50,11 +50,17 @@ const profileLoader = async ({ request, params }: LoaderFunctionArgs) => {
 
 const getScheduleProfileRoute = (
   profileId: string,
-  scheduleType: ProfileType
+  scheduleType: ProfileType,
+  destination: string = "calendar"
 ) => {
-  return routeWithParams(APP_ROUTES.schedule, [profileId], {
-    type: scheduleType,
-  })
+  return routeWithParams(
+    APP_ROUTES.schedule,
+    [profileId],
+    {
+      type: scheduleType,
+    },
+    destination
+  )
 }
 
 export { profileLoader, getScheduleProfileRoute }

@@ -1,0 +1,17 @@
+@use "../../../../styles/helpers" as *;
+
+.month-switch {
+  @include flex-center;
+
+  column-gap: rem(30);
+
+  &__title {
+    @include flex-center;
+
+    column-gap: rem(10);
+  }
+
+  &__right {
+    rotate: 180deg;
+  }
+}

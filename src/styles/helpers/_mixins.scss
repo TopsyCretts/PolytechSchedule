@@ -80,6 +80,7 @@
 @mixin border-shadow-themed($borderRadius: 0, $isDarkShadowEnabled: true) {
   border: var(--border-themed);
   border-radius: $borderRadius;
+  backdrop-filter: blur(20px);
 
   @if $isDarkShadowEnabled {
     box-shadow: var(--shadow);
@@ -89,6 +90,7 @@
 }
 
 @mixin container-max-width($width, $padding-x) {
+  width: 100%;
   max-width: calc($width + 2 * $padding-x);
 }
 
@@ -99,4 +101,15 @@
   text-overflow: ellipsis;
   -webkit-line-clamp: #{$line-clamp};
   -webkit-box-orient: vertical;
+}
+
+@mixin generate-color-opacities($color-name, $color-value) {
+  @for $i from 1 through 9 {
+    $opacity: $i * 10;
+    $opacity-decimal: $opacity / 100;
+
+    --color-#{$color-name}-opacity-#{$opacity}: rgb(
+      #{$color-value} / #{$opacity-decimal}
+    );
+  }
 }

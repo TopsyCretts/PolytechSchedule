@@ -1,5 +1,8 @@
 import type { ThemeObject } from "@/domain/types/Theme.ts"
 import { STRINGS_RES } from "@/constants/strings.ts"
+import type { Locale } from "date-fns"
+import { enUS, fr, ru } from "date-fns/locale"
+import type { LessonType } from "@/pages/schedule/model/ScheduleData.ts"
 
 const themeArray: ThemeObject[] = [
   {
@@ -12,10 +15,10 @@ const themeArray: ThemeObject[] = [
   },
 ] as const
 
-const LANGUAGES_MAP: Record<string, { nativeName: string }> = {
-  en: { nativeName: "English" },
-  ru: { nativeName: "Русский" },
-  fr: { nativeName: "Français" },
+const LANGUAGES_MAP: Record<string, { nativeName: string; locale: Locale }> = {
+  en: { nativeName: "English", locale: enUS },
+  ru: { nativeName: "Русский", locale: ru },
+  fr: { nativeName: "Français", locale: fr },
 } as const
 
 const LANGUAGES_KEYS = [...Object.keys(LANGUAGES_MAP)] as const
@@ -36,6 +39,32 @@ const ORIGINAL_SITE = {
   link: "https://ypolytech.ru",
 } as const
 
+const LESSONS_MAP: Record<
+  LessonType,
+  { lessonCardHeaderColor: string; nameI18nkey: string }
+> = {
+  lecture: {
+    lessonCardHeaderColor: "var(--color-green)",
+    nameI18nkey: STRINGS_RES.lecture,
+  },
+  practical: {
+    lessonCardHeaderColor: "var(--color-orange)",
+    nameI18nkey: STRINGS_RES.practice,
+  },
+  laboratory: {
+    lessonCardHeaderColor: "var(--color-blue)",
+    nameI18nkey: STRINGS_RES.laboratory,
+  },
+  exam: {
+    lessonCardHeaderColor: "var(--color-red)",
+    nameI18nkey: STRINGS_RES.exam,
+  },
+  unknown: {
+    lessonCardHeaderColor: "var(--color-text-themed)",
+    nameI18nkey: "",
+  },
+} as const
+
 export {
   themeArray,
   PROFILES_KEY,
@@ -43,4 +72,5 @@ export {
   LANGUAGES_KEYS,
   LANGUAGE_SELECTABLE_VALUES,
   ORIGINAL_SITE,
+  LESSONS_MAP,
 }

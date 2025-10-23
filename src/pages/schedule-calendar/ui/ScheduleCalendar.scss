@@ -1,0 +1,21 @@
+@use "../../../styles/helpers/index" as *;
+
+.schedule-calendar {
+  display: flex;
+  justify-content: center;
+  gap: rem(20);
+
+  @include laptop {
+    flex-direction: column;
+    width: 100%;
+    max-width: rem(870);
+  }
+
+  transition-duration: 0.2s;
+
+  &__day-item {
+    @include laptop-above {
+      min-width: rem(515);
+    }
+  }
+}

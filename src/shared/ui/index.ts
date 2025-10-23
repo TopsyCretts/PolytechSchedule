@@ -9,6 +9,9 @@ import SearchSelect from "./SearchSelect"
 import Spinner from "./Spinner"
 import Switcher from "./Switcher"
 import Select from "./Select"
+import LessonCard from "./LessonCard"
+import LessonTypeIcon from "./LessonTypeIcon"
+import Calendar from "./Calendar"
 
 export {
   AccentButton,
@@ -22,4 +25,7 @@ export {
   Spinner,
   Switcher,
   Select,
+  LessonCard,
+  LessonTypeIcon,
+  Calendar,
 }

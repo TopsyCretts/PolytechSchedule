@@ -9,6 +9,8 @@
   --color-dark: #0a0f2c;
   --color-dark-opacity-5: rgb(10 15 44 / 0.05);
   --color-dark-opacity-10: rgb(10 15 44 / 0.1);
+  --color-dark-opacity-25: rgb(10 15 44 / 0.25);
+
   --color-accent: #1a4d8f;
   --color-accent-alt: #0d3a6a;
 
@@ -18,16 +20,24 @@
   --color-gray-light: #a0a5c0;
 
   --color-blue: rgb(24 108 204);
-  --color-blue-opacity-20: rgb(24 108 204 / 0.2);
+
+  @include generate-color-opacities("blue", 24 108 204);
 
   --color-green: #4cd964;
-  --color-yellow: #ffcc00;
-  --color-red: #ff4f45;
-  --color-orange: #ef7e1c;
-  --color-orange-opacity-20: rgb(239 126 28 / 0.2);
-  --color-orange-opacity-60: rgb(239 126 28 / 0.6);
 
-  --shadow: 0 0 #{rem(20)} 0 rgb(16 72 136 / 0.2);
+  @include generate-color-opacities("green", 76 217 100);
+
+  --color-yellow: #ffcc00;
+
+  --color-red: #ff4f45;
+
+  @include generate-color-opacities("red", 255 79 69);
+
+  --color-orange: #ef7e1c;
+
+  @include generate-color-opacities("orange", 239 126 28);
+
+  --shadow: 0 0 20px 0 rgb(16 72 136 / 0.2);
   --blur-10: blur(10px);
   --blur-20: blur(20px);
 
@@ -48,6 +58,9 @@
 
   --selected-profile-bg: var(--color-orange);
 
+  --lesson-card-bg: var(--color-light-alt);
+  --lesson-card-border: var(--color-dark-opacity-25);
+
   color-scheme: dark light;
 
   & .dark-mode {
@@ -63,6 +76,10 @@
 
     --selected-profile-bg: var(--color-orange-opacity-60);
 
+    --lesson-card-bg: var(--color-light-opacity-10);
+
     --shadow-themed: none;
+
+    --lesson-card-border: transparent;
   }
 }

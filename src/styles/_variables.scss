@@ -9,10 +9,14 @@
   --border-radius-medium: #{rem(16)};
   --border-radius-large: #{rem(20)};
 
+  --container-width-extra-small: #{rem(482)};
   --container-width-small: #{rem(542)};
   --container-width: #{rem(900)};
   --container-width-large: #{rem(1360)};
   --container-padding-x: #{rem(16)};
+
+  --calendar-cell-width: #{rem(100)};
+  --calendar-cell-height: #{rem(130)};
 
   --button-height: #{rem(44)};
   --input-height: #{rem(60)};

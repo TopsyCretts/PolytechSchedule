@@ -1,0 +1,9 @@
+@use "../../styles/helpers/index" as *;
+
+.language-picker {
+  @include square(var(--button-height));
+
+  & .select__wrapper {
+    max-width: rem(200);
+  }
+}

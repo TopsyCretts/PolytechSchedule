@@ -1,3 +1,3 @@
-import SchedulePage from "./SchedulePage.tsx"
+import { SchedulePage } from "./SchedulePage.tsx"
 
 export default SchedulePage

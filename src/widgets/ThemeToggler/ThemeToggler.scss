@@ -1,0 +1,14 @@
+@use "../../styles/helpers/index" as *;
+
+.theme-picker {
+  @include square(var(--button-height));
+
+  z-index: calc(var(--z-index-select) + 10);
+
+  &__theme-type {
+    display: flex;
+    align-items: center;
+    column-gap: rem(10);
+    white-space: nowrap;
+  }
+}

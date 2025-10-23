@@ -1,6 +1,7 @@
 .profile-creation {
   border: var(--border-themed);
   border-radius: var(--border-radius-large);
+  backdrop-filter: blur(20px);
   box-shadow: var(--shadow-themed);
   margin-top: 1.875rem;
   padding: 1.875rem;
@@ -10,12 +11,10 @@
     padding: 0.9375rem;
   }
 }
-.profile-creation__loading-fallback,
-.profile-creation__retry-fallback {
+.profile-creation__loading-fallback, .profile-creation__retry-fallback {
   height: 25rem;
 }
-.profile-creation__body,
-.profile-creation__form {
+.profile-creation__body, .profile-creation__form {
   display: flex;
   flex-direction: column;
   row-gap: 1.25rem;

@@ -1,0 +1,22 @@
+.schedule-calendar {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+}
+@media (width <= 87.56125rem) {
+  .schedule-calendar {
+    flex-direction: column;
+    width: 100%;
+    max-width: 54.375rem;
+  }
+}
+.schedule-calendar {
+  transition-duration: 0.2s;
+}
+@media (width > 87.56125rem) {
+  .schedule-calendar__day-item {
+    min-width: 32.1875rem;
+  }
+}
+
+/*# sourceMappingURL=ScheduleCalendar.css.map */

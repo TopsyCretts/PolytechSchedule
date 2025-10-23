@@ -37,5 +37,10 @@
   "close": "Fermer",
   "select": "Choisir",
   "remove": "Supprimer",
-  "back": ""
+  "back": "Retour",
+  "lecture": "Conférence",
+  "practice": "Pratique",
+  "exam": "Examen",
+  "laboratory": "Laboratoire",
+  "schedule": "Calendrier"
 }

@@ -7,12 +7,13 @@ import {
 } from "react-router"
 import { lazy } from "react"
 import { profileLoader } from "@/pages/schedule"
+import ScheduleCalendar from "@/pages/schedule-calendar"
 
 const HomePage = lazy(() => import("@/pages/HomePage"))
 const LayOut = lazy(() => import("@/hoc/LayOut.tsx"))
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"))
 const SchedulePage = lazy(() => import("@/pages/schedule"))
-const RouterErrorElement = lazy(() => import("@components/RouterErrorElement"))
+const RouterErrorElement = lazy(() => import("@shared/ui/RouterErrorElement"))
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -46,14 +47,34 @@ const router = createBrowserRouter(
         }
       />
       <Route
-        path={"schedule/:profileId"}
+        path={"schedule/:profileId/"}
         id={"schedule"}
         loader={async ({ request, context, params }) =>
           profileLoader({ request, context, params })
         }
         element={<SchedulePage />}
         errorElement={<RouterErrorElement />}
-      />
+      >
+        <Route
+          path={"calendar"}
+          errorElement={<RouterErrorElement />}
+          element={<ScheduleCalendar />}
+        />
+        <Route
+          path={"week"}
+          errorElement={<RouterErrorElement />}
+          element={<h1>Week</h1>}
+        />
+        <Route
+          index
+          element={
+            <Navigate
+              to="/not-found"
+              replace
+            />
+          }
+        />
+      </Route>
     </Route>
   )
 )

@@ -1,0 +1,17 @@
+.month-switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 1.875rem;
+}
+.month-switch__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.625rem;
+}
+.month-switch__right {
+  rotate: 180deg;
+}
+
+/*# sourceMappingURL=CalendarMonthSwitch.css.map */

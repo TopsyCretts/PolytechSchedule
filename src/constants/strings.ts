@@ -38,4 +38,9 @@ export const STRINGS_RES = {
   select: "select",
   remove: "remove",
   back: "back",
+  lecture: "lecture",
+  practice: "practice",
+  exam: "exam",
+  laboratory: "laboratory",
+  schedule: "schedule",
 }

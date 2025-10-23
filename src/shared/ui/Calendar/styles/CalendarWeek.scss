@@ -1,0 +1,20 @@
+@use "../../../../styles/helpers" as *;
+
+.calendar-week {
+  overflow-x: auto;
+  width: 100%;
+  border-radius: var(--border-radius-medium);
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(7, var(--calendar-cell-width));
+    gap: rem(15);
+    height: 100%;
+    min-height: calc(var(--calendar-cell-height) + #{rem(8)});
+    padding: rem(4);
+  }
+
+  &__item {
+    width: var(--calendar-cell-width);
+  }
+}

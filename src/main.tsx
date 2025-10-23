@@ -8,7 +8,7 @@ import { ErrorBoundary } from "react-error-boundary"
 import { mainContainer } from "@/mainContainer.ts"
 import { Provider } from "inversify-react"
 import { queryClient } from "@/api"
-import WebLoaderIndicator from "@components/WebLoaderIndicator/WebLoaderIndicator.tsx"
+import WebLoaderIndicator from "@shared/ui/WebLoaderIndicator/WebLoaderIndicator.tsx"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

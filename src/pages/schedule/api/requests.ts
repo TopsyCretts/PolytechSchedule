@@ -1,9 +1,13 @@
 import { axiosClient } from "@/api"
+import type {
+  GroupScheduleDto,
+  TeacherScheduleDto,
+} from "@/pages/schedule/api/dto/ScheduleDto.ts"
 
-const getScheduleByGroupId = (groupId: string) =>
-  axiosClient.get(`/schedule/group/${groupId}`)
+const getScheduleByGroupId = async (groupId: number) =>
+  axiosClient.get<GroupScheduleDto>(`/schedule/group/${groupId}`)
 
-const getScheduleByTeacherId = (teacherId: string) =>
-  axiosClient.get(`/schedule/teacher/${teacherId}`)
+const getScheduleByTeacherId = (teacherId: number) =>
+  axiosClient.get<TeacherScheduleDto>(`/schedule/teacher/${teacherId}`)
 
 export { getScheduleByGroupId, getScheduleByTeacherId }

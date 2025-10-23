@@ -67,6 +67,10 @@ export class InstitutesStore {
     return institute.groups
   }
 
+  getAllGroups(institutes: InstitutesData): GroupData[] {
+    return institutes.institutes.map((institute) => institute.groups).flat()
+  }
+
   @computed
   get getInstitutes() {
     return this.institutesData

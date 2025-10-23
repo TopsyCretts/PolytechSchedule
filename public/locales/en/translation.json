@@ -37,5 +37,10 @@
   "close": "Close",
   "select": "Select",
   "remove": "Remove",
-  "back": "Back"
+  "back": "Back",
+  "lecture": "Lecture",
+  "practice": "Practice",
+  "exam": "Exam",
+  "laboratory": "Laboratory",
+  "schedule": "Schedule"
 }
