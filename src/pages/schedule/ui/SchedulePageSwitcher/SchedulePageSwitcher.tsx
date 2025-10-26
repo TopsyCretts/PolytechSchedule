@@ -38,7 +38,7 @@ const SchedulePageSwitcher = ({
 
   return (
     <>
-      <title>{`${t(STRINGS_RES.schedule)} | ${t(currentItem.label)}`}</title>
+      <title>{`${t(STRINGS_RES.schedule)} | ${currentItem.label}`}</title>
       <Switcher
         className="schedule-page__switcher container-extra-small"
         currentItem={currentItem}

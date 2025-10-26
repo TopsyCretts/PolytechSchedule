@@ -1,0 +1,13 @@
+.schedule-week-select {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.9375rem;
+  height: var(--button-height);
+}
+.schedule-week-select__content {
+  overflow-y: auto;
+  max-height: 30rem;
+}
+
+/*# sourceMappingURL=ScheduleWeekSelect.css.map */

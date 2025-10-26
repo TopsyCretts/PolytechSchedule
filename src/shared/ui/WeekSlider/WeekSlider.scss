@@ -1,0 +1,8 @@
+@use "../../../styles/helpers" as *;
+
+.week-slider {
+  display: flex;
+  flex-direction: column;
+  row-gap: rem(20);
+  padding-top: rem(20);
+}

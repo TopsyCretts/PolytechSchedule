@@ -3,15 +3,15 @@ import clsx from "clsx"
 import { Button } from "@shared/ui"
 import SelectorArrowsIcon from "@assets/icons/selector-arrows.svg?react"
 import type {
-  SelectValues,
-  SelectProps,
-  SelectListProps,
-  SelectHeaderProps,
-  SelectContainerProps,
   SelectButtonTogglerProps,
-  SelectStringTogglerProps,
-  SelectOptionProps,
+  SelectContainerProps,
   SelectGroupProps,
+  SelectHeaderProps,
+  SelectListProps,
+  SelectOptionProps,
+  SelectProps,
+  SelectStringTogglerProps,
+  SelectValues,
 } from "./types"
 import { createContext, useCallback, useContext, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
@@ -122,9 +122,20 @@ const Container = ({ children, width = "12.5rem" }: SelectContainerProps) => {
 }
 
 const Header = ({ children }: SelectHeaderProps) => {
+  const { t } = useTranslation()
+  const { toggle } = useSelect()
+
   return (
     <div className="select__header">
       <span className="select__title text-16 bold">{children}</span>
+      <Button
+        className={"select__cross"}
+        onClick={toggle}
+        title={t(STRINGS_RES.close)}
+        isSquare={true}
+      >
+        {<CrossIcon />}
+      </Button>
     </div>
   )
 }
@@ -228,4 +239,4 @@ Select.Backdrop = BackDrop
 Select.ButtonToggler = ButtonToggler
 Select.StringToggler = StingToggler
 
-export default Select
+export { Select, SelectContext }

@@ -4,7 +4,7 @@
   display: flex;
   width: 100%;
   max-width: 100%;
-  padding-right: rem(10);
+  padding-inline: rem(10);
 
   &__duration,
   &__inner,
@@ -19,6 +19,10 @@
 
     justify-content: space-between;
     margin-right: rem(10);
+
+    @include mobile {
+      @include square(rem(50));
+    }
   }
 
   &__start-time {
@@ -51,6 +55,10 @@
     border: rem(1) solid var(--lesson-card-border);
     border-radius: var(--border-radius-large);
     box-shadow: var(--shadow-themed);
+
+    @include mobile {
+      margin-bottom: 0;
+    }
   }
 
   &__path-indicator {
@@ -85,10 +93,24 @@
       background-color: currentColor;
       border-radius: rem(5);
     }
+
+    @include mobile {
+      margin-right: rem(10);
+    }
   }
 
   &__path-indicator--active {
     color: var(--color-orange);
+  }
+
+  &__title {
+    @include fluid-text(20, 16);
+
+    font-weight: 700;
+
+    @include mobile {
+      font-weight: 400;
+    }
   }
 
   &__description {
@@ -115,6 +137,7 @@
     @include mobile {
       flex-direction: column;
       row-gap: rem(10);
+      font-size: rem(14);
 
       & * {
         margin-left: 0 !important;

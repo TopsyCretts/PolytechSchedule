@@ -35,7 +35,7 @@ const SchedulePage = observer(({ className }: SchedulePageProps) => {
   }, [institutes, getAllGroups])
 
   return (
-    <main className={clsx(className, "schedule-page")}>
+    <main className={clsx(className, "schedule-page", "overflow-x-hidden")}>
       <SchedulePageSwitcher
         profileId={profile.id}
         profileType={profile.profileType}

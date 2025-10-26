@@ -37,11 +37,27 @@
     }
   }
 
-  &__button-toggler {
+  &__button-toggler,
+  &__cross {
     position: absolute;
-    z-index: calc(var(--z-index-select) + 1);
     top: 0;
     right: 0;
+  }
+
+  &__cross {
+    z-index: calc(var(--z-index-select) + 1);
+  }
+
+  &__sting-toggler {
+    @include reset-button;
+    @include flex-center(true);
+    @include border-shadow-themed(var(--border-radius), false);
+
+    column-gap: rem(5);
+    height: var(--button-height);
+    padding-inline: rem(8);
+    color: inherit;
+    background-color: var(--select-bg);
   }
 
   &__group-title,
@@ -62,6 +78,7 @@
   }
 
   &__item {
+    white-space: nowrap;
     cursor: pointer;
     transition-duration: var(--transition-duration);
 

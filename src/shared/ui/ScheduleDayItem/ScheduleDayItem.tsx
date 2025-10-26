@@ -11,6 +11,7 @@ interface ScheduleDayItemProps {
   dayData: DayData
   profileType: ProfileType
   locale: Locale
+  isTitleIsHidden?: boolean
 }
 
 const ScheduleDayItem = ({
@@ -18,17 +19,20 @@ const ScheduleDayItem = ({
   dayData,
   profileType,
   locale,
+  isTitleIsHidden = false,
 }: ScheduleDayItemProps) => {
   return (
     <div className={clsx(className, "schedule-day-item")}>
-      <h3 className="schedule-day-item__title">
-        <time dateTime={format(dayData.date, "d MMMM, EEEE", { locale })}>
-          {format(dayData.date, "d", { locale })}{" "}
-          {capitalizeFirstLatter(format(dayData.date, "MMMM", { locale }))}
-          {", "}
-          {capitalizeFirstLatter(format(dayData.date, "EEEE", { locale }))}
-        </time>
-      </h3>
+      {!isTitleIsHidden && (
+        <h3 className="schedule-day-item__title">
+          <time dateTime={format(dayData.date, "MM-dd")}>
+            {format(dayData.date, "d", { locale })}{" "}
+            {capitalizeFirstLatter(format(dayData.date, "MMMM", { locale }))}
+            {", "}
+            {capitalizeFirstLatter(format(dayData.date, "EEEE", { locale }))}
+          </time>
+        </h3>
+      )}
       {dayData.lessons.length > 0 ? (
         <ul className="schedule-day-item__list">
           {dayData.lessons.map((lesson, index) => (

@@ -39,13 +39,13 @@ const CalendarCell = memo(
       >
         <time
           className="calendar-day__header-desktop"
-          dateTime={format(cellData.date, dateDisplayFormatDesktop, { locale })}
+          dateTime={format(cellData.date, "MM-dd")}
         >
           {format(cellData.date, dateDisplayFormatDesktop, { locale })}
         </time>
         <time
           className="calendar-day__header-mobile"
-          dateTime={format(cellData.date, dateDisplayFormatMobile, { locale })}
+          dateTime={format(cellData.date, "MM-dd")}
         >
           {format(cellData.date, dateDisplayFormatMobile, { locale })
             .split(", ")

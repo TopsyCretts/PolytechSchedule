@@ -2,6 +2,7 @@ import "./styles/Calendar.scss"
 import clsx from "clsx"
 import {
   add,
+  eachDayOfInterval,
   eachWeekOfInterval,
   endOfMonth,
   endOfWeek,
@@ -21,17 +22,14 @@ import CalendarWeek from "./CalendarWeek.tsx"
 import { createContext, useCallback, useMemo, useState } from "react"
 import CalendarChangeMonth from "./CalendarChangeMonth.tsx"
 import { ru } from "date-fns/locale"
-
-const MONTH_FORMAT = "MMMM-yyyy" as const
+import { CALENDAR_SPECIAL_MONTH_FORMAT } from "@/constants/contstants.ts"
+import { formatDateToSpecialMonthString } from "@shared/lib/formatDateToSpecialMonthString.ts"
 
 const CalendarContext = createContext<CalendarContextValues | null>(null)
 
 const CalendarActionsContext = createContext<CalendarContextActions | null>(
   null
 )
-const formatDateToMonth = (date: Date) => {
-  return format(date, MONTH_FORMAT)
-}
 
 const Calendar = ({
   onMonthChange,
@@ -47,11 +45,11 @@ const Calendar = ({
     if (initialMonth !== null) {
       return initialMonth
     }
-    return formatDateToMonth(startOfToday())
+    return formatDateToSpecialMonthString(startOfToday())
   })
 
   const firstDayOfCurrentMonth = useMemo(
-    () => parse(currentMonth, MONTH_FORMAT, new Date()),
+    () => parse(currentMonth, CALENDAR_SPECIAL_MONTH_FORMAT, new Date()),
     [currentMonth]
   )
 
@@ -72,14 +70,14 @@ const Calendar = ({
     return {
       currentMonth,
       selectedDate,
-      monthFormat: MONTH_FORMAT,
+      monthFormat: CALENDAR_SPECIAL_MONTH_FORMAT,
       locale,
     }
   }, [currentMonth, selectedDate, locale])
 
   const handleMonthChange = useCallback(
     (month: Date) => {
-      const monthString = formatDateToMonth(month)
+      const monthString = formatDateToSpecialMonthString(month)
       setCurrentMonth(monthString)
       onMonthChange(monthString)
     },
@@ -116,6 +114,13 @@ const Calendar = ({
     { weekStartsOn }
   )
 
+  const weekDaysString = useMemo(() => {
+    return eachDayOfInterval({
+      start: startOfWeek(new Date()),
+      end: endOfWeek(new Date()),
+    }).map((day) => format(day, "EEEEEE", { locale }))
+  }, [locale])
+
   return (
     <CalendarContext.Provider value={value}>
       <CalendarActionsContext.Provider value={actionValue}>
@@ -125,13 +130,9 @@ const Calendar = ({
           </header>
           <div className="calendar__inner">
             <div className="calendar__weekdays">
-              <span>Пн</span>
-              <span>Вт</span>
-              <span>Ср</span>
-              <span>Чт</span>
-              <span>Пт</span>
-              <span>Сб</span>
-              <span>Вс</span>
+              {weekDaysString.map((day) => (
+                <span key={day}>{day}</span>
+              ))}
             </div>
           </div>
           <div className="calendar__body">
@@ -154,4 +155,4 @@ const Calendar = ({
   )
 }
 
-export { Calendar, CalendarActionsContext, CalendarContext, formatDateToMonth }
+export { Calendar, CalendarActionsContext, CalendarContext }

@@ -1,0 +1,59 @@
+@use "../../../styles/helpers" as *;
+
+.day-controller {
+  @include flex-center;
+
+  column-gap: rem(12);
+
+  &__title {
+    @include flex-center(true);
+
+    column-gap: rem(15);
+    min-width: rem(218);
+    height: var(--button-height);
+    padding-inline: rem(5);
+    background-color: var(--select-bg);
+    border-radius: var(--border-radius);
+    transition-duration: var(--transition-duration);
+
+    @include mobile {
+      font-size: rem(14);
+    }
+  }
+
+  &__right {
+    rotate: 180deg;
+  }
+
+  &__right,
+  &__left {
+    @include reset-button;
+    @include flex-center;
+    @include border-shadow-themed(var(--border-radius), false);
+    @include square(var(--button-height));
+
+    svg * {
+      color: var(--color-icon-themed);
+    }
+
+    @include hover {
+      color: var(--color-light);
+      background-color: var(--color-accent-themed);
+
+      svg * {
+        color: inherit;
+      }
+    }
+  }
+
+  &__inactive-button {
+    opacity: 40%;
+    cursor: not-allowed;
+  }
+
+  &--active {
+    & .day-controller__title {
+      border: rem(1) solid var(--color-orange);
+    }
+  }
+}

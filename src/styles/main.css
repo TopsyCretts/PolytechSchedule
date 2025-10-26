@@ -342,7 +342,7 @@ svg * {
   --blur-10: blur(10px);
   --blur-20: blur(20px);
   --border-light: 0.0625rem solid var(--color-light-opacity-5);
-  --border-dark: 0.0625rem solid var(--color-dark-opacity-5);
+  --border-dark: 0.0625rem solid var(--color-dark-opacity-10);
   --color-bg-themed: var(--color-light-alt);
   --color-accent-themed: var(--color-accent-alt);
   --color-text-themed: var(--color-dark);
@@ -479,6 +479,11 @@ svg * {
     color: var(--color-light);
     background-color: var(--color-orange-opacity-20);
   }
+}
+
+.overflow-x-hidden {
+  -ms-overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 body {

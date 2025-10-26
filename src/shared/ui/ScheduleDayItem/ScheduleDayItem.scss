@@ -21,10 +21,11 @@
 
   &__empty-lessons {
     @include flex-center;
+    @include fluid-text(20, 14);
 
     width: 100%;
     height: rem(200);
-    font-size: rem(20);
+    text-align: center;
     color: var(--color-text-accent-themed);
   }
 }

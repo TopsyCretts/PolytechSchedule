@@ -1,0 +1,46 @@
+@use "../../../../styles/helpers" as *;
+
+.schedule-week-string-toggler {
+  @include flex-center;
+
+  column-gap: rem(15);
+  color: inherit;
+
+  &__header {
+    @include flex-center;
+
+    @include mobile {
+      flex-direction: column;
+    }
+  }
+
+  &__title {
+    @include mobile {
+      font-size: rem(14);
+      font-weight: 400;
+    }
+  }
+
+  &__current-item {
+    @include mobile {
+      font-size: rem(12);
+      color: var(--color-text-accent-themed);
+    }
+  }
+
+  &__button {
+    @include reset-button;
+    @include flex-center(true);
+    @include border-shadow-themed(var(--border-radius), false);
+
+    column-gap: rem(5);
+    height: var(--button-height);
+    padding-inline: rem(8);
+    color: inherit;
+    background-color: var(--select-bg);
+
+    @include mobile {
+      @include square(var(--button-height));
+    }
+  }
+}

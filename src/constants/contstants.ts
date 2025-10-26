@@ -65,6 +65,8 @@ const LESSONS_MAP: Record<
   },
 } as const
 
+const CALENDAR_SPECIAL_MONTH_FORMAT = "MMMM-yyyy" as const
+
 export {
   themeArray,
   PROFILES_KEY,
@@ -73,4 +75,5 @@ export {
   LANGUAGE_SELECTABLE_VALUES,
   ORIGINAL_SITE,
   LESSONS_MAP,
+  CALENDAR_SPECIAL_MONTH_FORMAT,
 }

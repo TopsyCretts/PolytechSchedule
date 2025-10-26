@@ -54,7 +54,7 @@ const LessonCard = memo(
         ></div>
         <div className="lesson-card__inner">
           <h3
-            className="lesson-card__title h2"
+            className="lesson-card__title"
             style={{
               color: LESSONS_MAP[lessonData.type].lessonCardHeaderColor,
             }}

@@ -1,7 +1,8 @@
 .header {
   margin-top: 1.875rem;
 }
-.header__inner, .header__main {
+.header__inner,
+.header__main {
   border: var(--border-themed);
   border-radius: var(--border-radius-large);
   box-shadow: var(--shadow-themed);

@@ -1,4 +1,4 @@
-import "./Button.css"
+import "./Button.scss"
 import clsx from "clsx"
 import type { ButtonProps } from "./types.ts"
 

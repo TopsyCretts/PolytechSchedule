@@ -1,3 +1,3 @@
-import Select from "./Select.tsx"
+import { Select, SelectContext } from "./Select.tsx"
 
-export default Select
+export { Select, SelectContext }

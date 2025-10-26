@@ -8,6 +8,7 @@ import {
 import { lazy } from "react"
 import { profileLoader } from "@/pages/schedule"
 import ScheduleCalendar from "@/pages/schedule-calendar"
+import ScheduleWeekSlider from "@/pages/schedule-week-slider/ui/ScheduleWeekSlider/ScheduleWeekSlider.tsx"
 
 const HomePage = lazy(() => import("@/pages/HomePage"))
 const LayOut = lazy(() => import("@/hoc/LayOut.tsx"))
@@ -63,7 +64,7 @@ const router = createBrowserRouter(
         <Route
           path={"week"}
           errorElement={<RouterErrorElement />}
-          element={<h1>Week</h1>}
+          element={<ScheduleWeekSlider />}
         />
         <Route
           index

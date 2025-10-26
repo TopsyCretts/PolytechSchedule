@@ -1,7 +1,6 @@
 import { Button } from "@shared/ui"
 import { format, parse } from "date-fns"
 import { capitalizeFirstLatter } from "@shared/lib/capitalizeFirstLatter.ts"
-import { ru } from "date-fns/locale"
 import ArrowLeftIcon from "@assets/icons/arrow-left.svg?react"
 import clsx from "clsx"
 import {
@@ -31,9 +30,9 @@ const CalendarChangeMonth = ({ className }: CalendarChangeMonthProps) => {
       </Button>
       <time
         className="month-switch__title"
-        dateTime={format(month, "LLLL yyyy", { locale: ru })}
+        dateTime={format(month, "yyyy-MM", { locale: locale })}
       >
-        <span className="month-switch__month-name h2">
+        <span className="month-switch__month-name">
           {capitalizeFirstLatter(
             format(month, "LLLL", {
               locale: locale,
