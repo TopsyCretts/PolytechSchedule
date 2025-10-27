@@ -55,7 +55,7 @@ const WeekSlider = ({ weekData, profileType, locale }: WeekSliderProps) => {
       speed: 500,
       style: {
         height: "100%",
-        minHeight: "100%",
+        width: "100vw",
       },
       direction: "horizontal",
     }
@@ -85,36 +85,34 @@ const WeekSlider = ({ weekData, profileType, locale }: WeekSliderProps) => {
         isIncrementActive={activeindex < weekDays.length - 1}
         isDecrementActive={activeindex > 0}
       />
-      <div>
-        <Swiper
-          ref={swiperRef}
-          onSlideChange={(swiper) => {
-            setActiveIndex(swiper.activeIndex)
-          }}
-          {...swiperParams}
-        >
-          {newWeekData.map((date, index) => (
-            <SwiperSlide
-              key={date.date.toString()}
-              style={{
-                maxWidth: 510,
-                scale: activeindex === index ? 1 : 0.8,
-                margin: "0 !important",
-              }}
-              onClick={() => {
-                goToIndex(index)
-              }}
-            >
-              <ScheduleDayItem
-                dayData={date}
-                profileType={profileType}
-                locale={locale}
-                isTitleIsHidden={index === activeindex}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+      <Swiper
+        ref={swiperRef}
+        onSlideChange={(swiper) => {
+          setActiveIndex(swiper.activeIndex)
+        }}
+        {...swiperParams}
+      >
+        {newWeekData.map((date, index) => (
+          <SwiperSlide
+            key={date.date.toString()}
+            style={{
+              maxWidth: 510,
+              scale: activeindex === index ? 1 : 0.8,
+              margin: "0 !important",
+            }}
+            onClick={() => {
+              goToIndex(index)
+            }}
+          >
+            <ScheduleDayItem
+              dayData={date}
+              profileType={profileType}
+              locale={locale}
+              isTitleIsHidden={index === activeindex}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   )
 }

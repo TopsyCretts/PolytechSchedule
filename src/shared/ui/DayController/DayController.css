@@ -58,6 +58,9 @@
     color: inherit;
   }
 }
+.day-controller__right, .day-controller__left {
+  pointer-events: auto;
+}
 .day-controller__inactive-button {
   opacity: 40%;
   cursor: not-allowed;

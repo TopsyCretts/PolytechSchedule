@@ -2,16 +2,13 @@ import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
 import { WeekSlider } from "@shared/ui"
 import { useTranslation } from "react-i18next"
 import { LANGUAGES_MAP } from "@/constants/contstants.ts"
-import { useCallback, useMemo, useRef, useState } from "react"
-import {
-  Swiper,
-  type SwiperProps,
-  type SwiperRef,
-  SwiperSlide,
-} from "swiper/react"
+import { useCallback, useRef, useState } from "react"
+import { Swiper, type SwiperRef, SwiperSlide } from "swiper/react"
 import ScheduleWeekSelect from "@/pages/schedule-week-slider/ui/ScheduleWeekSelect/ScheduleWeekSelect.tsx"
 import type { SelectedWeekSlide } from "@/pages/schedule-week-slider/lib/types.ts"
 import type { ScheduleWeekData } from "@/pages/schedule/model/ScheduleData.ts"
+import { Mousewheel } from "swiper/modules"
+import ScheduleWeekSliderWrapper from "@/pages/schedule-week-slider/ui/WeekSliderWrapper/ScheduleWeekSliderWrapper.tsx"
 
 const ScheduleWeekSlider = () => {
   const { data, profileType } = useScheduleData()
@@ -31,23 +28,6 @@ const ScheduleWeekSlider = () => {
     swiperRef.current?.swiper?.slideTo(index)
   }, [])
 
-  const swiperParams: SwiperProps = useMemo(() => {
-    return {
-      grabCursor: true,
-      spaceBetween: 60,
-      centeredSlides: true,
-      roundLengths: true,
-      speed: 1000,
-      slidesPerView: "auto",
-      style: {
-        overflowY: "hidden",
-        height: 777,
-        maxWidth: "100%",
-      },
-      direction: "vertical",
-    }
-  }, [])
-
   const handleWeekSelection = (weekData: ScheduleWeekData) => {
     const newActiveIndex = data.weeks.indexOf(weekData)
     if (newActiveIndex !== -1) {
@@ -65,32 +45,55 @@ const ScheduleWeekSlider = () => {
         selectedWeekStart={activeindex.startDate}
         onSelectedWeekChange={handleWeekSelection}
       />
-      <Swiper
-        ref={swiperRef}
-        onSlideChange={({ activeIndex }) => {
-          setActiveIndex({
-            index: activeIndex,
-            startDate: data.weeks[activeIndex].start,
-          })
-        }}
-        {...swiperParams}
+      <ScheduleWeekSliderWrapper
+        swiperRef={swiperRef.current}
       >
-        {data.weeks.map((week, index) => (
-          <SwiperSlide
-            key={week.start.toString()}
-            onClick={() => {
-              goToIndex(index)
-            }}
-          >
-            <WeekSlider
+        <Swiper
+          ref={swiperRef}
+          onSlideChange={({ activeIndex }) => {
+            setActiveIndex({
+              index: activeIndex,
+              startDate: data.weeks[activeIndex].start,
+            })
+          }}
+          modules={[Mousewheel]}
+          grabCursor={true}
+          spaceBetween={60}
+          centeredSlides={true}
+          roundLengths={true}
+          mousewheel={{
+            releaseOnEdges: true,
+          }}
+          allowTouchMove={false}
+          slidesPerView={"auto"}
+          speed={1000}
+          style={{
+            height: "100%",
+            width: "100%",
+            maxWidth: "100%",
+            marginBottom: 0,
+            zIndex: 0,
+          }}
+          direction={"vertical"}
+        >
+          {data.weeks.map((week, index) => (
+            <SwiperSlide
               key={week.start.toString()}
-              weekData={week}
-              locale={LANGUAGES_MAP[i18n.language].locale}
-              profileType={profileType}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+              onClick={() => {
+                goToIndex(index)
+              }}
+              style={{ height: "100%"}}
+            >
+              <WeekSlider
+                key={week.start.toString()}
+                weekData={week}
+                locale={LANGUAGES_MAP[i18n.language].locale}
+                profileType={profileType}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </ScheduleWeekSliderWrapper>
     </>
   )
 }

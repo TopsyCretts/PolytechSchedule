@@ -11,9 +11,17 @@ export const mapWeekDataToWeeksByYear = (
 ) => {
   const array: WeeksByYear[] = []
   weekOptionsMapper(0, weekData, formatStr, locale, (year) => {
-    array.push(year)
+    const existingIndex = array.findIndex((y) => isEqual(y.year, year.year))
+    if (existingIndex !== -1) {
+      array[existingIndex] = {
+        ...array[existingIndex],
+        weeks: array[existingIndex].weeks.concat(year.weeks),
+      }
+    } else {
+      array.push(year)
+    }
   })
-  return array.reverse()
+  return array
 }
 
 const weekOptionsMapper = (
@@ -28,7 +36,7 @@ const weekOptionsMapper = (
   }
   const currentYear = startOfYear(weekData[initialIndex].start)
   const weeksOptions: SelectOption[] = []
-  for (let i = 0; i < weekData.length; i++) {
+  for (let i = initialIndex; i < weekData.length; i++) {
     const week = weekData[i]
     const start = week.start
 
@@ -39,7 +47,8 @@ const weekOptionsMapper = (
       })
     } else {
       onNewYear({ year: currentYear, weeks: weeksOptions })
-      weekOptionsMapper(i + 1, weekData, formatStr, locale, onNewYear)
+      weekOptionsMapper(i, weekData, formatStr, locale, onNewYear)
+      return
     }
   }
   onNewYear({ year: currentYear, weeks: weeksOptions })

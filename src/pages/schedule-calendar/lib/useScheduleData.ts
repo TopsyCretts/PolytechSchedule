@@ -5,7 +5,7 @@ const useScheduleData = () => {
   const context = useContext(ScheduleContext)
   if (!context) {
     throw new Error(
-      "useScheduleData useTheme must be used within ScheduleProvider"
+      "useScheduleData must be used within ScheduleProvider"
     )
   }
   return context
