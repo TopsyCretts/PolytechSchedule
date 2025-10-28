@@ -98,7 +98,6 @@ const WeekSlider = ({ weekData, profileType, locale }: WeekSliderProps) => {
             style={{
               maxWidth: 510,
               scale: activeindex === index ? 1 : 0.8,
-              margin: "0 !important",
             }}
             onClick={() => {
               goToIndex(index)
