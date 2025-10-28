@@ -53,6 +53,7 @@ const WeekSlider = ({ weekData, profileType, locale }: WeekSliderProps) => {
       initialSlide: 0,
       activeindex: 0,
       speed: 500,
+      autoHeight: true,
       style: {
         height: "100%",
         width: "100vw",
@@ -75,7 +76,10 @@ const WeekSlider = ({ weekData, profileType, locale }: WeekSliderProps) => {
   )
 
   return (
-    <div className={"week-slider"}>
+    <div
+      className={"week-slider"}
+      style={{ position: "relative" }}
+    >
       <DayController
         day={weekDays[activeindex]}
         locale={locale}
@@ -98,12 +102,19 @@ const WeekSlider = ({ weekData, profileType, locale }: WeekSliderProps) => {
             style={{
               maxWidth: 510,
               scale: activeindex === index ? 1 : 0.8,
+              position: "relative",
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              maxHeight: "100%",
+              overflowY: "auto",
             }}
             onClick={() => {
               goToIndex(index)
             }}
           >
             <ScheduleDayItem
+              className={"no-swiping-element"}
               dayData={date}
               profileType={profileType}
               locale={locale}
@@ -112,6 +123,9 @@ const WeekSlider = ({ weekData, profileType, locale }: WeekSliderProps) => {
           </SwiperSlide>
         ))}
       </Swiper>
+      <div className="week-slider__bottom-drag-zone">
+        <div className="week-slider__dragger"></div>
+      </div>
     </div>
   )
 }

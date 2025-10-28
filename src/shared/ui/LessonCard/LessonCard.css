@@ -4,7 +4,9 @@
   max-width: 100%;
   padding-inline: 0.625rem;
 }
-.lesson-card__duration, .lesson-card__inner, .lesson-card__body {
+.lesson-card__duration,
+.lesson-card__inner,
+.lesson-card__body {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -34,7 +36,8 @@
   font-size: clamp(0.75rem, 0.6923076923rem + 0.2564102564vw, 1rem);
   color: var(--color-text-accent-themed);
 }
-.lesson-card__inner, .lesson-card__body {
+.lesson-card__inner,
+.lesson-card__body {
   justify-content: center;
   row-gap: 0.5rem;
 }

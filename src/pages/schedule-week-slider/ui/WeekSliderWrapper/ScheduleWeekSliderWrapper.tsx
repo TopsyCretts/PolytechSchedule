@@ -93,7 +93,8 @@ const DragHandler = ({
         top: type === "up" ? 0 : undefined,
         left: 0,
         right: 0,
-        marginTop: type === "up" ? "calc(var(--button-height) + 2*1.25rem)" : undefined,
+        marginTop:
+          type === "up" ? "calc(var(--button-height) + 2*1.25rem)" : undefined,
         height: type === "up" ? "50px" : "200px",
         zIndex: 10,
         cursor: "grab",

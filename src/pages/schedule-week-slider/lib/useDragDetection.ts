@@ -11,7 +11,9 @@ export const useDragDetection = (threshold = 0) => {
 
   const handleMove = useCallback(
     (clientX: number, clientY: number) => {
-      if (!startPos.current.x && !startPos.current.y) return
+      if (!startPos.current.x && !startPos.current.y) {
+        return
+      }
 
       const deltaX = Math.abs(clientX - startPos.current.x)
       const deltaY = Math.abs(clientY - startPos.current.y)

@@ -9,12 +9,20 @@
 .schedule-day-item__title {
   font-weight: 700;
 }
+.schedule-day-item__body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
 .schedule-day-item__list {
   display: flex;
   flex-direction: column;
   row-gap: 0.625rem;
   width: 100%;
   max-width: 100%;
+  height: 100%;
 }
 .schedule-day-item__empty-lessons {
   display: flex;

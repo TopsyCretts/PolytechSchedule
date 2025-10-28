@@ -7,7 +7,6 @@ import { Swiper, type SwiperRef, SwiperSlide } from "swiper/react"
 import ScheduleWeekSelect from "@/pages/schedule-week-slider/ui/ScheduleWeekSelect/ScheduleWeekSelect.tsx"
 import type { SelectedWeekSlide } from "@/pages/schedule-week-slider/lib/types.ts"
 import type { ScheduleWeekData } from "@/pages/schedule/model/ScheduleData.ts"
-import { Mousewheel } from "swiper/modules"
 
 const ScheduleWeekSlider = () => {
   const { data, profileType } = useScheduleData()
@@ -44,54 +43,62 @@ const ScheduleWeekSlider = () => {
         selectedWeekStart={activeindex.startDate}
         onSelectedWeekChange={handleWeekSelection}
       />
-      <Swiper
-        ref={swiperRef}
-        onSlideChange={({ activeIndex }) => {
-          setActiveIndex({
-            index: activeIndex,
-            startDate: data.weeks[activeIndex].start,
-          })
-        }}
-        modules={[Mousewheel]}
-        grabCursor={true}
-        spaceBetween={60}
-        centeredSlides={true}
-        roundLengths={true}
-        mousewheel={{
-          releaseOnEdges: true,
-          enabled: false,
-        }}
-        allowTouchMove={true}
-        slidesPerView={"auto"}
-        longSwipesRatio={0.8}
-        threshold={10}
-        speed={1000}
+      <div
         style={{
-          height: 700,
-          width: "100%",
-          maxWidth: "100%",
-          marginBottom: 0,
-          zIndex: 0,
+          height: 800,
+          overflowY: "auto",
         }}
-        direction={"vertical"}
       >
-        {data.weeks.map((week, index) => (
-          <SwiperSlide
-            key={week.start.toString()}
-            onClick={() => {
-              goToIndex(index)
-            }}
-            style={{ height: "100%"}}
-          >
-            <WeekSlider
+        <Swiper
+          ref={swiperRef}
+          onSlideChange={({ activeIndex }) => {
+            setActiveIndex({
+              index: activeIndex,
+              startDate: data.weeks[activeIndex].start,
+            })
+          }}
+          grabCursor={true}
+          spaceBetween={0}
+          centeredSlides={true}
+          roundLengths={true}
+          allowTouchMove={true}
+          slidesPerView={1}
+          speed={1000}
+          simulateTouch={true}
+          style={{
+            width: "100%",
+            maxWidth: "100%",
+            marginBottom: 0,
+            height: "100%",
+            zIndex: 0,
+          }}
+          noSwipingClass={"no-swiping-element"}
+          noSwipingSelector={".no-swiping-element"}
+          noSwiping={true}
+          direction={"vertical"}
+        >
+          {data.weeks.map((week, index) => (
+            <SwiperSlide
               key={week.start.toString()}
-              weekData={week}
-              locale={LANGUAGES_MAP[i18n.language].locale}
-              profileType={profileType}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+              onClick={() => {
+                goToIndex(index)
+              }}
+              style={{
+                height: "100%",
+              }}
+            >
+              <>
+                <WeekSlider
+                  key={week.start.toString()}
+                  weekData={week}
+                  locale={LANGUAGES_MAP[i18n.language].locale}
+                  profileType={profileType}
+                />
+              </>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     </>
   )
 }

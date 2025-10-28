@@ -33,25 +33,27 @@ const ScheduleDayItem = ({
           </time>
         </h3>
       )}
-      {dayData.lessons.length > 0 ? (
-        <ul className="schedule-day-item__list">
-          {dayData.lessons.map((lesson, index) => (
-            <li
-              key={lesson.lessonNumber + index}
-              className="schedule-day-item__item"
-            >
-              <LessonCard
-                lessonData={lesson}
-                profileType={profileType}
-              />
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <div className="schedule-day-item__empty-lessons">
-          There are no classes on the schedule today.
-        </div>
-      )}
+      <div className="schedule-day-item__body">
+        {dayData.lessons.length > 0 ? (
+          <ul className="schedule-day-item__list">
+            {dayData.lessons.map((lesson, index) => (
+              <li
+                key={lesson.lessonNumber + index}
+                className="schedule-day-item__item"
+              >
+                <LessonCard
+                  lessonData={lesson}
+                  profileType={profileType}
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="schedule-day-item__empty-lessons">
+            There are no classes on the schedule today.
+          </div>
+        )}
+      </div>
     </div>
   )
 }

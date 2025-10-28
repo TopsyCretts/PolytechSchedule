@@ -8,6 +8,10 @@
   max-width: 100%;
   padding-bottom: rem(100);
 
+  @include mobile {
+    padding-bottom: rem(40);
+  }
+
   &__switcher {
     margin-block: rem(20);
   }
