@@ -63,6 +63,7 @@ const ScheduleWeekSlider = () => {
           roundLengths={true}
           allowTouchMove={true}
           slidesPerView={1}
+          longSwipesRatio={0.25}
           speed={1000}
           simulateTouch={true}
           style={{
