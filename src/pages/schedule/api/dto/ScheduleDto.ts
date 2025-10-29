@@ -44,6 +44,7 @@ interface ScheduleLessonDto {
   isLecture?: boolean
   additionalTeacherName?: string
   additionalTeacherId?: number
+  subInfo?: string
 }
 
 export type {

@@ -34,6 +34,7 @@ interface LessonData {
   groups: Array<GroupData | string>
   auditory?: string
   isDistant: boolean
+  additionalInfo?: string
 }
 
 type LessonType = "unknown" | "lecture" | "practical" | "exam" | "laboratory"

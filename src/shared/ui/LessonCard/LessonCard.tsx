@@ -9,6 +9,8 @@ import { LessonTypeIcon } from "@shared/ui"
 import { getScheduleProfileRoute } from "@/pages/schedule/api/profileLoader.ts"
 import { LESSONS_MAP } from "@/constants/contstants.ts"
 import { useTranslation } from "react-i18next"
+import RemoteIcon from "@assets/icons/remote.svg?react"
+import { STRINGS_RES } from "@/constants/strings.ts"
 
 interface LessonCardProps {
   className?: string
@@ -76,6 +78,12 @@ const LessonCard = memo(
                 </div>
               )}
             </div>
+            {lessonData.isDistant && (
+              <div className="lesson-card__remote">
+                <RemoteIcon className="lesson-card__icon" />
+                {t(STRINGS_RES.remote_lesson)}
+              </div>
+            )}
             <ul className="lesson-card__link-list">
               {profileType === "student"
                 ? lessonData.teachers.map((teacher, index) => (
@@ -93,6 +101,11 @@ const LessonCard = memo(
                     />
                   ))}
             </ul>
+            {lessonData.additionalInfo !== undefined && (
+              <div className="lesson-card__additional-info">
+                {t(STRINGS_RES.additional_info)} {lessonData.additionalInfo}
+              </div>
+            )}
           </div>
         </div>
       </article>

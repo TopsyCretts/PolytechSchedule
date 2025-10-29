@@ -7,6 +7,8 @@ import { Swiper, type SwiperRef, SwiperSlide } from "swiper/react"
 import ScheduleWeekSelect from "@/pages/schedule-week-slider/ui/ScheduleWeekSelect/ScheduleWeekSelect.tsx"
 import type { SelectedWeekSlide } from "@/pages/schedule-week-slider/lib/types.ts"
 import type { ScheduleWeekData } from "@/pages/schedule/model/ScheduleData.ts"
+import { startOfToday } from "date-fns"
+import { findWeekSlide } from "@/pages/schedule-week-slider/lib/findWeekSlide.ts"
 
 const ScheduleWeekSlider = () => {
   const { data, profileType } = useScheduleData()
@@ -17,10 +19,9 @@ const ScheduleWeekSlider = () => {
   }
 
   const swiperRef = useRef<SwiperRef | null>(null)
-  const [activeindex, setActiveIndex] = useState<SelectedWeekSlide>({
-    index: 0,
-    startDate: data.weeks[0].start,
-  })
+  const [activeindex, setActiveIndex] = useState<SelectedWeekSlide>(
+    findWeekSlide(data.weeks, startOfToday())
+  )
 
   const goToIndex = useCallback((index: number) => {
     swiperRef.current?.swiper?.slideTo(index)
@@ -46,7 +47,6 @@ const ScheduleWeekSlider = () => {
       <div
         style={{
           height: 800,
-          overflowY: "auto",
         }}
       >
         <Swiper
@@ -58,6 +58,7 @@ const ScheduleWeekSlider = () => {
             })
           }}
           grabCursor={true}
+          initialSlide={activeindex.index}
           spaceBetween={0}
           centeredSlides={true}
           roundLengths={true}
@@ -89,14 +90,12 @@ const ScheduleWeekSlider = () => {
                 height: "100%",
               }}
             >
-              <>
-                <WeekSlider
-                  key={week.start.toString()}
-                  weekData={week}
-                  locale={LANGUAGES_MAP[i18n.language].locale}
-                  profileType={profileType}
-                />
-              </>
+              <WeekSlider
+                key={week.start.toString()}
+                weekData={week}
+                locale={LANGUAGES_MAP[i18n.language].locale}
+                profileType={profileType}
+              />
             </SwiperSlide>
           ))}
         </Swiper>

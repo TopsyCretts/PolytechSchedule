@@ -10,6 +10,7 @@ import {
   type Locale,
   startOfDay,
   startOfToday,
+  startOfWeek,
 } from "date-fns"
 import ScheduleDayItem from "@shared/ui/ScheduleDayItem"
 import type { ProfileType } from "@/domain/models/Profile.ts"
@@ -28,11 +29,25 @@ interface WeekSliderProps {
 
 const WeekSlider = ({ weekData, profileType, locale }: WeekSliderProps) => {
   const swiperRef = useRef<SwiperRef | null>(null)
-  const [activeindex, setActiveIndex] = useState<number>(0)
+  const isCurrentWeek = useMemo(() => {
+    return isEqual(
+      startOfWeek(startOfToday(), { weekStartsOn: 1 }),
+      weekData.start
+    )
+  }, [weekData])
 
   const weekDays = eachDayOfInterval({
     start: weekData.start,
     end: weekData.end,
+  })
+
+  const [activeindex, setActiveIndex] = useState<number>(() => {
+    if (isCurrentWeek) {
+      return weekDays.findIndex((day) => {
+        return isEqual(startOfDay(day), startOfToday())
+      })
+    }
+    return 0
   })
 
   const newWeekData = weekDays.map((day) => {
@@ -50,8 +65,6 @@ const WeekSlider = ({ weekData, profileType, locale }: WeekSliderProps) => {
       centeredSlides: true,
       slidesPerView: "auto",
       roundLengths: true,
-      initialSlide: 0,
-      activeindex: 0,
       speed: 500,
       autoHeight: true,
       style: {
@@ -94,6 +107,7 @@ const WeekSlider = ({ weekData, profileType, locale }: WeekSliderProps) => {
         onSlideChange={(swiper) => {
           setActiveIndex(swiper.activeIndex)
         }}
+        initialSlide={activeindex}
         {...swiperParams}
       >
         {newWeekData.map((date, index) => (

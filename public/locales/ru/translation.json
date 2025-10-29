@@ -42,5 +42,9 @@
   "practice": "Практика",
   "exam": "Экзамен",
   "laboratory": "Лабораторная",
-  "schedule": "Расписание"
+  "schedule": "Расписание",
+  "there_are_no_classes": "Сегодня в расписании нет занятий.",
+  "remote_lesson": "Дистант",
+  "lesson_name_not_specified": "Название не указано",
+  "additional_info": "Доп. инф.:"
 }

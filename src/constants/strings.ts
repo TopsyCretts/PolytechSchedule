@@ -43,4 +43,8 @@ export const STRINGS_RES = {
   exam: "exam",
   laboratory: "laboratory",
   schedule: "schedule",
+  there_are_no_classes: "there_are_no_classes",
+  remote_lesson: "remote_lesson",
+  lesson_name_not_specified: "lesson_name_not_specified",
+  additional_info: "additional_info",
 }

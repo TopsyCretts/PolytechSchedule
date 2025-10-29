@@ -113,17 +113,18 @@
     }
   }
 
+  &__lesson-type,
+  &__remote {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   &__description {
     display: flex;
-
-    *:not(:first-child) {
-      margin-left: rem(15);
-    }
+    gap: rem(10) rem(15);
 
     *:not(:last-child) {
-      display: inline-flex;
-      align-items: center;
-
       &::after {
         @include square(rem(5));
 
@@ -140,7 +141,7 @@
       font-size: rem(14);
 
       & * {
-        margin-left: 0 !important;
+        margin-left: 0;
 
         &::after {
           display: none;
@@ -149,10 +150,10 @@
     }
   }
 
-  &__lesson-type {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  &__remote {
+    @include mobile {
+      font-size: rem(14);
+    }
   }
 
   &__icon {
@@ -164,6 +165,10 @@
     display: flex;
     flex-flow: row wrap;
     column-gap: rem(10);
+  }
+
+  &__additional-info {
+    color: var(--color-text-accent-themed);
   }
 
   &--inactive {

@@ -72,6 +72,7 @@ const toWeekData = (
                 groups: getGroupsByNames(lesson.groups, allActualGroups),
                 auditory: lesson.auditoryName,
                 isDistant: false,
+                additionalInfo: lesson.subInfo,
               }
             }),
           }

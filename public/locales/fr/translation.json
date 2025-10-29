@@ -42,5 +42,9 @@
   "practice": "Pratique",
   "exam": "Examen",
   "laboratory": "Laboratoire",
-  "schedule": "Calendrier"
+  "schedule": "Calendrier",
+  "there_are_no_classes": "Il n'y a pas de cours au programme aujourd'hui.",
+  "remote_lesson": "Télécommande",
+  "lesson_name_not_specified": "Nom non précisé",
+  "additional_info": "Compl. info:"
 }
