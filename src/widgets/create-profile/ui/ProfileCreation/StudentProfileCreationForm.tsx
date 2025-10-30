@@ -7,12 +7,12 @@ import type { ProfileCreationFormProps } from "@widgets/create-profile/ui/Profil
 import { toInstituteUi } from "@/domain/models/Institute.ts"
 import type { SearchItem } from "@/domain/types/Search.ts"
 import { useNavigate } from "react-router"
-import { getScheduleProfileRoute } from "@/pages/schedule/api/profileLoader.ts"
+import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
 import { useInjection } from "inversify-react"
-import { InstitutesStore } from "@/domain/institutes/InstitutesStore.ts"
+import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
 import { observer } from "mobx-react-lite"
 import type { GroupData } from "@/domain/models/Group.ts"
-import { useGetGroupsByInstitutesQuery } from "@/api/search-schedule/institutesService.ts"
+import { useGetGroupsByInstitutesQuery } from "@shared/api/search-schedule/institutesService.ts"
 
 const mapGroupsToSearchItems = (groups: GroupData[] | null): SearchItem[] => {
   if (groups === null) {

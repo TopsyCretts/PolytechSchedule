@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next"
 import NewProfileItem from "@widgets/header/ui/NewProfileItem"
 import { STRINGS_RES } from "@/constants/strings.ts"
 import { useInjection } from "inversify-react"
-import { ProfilesStore } from "@/domain/profiles/ProfilesStore.ts"
+import { ProfilesStore } from "@/app/store/profiles/ProfilesStore.ts"
 import { observer } from "mobx-react-lite"
 
 interface ProfilesProps {

@@ -1,6 +1,6 @@
 import SchedulePage from "./ui/SchedulePage"
 
-import { profileLoader } from "./api/profileLoader.ts"
+import { profileLoader } from "../../app/routes/schedule/profileLoader.ts"
 
 export { profileLoader }
 

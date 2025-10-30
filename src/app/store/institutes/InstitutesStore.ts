@@ -1,10 +1,10 @@
 import { injectable } from "inversify"
 import { action, computed, makeAutoObservable, observable } from "mobx"
-import { queryClient } from "@/api"
+import { queryClient } from "@shared/api"
 import type { InstitutesData } from "@/domain/models/Institute.ts"
 import type { GroupData } from "@/domain/models/Group.ts"
-import { LocalStorageManager } from "@/domain/browser-storages"
-import { getGroupsByInstitutesQueryOptions } from "@/api/search-schedule/institutesService.ts"
+import { LocalStorageManager } from "@/app/store/browser-storages"
+import { getGroupsByInstitutesQueryOptions } from "@shared/api/search-schedule/institutesService.ts"
 
 @injectable()
 export class InstitutesStore {

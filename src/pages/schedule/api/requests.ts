@@ -1,4 +1,4 @@
-import { axiosClient } from "@/api"
+import { axiosClient } from "@shared/api"
 import type {
   GroupScheduleDto,
   TeacherScheduleDto,

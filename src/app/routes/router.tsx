@@ -5,15 +5,15 @@ import {
   Route,
   RouterProvider,
 } from "react-router"
-import { lazy } from "react"
 import { profileLoader } from "@/pages/schedule"
-import ScheduleCalendar from "@/pages/schedule-calendar"
-import ScheduleWeekSlider from "@/pages/schedule-week-slider/ui/ScheduleWeekSlider/ScheduleWeekSlider.tsx"
+import { lazy } from "react"
+import LayOut from "@/hoc/LayOut.tsx"
 
 const HomePage = lazy(() => import("@/pages/HomePage"))
-const LayOut = lazy(() => import("@/hoc/LayOut.tsx"))
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"))
 const SchedulePage = lazy(() => import("@/pages/schedule"))
+const ScheduleCalendar = lazy(() => import("@/pages/schedule-calendar"))
+const ScheduleWeekSlider = lazy(() => import("@/pages/schedule-week-slider"))
 const RouterErrorElement = lazy(() => import("@shared/ui/RouterErrorElement"))
 
 const router = createBrowserRouter(
@@ -80,8 +80,8 @@ const router = createBrowserRouter(
   )
 )
 
-function App() {
+const AppRouter = () => {
   return <RouterProvider router={router} />
 }
 
-export default App
+export default AppRouter

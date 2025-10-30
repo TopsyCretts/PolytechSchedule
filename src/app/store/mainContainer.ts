@@ -1,7 +1,7 @@
 import { Container } from "inversify"
-import { InstitutesStore } from "@/domain/institutes/InstitutesStore.ts"
-import { ProfilesStore } from "@/domain/profiles/ProfilesStore.ts"
-import { TeachersStore } from "@/domain/teachers/TeachersStore.ts"
+import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
+import { ProfilesStore } from "@/app/store/profiles/ProfilesStore.ts"
+import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
 
 const mainContainer = new Container()
 

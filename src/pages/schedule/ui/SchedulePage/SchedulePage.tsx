@@ -15,9 +15,9 @@ import type { ScheduleData } from "../../model/ScheduleData"
 import SchedulePageSwitcher from "@/pages/schedule/ui/SchedulePageSwitcher/SchedulePageSwitcher.tsx"
 
 const { InstitutesStore } = await import(
-  "@/domain/institutes/InstitutesStore.ts"
+  "@/app/store/institutes/InstitutesStore.ts"
 )
-const { TeachersStore } = await import("@/domain/teachers/TeachersStore.ts")
+const { TeachersStore } = await import("@/app/store/teachers/TeachersStore.ts")
 
 interface SchedulePageProps {
   className?: string

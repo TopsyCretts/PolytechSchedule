@@ -1,13 +1,13 @@
 import type { LoaderFunctionArgs } from "react-router"
 import type { ProfileType } from "@/domain/models/Profile.ts"
-import { mainContainer } from "@/mainContainer.ts"
-import { ProfilesStore } from "@/domain/profiles/ProfilesStore.ts"
-import { APP_ROUTES, routeWithParams } from "@/routes/routes.ts"
-import { queryClient } from "@/api"
-import { getGroupsByInstitutesQueryOptions } from "@/api/search-schedule/institutesService.ts"
-import { getTeachersQueryOptions } from "@/api/search-schedule/teachersService.ts"
-import { InstitutesStore } from "@/domain/institutes/InstitutesStore.ts"
-import { TeachersStore } from "@/domain/teachers/TeachersStore.ts"
+import { mainContainer } from "@/app/store/mainContainer.ts"
+import { ProfilesStore } from "@/app/store/profiles/ProfilesStore.ts"
+import { APP_ROUTES, routeWithParams } from "@/app/routes/routes.ts"
+import { queryClient } from "@shared/api"
+import { getGroupsByInstitutesQueryOptions } from "@shared/api/search-schedule/institutesService.ts"
+import { getTeachersQueryOptions } from "@shared/api/search-schedule/teachersService.ts"
+import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
+import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
 
 const profileLoader = async ({ request, params }: LoaderFunctionArgs) => {
   const url = new URL(request.url)

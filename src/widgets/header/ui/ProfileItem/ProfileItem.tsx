@@ -4,9 +4,9 @@ import "./ProfileItem.scss"
 import { NavLink, useNavigate, useParams } from "react-router"
 import type { ProfileType } from "@/domain/models/Profile.ts"
 import { useInjection } from "inversify-react"
-import { ProfilesStore } from "@/domain/profiles/ProfilesStore.ts"
+import { ProfilesStore } from "@/app/store/profiles/ProfilesStore.ts"
 import { observer } from "mobx-react-lite"
-import { getScheduleProfileRoute } from "@/pages/schedule/api/profileLoader.ts"
+import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
 
 interface ProfilesProps {
   className?: string

@@ -1,14 +1,14 @@
 import { StrictMode, Suspense } from "react"
 import { createRoot } from "react-dom/client"
-import App from "./App.tsx"
-import "./i18n.ts"
+import "../../i18n.ts"
 import { ThemeProvider } from "@/hoc"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { ErrorBoundary } from "react-error-boundary"
-import { mainContainer } from "@/mainContainer.ts"
+import { mainContainer } from "@/app/store/mainContainer.ts"
 import { Provider } from "inversify-react"
-import { queryClient } from "@/api"
+import { queryClient } from "@shared/api"
 import WebLoaderIndicator from "@shared/ui/WebLoaderIndicator/WebLoaderIndicator.tsx"
+import AppRouter from "../routes/router.tsx"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -17,7 +17,7 @@ createRoot(document.getElementById("root")!).render(
         <QueryClientProvider client={queryClient}>
           <Provider container={mainContainer}>
             <ThemeProvider>
-              <App />
+              <AppRouter />
             </ThemeProvider>
           </Provider>
         </QueryClientProvider>

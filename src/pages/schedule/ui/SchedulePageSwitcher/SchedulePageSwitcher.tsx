@@ -1,6 +1,6 @@
 import { Switcher } from "@shared/ui"
 import { useMatch, useNavigate } from "react-router"
-import { getScheduleProfileRoute } from "@/pages/schedule/api/profileLoader.ts"
+import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
 import type { ProfileType } from "@/domain/models/Profile.ts"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/constants/strings.ts"

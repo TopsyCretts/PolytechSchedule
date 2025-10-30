@@ -7,8 +7,9 @@ const routeWithParams = (
   let newPath = path
   params.map((param) => {
     const encodedParam = encodeURIComponent(param)
-    newPath = `${newPath}/${encodedParam}/${destination}`
+    newPath = `${newPath}/${encodedParam}`
   })
+  newPath = `${newPath}/${destination}`
   const urlParams = new URLSearchParams(searchParams)
 
   return `${newPath}?${urlParams}`

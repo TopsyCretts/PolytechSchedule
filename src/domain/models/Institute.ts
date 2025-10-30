@@ -1,4 +1,4 @@
-import type { InstituteDto } from "@/api/search-schedule/dto/InstitutesDto.ts"
+import type { InstituteDto } from "@shared/api/search-schedule/dto/InstitutesDto.ts"
 import type { SearchItem } from "@/domain/types/Search.ts"
 import type { GroupData } from "@/domain/models/Group.ts"
 

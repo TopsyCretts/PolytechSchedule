@@ -1,8 +1,8 @@
-import { getTeachers } from "@/api/search-schedule/requests.ts"
+import { getTeachers } from "@shared/api/search-schedule/requests.ts"
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
-import { LocalStorageManager } from "@/domain/browser-storages"
-import { mainContainer } from "@/mainContainer.ts"
-import { TeachersStore } from "@/domain/teachers/TeachersStore.ts"
+import { LocalStorageManager } from "@/app/store/browser-storages"
+import { mainContainer } from "@/app/store/mainContainer.ts"
+import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
 import type { TeachersData } from "@/domain/models/Teachers.ts"
 
 const getTeachersFromStorageOrRefetch = async () => {

@@ -1,7 +1,7 @@
 import { action, computed, makeAutoObservable, observable } from "mobx"
-import { queryClient } from "@/api"
-import { LocalStorageManager } from "@/domain/browser-storages"
-import { getTeachersQueryOptions } from "@/api/search-schedule/teachersService.ts"
+import { queryClient } from "@shared/api"
+import { LocalStorageManager } from "@/app/store/browser-storages"
+import { getTeachersQueryOptions } from "@shared/api/search-schedule/teachersService.ts"
 import type { TeacherData, TeachersData } from "@/domain/models/Teachers.ts"
 import { injectable } from "inversify"
 

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import type { Profile, StudentProfile } from "@/domain/models/Profile.ts"
 import { observer } from "mobx-react-lite"
 import "./HeaderProfileLabel.scss"
-import type { profileLoader } from "@/pages/schedule/api/profileLoader.ts"
+import type { profileLoader } from "@/app/routes/schedule/profileLoader.ts"
 import { useDebounce } from "use-debounce"
 
 const castProfileAsStudent = (profile: Profile): StudentProfile => {

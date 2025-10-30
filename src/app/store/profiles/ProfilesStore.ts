@@ -7,8 +7,8 @@ import type {
 } from "@/domain/models/Profile.ts"
 import { action, computed, makeAutoObservable, observable } from "mobx"
 import { PROFILES_KEY } from "@/constants/contstants.ts"
-import { InstitutesStore } from "@/domain/institutes/InstitutesStore.ts"
-import { TeachersStore } from "@/domain/teachers/TeachersStore.ts"
+import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
+import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
 
 @injectable()
 export class ProfilesStore {
