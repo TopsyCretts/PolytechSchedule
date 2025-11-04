@@ -13,7 +13,7 @@ const pwaOptions: Partial<VitePWAOptions> = {
   filename: "sw.ts",
   includeAssets: ["images/*", "locales/*"],
   injectManifest: {
-    globPatterns: ["**/*.{js,ts,tsx,css,html,ico,png,svg,woff2}"],
+    globPatterns: ["**/*.{js,ts,json,tsx,css,html,ico,png,svg,woff2}"],
     maximumFileSizeToCacheInBytes: 3000000,
   },
   manifest: {
