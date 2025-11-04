@@ -141,16 +141,22 @@ export class ProfilesStore {
   }
 
   private saveProfileToDb(profile: Profile) {
-    dbService
-      .saveProfile(profile)
-      .then((profile) => console.log(`Profile saved successfully ${profile}`))
+    try {
+      dbService
+        .saveProfile(profile)
+        .then((profile) => console.log(`Profile saved successfully ${profile}`))
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   private removeProfile(id: number) {
-    {
+    try {
       dbService
         .deleteProfile(id)
         .then(() => console.log(`Profile deleted successfully `))
+    } catch (e) {
+      console.error(e)
     }
   }
 }
