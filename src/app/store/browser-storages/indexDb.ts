@@ -17,7 +17,7 @@ type StoreName = keyof typeof STORE_NAMES
 
 interface ScheduleDB extends DBSchema {
   profiles: {
-    key: string
+    key: number
     value: Profile
     indexes: { "by-name": string }
   }
@@ -31,7 +31,7 @@ interface ScheduleDB extends DBSchema {
     indexes: { "by-name": string }
   }
   schedules: {
-    key: string
+    key: number
     value: ScheduleDataDB
     indexes: { "by-id": number }
   }
@@ -114,7 +114,8 @@ class DatabaseService {
 
   async deleteProfile(profileId: number): Promise<void> {
     const db = await this.init()
-    await db.delete("profiles", profileId.toString())
+    await db.delete("profiles", profileId)
+    await db.delete("schedules", profileId)
   }
 }
 
