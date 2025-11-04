@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import clsx from "clsx"
 import SearchItemWithType from "@shared/ui/SearchItem/SearchItemWithType.tsx"
 import { useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@/constants/strings.ts"
+import { STRINGS_RES } from "@shared/constants/strings.ts"
 
 const SearchList = ({ items, selectedItem, onItemClick }: SearchListProps) => {
   const { t } = useTranslation()

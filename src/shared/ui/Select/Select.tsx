@@ -17,7 +17,7 @@ import { createContext, useCallback, useContext, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import CrossIcon from "@assets/icons/cross.svg?react"
 import { useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@/constants/strings.ts"
+import { STRINGS_RES } from "@shared/constants/strings.ts"
 
 const SelectContext = createContext<SelectValues | null>(null)
 

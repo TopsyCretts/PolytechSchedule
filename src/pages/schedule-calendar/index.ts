@@ -1,3 +1,3 @@
-import ScheduleCalendar from "./ui/ScheduleCalendar.tsx"
+import ScheduleCalendarView from "./ui/ScheduleCalendarView.tsx"
 
-export default ScheduleCalendar
+export default ScheduleCalendarView

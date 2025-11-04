@@ -7,10 +7,10 @@ import { format, isWithinInterval } from "date-fns"
 import { memo } from "react"
 import { LessonTypeIcon } from "@shared/ui"
 import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
-import { LESSONS_MAP } from "@/constants/contstants.ts"
+import { LESSONS_MAP } from "@shared/constants/contstants.ts"
 import { useTranslation } from "react-i18next"
 import RemoteIcon from "@assets/icons/remote.svg?react"
-import { STRINGS_RES } from "@/constants/strings.ts"
+import { STRINGS_RES } from "@shared/constants/strings.ts"
 
 interface LessonCardProps {
   className?: string

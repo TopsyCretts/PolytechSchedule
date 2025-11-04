@@ -1,44 +1,56 @@
 import { Calendar } from "@shared/ui"
 import CalendarLessons from "@/pages/schedule-calendar/ui/CalendarLessons"
-import { isEqual, startOfToday } from "date-fns"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ScheduleDayItem from "@shared/ui/ScheduleDayItem"
 import clsx from "clsx"
-import { useTranslation } from "react-i18next"
-import { LANGUAGES_MAP } from "@/constants/contstants.ts"
-import "./ScheduleCalendar.scss"
+import "./ScheduleCalendarView.scss"
 import { AnimatePresence, motion } from "framer-motion"
 import { useDebounce } from "use-debounce"
-import type {
-  DayData,
-  ScheduleWeekData,
-} from "@/pages/schedule/model/ScheduleData.ts"
 import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
+import { MATCH_MEDIA } from "@shared/constants/media.ts"
+import { useLocation, useNavigate } from "react-router"
+import { findEqualDayData } from "@/pages/schedule-calendar/lib/findEqualDayData.ts"
 
 interface ScheduleCalendarProps {
   className?: string
 }
 
-const ScheduleCalendar = ({ className }: ScheduleCalendarProps) => {
-  const { data, profileType } = useScheduleData()
+const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
+  const navigate = useNavigate()
+  const location = useLocation()
 
-  const { i18n } = useTranslation()
-  const locale = LANGUAGES_MAP[i18n.language].locale
+  const [isLaptop, setIsLaptop] = useState(MATCH_MEDIA.laptop.matches)
 
-  const [day, setDay] = useState<DayData>(
-    findEqualDayData(data.weeks, startOfToday())
-  )
-  const [debouncedDay] = useDebounce(day, 200)
+  const handleLaptopChange = (event: MediaQueryListEvent) => {
+    setIsLaptop(event.matches)
+  }
+  useEffect(() => {
+    MATCH_MEDIA.laptop.addEventListener("change", handleLaptopChange)
+    return () => {
+      MATCH_MEDIA.laptop.removeEventListener("change", handleLaptopChange)
+    }
+  }, [])
+
+  const { data, profileType, currentDayData, setCurrentDayData, locale } =
+    useScheduleData()
+
+  const [debouncedDay] = useDebounce(currentDayData, 200)
+
+  const navigateToDay = () =>
+    navigate(`${location.pathname}/day${location.search}`)
 
   const handleDateSelect = (date: Date | null) => {
     if (date === null) {
+      if (isLaptop) {
+        navigateToDay()
+      }
       return
     }
-    const a = document.createElement("a")
     const dayData = findEqualDayData(data.weeks, date)
-    setDay(dayData)
-    a.href = "#schedule-day"
-    a.click()
+    setCurrentDayData(dayData)
+    if (isLaptop) {
+      navigateToDay()
+    }
   }
 
   return (
@@ -62,42 +74,31 @@ const ScheduleCalendar = ({ className }: ScheduleCalendarProps) => {
         }}
         locale={locale}
         onMonthChange={() => {}}
-        initialDate={day.date}
-        isSelectedDateCouldBeNull={false}
+        initialDate={isLaptop ? null : currentDayData.date}
+        isSelectedDateCouldBeNull={isLaptop}
         onSelectedDateChange={handleDateSelect}
       />
       <AnimatePresence>
-        {debouncedDay.date.getTime() === day.date.getTime() && (
+        {debouncedDay.date.getTime() === currentDayData.date.getTime() && (
           <motion.div
+            className={"hidden-laptop"}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
             <ScheduleDayItem
-              key={day.date.toString()}
+              key={currentDayData.date.toString()}
               className={"schedule-calendar__day-item"}
-              dayData={day}
+              dayData={currentDayData}
               locale={locale}
               profileType={profileType}
             />
           </motion.div>
         )}
       </AnimatePresence>
-      <div id={"schedule-day"}></div>
     </section>
   )
 }
 
-export default ScheduleCalendar
-
-const findEqualDayData = (weekData: ScheduleWeekData[], date: Date) => {
-  const dayData = weekData
-    .map((week) => week.days)
-    .flat()
-    .find((d) => isEqual(d.date, date))
-  if (dayData !== undefined) {
-    return dayData
-  }
-  return { date, lessons: [] }
-}
+export default ScheduleCalendarView

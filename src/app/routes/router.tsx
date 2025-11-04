@@ -12,8 +12,11 @@ import LayOut from "@/hoc/LayOut.tsx"
 const HomePage = lazy(() => import("@/pages/HomePage"))
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"))
 const SchedulePage = lazy(() => import("@/pages/schedule"))
-const ScheduleCalendar = lazy(() => import("@/pages/schedule-calendar"))
+const ScheduleCalendarView = lazy(
+  () => import("@/pages/schedule-calendar/ui/ScheduleCalendarView")
+)
 const ScheduleWeekSlider = lazy(() => import("@/pages/schedule-week-slider"))
+const ScheduleDayView = lazy(() => import("@/pages/schedule-day"))
 const RouterErrorElement = lazy(() => import("@shared/ui/RouterErrorElement"))
 
 const router = createBrowserRouter(
@@ -57,10 +60,20 @@ const router = createBrowserRouter(
         errorElement={<RouterErrorElement />}
       >
         <Route
-          path={"calendar"}
+          path={"calendar/"}
           errorElement={<RouterErrorElement />}
-          element={<ScheduleCalendar />}
-        />
+        >
+          <Route
+            index
+            element={<ScheduleCalendarView />}
+            errorElement={<RouterErrorElement />}
+          />
+          <Route
+            path={"day"}
+            errorElement={<RouterErrorElement />}
+            element={<ScheduleDayView />}
+          />
+        </Route>
         <Route
           path={"week"}
           errorElement={<RouterErrorElement />}

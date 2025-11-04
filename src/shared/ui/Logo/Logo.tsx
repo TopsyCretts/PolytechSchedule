@@ -2,7 +2,7 @@ import "./Logo.scss"
 import clsx from "clsx"
 import LogoIcon from "@assets/icons/logo.svg"
 import { useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@/constants/strings.ts"
+import { STRINGS_RES } from "@shared/constants/strings.ts"
 
 interface LogoProps {
   className?: string

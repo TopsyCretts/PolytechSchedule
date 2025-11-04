@@ -1,0 +1,13 @@
+.schedule-day-view {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+@media (width <= 47.999375rem) {
+  .schedule-day-view {
+    row-gap: 0.75rem;
+  }
+}
+
+/*# sourceMappingURL=ScheduleDayView.css.map */

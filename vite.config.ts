@@ -6,66 +6,15 @@ import { VitePWA, type VitePWAOptions } from "vite-plugin-pwa"
 
 const pwaOptions: Partial<VitePWAOptions> = {
   mode: "development",
-  injectRegister: "script-defer",
+  injectRegister: "script",
   registerType: "autoUpdate",
-  strategies: "generateSW",
+  strategies: "injectManifest",
   srcDir: "src",
-  includeAssets: ["images/*"],
-  workbox: {
-    globPatterns: [
-      "**/*.{ts,tsx,css,html,ico,png,svg,woff2}",
-      "**/*-*.js", // Для chunks с хешами в названии (например: component-abc123.js)
-    ],
+  filename: "sw.ts",
+  includeAssets: ["images/*", "locales/*"],
+  injectManifest: {
+    globPatterns: ["**/*.{js,ts,tsx,css,html,ico,png,svg,woff2}"],
     maximumFileSizeToCacheInBytes: 3000000,
-    cleanupOutdatedCaches: true,
-    skipWaiting: true,
-    clientsClaim: true,
-
-    // Специальные настройки для API расписания
-    runtimeCaching: [
-      {
-        // Кэшируем JS chunks с CacheFirst стратегией
-        urlPattern: /\.js$/,
-        handler: "CacheFirst",
-        options: {
-          cacheName: "js-chunks-cache",
-          expiration: {
-            maxEntries: 100,
-            maxAgeSeconds: 60 * 60 * 24 * 365, // 1 год (chunks не меняются)
-          },
-          cacheableResponse: {
-            statuses: [0, 200],
-          },
-        },
-      },
-      {
-        // API расписания - кэшируем надолго т.к. расписание меняется редко
-        urlPattern: /^https:\/\/gg-api\.ystuty\.ru\/api\/schedule\/v1\/.*/,
-        handler: "StaleWhileRevalidate",
-        options: {
-          cacheName: "schedule-api-cache",
-          expiration: {
-            maxEntries: 100,
-            maxAgeSeconds: 10 * 24 * 60 * 60, // 240 часа
-          },
-          cacheableResponse: {
-            statuses: [0, 200], // Кэшируем даже если CORS ошибки (status 0)
-          },
-        },
-      },
-      {
-        // Изображения и медиа
-        urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|ico)$/,
-        handler: "CacheFirst",
-        options: {
-          cacheName: "images-cache",
-          expiration: {
-            maxEntries: 100,
-            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 дней
-          },
-        },
-      },
-    ],
   },
   manifest: {
     name: "Политех",
@@ -117,8 +66,9 @@ const pwaOptions: Partial<VitePWAOptions> = {
     theme_color: "#FFFFFF",
   },
   devOptions: {
-    enabled: false, // Включаем PWA в development
-    type: "classic",
+    enabled: true, // Включаем PWA в development
+    type: "module",
+    navigateFallback: "index.html",
   },
 }
 

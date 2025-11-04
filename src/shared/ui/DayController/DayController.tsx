@@ -33,15 +33,17 @@ const DayController = ({
         isActive && "day-controller--active"
       )}
     >
-      <button
-        className={clsx(
-          "day-controller__left",
-          !isDecrementActive && "day-controller__inactive-button"
-        )}
-        onClick={decrement}
-      >
-        <ArrowLeftIcon />
-      </button>
+      {decrement !== undefined && (
+        <button
+          className={clsx(
+            "day-controller__left",
+            !isDecrementActive && "day-controller__inactive-button"
+          )}
+          onClick={decrement}
+        >
+          <ArrowLeftIcon />
+        </button>
+      )}
       <time
         className="day-controller__title"
         dateTime={format(day, "MM-dd")}
@@ -61,15 +63,17 @@ const DayController = ({
           })
         )}
       </time>
-      <button
-        className={clsx(
-          "day-controller__right",
-          !isIncrementActive && "day-controller__inactive-button"
-        )}
-        onClick={increment}
-      >
-        <ArrowLeftIcon />
-      </button>
+      {increment !== undefined && (
+        <button
+          className={clsx(
+            "day-controller__right",
+            !isIncrementActive && "day-controller__inactive-button"
+          )}
+          onClick={increment}
+        >
+          <ArrowLeftIcon />
+        </button>
+      )}
     </div>
   )
 }

@@ -22,7 +22,7 @@ import CalendarWeek from "./CalendarWeek.tsx"
 import { createContext, useCallback, useMemo, useState } from "react"
 import CalendarChangeMonth from "./CalendarChangeMonth.tsx"
 import { ru } from "date-fns/locale"
-import { CALENDAR_SPECIAL_MONTH_FORMAT } from "@/constants/contstants.ts"
+import { CALENDAR_SPECIAL_MONTH_FORMAT } from "@shared/constants/contstants.ts"
 import { formatDateToSpecialMonthString } from "@shared/lib/formatDateToSpecialMonthString.ts"
 
 const CalendarContext = createContext<CalendarContextValues | null>(null)
@@ -116,8 +116,8 @@ const Calendar = ({
 
   const weekDaysString = useMemo(() => {
     return eachDayOfInterval({
-      start: startOfWeek(new Date()),
-      end: endOfWeek(new Date()),
+      start: startOfWeek(new Date(), { weekStartsOn: 1 }),
+      end: endOfWeek(new Date(), { weekStartsOn: 1 }),
     }).map((day) => format(day, "EEEEEE", { locale }))
   }, [locale])
 

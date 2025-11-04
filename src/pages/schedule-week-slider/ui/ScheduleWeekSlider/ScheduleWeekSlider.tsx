@@ -1,7 +1,7 @@
 import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
 import { WeekSlider } from "@shared/ui"
 import { useTranslation } from "react-i18next"
-import { LANGUAGES_MAP } from "@/constants/contstants.ts"
+import { LANGUAGES_MAP } from "@shared/constants/contstants.ts"
 import { useCallback, useRef, useState } from "react"
 import { Swiper, type SwiperRef, SwiperSlide } from "swiper/react"
 import ScheduleWeekSelect from "@/pages/schedule-week-slider/ui/ScheduleWeekSelect/ScheduleWeekSelect.tsx"

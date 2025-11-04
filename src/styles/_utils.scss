@@ -56,6 +56,10 @@
   @include visually-hidden;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .hidden-mobile-s,
 .hidden-mobile {
   @include mobile {
@@ -66,6 +70,12 @@
 .visible-mobile-s,
 .visible-mobile {
   @include mobile-above {
+    display: none !important;
+  }
+}
+
+.hidden-laptop {
+  @include laptop {
     display: none !important;
   }
 }

@@ -5,6 +5,7 @@ import type { InstitutesData } from "@/domain/models/Institute.ts"
 import type { GroupData } from "@/domain/models/Group.ts"
 import { LocalStorageManager } from "@/app/store/browser-storages"
 import { getGroupsByInstitutesQueryOptions } from "@shared/api/search-schedule/institutesService.ts"
+import { dbService } from "@/app/store/browser-storages/indexDb.ts"
 
 @injectable()
 export class InstitutesStore {
@@ -50,6 +51,7 @@ export class InstitutesStore {
   @action
   setInstitutesData(data: InstitutesData) {
     this.institutesData = { ...data }
+    dbService.saveAllInstitutes(data.institutes).then()
     LocalStorageManager.saveInstitutesData(data)
   }
 

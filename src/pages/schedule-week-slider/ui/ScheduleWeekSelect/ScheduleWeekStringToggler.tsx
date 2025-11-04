@@ -5,7 +5,7 @@ import { SelectContext } from "@shared/ui/Select"
 import SelectorArrowsIcon from "@assets/icons/selector-arrows.svg?react"
 import "./ScheduleWeekStringToggler.scss"
 import { useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@/constants/strings.ts"
+import { STRINGS_RES } from "@shared/constants/strings.ts"
 
 const ScheduleWeekStringToggler = ({
   className,

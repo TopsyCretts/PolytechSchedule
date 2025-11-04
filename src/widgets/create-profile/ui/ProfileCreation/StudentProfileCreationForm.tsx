@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 import { useCallback, useState } from "react"
 import { SearchSelect } from "@shared/ui"
-import { STRINGS_RES } from "@/constants/strings.ts"
+import { STRINGS_RES } from "@shared/constants/strings.ts"
 import { AccentButton } from "@shared/ui"
 import type { ProfileCreationFormProps } from "@widgets/create-profile/ui/ProfileCreation/types.ts"
 import { toInstituteUi } from "@/domain/models/Institute.ts"

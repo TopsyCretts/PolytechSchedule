@@ -1,5 +1,5 @@
 import type { ThemeObject } from "@/domain/types/Theme.ts"
-import { STRINGS_RES } from "@/constants/strings.ts"
+import { STRINGS_RES } from "@shared/constants/strings.ts"
 import type { Locale } from "date-fns"
 import { enUS, fr, ru } from "date-fns/locale"
 import type { LessonType } from "@/pages/schedule/model/ScheduleData.ts"
@@ -67,6 +67,9 @@ const LESSONS_MAP: Record<
 
 const CALENDAR_SPECIAL_MONTH_FORMAT = "MMMM-yyyy" as const
 
+const DB_NAME = "schedule-db"
+const DB_VERSION = 1
+
 export {
   themeArray,
   PROFILES_KEY,
@@ -76,4 +79,6 @@ export {
   ORIGINAL_SITE,
   LESSONS_MAP,
   CALENDAR_SPECIAL_MONTH_FORMAT,
+  DB_NAME,
+  DB_VERSION,
 }

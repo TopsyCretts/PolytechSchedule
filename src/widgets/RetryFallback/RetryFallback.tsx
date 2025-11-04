@@ -2,7 +2,7 @@ import "./RetryFallback.scss"
 import clsx from "clsx"
 import { AccentButton } from "@shared/ui"
 import { useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@/constants/strings.ts"
+import { STRINGS_RES } from "@shared/constants/strings.ts"
 
 interface RetryFallbackProps {
   className?: string

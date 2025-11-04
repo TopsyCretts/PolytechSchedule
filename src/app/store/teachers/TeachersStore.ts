@@ -1,9 +1,9 @@
 import { action, computed, makeAutoObservable, observable } from "mobx"
 import { queryClient } from "@shared/api"
-import { LocalStorageManager } from "@/app/store/browser-storages"
 import { getTeachersQueryOptions } from "@shared/api/search-schedule/teachersService.ts"
 import type { TeacherData, TeachersData } from "@/domain/models/Teachers.ts"
 import { injectable } from "inversify"
+import { dbService } from "@/app/store/browser-storages/indexDb.ts"
 
 @injectable()
 export class TeachersStore {
@@ -48,7 +48,7 @@ export class TeachersStore {
   @action
   setTeachersData(data: TeachersData) {
     this.teachersData = { ...data }
-    LocalStorageManager.saveTeachersData(data)
+    dbService.saveAllTeachers(data.teachers).then()
   }
 
   getTeacherById(teacherId: number): TeacherData | null {

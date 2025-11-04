@@ -3,7 +3,7 @@ import clsx from "clsx"
 import { IconButton } from "@shared/ui"
 import type { SearchItemCoreProps } from "../SearchItem/types.ts"
 import { useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@/constants/strings.ts"
+import { STRINGS_RES } from "@shared/constants/strings.ts"
 
 interface SearchItemProps extends SearchItemCoreProps {
   headingChildren?: React.ReactNode

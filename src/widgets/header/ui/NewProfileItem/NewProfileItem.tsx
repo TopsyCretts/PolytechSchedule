@@ -1,7 +1,7 @@
 import "./NewProfileItem.scss"
 import clsx from "clsx"
 import { NavLink, useMatch } from "react-router"
-import { STRINGS_RES } from "@/constants/strings.ts"
+import { STRINGS_RES } from "@shared/constants/strings.ts"
 import { useTranslation } from "react-i18next"
 
 interface NewProfileLinkProps {

@@ -1,0 +1,12 @@
+@use "../../styles/helpers" as *;
+
+.schedule-day-view {
+  display: flex;
+  flex-direction: column;
+  row-gap: rem(20);
+  margin-top: rem(20);
+
+  @include mobile {
+    row-gap: rem(12);
+  }
+}

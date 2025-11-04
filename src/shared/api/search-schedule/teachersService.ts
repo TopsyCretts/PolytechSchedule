@@ -4,26 +4,39 @@ import { LocalStorageManager } from "@/app/store/browser-storages"
 import { mainContainer } from "@/app/store/mainContainer.ts"
 import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
 import type { TeachersData } from "@/domain/models/Teachers.ts"
+import { dbService } from "@/app/store/browser-storages/indexDb.ts"
+import axios from "axios"
 
 const getTeachersFromStorageOrRefetch = async () => {
-  const savedData = await LocalStorageManager.getTeachersData()
+  const savedData = await dbService.getAll("teachers")
+  const lastUpdate = LocalStorageManager.get<number>("teachersLastUpdate")
   const now = Date.now()
   const teachersStore = mainContainer.get<TeachersStore>(TeachersStore)
-  if (savedData !== null && savedData.teachers.length > 0) {
-    const isExpired = now - savedData.lastUpdate >= 24 * 60 * 60 * 1000
-    if (!isExpired) {
-      teachersStore.setTeachersData(savedData)
-      return savedData.teachers
+  try {
+    const response = await getTeachers()
+    const dto = response.data
+    const newData: TeachersData = {
+      lastUpdate: now,
+      teachers: dto.items,
     }
+    teachersStore.setTeachersData(newData)
+    LocalStorageManager.set("teachersLastUpdate", now)
+    return newData.teachers
+  } catch (e) {
+    if (axios.isAxiosError(e) && !e.response) {
+      console.log(e)
+      if (savedData.length === 0) {
+        console.log("Empty saved data")
+        throw e
+      }
+      teachersStore.setTeachersData({
+        lastUpdate: lastUpdate ? lastUpdate : Date.now(),
+        teachers: savedData,
+      })
+      return savedData
+    }
+    throw e
   }
-  const response = await getTeachers()
-  const dto = response.data
-  const newData: TeachersData = {
-    lastUpdate: now,
-    teachers: dto.items,
-  }
-  teachersStore.setTeachersData(newData)
-  return newData.teachers
 }
 
 const getTeachersQueryOptions = () => {
@@ -31,6 +44,12 @@ const getTeachersQueryOptions = () => {
     queryFn: getTeachersFromStorageOrRefetch,
     queryKey: ["teachers"],
     select: (data) => data,
+    retry: (failureCount, error) => {
+      if (axios.isAxiosError(error) && !error.response) {
+        return failureCount < 1
+      }
+      return failureCount < 2
+    },
     staleTime: 100000,
   })
 }

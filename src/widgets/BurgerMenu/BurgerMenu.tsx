@@ -7,13 +7,13 @@ import { Select } from "@shared/ui"
 import {
   LANGUAGE_SELECTABLE_VALUES,
   themeArray,
-} from "@/constants/contstants.ts"
+} from "@shared/constants/contstants.ts"
 import "@widgets/ThemeToggler/ThemeToggler.scss"
 import { ThemeItem } from "@widgets/ThemeToggler/utils"
 import BurgerIcon from "@assets/icons/burger.svg?react"
 import i18next from "i18next"
 import { useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@/constants/strings.ts"
+import { STRINGS_RES } from "@shared/constants/strings.ts"
 
 interface BurgerMenuProps {
   className?: string

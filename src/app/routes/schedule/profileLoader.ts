@@ -38,9 +38,10 @@ const profileLoader = async ({ request, params }: LoaderFunctionArgs) => {
     await queryClient.prefetchQuery(getTeachersQueryOptions())
   }
 
-  const profile = mainContainer
-    .get(ProfilesStore)
-    .getOrCreateProfile(scheduleType, profileId)
+  const profilesStore = mainContainer.get(ProfilesStore)
+  await profilesStore.getIsInitialized
+
+  const profile = profilesStore.getOrCreateProfile(scheduleType, profileId)
 
   if (!profile) {
     throw new Response("Profile creation failed", { status: 404 })

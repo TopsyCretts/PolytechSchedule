@@ -9,8 +9,8 @@ import BurgerMenu from "@widgets/BurgerMenu"
 import type { HeaderControlsProps } from "@widgets/header/lib/types.ts"
 import Profiles from "@widgets/header/ui/Profiles"
 import { Trans, useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@/constants/strings.ts"
-import { ORIGINAL_SITE } from "@/constants/contstants.ts"
+import { STRINGS_RES } from "@shared/constants/strings.ts"
+import { ORIGINAL_SITE } from "@shared/constants/contstants.ts"
 import HeaderProfileLabel from "@/widgets/header/ui/HeaderProfileLabel/HeaderProfileLabel.tsx"
 
 const Header = () => {

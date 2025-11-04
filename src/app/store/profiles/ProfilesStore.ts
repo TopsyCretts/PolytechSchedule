@@ -5,32 +5,58 @@ import type {
   StudentProfile,
   TeacherProfile,
 } from "@/domain/models/Profile.ts"
-import { action, computed, makeAutoObservable, observable } from "mobx"
-import { PROFILES_KEY } from "@/constants/contstants.ts"
+import {
+  action,
+  computed,
+  makeAutoObservable,
+  observable,
+  runInAction,
+} from "mobx"
 import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
 import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
+import { dbService } from "@/app/store/browser-storages/indexDb.ts"
 
 @injectable()
 export class ProfilesStore {
   @observable
   private profiles: Profile[] = []
 
+  @observable
+  private readonly isInitialized: Promise<boolean>
+
+  private resolveInitialized!: (value: boolean) => void
+  private rejectInitialized!: () => void
+
   constructor(
     @inject(InstitutesStore) private institutesStore: InstitutesStore,
     @inject(TeachersStore) private teachersStore: TeachersStore
   ) {
     makeAutoObservable(this, {}, { autoBind: true })
+    this.isInitialized = new Promise<boolean>((resolve, reject) => {
+      this.resolveInitialized = resolve
+      this.rejectInitialized = reject
+    })
     this.initProfiles()
   }
 
   @action
   initProfiles() {
-    const profilesString = localStorage.getItem(PROFILES_KEY)
-    if (profilesString === null) {
-      return
-    }
-    const profiles: Profile[] = JSON.parse(profilesString)
-    this.profiles = [...profiles]
+    dbService
+      .getAll("profiles")
+      .then((profiles) => {
+        runInAction(() => {
+          this.profiles = [...profiles]
+          this.resolveInitialized(true)
+        })
+      })
+      .catch(() => {
+        this.rejectInitialized()
+      })
+  }
+
+  @computed
+  get getIsInitialized() {
+    return this.isInitialized
   }
 
   @computed
@@ -87,7 +113,7 @@ export class ProfilesStore {
       return
     }
     this.profiles = [...this.profiles, newProfile]
-    this.saveProfilesToLocalStorage(this.profiles)
+    this.saveProfileToDb(newProfile)
   }
 
   @action
@@ -101,7 +127,7 @@ export class ProfilesStore {
 
     const nearestRightIndexAfterRemove = index
 
-    this.saveProfilesToLocalStorage(this.profiles)
+    this.removeProfile(profileId)
 
     if (nearestRightIndexAfterRemove < this.profiles.length) {
       return this.profiles[nearestRightIndexAfterRemove]
@@ -114,8 +140,18 @@ export class ProfilesStore {
     return null
   }
 
-  private saveProfilesToLocalStorage(profiles: Profile[]) {
-    localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles))
+  private saveProfileToDb(profile: Profile) {
+    dbService
+      .saveProfile(profile)
+      .then((profile) => console.log(`Profile saved successfully ${profile}`))
+  }
+
+  private removeProfile(id: number) {
+    {
+      dbService
+        .deleteProfile(id)
+        .then(() => console.log(`Profile deleted successfully `))
+    }
   }
 }
 
