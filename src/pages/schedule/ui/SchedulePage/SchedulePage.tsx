@@ -44,7 +44,7 @@ const SchedulePage = observer(({ className }: SchedulePageProps) => {
         profileId={profile.id}
         profileType={profile.profileType}
       />
-      <QueryErrorResetWrapper>
+      <QueryErrorResetWrapper key={profile.id}>
         <Suspense fallback={<Spinner />}>
           <ScheduleLayout
             profile={profile}
