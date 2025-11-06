@@ -61,9 +61,11 @@
   --lesson-card-bg: var(--color-light-alt);
   --lesson-card-border: var(--color-dark-opacity-25);
 
+  --scrollbar-bg-color: transparent;
+
   color-scheme: dark light;
 
-  & .dark-mode {
+  &.dark-mode {
     --color-bg-themed: var(--color-dark);
     --color-accent-themed: var(--color-accent);
     --color-text-themed: var(--color-light);
@@ -81,5 +83,7 @@
     --shadow-themed: none;
 
     --lesson-card-border: transparent;
+
+    --scrollbar-bg-color: var(--color-light-opacity-10);
   }
 }

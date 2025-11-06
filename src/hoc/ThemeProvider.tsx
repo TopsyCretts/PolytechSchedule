@@ -29,14 +29,14 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
 
   useLayoutEffect(() => {
     if ((isSystemDark && storedTheme === null) || storedTheme === "dark") {
-      document.body.classList.toggle("dark-mode", true)
+      document.documentElement.classList.toggle("dark-mode", true)
     }
   }, [isSystemDark, storedTheme])
 
   const saveNewThemeValue = useCallback((newTheme: ThemeType) => {
     localStorage.setItem("theme", newTheme)
     setTheme(newTheme)
-    document.body.classList.toggle("dark-mode")
+    document.documentElement.classList.toggle("dark-mode")
   }, [])
 
   const toggleTheme = useCallback(() => {

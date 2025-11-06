@@ -8,6 +8,7 @@ import {
 } from "@shared/ui/Calendar/useCalendar.ts"
 import { memo } from "react"
 import { capitalizeFirstLatter } from "@shared/lib/capitalizeFirstLatter.ts"
+import { isEnterKeyPressed } from "@shared/lib/isEnterKeyPressed.ts"
 
 const CalendarCell = memo(
   ({
@@ -33,8 +34,14 @@ const CalendarCell = memo(
             getMonth(parse(currentMonth, monthFormat, new Date())) &&
             "calendar-day--not-current-month"
         )}
+        tabIndex={0}
         onClick={() => {
           selectDate(isSelected ? null : cellData.date)
+        }}
+        onKeyDown={(e) => {
+          isEnterKeyPressed(e, () =>
+            selectDate(isSelected ? null : cellData.date)
+          )
         }}
       >
         <time

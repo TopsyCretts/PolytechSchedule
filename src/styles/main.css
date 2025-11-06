@@ -356,9 +356,10 @@ svg * {
   --selected-profile-bg: var(--color-orange);
   --lesson-card-bg: var(--color-light-alt);
   --lesson-card-border: var(--color-dark-opacity-25);
+  --scrollbar-bg-color: transparent;
   color-scheme: dark light;
 }
-:root .dark-mode {
+:root.dark-mode {
   --color-bg-themed: var(--color-dark);
   --color-accent-themed: var(--color-accent);
   --color-text-themed: var(--color-light);
@@ -372,6 +373,7 @@ svg * {
   --lesson-card-bg: var(--color-light-opacity-10);
   --shadow-themed: none;
   --lesson-card-border: transparent;
+  --scrollbar-bg-color: var(--color-light-opacity-10);
 }
 
 :root {
@@ -535,6 +537,20 @@ a [class=active], a:not([class]) {
   a [class=active]:active, a:not([class]):active {
     color: var(--color-orange);
   }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: var(--scrollbar-bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-accent-themed);
+}
+
+* {
+  scrollbar-color: var(--color-accent-themed) var(--scrollbar-bg-color);
+  scrollbar-width: thin;
 }
 
 h1,

@@ -18,6 +18,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import CrossIcon from "@assets/icons/cross.svg?react"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@shared/constants/strings.ts"
+import { isEnterKeyPressed } from "@shared/lib/isEnterKeyPressed.ts"
 
 const SelectContext = createContext<SelectValues | null>(null)
 
@@ -148,6 +149,11 @@ const Option = ({
   isSelected,
   onOptionClick,
 }: SelectOptionProps) => {
+  const handleOptionClick = () => {
+    if (!isSelected) {
+      onOptionClick?.(optionKey)
+    }
+  }
   return (
     <li
       className={clsx(
@@ -156,11 +162,13 @@ const Option = ({
         numerated && "select__item--numerated",
         isSelected && "select__item--selected"
       )}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        isEnterKeyPressed(e, handleOptionClick)
+      }}
       onClick={(event) => {
         event.stopPropagation()
-        if (!isSelected) {
-          onOptionClick?.(optionKey)
-        }
+        handleOptionClick()
       }}
     >
       {children}

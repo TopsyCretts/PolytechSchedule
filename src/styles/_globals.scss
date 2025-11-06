@@ -35,3 +35,17 @@ a {
     }
   }
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: var(--scrollbar-bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-accent-themed);
+}
+
+* {
+  scrollbar-color: var(--color-accent-themed) var(--scrollbar-bg-color);
+  scrollbar-width: thin;
+}
