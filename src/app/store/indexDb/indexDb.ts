@@ -46,7 +46,20 @@ class DatabaseService {
     }
 
     this.db = await openDB<ScheduleDB>(DB_NAME, DB_VERSION, {
-      upgrade: async (db) => {
+      upgrade: async (db, oldVersion, newVersion) => {
+        // Если старая версия не равна новой, удаляем все
+        if (oldVersion !== newVersion && oldVersion > 0) {
+          console.log(`Обновление с версии ${oldVersion} до ${newVersion}`)
+
+          // Удаляем все существующие хранилища
+          const storeNames = Array.from(db.objectStoreNames)
+
+          for (const storeName of storeNames) {
+            db.deleteObjectStore(storeName)
+            console.log(`Удалено хранилище: ${storeName}`)
+          }
+        }
+
         if (!db.objectStoreNames.contains(STORE_NAMES.profiles)) {
           const store = db.createObjectStore(STORE_NAMES.profiles, {
             keyPath: "id",

@@ -66,7 +66,7 @@ const LESSONS_MAP: Record<
 const CALENDAR_SPECIAL_MONTH_FORMAT = "MMMM-yyyy" as const
 
 const DB_NAME = "schedule-db"
-const DB_VERSION = 2
+const DB_VERSION = 3
 
 const LOCAL_STORAGE_KEY = {
   theme: "theme",
