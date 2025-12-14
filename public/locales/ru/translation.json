@@ -46,5 +46,8 @@
   "there_are_no_classes": "Сегодня в расписании нет занятий.",
   "remote_lesson": "Дистант",
   "lesson_name_not_specified": "Название не указано",
-  "additional_info": "Доп. инф.:"
+  "additional_info": "Доп. инф.:",
+  "offline_mode": "Оффлайн-режим.",
+  "last_update_at": "Последнее обновление:",
+  "there_is_no_schedule_for_profile": "Не найдено расписание для этого профиля."
 }

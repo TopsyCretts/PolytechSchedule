@@ -1,6 +1,5 @@
 import { Calendar } from "@shared/ui"
 import CalendarLessons from "@/pages/schedule-calendar/ui/CalendarLessons"
-import { useEffect, useState } from "react"
 import ScheduleDayItem from "@shared/ui/ScheduleDayItem"
 import clsx from "clsx"
 import "./ScheduleCalendarView.scss"
@@ -10,6 +9,7 @@ import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
 import { MATCH_MEDIA } from "@shared/constants/media.ts"
 import { useLocation, useNavigate } from "react-router"
 import { findEqualDayData } from "@/pages/schedule-calendar/lib/findEqualDayData.ts"
+import useMediaQueryListEvent from "@shared/lib/useMediaQueryListEvent.ts"
 
 interface ScheduleCalendarProps {
   className?: string
@@ -19,19 +19,11 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const [isLaptop, setIsLaptop] = useState(MATCH_MEDIA.laptop.matches)
+  const { isMatchesMedia: isLaptop } = useMediaQueryListEvent(
+    MATCH_MEDIA.laptop
+  )
 
-  const handleLaptopChange = (event: MediaQueryListEvent) => {
-    setIsLaptop(event.matches)
-  }
-  useEffect(() => {
-    MATCH_MEDIA.laptop.addEventListener("change", handleLaptopChange)
-    return () => {
-      MATCH_MEDIA.laptop.removeEventListener("change", handleLaptopChange)
-    }
-  }, [])
-
-  const { data, profileType, currentDayData, setCurrentDayData, locale } =
+  const { data, profile, currentDayData, setCurrentDayData, locale } =
     useScheduleData()
 
   const [debouncedDay] = useDebounce(currentDayData, 200)
@@ -92,7 +84,7 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
               className={"schedule-calendar__day-item"}
               dayData={currentDayData}
               locale={locale}
-              profileType={profileType}
+              profileType={profile.profileType}
             />
           </motion.div>
         )}

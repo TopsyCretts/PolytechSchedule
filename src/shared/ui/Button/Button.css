@@ -8,6 +8,7 @@
   border: var(--border-themed);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
+  color: inherit;
   background-color: var(--color-light-opacity-10);
   backdrop-filter: var(--blur-20);
 }
@@ -35,6 +36,9 @@
 .button--square {
   width: var(--button-height);
   height: var(--button-height);
+}
+.button--disabled {
+  opacity: 0.6;
 }
 
 /*# sourceMappingURL=Button.css.map */

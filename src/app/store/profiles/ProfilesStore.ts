@@ -1,10 +1,11 @@
 import { inject, injectable } from "inversify"
-import type {
-  Profile,
-  ProfileType,
-  StudentProfile,
-  TeacherProfile,
-} from "@/domain/models/Profile.ts"
+import {
+  type Profile,
+  PROFILE_TYPE,
+  type ProfileType,
+  type StudentProfile,
+  type TeacherProfile,
+} from "@/entities/Profile.ts"
 import {
   action,
   computed,
@@ -14,7 +15,11 @@ import {
 } from "mobx"
 import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
 import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
-import { dbService } from "@/app/store/browser-storages/indexDb.ts"
+import { dbService, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
+import { SCHEDULE_VIEW } from "@/entities/ScheduleData.ts"
+import { LocalStorageManager } from "@/app/store/browser-storages"
+import { LOCAL_STORAGE_KEY } from "@shared/constants/contstants.ts"
+import type { ProfileDB } from "@/app/store/indexDb/models/ProfileDB.ts"
 
 @injectable()
 export class ProfilesStore {
@@ -42,7 +47,7 @@ export class ProfilesStore {
   @action
   initProfiles() {
     dbService
-      .getAll("profiles")
+      .getAll(STORE_NAMES.profiles)
       .then((profiles) => {
         runInAction(() => {
           this.profiles = [...profiles]
@@ -64,31 +69,37 @@ export class ProfilesStore {
     return this.profiles
   }
 
-  getOrCreateProfile(type: ProfileType, newProfileId: number): Profile | null {
-    const existingProfile = this.getProfile(newProfileId)
+  async getOrCreateProfile(
+    type: ProfileType,
+    newProfileApiId: number
+  ): Promise<Profile | null> {
+    await this.isInitialized
+    const existingProfile = this.getProfile(newProfileApiId, type)
     if (existingProfile !== null) {
       return existingProfile
     }
+
     switch (type) {
-      case "student": {
-        const data = this.institutesStore.getInstituteByGroupId(newProfileId)
+      case PROFILE_TYPE.student: {
+        const data = this.institutesStore.getInstituteByGroupId(newProfileApiId)
         if (data !== null) {
-          const newProfile = createStudentProfile(
-            newProfileId,
+          const profileBluePrint = createStudentProfile(
+            newProfileApiId,
             data.group.name,
             data.institute
           )
-          this.addProfile(newProfile)
-          return newProfile
+          return await this.addProfile(profileBluePrint)
         }
         break
       }
-      case "teacher": {
-        const teacher = this.teachersStore.getTeacherById(newProfileId)
+      case PROFILE_TYPE.teacher: {
+        const teacher = this.teachersStore.getTeacherById(newProfileApiId)
         if (teacher !== null) {
-          const newProfile = createTeacherProfile(newProfileId, teacher.name)
-          this.addProfile(newProfile)
-          return newProfile
+          const profileBluePrint = createTeacherProfile(
+            newProfileApiId,
+            teacher.name
+          )
+          return await this.addProfile(profileBluePrint)
         }
         break
       }
@@ -96,8 +107,11 @@ export class ProfilesStore {
     return null
   }
 
-  getProfile(id: number): Profile | null {
-    const existingProfile = this.profiles.find((profile) => profile.id === id)
+  getProfile(apiId: number, profileType: ProfileType): Profile | null {
+    const existingProfile = this.profiles.find(
+      (profile) =>
+        profile.apiId === apiId && profile.profileType === profileType
+    )
     if (existingProfile !== undefined) {
       return existingProfile
     }
@@ -105,15 +119,13 @@ export class ProfilesStore {
   }
 
   @action
-  addProfile(newProfile: Profile) {
-    const isProfileExists =
-      this.profiles.find((profile) => profile.id === newProfile.id) !==
-      undefined
-    if (isProfileExists) {
-      return
-    }
-    this.profiles = [...this.profiles, newProfile]
-    this.saveProfileToDb(newProfile)
+  async addProfile(newProfile: Profile) {
+    const newId = await this.saveProfileToDb(newProfile)
+    const localProfile = { ...newProfile, id: newId }
+    runInAction(() => {
+      this.profiles = [...this.profiles, localProfile]
+    })
+    return localProfile
   }
 
   @action
@@ -140,49 +152,55 @@ export class ProfilesStore {
     return null
   }
 
-  private saveProfileToDb(profile: Profile) {
-    try {
-      dbService
-        .saveProfile(profile)
-        .then((profile) => console.log(`Profile saved successfully ${profile}`))
-    } catch (e) {
-      console.error(e)
+  private async saveProfileToDb(profile: Profile) {
+    let profileDb: ProfileDB = {
+      name: profile.name,
+      apiId: profile.apiId,
+      profileType: profile.profileType,
+      lastUpdateAt: null,
+      selectedViewType: profile.selectedViewType,
     }
+    if ("institute" in profile) {
+      profileDb = { ...profileDb, institute: profile.institute }
+    }
+
+    return await dbService.saveProfile(profileDb)
   }
 
   private removeProfile(id: number) {
-    try {
-      dbService
-        .deleteProfile(id)
-        .then(() => console.log(`Profile deleted successfully `))
-    } catch (e) {
-      console.error(e)
-    }
+    dbService
+      .deleteProfile(id)
+      .then(() => console.log(`Profile deleted successfully `))
+    LocalStorageManager.set(LOCAL_STORAGE_KEY.lastProfileId, null)
   }
 }
 
 const createTeacherProfile = (
-  id: number,
+  apiId: number,
   teacherName: string
 ): TeacherProfile => {
   return {
-    id: id,
+    id: 0,
+    apiId: apiId,
     name: teacherName,
-    profileType: "teacher",
-    lastUsed: new Date(),
+    profileType: PROFILE_TYPE.teacher,
+    lastUpdateAt: null,
+    selectedViewType: SCHEDULE_VIEW.week,
   }
 }
 
 const createStudentProfile = (
-  id: number,
+  apiId: number,
   name: string,
   institute: string
 ): StudentProfile => {
   return {
-    id: id,
+    id: 0,
+    apiId: apiId,
     name,
-    profileType: "student",
+    profileType: PROFILE_TYPE.student,
     institute: institute,
-    lastUsed: new Date(),
+    lastUpdateAt: null,
+    selectedViewType: SCHEDULE_VIEW.week,
   }
 }

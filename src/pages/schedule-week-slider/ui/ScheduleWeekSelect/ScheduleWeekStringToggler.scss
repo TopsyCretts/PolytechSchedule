@@ -29,15 +29,12 @@
   }
 
   &__button {
-    @include reset-button;
     @include flex-center(true);
-    @include border-shadow-themed(var(--border-radius), false);
 
     column-gap: rem(5);
     height: var(--button-height);
     padding-inline: rem(8);
-    color: inherit;
-    background-color: var(--select-bg);
+    box-shadow: var(--shadow-themed);
 
     @include mobile {
       @include square(var(--button-height));

@@ -9,5 +9,10 @@
   overflow-y: auto;
   max-height: 30rem;
 }
+@media (width <= 47.999375rem) {
+  .schedule-week-select__content {
+    max-height: 18.75rem;
+  }
+}
 
 /*# sourceMappingURL=ScheduleWeekSelect.css.map */

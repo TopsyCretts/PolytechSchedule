@@ -28,20 +28,13 @@
   }
 }
 .schedule-week-string-toggler__button {
-  padding: 0;
-  background-color: transparent;
-  border: none;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border: var(--border-themed);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-themed);
   column-gap: 0.3125rem;
   height: var(--button-height);
   padding-inline: 0.5rem;
-  color: inherit;
-  background-color: var(--select-bg);
+  box-shadow: var(--shadow-themed);
 }
 @media (width <= 47.999375rem) {
   .schedule-week-string-toggler__button {

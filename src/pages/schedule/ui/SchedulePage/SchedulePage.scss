@@ -1,18 +1,13 @@
 @use "../../../../styles/helpers/index" as *;
 
 .schedule-page {
-  @include flex-center;
-
+  display: flex;
   flex-direction: column;
   width: 100%;
   max-width: 100%;
-  padding-bottom: rem(100);
+  height: 100%;
 
   @include mobile {
-    padding-bottom: rem(40);
-  }
-
-  &__switcher {
-    margin-block: rem(20);
+    padding-bottom: rem(20);
   }
 }

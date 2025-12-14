@@ -2,4 +2,8 @@
 
 .home-page {
   padding-bottom: rem(200);
+
+  @include mobile {
+    padding-bottom: rem(50);
+  }
 }

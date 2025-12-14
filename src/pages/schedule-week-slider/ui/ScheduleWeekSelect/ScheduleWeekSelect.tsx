@@ -4,12 +4,15 @@ import "./ScheduleWeekSelect.scss"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@shared/constants/strings.ts"
 import { mapWeekDataToWeeksByYear } from "../../lib/mapWeekDataToWeeksByYear"
-import type { ScheduleWeekSelectProps } from "../../lib/types.ts"
-import { useMemo } from "react"
+import type { ScheduleWeekSelectProps, WeeksByYear } from "../../lib/types.ts"
+import { useEffect, useMemo, useRef } from "react"
 import { getWeekByFormatedString } from "@/pages/schedule-week-slider/lib/getWeekByFormatedString.ts"
 import ScheduleWeekStringToggler from "@/pages/schedule-week-slider/ui/ScheduleWeekSelect/ScheduleWeekStringToggler.tsx"
+import clsx from "clsx"
+import scrollContainerToSelectedElement from "@shared/lib/scrollContainerToSelectedElement.ts"
 
 const ScheduleWeekSelect = ({
+  className,
   weekData,
   startWeekFormat,
   locale,
@@ -19,7 +22,7 @@ const ScheduleWeekSelect = ({
   const { t } = useTranslation()
   const formatedSelectedString = format(selectedWeekStart, startWeekFormat)
 
-  const groups = useMemo(() => {
+  const weeksByYears = useMemo(() => {
     return mapWeekDataToWeeksByYear(weekData, startWeekFormat, locale)
   }, [weekData, startWeekFormat, locale])
 
@@ -30,13 +33,13 @@ const ScheduleWeekSelect = ({
     }
   }
 
-  const selectedWeek = groups
+  const selectedWeek = weeksByYears
     .map((year) => year.weeks)
     .flat()
     .find((week) => week.key === formatedSelectedString)?.value
 
   return (
-    <div className="schedule-week-select">
+    <div className={clsx(className, "schedule-week-select")}>
       <Select className={"schedule-week-select__select"}>
         <ScheduleWeekStringToggler>
           {selectedWeek !== undefined ? selectedWeek : "Ошибка в поиске недель"}
@@ -44,17 +47,11 @@ const ScheduleWeekSelect = ({
         <Select.Backdrop />
         <Select.Container>
           <Select.Header>{t(STRINGS_RES.week_other)}</Select.Header>
-          <div className="schedule-week-select__content">
-            {groups.map((group) => (
-              <Select.OptionsGroup
-                key={group.year.toString()}
-                title={format(group.year, "yyyy")}
-                values={group.weeks}
-                initialSelectedOptionsKeys={[formatedSelectedString]}
-                onOptionChange={handleSelection}
-              />
-            ))}
-          </div>
+          <Content
+            formatedSelectedString={formatedSelectedString}
+            weekByYears={weeksByYears}
+            handleSelection={handleSelection}
+          />
         </Select.Container>
       </Select>
     </div>
@@ -62,3 +59,43 @@ const ScheduleWeekSelect = ({
 }
 
 export default ScheduleWeekSelect
+
+interface ScheduleWeekSelectContent {
+  formatedSelectedString: string
+  weekByYears: WeeksByYear[]
+  handleSelection: (key: string) => void
+}
+
+const Content = ({
+  formatedSelectedString,
+  weekByYears,
+  handleSelection,
+}: ScheduleWeekSelectContent) => {
+  const containerRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    scrollContainerToSelectedElement(
+      containerRef.current!,
+      formatedSelectedString,
+      "vertical",
+      100
+    )
+  })
+
+  return (
+    <div
+      className="schedule-week-select__content"
+      ref={containerRef}
+    >
+      {weekByYears.map((weeksByYear) => (
+        <Select.OptionsGroup
+          key={weeksByYear.year.toString()}
+          title={format(weeksByYear.year, "yyyy")}
+          values={weeksByYear.weeks}
+          initialSelectedOptionsKeys={[formatedSelectedString]}
+          onOptionChange={handleSelection}
+        />
+      ))}
+    </div>
+  )
+}

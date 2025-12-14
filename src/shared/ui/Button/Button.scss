@@ -5,6 +5,7 @@
   @include flex-center;
   @include border-shadow-themed(var(--border-radius));
 
+  color: inherit;
   background-color: var(--color-light-opacity-10);
   backdrop-filter: var(--blur-20);
 
@@ -23,5 +24,9 @@
 
   &--square {
     @include square(var(--button-height));
+  }
+
+  &--disabled {
+    opacity: 0.6;
   }
 }

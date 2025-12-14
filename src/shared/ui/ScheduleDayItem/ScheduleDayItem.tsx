@@ -1,8 +1,8 @@
 import "./ScheduleDayItem.scss"
 import clsx from "clsx"
-import type { DayData } from "@/pages/schedule/model/ScheduleData.ts"
+import type { DayData } from "@/entities/ScheduleData.ts"
 import { LessonCard } from "@shared/ui"
-import type { ProfileType } from "@/domain/models/Profile.ts"
+import type { ProfileType } from "@/entities/Profile.ts"
 import { format, type Locale } from "date-fns"
 import { capitalizeFirstLatter } from "@shared/lib/capitalizeFirstLatter.ts"
 

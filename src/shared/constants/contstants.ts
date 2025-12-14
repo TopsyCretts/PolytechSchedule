@@ -1,8 +1,8 @@
-import type { ThemeObject } from "@/domain/types/Theme.ts"
+import type { ThemeObject } from "@shared/models/Theme.ts"
 import { STRINGS_RES } from "@shared/constants/strings.ts"
 import type { Locale } from "date-fns"
 import { enUS, fr, ru } from "date-fns/locale"
-import type { LessonType } from "@/pages/schedule/model/ScheduleData.ts"
+import type { LessonType } from "@/entities/ScheduleData.ts"
 
 const themeArray: ThemeObject[] = [
   {
@@ -31,8 +31,6 @@ const LANGUAGE_SELECTABLE_VALUES = [
     }
   }),
 ] as const
-
-const PROFILES_KEY = "schedule-profiles"
 
 const ORIGINAL_SITE = {
   hostname: "ypolytech.ru",
@@ -68,11 +66,21 @@ const LESSONS_MAP: Record<
 const CALENDAR_SPECIAL_MONTH_FORMAT = "MMMM-yyyy" as const
 
 const DB_NAME = "schedule-db"
-const DB_VERSION = 1
+const DB_VERSION = 2
+
+const LOCAL_STORAGE_KEY = {
+  theme: "theme",
+  institutesLastUpdate: "institutes-last-update",
+  teachersLastUpdate: "teachers-last-update",
+  lastProfileId: "last-profile-id",
+} as const
+
+const SESSION_STORAGE_KEY = {
+  isLastProfileInitiated: "is-last-profile-init",
+} as const
 
 export {
   themeArray,
-  PROFILES_KEY,
   LANGUAGES_MAP,
   LANGUAGES_KEYS,
   LANGUAGE_SELECTABLE_VALUES,
@@ -81,4 +89,6 @@ export {
   CALENDAR_SPECIAL_MONTH_FORMAT,
   DB_NAME,
   DB_VERSION,
+  LOCAL_STORAGE_KEY,
+  SESSION_STORAGE_KEY,
 }

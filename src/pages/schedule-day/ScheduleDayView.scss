@@ -3,10 +3,21 @@
 .schedule-day-view {
   display: flex;
   flex-direction: column;
-  row-gap: rem(20);
+  row-gap: rem(12);
   margin-top: rem(20);
 
   @include mobile {
     row-gap: rem(12);
+  }
+
+  &__header {
+    @include flex-center;
+
+    column-gap: rem(8);
+  }
+
+  &__offline-indicator-wrapper {
+    min-width: var(--button-height);
+    min-height: var(--button-height);
   }
 }

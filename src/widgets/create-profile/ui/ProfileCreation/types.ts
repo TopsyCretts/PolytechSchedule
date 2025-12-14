@@ -3,4 +3,14 @@ interface ProfileCreationFormProps {
   onProfileCreation: (profileId: number) => void
 }
 
-export type { ProfileCreationFormProps }
+interface ProfileCreationValue {
+  id: number
+  name: string
+}
+
+interface StudentProfileCreationValues {
+  institute: ProfileCreationValue | null
+  group: ProfileCreationValue | null
+}
+
+export type { ProfileCreationFormProps, StudentProfileCreationValues }

@@ -1,65 +1,62 @@
 import type { LoaderFunctionArgs } from "react-router"
-import type { ProfileType } from "@/domain/models/Profile.ts"
+import { PROFILE_TYPE, type ProfileType } from "@/entities/Profile.ts"
 import { mainContainer } from "@/app/store/mainContainer.ts"
 import { ProfilesStore } from "@/app/store/profiles/ProfilesStore.ts"
 import { APP_ROUTES, routeWithParams } from "@/app/routes/routes.ts"
-import { queryClient } from "@shared/api"
-import { getGroupsByInstitutesQueryOptions } from "@shared/api/search-schedule/institutesService.ts"
-import { getTeachersQueryOptions } from "@shared/api/search-schedule/teachersService.ts"
 import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
 import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
+import { LocalStorageManager } from "@/app/store/browser-storages"
+import { LOCAL_STORAGE_KEY } from "@shared/constants/contstants.ts"
+import { SCHEDULE_VIEW } from "@/entities/ScheduleData.ts"
 
-const profileLoader = async ({ request, params }: LoaderFunctionArgs) => {
-  const url = new URL(request.url)
-  const searchParams = url.searchParams
-  const type = searchParams.get("type")
-  const newProfileId = params.profileId
+const profileLoader = async ({ params }: LoaderFunctionArgs) => {
+  const newProfileId = params.profileApiId
+  const newProfileType = params.profileType
+
   if (
-    !type ||
+    !newProfileType ||
     !newProfileId ||
-    type.trim() === "" ||
+    newProfileType.trim() === "" ||
     newProfileId.trim() === ""
   ) {
     throw new Response("Missing required fields", { status: 404 })
   }
 
-  const scheduleType = type.toString() as ProfileType
+  const profileType = newProfileType as ProfileType
+
+  if (!Object.values(PROFILE_TYPE).includes(profileType)) {
+    throw new Response("Missing required fields", { status: 404 })
+  }
+
   const profileId = Number(newProfileId)
 
   const institutesStore = mainContainer.get(InstitutesStore)
   const teachersStore = mainContainer.get(TeachersStore)
 
-  const isInstitutesInit = await institutesStore.getIsInitialized
-  const isTeachersInit = await teachersStore.getIsInitialized
-
-  if (scheduleType === "student" && !isInstitutesInit) {
-    await queryClient.prefetchQuery(getGroupsByInstitutesQueryOptions())
-  } else if (!isTeachersInit) {
-    await queryClient.prefetchQuery(getTeachersQueryOptions())
-  }
+  await institutesStore.getIsInitialized
+  await teachersStore.getIsInitialized
 
   const profilesStore = mainContainer.get(ProfilesStore)
   await profilesStore.getIsInitialized
 
-  const profile = profilesStore.getOrCreateProfile(scheduleType, profileId)
+  const profile = await profilesStore.getOrCreateProfile(profileType, profileId)
 
   if (!profile) {
     throw new Response("Profile creation failed", { status: 404 })
   }
+  LocalStorageManager.set<number>(LOCAL_STORAGE_KEY.lastProfileId, profile.id)
   return { profile }
 }
 
 const getScheduleProfileRoute = (
   profileId: string,
   scheduleType: ProfileType,
-  destination: string = "calendar"
+  destination: string = SCHEDULE_VIEW.calendar
 ) => {
   return routeWithParams(
-    APP_ROUTES.schedule,
-    [profileId],
-    {
-      type: scheduleType,
-    },
+    APP_ROUTES.scheduleIndex,
+    [scheduleType, profileId],
+    undefined,
     destination
   )
 }

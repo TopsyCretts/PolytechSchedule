@@ -2,6 +2,7 @@
 
 .profile-item {
   border-right: var(--border-themed);
+  border-bottom: var(--border-themed);
   transition-duration: var(--transition-duration);
 
   &--active {

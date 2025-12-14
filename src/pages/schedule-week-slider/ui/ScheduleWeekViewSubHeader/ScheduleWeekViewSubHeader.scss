@@ -1,0 +1,40 @@
+@use "../../../../styles/helpers" as *;
+
+.schedule-week-view-sub-header {
+  @include flex-center;
+
+  min-width: 100%;
+  padding-block: rem(12);
+
+  &__inner {
+    @include flex-center;
+
+    column-gap: rem(15);
+    width: 100%;
+
+    @include mobile {
+      display: grid;
+      place-items: center center;
+      grid-template-columns: repeat(3, minmax(rem(44), auto));
+      justify-content: space-between;
+    }
+  }
+
+  &__arrow-button {
+    &--prev {
+      rotate: 0.25turn;
+    }
+
+    &--next {
+      rotate: -0.25turn;
+    }
+
+    @include mobile {
+      display: none;
+    }
+  }
+
+  &__week-select {
+    place-self: center center;
+  }
+}

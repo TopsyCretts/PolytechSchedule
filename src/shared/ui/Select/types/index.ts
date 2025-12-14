@@ -1,4 +1,5 @@
 import type { ButtonProps } from "@shared/ui/Button/types.ts"
+import type { RefObject } from "react"
 
 interface SelectValues {
   isOpen: boolean
@@ -21,6 +22,7 @@ type SelectStringTogglerProps = ButtonProps
 interface SelectContainerProps {
   children: React.ReactNode
   width?: number | string
+  ref?: RefObject<HTMLDivElement | null>
 }
 
 interface SelectHeaderProps {

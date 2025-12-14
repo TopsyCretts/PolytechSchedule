@@ -1,32 +1,23 @@
 import type { ScheduleWeekDto } from "@/pages/schedule/api/dto/ScheduleDto.ts"
-import type {
-  DayData,
-  LessonData,
-  LessonType,
-  ScheduleData,
-  ScheduleWeekData,
-} from "@/pages/schedule/model/ScheduleData.ts"
+import {
+  type DayData,
+  LESSON_TYPE,
+  type LessonData,
+  type LessonType,
+  type ScheduleData,
+  type ScheduleWeekData,
+} from "@/entities/ScheduleData.ts"
 import { add, endOfWeek, parseISO, startOfWeek } from "date-fns"
-import type { GroupData } from "@/domain/models/Group.ts"
-import type { TeacherData } from "@/domain/models/Teachers.ts"
-import type { BaseProfile } from "@/domain/models/Profile.ts"
+import type { GroupData } from "@/entities/Group.ts"
+import type { TeacherData } from "@/entities/Teachers.ts"
 
-export const toScheduleData = async <
-  T extends { items: ScheduleWeekDto[] },
-  V extends BaseProfile,
->(
+export const toScheduleData = async <T extends { items: ScheduleWeekDto[] }>(
   data: T,
-  profile: V,
   allActualGroups: GroupData[],
   actualTeachers: TeacherData[]
 ): Promise<ScheduleData> => {
   return {
     weeks: toWeekData(data.items, allActualGroups, actualTeachers),
-    id: profile.id,
-    name: profile.name,
-    type: profile.profileType,
-    view: "calendar",
-    lastUpdate: new Date(),
   }
 }
 
@@ -130,14 +121,14 @@ const getTeachersByIds = (
 const getLessonType = (numberType: number): LessonType => {
   switch (numberType) {
     case 2:
-      return "lecture"
+      return LESSON_TYPE.lecture
     case 4:
-      return "practical"
+      return LESSON_TYPE.practical
     case 8:
-      return "laboratory"
+      return LESSON_TYPE.laboratory
     case 256:
-      return "exam"
+      return LESSON_TYPE.exam
     default:
-      return "unknown"
+      return LESSON_TYPE.unknown
   }
 }

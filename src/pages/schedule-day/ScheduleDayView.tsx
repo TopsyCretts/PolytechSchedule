@@ -6,33 +6,53 @@ import { useNavigate } from "react-router"
 import { useCallback } from "react"
 import "./ScheduleDayView.scss"
 import clsx from "clsx"
+import { useTranslation } from "react-i18next"
+import { STRINGS_RES } from "@shared/constants/strings.ts"
+import { MATCH_MEDIA } from "@shared/constants/media.ts"
+import useMediaQueryListEvent from "@shared/lib/useMediaQueryListEvent.ts"
+import ScheduleDataErrorPopover from "@/pages/schedule/ui/ScheduleDataErrorPopover"
 
 const ScheduleDayView = () => {
-  const { currentDayData: day, profileType, locale } = useScheduleData()
+  const { t } = useTranslation()
   const navigate = useNavigate()
+
+  const { currentDayData: day, profile, locale } = useScheduleData()
 
   const handleBack = useCallback(() => {
     navigate(-1)
   }, [navigate])
 
+  const { isMatchesMedia } = useMediaQueryListEvent(MATCH_MEDIA.tablet)
+
   return (
-    <main className={clsx("schedule-day-view", "container")}>
-      <DayController
-        day={day.date}
-        locale={locale}
-        decrement={handleBack}
-        isActive={isToday(day.date)}
-        isDecrementActive={true}
-      />
+    <section className={clsx("schedule-day-view", "container")}>
+      <header className={clsx("schedule-day-view__header")}>
+        <h2 className={clsx("visually-hidden")}>
+          {t(STRINGS_RES.schedule)} на день
+        </h2>
+        <DayController
+          day={day.date}
+          locale={locale}
+          decrement={handleBack}
+          isActive={isToday(day.date)}
+          isDecrementActive={true}
+        />
+        <div className={"schedule-day-view__offline-indicator-wrapper"}>
+          <ScheduleDataErrorPopover
+            className={"schedule-day-view__offline-indicator"}
+            isReversed={isMatchesMedia}
+          />
+        </div>
+      </header>
       <ScheduleDayItem
         key={day.date.toString()}
-        className={"schedule-calendar__day-item"}
+        className={"schedule-day-view__day-item"}
         dayData={day}
         locale={locale}
-        profileType={profileType}
+        profileType={profile.profileType}
         isTitleIsHidden={true}
       />
-    </main>
+    </section>
   )
 }
 

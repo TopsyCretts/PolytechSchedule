@@ -1,4 +1,4 @@
-import type { LessonType } from "@/pages/schedule/model/ScheduleData.ts"
+import type { LessonType } from "@/entities/ScheduleData.ts"
 import LectureIcon from "@assets/icons/lecture.svg?react"
 import PracticalIcon from "@assets/icons/practical.svg?react"
 import LaboratoryIcon from "@assets/icons/labarotory.svg?react"

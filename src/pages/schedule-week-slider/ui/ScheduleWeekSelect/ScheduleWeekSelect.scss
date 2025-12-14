@@ -6,11 +6,12 @@
   column-gap: rem(15);
   height: var(--button-height);
 
-  &__select {
-  }
-
   &__content {
     overflow-y: auto;
     max-height: rem(480);
+
+    @include mobile {
+      max-height: rem(300);
+    }
   }
 }

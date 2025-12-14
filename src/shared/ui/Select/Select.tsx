@@ -103,12 +103,17 @@ const BackDrop = () => {
   )
 }
 
-const Container = ({ children, width = "12.5rem" }: SelectContainerProps) => {
+const Container = ({
+  children,
+  width = "12.5rem",
+  ref,
+}: SelectContainerProps) => {
   const { isOpen } = useSelect()
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
+          ref={ref}
           className="select__wrapper"
           initial={{ height: 0, width: 0, opacity: 0.5 }}
           animate={{ height: "auto", width: width, opacity: 1 }}
@@ -162,6 +167,7 @@ const Option = ({
         numerated && "select__item--numerated",
         isSelected && "select__item--selected"
       )}
+      id={optionKey}
       tabIndex={0}
       onKeyDown={(e) => {
         isEnterKeyPressed(e, handleOptionClick)

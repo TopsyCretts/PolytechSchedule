@@ -5,14 +5,17 @@ import type {
   SwitcherProps,
 } from "@shared/ui/Switcher/types.ts"
 
-const Switcher = ({
+const Switcher = <T extends string>({
   className,
   items,
   currentItem,
   onItemChange,
-}: SwitcherProps) => {
+}: SwitcherProps<T>) => {
   return (
-    <div className={clsx(className, "switcher")}>
+    <div
+      className={clsx(className, "switcher")}
+      role={"switch"}
+    >
       <div className="switcher__body">
         <ul className="switcher__list">
           {items.map((item) => (
@@ -29,7 +32,11 @@ const Switcher = ({
   )
 }
 
-const SwitcherItem = ({ item, isSelected, onClick }: SwitcherItemProps) => {
+const SwitcherItem = <T extends string>({
+  item,
+  isSelected,
+  onClick,
+}: SwitcherItemProps<T>) => {
   return (
     <li
       className={clsx(

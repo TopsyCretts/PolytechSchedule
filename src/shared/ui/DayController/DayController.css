@@ -24,8 +24,7 @@
 .day-controller__right {
   rotate: 180deg;
 }
-.day-controller__right,
-.day-controller__left {
+.day-controller__right, .day-controller__left {
   padding: 0;
   background-color: transparent;
   border: none;
@@ -38,34 +37,28 @@
   width: var(--button-height);
   height: var(--button-height);
 }
-.day-controller__right svg *,
-.day-controller__left svg * {
+.day-controller__right svg *, .day-controller__left svg * {
   color: var(--color-icon-themed);
 }
 @media (hover: hover) {
-  .day-controller__right:hover,
-  .day-controller__left:hover {
+  .day-controller__right:hover, .day-controller__left:hover {
     color: var(--color-light);
     background-color: var(--color-accent-themed);
   }
-  .day-controller__right:hover svg *,
-  .day-controller__left:hover svg * {
+  .day-controller__right:hover svg *, .day-controller__left:hover svg * {
     color: inherit;
   }
 }
 @media (hover: none) {
-  .day-controller__right:active,
-  .day-controller__left:active {
+  .day-controller__right:active, .day-controller__left:active {
     color: var(--color-light);
     background-color: var(--color-accent-themed);
   }
-  .day-controller__right:active svg *,
-  .day-controller__left:active svg * {
+  .day-controller__right:active svg *, .day-controller__left:active svg * {
     color: inherit;
   }
 }
-.day-controller__right,
-.day-controller__left {
+.day-controller__right, .day-controller__left {
   pointer-events: auto;
 }
 .day-controller__inactive-button {

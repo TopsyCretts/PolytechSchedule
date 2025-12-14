@@ -5,9 +5,11 @@ import {
   Route,
   RouterProvider,
 } from "react-router"
-import { profileLoader } from "@/pages/schedule"
 import { lazy } from "react"
-import LayOut from "@/hoc/LayOut.tsx"
+import LayOut from "@/app/entrypoint/LayOut.tsx"
+import { mainLoader } from "@/app/routes/main/mainLoader.ts"
+import { WebLoaderIndicator } from "@shared/ui"
+import { profileLoader } from "@/app/routes/schedule/profileLoader.ts"
 
 const HomePage = lazy(() => import("@/pages/HomePage"))
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"))
@@ -15,7 +17,12 @@ const SchedulePage = lazy(() => import("@/pages/schedule"))
 const ScheduleCalendarView = lazy(
   () => import("@/pages/schedule-calendar/ui/ScheduleCalendarView")
 )
-const ScheduleWeekSlider = lazy(() => import("@/pages/schedule-week-slider"))
+const ScheduleWeekSlider = lazy(
+  () =>
+    import(
+      "@/pages/schedule-week-slider/ui/ScheduleWeekView/ScheduleWeekView.tsx"
+    )
+)
 const ScheduleDayView = lazy(() => import("@/pages/schedule-day"))
 const RouterErrorElement = lazy(() => import("@shared/ui/RouterErrorElement"))
 
@@ -25,10 +32,12 @@ const router = createBrowserRouter(
       path={"/"}
       element={<LayOut />}
       errorElement={<RouterErrorElement />}
+      hydrateFallbackElement={<WebLoaderIndicator />}
     >
       <Route
         index
         element={<HomePage />}
+        loader={mainLoader}
         errorElement={<RouterErrorElement />}
       />
       <Route
@@ -51,7 +60,7 @@ const router = createBrowserRouter(
         }
       />
       <Route
-        path={"schedule/:profileId/"}
+        path={"schedule/:profileType/:profileApiId/"}
         id={"schedule"}
         loader={async ({ request, context, params }) =>
           profileLoader({ request, context, params })

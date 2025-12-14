@@ -1,19 +1,19 @@
-interface SwitcherProps {
+interface SwitcherProps<T extends string> {
   className?: string
-  currentItem: SwitcherOption
-  items: SwitcherOption[]
-  onItemChange: (option: SwitcherOption) => void
+  currentItem: SwitcherOption<T>
+  items: SwitcherOption<T>[]
+  onItemChange: (option: SwitcherOption<T>) => void
 }
 
-interface SwitcherItemProps {
-  item: SwitcherOption
+interface SwitcherItemProps<T extends string> {
+  item: SwitcherOption<T>
   isSelected: boolean
-  onClick: (option: SwitcherOption) => void
+  onClick: (option: SwitcherOption<T>) => void
 }
 
-interface SwitcherOption {
-  value: string
+interface SwitcherOption<T extends string> {
+  value: T
   label: string
 }
 
-export type { SwitcherProps, SwitcherItemProps }
+export type { SwitcherProps, SwitcherItemProps, SwitcherOption }

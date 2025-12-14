@@ -7,7 +7,7 @@ import MagicLight from "@assets/icons/magic-games-institute.svg?react"
 import EconomicLight from "@assets/icons/economics-management-institute.svg?react"
 import DigitalLight from "@assets/icons/digital-institute.svg?react"
 import CollageLight from "@assets/icons/collage.svg?react"
-import type { InstituteType } from "@/domain/models/Institute.ts"
+import type { InstituteType } from "@/entities/Institute.ts"
 
 interface InstituteIconProps {
   className?: string

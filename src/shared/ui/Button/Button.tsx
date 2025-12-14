@@ -9,11 +9,17 @@ const Button = ({
   type = "button",
   stopPropagation = true,
   onClick,
+  disabled,
   ...restProps
 }: ButtonProps) => {
   return (
     <button
-      className={clsx(className, "button", isSquare && "button--square")}
+      className={clsx(
+        className,
+        "button",
+        isSquare && "button--square",
+        disabled && "button--disabled"
+      )}
       onClick={(e) => {
         if (stopPropagation) {
           e.stopPropagation()
@@ -21,6 +27,7 @@ const Button = ({
         onClick?.(e)
       }}
       type={type}
+      disabled={disabled}
       {...restProps}
     >
       {children}

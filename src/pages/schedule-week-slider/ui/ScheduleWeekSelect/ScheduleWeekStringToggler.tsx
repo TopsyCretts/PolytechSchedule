@@ -6,6 +6,7 @@ import SelectorArrowsIcon from "@assets/icons/selector-arrows.svg?react"
 import "./ScheduleWeekStringToggler.scss"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@shared/constants/strings.ts"
+import { Button } from "@shared/ui"
 
 const ScheduleWeekStringToggler = ({
   className,
@@ -24,7 +25,7 @@ const ScheduleWeekStringToggler = ({
           {children}
         </div>
       </div>
-      <button
+      <Button
         className={clsx(className, "schedule-week-string-toggler__button")}
         onClick={context?.toggle}
       >
@@ -32,7 +33,7 @@ const ScheduleWeekStringToggler = ({
           {children}
         </div>
         <SelectorArrowsIcon className="schedule-week-string-toggler__arrows" />
-      </button>
+      </Button>
     </div>
   )
 }

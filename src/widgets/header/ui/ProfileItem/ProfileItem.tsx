@@ -1,8 +1,8 @@
 import { IconButton } from "@shared/ui"
 import clsx from "clsx"
 import "./ProfileItem.scss"
-import { NavLink, useNavigate, useParams } from "react-router"
-import type { ProfileType } from "@/domain/models/Profile.ts"
+import { NavLink, useNavigate } from "react-router"
+import type { ProfileType } from "@/entities/Profile.ts"
 import { useInjection } from "inversify-react"
 import { ProfilesStore } from "@/app/store/profiles/ProfilesStore.ts"
 import { observer } from "mobx-react-lite"
@@ -10,16 +10,24 @@ import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
 
 interface ProfilesProps {
   className?: string
+  htmlId?: string
   profileId: number
+  profileApiId: number
   profileName: string
   scheduleType: ProfileType
+  isActive: boolean
 }
 
 const ProfileItem = observer(
-  ({ className, profileId, profileName, scheduleType }: ProfilesProps) => {
-    const params = useParams()
-    const id = Number(params.profileId)
-    const isActive = id === profileId
+  ({
+    htmlId,
+    profileId,
+    className,
+    profileApiId,
+    profileName,
+    scheduleType,
+    isActive,
+  }: ProfilesProps) => {
     const { removeProfileAndReturnClosest } =
       useInjection<ProfilesStore>(ProfilesStore)
 
@@ -30,7 +38,7 @@ const ProfileItem = observer(
       if (nearestProfile !== null) {
         navigate(
           getScheduleProfileRoute(
-            nearestProfile.id.toString(),
+            nearestProfile.apiId.toString(),
             nearestProfile.profileType
           ),
           { replace: true }
@@ -42,6 +50,7 @@ const ProfileItem = observer(
 
     return (
       <li
+        id={htmlId}
         className={clsx(
           className,
           "profile-item",
@@ -50,7 +59,7 @@ const ProfileItem = observer(
         )}
       >
         <NavLink
-          to={getScheduleProfileRoute(profileId.toString(), scheduleType)}
+          to={getScheduleProfileRoute(profileApiId.toString(), scheduleType)}
           className={"profile-item__link"}
           title={profileName}
         >

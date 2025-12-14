@@ -1,0 +1,33 @@
+.schedule-page-view-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  column-gap: 1.25rem;
+  height: fit-content;
+  padding-block: 1.25rem;
+}
+@media (width <= 63.99875rem) {
+  .schedule-page-view-header {
+    padding-block: 0.9375rem;
+  }
+}
+.schedule-page-view-header__switcher {
+  width: 100%;
+  max-width: 30.125rem;
+}
+.schedule-page-view-header__header--grid {
+  display: grid;
+  grid-template-columns: 1fr minmax(auto, 30.125rem) 1fr;
+  place-items: center center;
+  column-gap: 0.5rem;
+}
+.schedule-page-view-header__header--grid .schedule-page__switcher, .schedule-page-view-header__header--grid .schedule-page__mobile-switcher {
+  grid-column: 2;
+}
+.schedule-page-view-header__offline-indicator {
+  grid-column: 3;
+  justify-self: start;
+}
+
+/*# sourceMappingURL=SchedulePageHeader.css.map */

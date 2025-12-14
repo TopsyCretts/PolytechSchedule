@@ -10,8 +10,7 @@
   max-width: 100%;
   transition-duration: var(--transition-duration);
 }
-.header-profile-label__name,
-.header-profile-label__inasitute {
+.header-profile-label__name, .header-profile-label__inasitute {
   flex-shrink: 1;
   overflow: hidden;
   display: -webkit-box;

@@ -11,6 +11,15 @@ body {
   background-color: var(--color-bg-themed);
 }
 
+#root {
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 100dvh;
+  }
+}
+
 a,
 button,
 input,

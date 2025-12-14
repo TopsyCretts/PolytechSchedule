@@ -1,3 +1,3 @@
-import ScheduleWeekSlider from "./ui/ScheduleWeekSlider/ScheduleWeekSlider.tsx"
+import ScheduleWeekView from "@/pages/schedule-week-slider/ui/ScheduleWeekView/ScheduleWeekView.tsx"
 
-export default ScheduleWeekSlider
+export default ScheduleWeekView

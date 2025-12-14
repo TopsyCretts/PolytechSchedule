@@ -1,6 +1,7 @@
 @use "../../../../styles/helpers/index" as *;
 
 .new-profile-item {
+  border-bottom: var(--border-themed);
   transition-duration: var(--transition-duration);
 
   &--active {

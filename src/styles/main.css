@@ -474,8 +474,26 @@ svg * {
   }
 }
 
+@media (width > 87.56125rem) {
+  .visible-laptop {
+    display: none !important;
+  }
+}
+
 @media (width <= 87.56125rem) {
   .hidden-laptop {
+    display: none !important;
+  }
+}
+
+@media (width <= 63.99875rem) {
+  .hidden-tablet {
+    display: none !important;
+  }
+}
+
+@media (width > 63.99875rem) {
+  .visible-tablet {
     display: none !important;
   }
 }
@@ -507,6 +525,15 @@ body {
   letter-spacing: var(--letter-spacing);
   color: var(--color-text-themed);
   background-color: var(--color-bg-themed);
+}
+
+@media (width <= 47.999375rem) {
+  #root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 100dvh;
+  }
 }
 
 a,

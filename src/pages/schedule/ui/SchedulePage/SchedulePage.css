@@ -1,19 +1,14 @@
 .schedule-page {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
   width: 100%;
   max-width: 100%;
-  padding-bottom: 6.25rem;
+  height: 100%;
 }
 @media (width <= 47.999375rem) {
   .schedule-page {
-    padding-bottom: 2.5rem;
+    padding-bottom: 1.25rem;
   }
-}
-.schedule-page__switcher {
-  margin-block: 1.25rem;
 }
 
 /*# sourceMappingURL=SchedulePage.css.map */

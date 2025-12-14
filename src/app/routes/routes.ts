@@ -18,7 +18,10 @@ const routeWithParams = (
 const APP_ROUTES = {
   home: "/",
   newProfile: "/new-profile",
-  schedule: "/schedule",
+  scheduleIndex: "/schedule",
+  scheduleCalendar: "schedule/:profileType/:profileApiId/calendar",
+  scheduleWeek: "schedule/:profileType/:profileApiId/week",
+  scheduleDay: "schedule/:profileType/:profileApiId/calendar/day",
   notFound: "/not-found",
 } as const
 

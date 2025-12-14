@@ -74,8 +74,26 @@
   }
 }
 
+.visible-laptop {
+  @include laptop-above {
+    display: none !important;
+  }
+}
+
 .hidden-laptop {
   @include laptop {
+    display: none !important;
+  }
+}
+
+.hidden-tablet {
+  @include tablet {
+    display: none !important;
+  }
+}
+
+.visible-tablet {
+  @include tablet-above {
     display: none !important;
   }
 }

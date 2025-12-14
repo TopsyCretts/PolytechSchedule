@@ -11,6 +11,10 @@
     height: 100%;
   }
 
+  &__inner {
+    overflow: auto hidden;
+  }
+
   &__item,
   &__new-profile-link {
     @include flex-center;
@@ -42,6 +46,10 @@
         text-decoration: none;
         color: inherit;
       }
+    }
+
+    &__profiles {
+      width: 100%;
     }
   }
 }

@@ -1,8 +1,7 @@
 import "./BurgerMenu.scss"
 import clsx from "clsx"
-import { useTheme } from "@/domain/hooks"
 import { useCallback } from "react"
-import type { ThemeType } from "@/domain/types/Theme.ts"
+import type { ThemeType } from "@shared/models/Theme.ts"
 import { Select } from "@shared/ui"
 import {
   LANGUAGE_SELECTABLE_VALUES,
@@ -14,6 +13,7 @@ import BurgerIcon from "@assets/icons/burger.svg?react"
 import i18next from "i18next"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@shared/constants/strings.ts"
+import { useTheme } from "@shared/lib/useTheme.ts"
 
 interface BurgerMenuProps {
   className?: string
@@ -42,8 +42,8 @@ const BurgerMenu = ({ className }: BurgerMenuProps) => {
   return (
     <Select className={clsx(className, "burger-menu", "visible-mobile-s")}>
       <Select.ButtonToggler
+        className="buger-menu__button-toggler"
         isSquare
-        onClick={() => {}}
       >
         <BurgerIcon />
       </Select.ButtonToggler>

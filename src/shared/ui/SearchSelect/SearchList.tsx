@@ -1,4 +1,4 @@
-import type { SearchListProps } from "@/domain/types/Search.ts"
+import type { SearchListProps } from "@shared/models/Search.ts"
 import { AnimatePresence, motion } from "framer-motion"
 import clsx from "clsx"
 import SearchItemWithType from "@shared/ui/SearchItem/SearchItemWithType.tsx"

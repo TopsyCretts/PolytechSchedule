@@ -47,4 +47,7 @@ export const STRINGS_RES = {
   remote_lesson: "remote_lesson",
   lesson_name_not_specified: "lesson_name_not_specified",
   additional_info: "additional_info",
-}
+  offline_mode: "offline_mode",
+  last_update_at: "last_update_at",
+  there_is_no_schedule_for_profile: "there_is_no_schedule_for_profile",
+};

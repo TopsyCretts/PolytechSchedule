@@ -1,8 +1,9 @@
-import type { ScheduleWeekData } from "@/pages/schedule/model/ScheduleData.ts"
+import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
 import type { Locale } from "date-fns"
 import type { SelectOption } from "@shared/ui/Select/types"
 
 interface ScheduleWeekSelectProps {
+  className?: string
   weekData: ScheduleWeekData[]
   startWeekFormat: string
   locale: Locale
@@ -17,7 +18,8 @@ interface WeeksByYear {
 
 interface SelectedWeekSlide {
   index: number
-  startDate: Date
+  weekData: ScheduleWeekData
+  activeDateIndex: number
 }
 
 export type { ScheduleWeekSelectProps, WeeksByYear, SelectedWeekSlide }

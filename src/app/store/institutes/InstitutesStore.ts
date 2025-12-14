@@ -1,17 +1,16 @@
 import { injectable } from "inversify"
 import { action, computed, makeAutoObservable, observable } from "mobx"
-import { queryClient } from "@shared/api"
-import type { InstitutesData } from "@/domain/models/Institute.ts"
-import type { GroupData } from "@/domain/models/Group.ts"
+import type { InstitutesData } from "@/entities/Institute.ts"
+import type { GroupData } from "@/entities/Group.ts"
+import { dbService, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
 import { LocalStorageManager } from "@/app/store/browser-storages"
-import { getGroupsByInstitutesQueryOptions } from "@shared/api/search-schedule/institutesService.ts"
-import { dbService } from "@/app/store/browser-storages/indexDb.ts"
+import { LOCAL_STORAGE_KEY } from "@shared/constants/contstants.ts"
 
 @injectable()
 export class InstitutesStore {
   @observable
   private institutesData: InstitutesData = {
-    lastUpdate: new Date().getTime(),
+    lastUpdate: null,
     institutes: [],
   }
 
@@ -33,12 +32,20 @@ export class InstitutesStore {
 
   @action
   private init() {
-    queryClient
-      .prefetchQuery(getGroupsByInstitutesQueryOptions())
+    dbService
+      .getAll(STORE_NAMES.institutes)
       .catch(() => {
         this.rejectInitialized()
       })
-      .then(() => {
+      .then((institutes) => {
+        if (institutes) {
+          this.institutesData = {
+            institutes: institutes,
+            lastUpdate: LocalStorageManager.get(
+              LOCAL_STORAGE_KEY.institutesLastUpdate
+            ),
+          }
+        }
         this.resolveInitialized(true)
       })
   }
@@ -52,7 +59,6 @@ export class InstitutesStore {
   setInstitutesData(data: InstitutesData) {
     this.institutesData = { ...data }
     dbService.saveAllInstitutes(data.institutes).then()
-    LocalStorageManager.saveInstitutesData(data)
   }
 
   getGroupsByInstitute(instituteId: number): GroupData[] | null {

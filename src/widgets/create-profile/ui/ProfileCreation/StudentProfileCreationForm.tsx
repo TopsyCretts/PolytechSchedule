@@ -1,22 +1,26 @@
 import { useTranslation } from "react-i18next"
 import { useCallback, useState } from "react"
-import { SearchSelect } from "@shared/ui"
+import { SearchSelect, Spinner } from "@shared/ui"
 import { STRINGS_RES } from "@shared/constants/strings.ts"
-import { AccentButton } from "@shared/ui"
-import type { ProfileCreationFormProps } from "@widgets/create-profile/ui/ProfileCreation/types.ts"
-import { toInstituteUi } from "@/domain/models/Institute.ts"
-import type { SearchItem } from "@/domain/types/Search.ts"
+import type {
+  ProfileCreationFormProps,
+  StudentProfileCreationValues,
+} from "@widgets/create-profile/ui/ProfileCreation/types.ts"
+import { toInstituteUi } from "@/entities/Institute.ts"
+import type { SearchItem } from "@shared/models/Search.ts"
 import { useNavigate } from "react-router"
 import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
 import { useInjection } from "inversify-react"
 import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
 import { observer } from "mobx-react-lite"
-import type { GroupData } from "@/domain/models/Group.ts"
+import type { GroupData } from "@/entities/Group.ts"
 import { useGetGroupsByInstitutesQuery } from "@shared/api/search-schedule/institutesService.ts"
+import { PROFILE_TYPE } from "@/entities/Profile.ts"
+import RetryFallback from "@widgets/RetryFallback"
 
 const mapGroupsToSearchItems = (groups: GroupData[] | null): SearchItem[] => {
   if (groups === null) {
-    throw new Error("Groups not found")
+    return []
   }
   return groups.map((item) => {
     return {
@@ -27,25 +31,22 @@ const mapGroupsToSearchItems = (groups: GroupData[] | null): SearchItem[] => {
   })
 }
 
-const defaultValues = { institute: null, group: null }
+const defaultValues: StudentProfileCreationValues = {
+  institute: null,
+  group: null,
+}
 
 const StudentProfileCreationForm = observer(
   ({ className }: ProfileCreationFormProps) => {
     const { t } = useTranslation()
     const navigate = useNavigate()
 
-    useGetGroupsByInstitutesQuery()
+    const { isFetching, isError, refetch } = useGetGroupsByInstitutesQuery()
     const { getInstitutes: institutes, getGroupsByInstitute } =
       useInjection<InstitutesStore>(InstitutesStore)
 
-    if (institutes.institutes.length === 0) {
-      throw new Error("Institutes not found")
-    }
-
-    const [selectedValues, setSelectedValues] = useState<{
-      institute: { id: number; name: string } | null
-      group: { id: number; name: string } | null
-    }>(defaultValues)
+    const [selectedValues, setSelectedValues] =
+      useState<StudentProfileCreationValues>(defaultValues)
 
     const handleInstituteSelection = useCallback(
       (institute: SearchItem | null) => {
@@ -73,22 +74,26 @@ const StudentProfileCreationForm = observer(
             name: group.searchableValue,
           },
         }))
+        navigateToStudentProfile(group.id)
       }
     }, [])
 
-    const handleSubmit = (event: React.FormEvent) => {
-      event.preventDefault()
+    const navigateToStudentProfile = (groupId: number | string) => {
       navigate(
-        getScheduleProfileRoute(selectedValues.group!.id.toString(), "student"),
+        getScheduleProfileRoute(groupId.toString(), PROFILE_TYPE.student),
         { replace: true }
       )
     }
 
-    return (
-      <form
-        onSubmit={handleSubmit}
-        className={className}
-      >
+    return isFetching && institutes.institutes.length === 0 ? (
+      <Spinner className={"profile-creation__loading-fallback"} />
+    ) : isError && institutes.institutes.length === 0 ? (
+      <RetryFallback
+        className={"profile-creation__retry-fallback"}
+        onRetry={refetch}
+      />
+    ) : (
+      <form className={className}>
         <SearchSelect
           id={"institutes"}
           label={t(STRINGS_RES.institute_other)}
@@ -106,15 +111,6 @@ const StudentProfileCreationForm = observer(
             placeholder={t(STRINGS_RES.enter_the_group)}
             onSelectedChange={handleGroupSelection}
           />
-        )}
-        {selectedValues.group !== null && (
-          <AccentButton
-            className={"profile-creation__next-button h3"}
-            type={"submit"}
-            onClick={() => {}}
-          >
-            {t(STRINGS_RES.next)}
-          </AccentButton>
         )}
       </form>
     )

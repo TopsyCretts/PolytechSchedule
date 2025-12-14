@@ -19,8 +19,7 @@
   color: var(--color-text-themed);
   background-color: var(--color-light-opacity-10);
 }
-.search-field__icon,
-.search-field__cross {
+.search-field__icon, .search-field__cross {
   flex-shrink: 0;
 }
 .search-field__icon {

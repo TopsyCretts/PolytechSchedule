@@ -1,9 +1,9 @@
 import { action, computed, makeAutoObservable, observable } from "mobx"
 import { queryClient } from "@shared/api"
 import { getTeachersQueryOptions } from "@shared/api/search-schedule/teachersService.ts"
-import type { TeacherData, TeachersData } from "@/domain/models/Teachers.ts"
+import type { TeacherData, TeachersData } from "@/entities/Teachers.ts"
 import { injectable } from "inversify"
-import { dbService } from "@/app/store/browser-storages/indexDb.ts"
+import { dbService } from "@/app/store/indexDb/indexDb.ts"
 
 @injectable()
 export class TeachersStore {

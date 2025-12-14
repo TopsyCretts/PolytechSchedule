@@ -1,20 +1,20 @@
 import "./ProfileCreation.scss"
 import clsx from "clsx"
-import { Switcher } from "@shared/ui"
+import { Spinner, Switcher } from "@shared/ui"
 import { Suspense, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@shared/constants/strings.ts"
 import StudentProfileCreationForm from "@widgets/create-profile/ui/ProfileCreation/StudentProfileCreationForm.tsx"
 import TeacherProfileCreationForm from "@widgets/create-profile/ui/ProfileCreation/TeacherProfileCreationForm.tsx"
-import { Spinner } from "@shared/ui"
-import QueryErrorResetWrapper from "@/hoc/QueryErrorResetWrapper/QueryErrorResetWrapper.tsx"
+import QueryErrorResetWrapper from "@shared/hoc/QueryErrorResetWrapper/QueryErrorResetWrapper.tsx"
+import { PROFILE_TYPE } from "@/entities/Profile.ts"
 
 const ProfileCreation = () => {
   const { t } = useTranslation()
   const items = useMemo(() => {
     return [
-      { label: t(STRINGS_RES.teacher_one), value: "teacher" },
-      { label: t(STRINGS_RES.student_one), value: "student" },
+      { label: t(STRINGS_RES.teacher_one), value: PROFILE_TYPE.teacher },
+      { label: t(STRINGS_RES.student_one), value: PROFILE_TYPE.student },
     ]
   }, [t])
 
@@ -29,23 +29,11 @@ const ProfileCreation = () => {
             items={items}
             onItemChange={setCurrentItem}
           />
-
-          {currentItem.value === "student" ? (
-            <QueryErrorResetWrapper
-              key={"student"}
-              fallbackClassName={"profile-creation__retry-fallback"}
-            >
-              <Suspense
-                fallback={
-                  <Spinner className={"profile-creation__loading-fallback"} />
-                }
-              >
-                <StudentProfileCreationForm
-                  className={"profile-creation__form"}
-                  onProfileCreation={() => {}}
-                />
-              </Suspense>
-            </QueryErrorResetWrapper>
+          {currentItem.value === PROFILE_TYPE.student ? (
+            <StudentProfileCreationForm
+              className={"profile-creation__form"}
+              onProfileCreation={() => {}}
+            />
           ) : (
             <QueryErrorResetWrapper
               key={"teacher"}

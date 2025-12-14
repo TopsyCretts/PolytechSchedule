@@ -1,5 +1,6 @@
 .profile-item {
   border-right: var(--border-themed);
+  border-bottom: var(--border-themed);
   transition-duration: var(--transition-duration);
 }
 .profile-item--active {
@@ -12,8 +13,7 @@
   content: "";
   margin-left: 0.3125rem;
 }
-.profile-item--active .profile-item__cross,
-.profile-item--active::before {
+.profile-item--active .profile-item__cross, .profile-item--active::before {
   width: 1.5rem;
   height: 1.5rem;
 }

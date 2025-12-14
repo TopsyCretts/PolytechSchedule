@@ -1,7 +1,7 @@
 @use "../../../../styles/helpers" as *;
 
 .header {
-  margin-top: rem(30);
+  padding-top: rem(30);
 
   &__inner,
   &__main {
@@ -84,7 +84,7 @@
   &__extra {
     position: absolute;
     z-index: -1;
-    overflow: auto hidden;
+    overflow-y: hidden;
     width: 100%;
     max-width: 100%;
     height: rem(53);

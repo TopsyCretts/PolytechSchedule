@@ -3,7 +3,7 @@ import SearchItem from "./SearchItem.tsx"
 import StudentIcon from "@assets/icons/student.svg?react"
 import TeacherIcon from "@assets/icons/teacher.svg?react"
 import type { SearchItemCoreProps } from "../SearchItem/types.ts"
-import type { InstituteType } from "@/domain/models/Institute.ts"
+import type { InstituteType } from "@/entities/Institute.ts"
 import type { JSX } from "react"
 
 interface SearchItemWithType extends SearchItemCoreProps {

@@ -6,14 +6,16 @@ import { useTranslation } from "react-i18next"
 
 interface NewProfileLinkProps {
   className?: string
+  id?: string
 }
 
-const NewProfileItem = ({ className }: NewProfileLinkProps) => {
+const NewProfileItem = ({ className, id }: NewProfileLinkProps) => {
   const { t } = useTranslation()
   const matches = useMatch("/new-profile")
 
   return (
     <li
+      id={id}
       className={clsx(
         className,
         "new-profile-item",

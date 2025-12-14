@@ -1,0 +1,49 @@
+@use "../../../../styles/helpers/index" as *;
+
+.schedule-week-view {
+  @include stretch-container-to-available-size;
+
+  flex-direction: column;
+
+  &__header {
+    @include flex-center;
+
+    flex-direction: column;
+
+    @include mobile {
+      max-width: calc(#{rem(380)} + 2 * var(--container-padding-x));
+      margin-inline: auto;
+      padding-inline: var(--container-padding-x);
+    }
+  }
+
+  &__slider-container,
+  &__slider-container-wrapper {
+    @include stretch-container-to-available-size;
+  }
+
+  &__indicator {
+    @include abs-x;
+    @include flex-center;
+    @include border-shadow-themed(var(--border-radius-small));
+
+    background-color: var(--select-bg);
+    pointer-events: none;
+
+    &--top {
+      top: rem(120);
+      rotate: -0.25turn;
+    }
+
+    &--bottom {
+      bottom: 0;
+      rotate: 0.25turn;
+    }
+  }
+
+  &__arrow {
+    width: 70%;
+    height: 70%;
+    color: inherit;
+  }
+}

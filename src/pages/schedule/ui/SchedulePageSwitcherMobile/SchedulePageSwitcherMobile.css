@@ -1,0 +1,29 @@
+.schedule-page-switcher-mobile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.75rem;
+  height: var(--button-height);
+  padding: 0.625rem !important;
+  border: none;
+  box-shadow: var(--shadow-themed);
+}
+.schedule-page-switcher-mobile__icon-wrapper {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+@media (hover: hover) {
+  .schedule-page-switcher-mobile:hover {
+    background-color: var(--color-accent-themed);
+  }
+}
+@media (hover: none) {
+  .schedule-page-switcher-mobile:active {
+    background-color: var(--color-accent-themed);
+  }
+}
+
+/*# sourceMappingURL=SchedulePageSwitcherMobile.css.map */

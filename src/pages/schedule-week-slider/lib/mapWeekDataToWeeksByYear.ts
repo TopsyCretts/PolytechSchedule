@@ -1,4 +1,4 @@
-import type { ScheduleWeekData } from "@/pages/schedule/model/ScheduleData.ts"
+import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
 import { format, isEqual, type Locale, startOfYear } from "date-fns"
 import type { SelectOption } from "@shared/ui/Select/types"
 import type { WeeksByYear } from "./types"

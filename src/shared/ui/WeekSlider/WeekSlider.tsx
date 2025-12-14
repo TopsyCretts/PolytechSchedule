@@ -13,22 +13,38 @@ import {
   startOfWeek,
 } from "date-fns"
 import ScheduleDayItem from "@shared/ui/ScheduleDayItem"
-import type { ProfileType } from "@/domain/models/Profile.ts"
-import type { ScheduleWeekData } from "@/pages/schedule/model/ScheduleData.ts"
+import type { ProfileType } from "@/entities/Profile.ts"
+import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
 // @ts-ignore
 import "swiper/css"
-import { useCallback, useMemo, useRef, useState } from "react"
-import DayController from "@shared/ui/DayController"
+import {
+  type RefObject,
+  type UIEvent,
+  useCallback,
+  useMemo,
+  useState,
+} from "react"
 import "./WeekSlider.scss"
+import useMediaQueryListEvent from "@shared/lib/useMediaQueryListEvent.ts"
+import { MATCH_MEDIA } from "@shared/constants/media.ts"
 
 interface WeekSliderProps {
   profileType: ProfileType
   locale: Locale
   weekData: ScheduleWeekData
+  onSlideChange: (index: number) => void
+  swiperRef: RefObject<SwiperRef | null>
+  onScroll: (event: UIEvent) => void
 }
 
-const WeekSlider = ({ weekData, profileType, locale }: WeekSliderProps) => {
-  const swiperRef = useRef<SwiperRef | null>(null)
+const WeekSlider = ({
+  weekData,
+  profileType,
+  locale,
+  swiperRef,
+  onSlideChange,
+  onScroll,
+}: WeekSliderProps) => {
   const isCurrentWeek = useMemo(() => {
     return isEqual(
       startOfWeek(startOfToday(), { weekStartsOn: 1 }),
@@ -40,6 +56,8 @@ const WeekSlider = ({ weekData, profileType, locale }: WeekSliderProps) => {
     start: weekData.start,
     end: weekData.end,
   })
+
+  const { isMatchesMedia } = useMediaQueryListEvent(MATCH_MEDIA.mobile_s)
 
   const [activeindex, setActiveIndex] = useState<number>(() => {
     if (isCurrentWeek) {
@@ -66,81 +84,52 @@ const WeekSlider = ({ weekData, profileType, locale }: WeekSliderProps) => {
       slidesPerView: "auto",
       roundLengths: true,
       speed: 500,
-      autoHeight: true,
       style: {
-        height: "100%",
         width: "100vw",
       },
       direction: "horizontal",
     }
   }, [])
 
-  const goToIndex = useCallback((index: number) => {
-    swiperRef.current?.swiper?.slideTo(index)
-  }, [])
-
-  const goNext = useCallback(
-    () => swiperRef.current?.swiper?.slideNext(),
-    [swiperRef]
-  )
-  const goPrev = useCallback(
-    () => swiperRef.current?.swiper?.slidePrev(),
+  const goToIndex = useCallback(
+    (index: number) => {
+      swiperRef.current?.swiper.slideTo(index)
+    },
     [swiperRef]
   )
 
   return (
-    <div
+    <Swiper
+      ref={swiperRef}
       className={"week-slider"}
-      style={{ position: "relative" }}
+      onSlideChange={(swiper) => {
+        setActiveIndex(swiper.activeIndex)
+        onSlideChange(swiper.activeIndex)
+      }}
+      initialSlide={activeindex}
+      touchMoveStopPropagation={true}
+      {...swiperParams}
     >
-      <DayController
-        day={weekDays[activeindex]}
-        locale={locale}
-        increment={goNext}
-        decrement={goPrev}
-        isActive={isEqual(startOfDay(weekDays[activeindex]), startOfToday())}
-        isIncrementActive={activeindex < weekDays.length - 1}
-        isDecrementActive={activeindex > 0}
-      />
-      <Swiper
-        ref={swiperRef}
-        onSlideChange={(swiper) => {
-          setActiveIndex(swiper.activeIndex)
-        }}
-        initialSlide={activeindex}
-        {...swiperParams}
-      >
-        {newWeekData.map((date, index) => (
-          <SwiperSlide
-            key={date.date.toString()}
-            style={{
-              maxWidth: 510,
-              scale: activeindex === index ? 1 : 0.8,
-              position: "relative",
-              display: "flex",
-              flexDirection: "column",
-              height: "100%",
-              maxHeight: "100%",
-              overflowY: "auto",
-            }}
-            onClick={() => {
-              goToIndex(index)
-            }}
-          >
-            <ScheduleDayItem
-              className={"no-swiping-element"}
-              dayData={date}
-              profileType={profileType}
-              locale={locale}
-              isTitleIsHidden={index === activeindex}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      <div className="week-slider__bottom-drag-zone">
-        <div className="week-slider__dragger"></div>
-      </div>
-    </div>
+      {newWeekData.map((date, index) => (
+        <SwiperSlide
+          key={date.date.toString()}
+          id={"week-day-" + index}
+          className={"week-slider__slide"}
+          style={{ scale: activeindex === index ? 1 : 0.8 }}
+          onScroll={(event) => onScroll(event)}
+          onClick={() => {
+            goToIndex(index)
+          }}
+        >
+          <ScheduleDayItem
+            dayData={date}
+            profileType={profileType}
+            locale={locale}
+            isTitleIsHidden={index === activeindex || isMatchesMedia}
+          />
+        </SwiperSlide>
+      ))}
+    </Swiper>
   )
 }
 

@@ -1,6 +1,6 @@
 import { useRouteLoaderData } from "react-router"
 import { AnimatePresence, motion } from "framer-motion"
-import type { Profile, StudentProfile } from "@/domain/models/Profile.ts"
+import type { Profile, StudentProfile } from "@/entities/Profile.ts"
 import { observer } from "mobx-react-lite"
 import "./HeaderProfileLabel.scss"
 import type { profileLoader } from "@/app/routes/schedule/profileLoader.ts"

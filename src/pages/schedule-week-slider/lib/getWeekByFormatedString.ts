@@ -1,4 +1,4 @@
-import type { ScheduleWeekData } from "@/pages/schedule/model/ScheduleData.ts"
+import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
 import { isEqual, parse } from "date-fns"
 
 export const getWeekByFormatedString = (

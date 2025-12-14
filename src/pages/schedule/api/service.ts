@@ -1,51 +1,70 @@
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query"
+import { queryOptions, useQuery } from "@tanstack/react-query"
 import {
   getScheduleByGroupId,
   getScheduleByTeacherId,
 } from "@/pages/schedule/api/requests.ts"
 import { toScheduleData } from "@/pages/schedule/lib/toScheduleData.ts"
-import type { GroupData } from "@/domain/models/Group.ts"
-import type { TeacherData } from "@/domain/models/Teachers.ts"
-import type { BaseProfile } from "@/domain/models/Profile.ts"
-import { dbService } from "@/app/store/browser-storages/indexDb.ts"
+import type { GroupData } from "@/entities/Group.ts"
+import type { TeacherData } from "@/entities/Teachers.ts"
+import { type BaseProfile, PROFILE_TYPE } from "@/entities/Profile.ts"
+import { dbService } from "@/app/store/indexDb/indexDb.ts"
 import axios from "axios"
-import { toScheduleUi } from "@/app/store/browser-storages/types.ts"
+import { toScheduleUi } from "@/app/store/indexDb/models/ScheduleDataDB.ts"
+import type {
+  ScheduleData,
+  ScheduleDataStatus,
+} from "@/entities/ScheduleData.ts"
+import { PROGRESS_STATUS } from "@shared/models/DataStatus.ts"
 
 const getScheduleByProfileOptions = (
   profile: BaseProfile,
+  onCacheData: (scheduleData: ScheduleDataStatus) => void,
   actualGroups: GroupData[],
   actualTeachers: TeacherData[]
 ) =>
   queryOptions({
-    queryKey: ["schedule", profile.profileType, profile.id],
-    queryFn: async () => {
+    queryKey: ["schedule", profile.profileType, profile.apiId],
+    queryFn: async (): Promise<ScheduleDataStatus | undefined> => {
       const existingScheduleData = await dbService.getSchedule(profile.id)
+      let existingScheduleDataUi: ScheduleData | null = null
 
       const isCacheValid = existingScheduleData !== undefined
 
+      if (isCacheValid) {
+        existingScheduleDataUi = toScheduleUi(existingScheduleData)
+        onCacheData({
+          data: existingScheduleDataUi,
+          status: PROGRESS_STATUS.loading,
+        })
+      }
+
       try {
         const response =
-          profile.profileType === "student"
-            ? await getScheduleByGroupId(profile.id)
-            : await getScheduleByTeacherId(profile.id)
+          profile.profileType === PROFILE_TYPE.student
+            ? await getScheduleByGroupId(profile.apiId)
+            : await getScheduleByTeacherId(profile.apiId)
         const newScheduleData = await toScheduleData(
           response.data,
-          profile,
           actualGroups,
           actualTeachers
         )
-        dbService.saveSchedule(newScheduleData).then(() => {
-          console.log(`Schedule saved successfully ${newScheduleData.id}`)
+        dbService.saveSchedule(profile.id, newScheduleData).then(() => {
+          console.log(`Schedule saved successfully ${profile.id}`)
         })
-        return newScheduleData
+        console.log(newScheduleData)
+        return { data: newScheduleData, status: PROGRESS_STATUS.success }
       } catch (error) {
         if (axios.isAxiosError(error) && !error.response && isCacheValid) {
           console.log("Using cached data due to network error")
-          return toScheduleUi(existingScheduleData!)
+          return {
+            data: existingScheduleDataUi!,
+            status: PROGRESS_STATUS.error,
+          }
         }
         throw error
       }
     },
+    refetchOnWindowFocus: false,
     select: (data) => data,
     retry: (failureCount, error) => {
       if (axios.isAxiosError(error) && !error.response) {
@@ -57,11 +76,17 @@ const getScheduleByProfileOptions = (
 
 const useGetScheduleByProfileQuery = (
   profile: BaseProfile,
+  onCacheData: (scheduleData: ScheduleDataStatus) => void,
   actualGroups: GroupData[],
   actualTeachers: TeacherData[]
 ) =>
-  useSuspenseQuery(
-    getScheduleByProfileOptions(profile, actualGroups, actualTeachers)
+  useQuery(
+    getScheduleByProfileOptions(
+      profile,
+      onCacheData,
+      actualGroups,
+      actualTeachers
+    )
   )
 
 export { useGetScheduleByProfileQuery, getScheduleByProfileOptions }

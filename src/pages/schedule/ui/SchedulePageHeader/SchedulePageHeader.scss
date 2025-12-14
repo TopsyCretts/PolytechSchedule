@@ -1,0 +1,38 @@
+@use "../../../../styles/helpers" as *;
+
+.schedule-page-view-header {
+  @include flex-center;
+
+  flex-shrink: 0;
+  column-gap: rem(20);
+  height: fit-content;
+  padding-block: rem(20);
+
+  @include tablet {
+    padding-block: rem(15);
+  }
+
+  &__switcher {
+    width: 100%;
+    max-width: rem(482);
+  }
+
+  &__header--grid {
+    display: grid;
+    grid-template-columns: 1fr minmax(auto, rem(482)) 1fr;
+    place-items: center center;
+    column-gap: rem(8);
+
+    & .schedule-page {
+      &__switcher,
+      &__mobile-switcher {
+        grid-column: 2;
+      }
+    }
+  }
+
+  &__offline-indicator {
+    grid-column: 3;
+    justify-self: start;
+  }
+}

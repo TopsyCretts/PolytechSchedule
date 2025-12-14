@@ -112,3 +112,11 @@
     );
   }
 }
+
+@mixin stretch-container-to-available-size {
+  flex: 1;
+  position: relative;
+  overflow-y: hidden;
+  display: flex;
+  min-height: 0;
+}

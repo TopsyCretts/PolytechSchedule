@@ -49,16 +49,11 @@
 
   &__inner {
     width: 100%;
-    margin-bottom: rem(15);
     padding: rem(10) rem(16) rem(16);
     background-color: var(--lesson-card-bg);
     border: rem(1) solid var(--lesson-card-border);
     border-radius: var(--border-radius-large);
     box-shadow: var(--shadow-themed);
-
-    @include mobile {
-      margin-bottom: 0;
-    }
   }
 
   &__path-indicator {
