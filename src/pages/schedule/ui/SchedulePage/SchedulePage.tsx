@@ -105,18 +105,18 @@ const ScheduleLayout = ({
       value={value}
     >
       <SchedulePageHeader className={"schedule-page__header"} />
+      {isError && isWeeksEmpty && <RetryFallback onRetry={refetch} />}
       {(isFetching && isWeeksEmpty) || debouncedProfileId !== profile.id ? (
         <Spinner />
-      ) : !isWeeksEmpty ? (
-        <Outlet />
-      ) : (
+      ) : isWeeksEmpty ? (
         scheduleData.status === PROGRESS_STATUS.success && (
           <h1 style={{ textAlign: "center" }}>
             {t(STRINGS_RES.there_is_no_schedule_for_profile)}
           </h1>
         )
+      ) : (
+        <Outlet />
       )}
-      {isError && <RetryFallback onRetry={refetch} />}
     </ScheduleContext.Provider>
   )
 }
