@@ -14,5 +14,10 @@
     max-height: 18.75rem;
   }
 }
+@media (width <= 30.06125rem) {
+  .schedule-week-select__content {
+    max-height: 15.625rem;
+  }
+}
 
 /*# sourceMappingURL=ScheduleWeekSelect.css.map */

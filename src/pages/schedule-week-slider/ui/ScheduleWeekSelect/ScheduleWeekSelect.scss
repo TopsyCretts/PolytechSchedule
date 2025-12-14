@@ -13,5 +13,9 @@
     @include mobile {
       max-height: rem(300);
     }
+
+    @include mobile-s {
+      max-height: rem(250);
+    }
   }
 }

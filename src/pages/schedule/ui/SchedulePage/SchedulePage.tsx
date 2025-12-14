@@ -104,7 +104,6 @@ const ScheduleLayout = ({
       key={profile.id}
       value={value}
     >
-      <SchedulePageHeader className={"schedule-page__header"} />
       {isError && isWeeksEmpty && <RetryFallback onRetry={refetch} />}
       {(isFetching && isWeeksEmpty) || debouncedProfileId !== profile.id ? (
         <Spinner />
@@ -115,7 +114,10 @@ const ScheduleLayout = ({
           </h1>
         )
       ) : (
-        <Outlet />
+        <>
+          <SchedulePageHeader className={"schedule-page__header"} />
+          <Outlet />
+        </>
       )}
     </ScheduleContext.Provider>
   )
