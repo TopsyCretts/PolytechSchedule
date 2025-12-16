@@ -3,6 +3,7 @@ import type {
   BaseComponent,
   BaseComponentWithChildren,
 } from "@shared/models/BaseComponent.ts"
+import type { ButtonProps } from "@shared/ui/Button/types.ts"
 
 interface SelectValues {
   isOpen: boolean
@@ -16,9 +17,8 @@ interface SelectOption {
 
 type SelectProps = BaseComponentWithChildren
 
-type SelectButtonTogglerProps = BaseComponentWithChildren
-
-type SelectStringTogglerProps = BaseComponentWithChildren
+type SelectButtonTogglerProps = ButtonProps
+type SelectStringTogglerProps = ButtonProps
 
 interface SelectContainerProps {
   children: React.ReactNode
@@ -44,7 +44,7 @@ interface SelectGroupProps extends SelectListProps {
   title?: string
 }
 
-interface SelectOptionProps extends BaseComponentWithChildren{
+interface SelectOptionProps extends BaseComponentWithChildren {
   optionKey: string
   isSelected: boolean
   numerated?: boolean
