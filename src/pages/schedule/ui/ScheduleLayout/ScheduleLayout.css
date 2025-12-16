@@ -4,6 +4,11 @@
 .schedule-layout__spinner, .schedule-layout__retry-fallback {
   height: 100%;
 }
+@media (width > 47.999375rem) {
+  .schedule-layout__spinner, .schedule-layout__retry-fallback {
+    height: 37.5rem;
+  }
+}
 .schedule-layout__spinner {
   align-items: center;
   justify-content: center;

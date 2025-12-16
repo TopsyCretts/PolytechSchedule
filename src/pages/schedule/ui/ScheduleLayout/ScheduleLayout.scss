@@ -1,9 +1,15 @@
+@use "../../../../styles/helpers" as *;
+
 .schedule-layout {
   display: contents;
 
   &__spinner,
   &__retry-fallback {
     height: 100%;
+
+    @include mobile-above{
+      height: rem(600);
+    }
   }
 
   &__spinner{
