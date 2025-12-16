@@ -1,5 +1,11 @@
 import { injectable } from "inversify"
-import { action, computed, makeAutoObservable, observable } from "mobx"
+import {
+  action,
+  computed,
+  makeAutoObservable,
+  observable,
+  runInAction,
+} from "mobx"
 import type { InstitutesData } from "@/entities/Institute.ts"
 import type { GroupData } from "@/entities/Group.ts"
 import { dbService, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
@@ -30,7 +36,6 @@ export class InstitutesStore {
     this.init()
   }
 
-  @action
   private init() {
     dbService
       .getAll(STORE_NAMES.institutes)
@@ -39,12 +44,15 @@ export class InstitutesStore {
       })
       .then((institutes) => {
         if (institutes) {
-          this.institutesData = {
-            institutes: institutes,
-            lastUpdate: LocalStorageManager.get(
-              LOCAL_STORAGE_KEY.institutesLastUpdate
-            ),
-          }
+          runInAction(
+            () =>
+              (this.institutesData = {
+                institutes: institutes,
+                lastUpdate: LocalStorageManager.get(
+                  LOCAL_STORAGE_KEY.institutesLastUpdate
+                ),
+              })
+          )
         }
         this.resolveInitialized(true)
       })

@@ -1,5 +1,8 @@
-import type { ButtonProps } from "@shared/ui/Button/types.ts"
 import type { RefObject } from "react"
+import type {
+  BaseComponent,
+  BaseComponentWithChildren,
+} from "@shared/models/BaseComponent.ts"
 
 interface SelectValues {
   isOpen: boolean
@@ -11,13 +14,11 @@ interface SelectOption {
   value: React.ReactNode | string
 }
 
-interface SelectProps {
-  className?: string
-  children: React.ReactNode
-}
+type SelectProps = BaseComponentWithChildren
 
-type SelectButtonTogglerProps = ButtonProps
-type SelectStringTogglerProps = ButtonProps
+type SelectButtonTogglerProps = BaseComponentWithChildren
+
+type SelectStringTogglerProps = BaseComponentWithChildren
 
 interface SelectContainerProps {
   children: React.ReactNode
@@ -30,9 +31,8 @@ interface SelectHeaderProps {
   isCross?: boolean
 }
 
-interface SelectListProps {
+interface SelectListProps extends BaseComponent {
   values: SelectOption[]
-  className?: string
   initialSelectedOptionsKeys?: string[]
   numerated?: boolean
   multiSelection?: boolean
@@ -44,10 +44,8 @@ interface SelectGroupProps extends SelectListProps {
   title?: string
 }
 
-interface SelectOptionProps {
-  className?: string
+interface SelectOptionProps extends BaseComponentWithChildren{
   optionKey: string
-  children: React.ReactNode
   isSelected: boolean
   numerated?: boolean
   onOptionClick?: (optionKey: string) => void

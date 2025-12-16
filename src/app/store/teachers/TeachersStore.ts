@@ -1,9 +1,15 @@
-import { action, computed, makeAutoObservable, observable } from "mobx"
-import { queryClient } from "@shared/api"
-import { getTeachersQueryOptions } from "@shared/api/search-schedule/teachersService.ts"
+import {
+  action,
+  computed,
+  makeAutoObservable,
+  observable,
+  runInAction,
+} from "mobx"
 import type { TeacherData, TeachersData } from "@/entities/Teachers.ts"
 import { injectable } from "inversify"
-import { dbService } from "@/app/store/indexDb/indexDb.ts"
+import { dbService, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
+import { LocalStorageManager } from "@/app/store/browser-storages"
+import { LOCAL_STORAGE_KEY } from "@shared/constants/contstants.ts"
 
 @injectable()
 export class TeachersStore {
@@ -28,15 +34,25 @@ export class TeachersStore {
     this.init()
   }
 
-  @action
   private init() {
-    queryClient
-      .prefetchQuery(getTeachersQueryOptions())
-      .then(() => {
-        this.resolveInitialized(true)
-      })
+    dbService
+      .getAll(STORE_NAMES.teachers)
       .catch(() => {
         this.rejectInitialized()
+      })
+      .then((teachers) => {
+        if (teachers) {
+          runInAction(
+            () =>
+              (this.teachersData = {
+                teachers: teachers,
+                lastUpdate: LocalStorageManager.get(
+                  LOCAL_STORAGE_KEY.institutesLastUpdate
+                ),
+              })
+          )
+        }
+        this.resolveInitialized(true)
       })
   }
 

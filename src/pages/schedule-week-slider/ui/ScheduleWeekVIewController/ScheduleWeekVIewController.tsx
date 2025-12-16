@@ -9,9 +9,9 @@ import {
 import { type RefObject, useEffect, useState } from "react"
 import type { SwiperClass, SwiperRef } from "swiper/react"
 import type { SelectedWeekSlide } from "@/pages/schedule-week-slider/lib/types.ts"
+import type { BaseComponent } from "@shared/models/BaseComponent.ts"
 
-interface ScheduleWeekVIewControllerProps {
-  className?: string
+interface ScheduleWeekViewControllerProps extends BaseComponent {
   locale: Locale
   scheduleWeekSlider: RefObject<SwiperRef | null>
   selectedWeekSlide: SelectedWeekSlide
@@ -33,7 +33,7 @@ const ScheduleWeekVIewController = ({
   selectedWeekSlide,
   onPrevWeek,
   onNextWeek,
-}: ScheduleWeekVIewControllerProps) => {
+}: ScheduleWeekViewControllerProps) => {
   const [weekDays, setWeekDays] = useState<Date[]>(
     eachDayOfInterval({
       start: selectedWeekSlide.weekData.start,

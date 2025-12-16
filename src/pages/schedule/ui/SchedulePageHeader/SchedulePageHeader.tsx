@@ -8,41 +8,45 @@ import { useMatch } from "react-router"
 import "./SchedulePageHeader.scss"
 import { APP_ROUTES } from "@/app/routes/routes.ts"
 import ScheduleDataErrorPopover from "@/pages/schedule/ui/ScheduleDataErrorPopover"
+import type { BaseComponent } from "@shared/models/BaseComponent.ts"
+import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
 
-type SchedulePageViewHeaderProps = {
-  className?: string
-}
-
-const SchedulePageHeader = ({ className }: SchedulePageViewHeaderProps) => {
+const SchedulePageHeader = ({ className }: BaseComponent) => {
   const { isOffline } = useOffline()
+  const { isFetchError } = useScheduleData()
 
   const dayMatch = useMatch(APP_ROUTES.scheduleDay)
   const weekMatch = useMatch(APP_ROUTES.scheduleWeek)
 
   const { isMatchesMedia: isLaptop } = useMediaQueryListEvent(
-    MATCH_MEDIA.tablet
+    MATCH_MEDIA.laptop
   )
+
+  const isSomethingWrong = isOffline || isFetchError
 
   return (
     <header
       className={clsx(
         className,
         "schedule-page-view-header",
-        isOffline && !isLaptop && "schedule-page-view-header--grid",
+        isSomethingWrong && "schedule-page-view-header--grid",
         "container-large",
         dayMatch !== null && "hidden",
         weekMatch !== null && "hidden-mobile"
       )}
     >
+      {isSomethingWrong && (
+        <div className={"schedule-page-view-header__spacer"}></div>
+      )}
       <SchedulePageSwitcherMobile
         className={clsx(
           "schedule-page-view-header__mobile-switcher",
-          "visible-tablet"
+          "visible-mobile"
         )}
         isTitleVisible
       />
       <SchedulePageSwitcherDesktop
-        className={clsx("schedule-page-view-header__switcher", "hidden-tablet")}
+        className={clsx("schedule-page-view-header__switcher", "hidden-mobile")}
       />
       <ScheduleDataErrorPopover
         className={"schedule-page-view-header__offline-indicator"}

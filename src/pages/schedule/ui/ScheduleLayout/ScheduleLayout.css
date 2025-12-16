@@ -1,0 +1,12 @@
+.schedule-layout {
+  display: contents;
+}
+.schedule-layout__spinner, .schedule-layout__retry-fallback {
+  height: 100%;
+}
+.schedule-layout__spinner {
+  align-items: center;
+  justify-content: center;
+}
+
+/*# sourceMappingURL=ScheduleLayout.css.map */

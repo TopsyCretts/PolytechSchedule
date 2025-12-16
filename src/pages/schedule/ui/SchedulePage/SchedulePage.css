@@ -3,10 +3,10 @@
   flex-direction: column;
   width: 100%;
   max-width: 100%;
-  height: 100%;
 }
 @media (width <= 47.999375rem) {
   .schedule-page {
+    height: 100%;
     padding-bottom: 1.25rem;
   }
 }

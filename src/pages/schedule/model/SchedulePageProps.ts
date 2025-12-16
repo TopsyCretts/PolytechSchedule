@@ -9,6 +9,7 @@ type SchedulePageProps = {
 }
 
 type ScheduleLayoutProps = {
+  className?: string
   profile: BaseProfile
   teachers: TeacherData[]
   actualGroups: GroupData[]

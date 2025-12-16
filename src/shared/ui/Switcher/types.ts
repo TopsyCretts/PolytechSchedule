@@ -1,5 +1,6 @@
-interface SwitcherProps<T extends string> {
-  className?: string
+import type { BaseComponent } from "@shared/models/BaseComponent.ts"
+
+interface SwitcherProps<T extends string> extends BaseComponent{
   currentItem: SwitcherOption<T>
   items: SwitcherOption<T>[]
   onItemChange: (option: SwitcherOption<T>) => void

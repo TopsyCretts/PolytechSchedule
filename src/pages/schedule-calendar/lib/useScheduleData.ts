@@ -1,4 +1,4 @@
-import { ScheduleContext } from "@/pages/schedule/ui/SchedulePage/SchedulePage.tsx"
+import { ScheduleContext } from "@/pages/schedule/ui/ScheduleLayout/ScheduleLayout.tsx"
 import { useContext } from "react"
 
 const useScheduleData = () => {

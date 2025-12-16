@@ -5,7 +5,7 @@ interface TeacherData {
 
 interface TeachersData {
   teachers: TeacherData[]
-  lastUpdate: number
+  lastUpdate: number | null
 }
 
 export type { TeacherData, TeachersData }

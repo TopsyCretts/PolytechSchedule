@@ -8,8 +8,9 @@ import StudentProfileCreationForm from "@widgets/create-profile/ui/ProfileCreati
 import TeacherProfileCreationForm from "@widgets/create-profile/ui/ProfileCreation/TeacherProfileCreationForm.tsx"
 import QueryErrorResetWrapper from "@shared/hoc/QueryErrorResetWrapper/QueryErrorResetWrapper.tsx"
 import { PROFILE_TYPE } from "@/entities/Profile.ts"
+import type { BaseComponent } from "@shared/models/BaseComponent.ts"
 
-const ProfileCreation = () => {
+const ProfileCreation = ({ className }: BaseComponent) => {
   const { t } = useTranslation()
   const items = useMemo(() => {
     return [
@@ -21,10 +22,11 @@ const ProfileCreation = () => {
   const [currentItem, setCurrentItem] = useState(items[1])
 
   return (
-    <section className={clsx("container-small")}>
-      <div className="profile-creation">
+    <section className={clsx(className, "profile-creation", "container-small")}>
+      <div className="profile-creation__inner">
         <div className="profile-creation__body">
           <Switcher
+            className={"profile-creation__switcher"}
             currentItem={currentItem}
             items={items}
             onItemChange={setCurrentItem}

@@ -8,7 +8,7 @@ import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
 import { type Day, startOfToday } from "date-fns"
 import { findWeekSlide } from "@/pages/schedule-week-slider/lib/findWeekSlide.ts"
 import "./ScheduleWeekView.scss"
-import ScheduleWeekVIewController from "@/pages/schedule-week-slider/ui/ScheduleWeekVIewController"
+import ScheduleWeekViewController from "@/pages/schedule-week-slider/ui/ScheduleWeekVIewController"
 import ScheduleWeekViewSubHeader from "@/pages/schedule-week-slider/ui/ScheduleWeekViewSubHeader"
 import ScheduleWeekViewControllerMobile from "@/pages/schedule-week-slider/ui/ScheduleWeekViewControllerMobile"
 import { AnimatePresence, motion } from "framer-motion"
@@ -267,7 +267,7 @@ const ScheduleWeekView = () => {
           locale={locale}
           onWeekDayClick={goToIndex}
         />
-        <ScheduleWeekVIewController
+        <ScheduleWeekViewController
           className={"hidden-mobile"}
           locale={locale}
           scheduleWeekSlider={swiperRef}

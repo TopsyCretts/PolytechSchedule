@@ -10,21 +10,14 @@ import LayOut from "@/app/entrypoint/LayOut.tsx"
 import { mainLoader } from "@/app/routes/main/mainLoader.ts"
 import { WebLoaderIndicator } from "@shared/ui"
 import { profileLoader } from "@/app/routes/schedule/profileLoader.ts"
+import HomePage from "@/pages/HomePage"
+import ScheduleCalendarView from "@/pages/schedule-calendar"
+import SchedulePage from "@/pages/schedule"
+import ScheduleWeekSlider from "@/pages/schedule-week-slider"
+import ScheduleDayView from "@/pages/schedule-day"
 
-const HomePage = lazy(() => import("@/pages/HomePage"))
-const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"))
-const SchedulePage = lazy(() => import("@/pages/schedule"))
-const ScheduleCalendarView = lazy(
-  () => import("@/pages/schedule-calendar/ui/ScheduleCalendarView")
-)
-const ScheduleWeekSlider = lazy(
-  () =>
-    import(
-      "@/pages/schedule-week-slider/ui/ScheduleWeekView/ScheduleWeekView.tsx"
-    )
-)
-const ScheduleDayView = lazy(() => import("@/pages/schedule-day"))
 const RouterErrorElement = lazy(() => import("@shared/ui/RouterErrorElement"))
+const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"))
 
 const router = createBrowserRouter(
   createRoutesFromElements(

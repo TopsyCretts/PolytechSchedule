@@ -10,9 +10,9 @@ import { Button } from "@shared/ui"
 import ArrowIcon from "@/assets/icons/arrow-left.svg?react"
 import ScheduleDataErrorPopover from "@/pages/schedule/ui/ScheduleDataErrorPopover"
 import { memo } from "react"
+import type { BaseComponent } from "@shared/models/BaseComponent.ts"
 
-interface ScheduleWeekViewHeaderProps {
-  className?: string
+interface ScheduleWeekViewHeaderProps extends BaseComponent {
   handleWeekSelection: (data: ScheduleWeekData) => void
   selectedWeek: { startDate: Date; index: number }
   onNextWeek: () => void

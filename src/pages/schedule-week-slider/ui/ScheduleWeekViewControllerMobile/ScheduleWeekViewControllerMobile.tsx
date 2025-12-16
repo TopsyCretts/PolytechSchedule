@@ -13,9 +13,9 @@ import {
 import clsx from "clsx"
 import { Button } from "@shared/ui"
 import { capitalizeFirstLatter } from "@shared/lib/capitalizeFirstLatter.ts"
+import type { BaseComponent } from "@shared/models/BaseComponent.ts"
 
-interface ScheduleWeekViewControllerMobileProps {
-  className?: string
+interface ScheduleWeekViewControllerMobileProps extends BaseComponent {
   startWeekDate: Date
   currentSelectedDayNumber: Day
   locale: Locale

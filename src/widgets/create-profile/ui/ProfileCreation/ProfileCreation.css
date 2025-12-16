@@ -1,4 +1,4 @@
-.profile-creation {
+.profile-creation__inner {
   border: var(--border-themed);
   border-radius: var(--border-radius-large);
   box-shadow: var(--shadow-themed);
@@ -6,7 +6,7 @@
   padding: 1.875rem;
 }
 @media (width <= 47.999375rem) {
-  .profile-creation {
+  .profile-creation__inner {
     padding: 0.9375rem;
   }
 }

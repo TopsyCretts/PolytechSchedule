@@ -1,0 +1,13 @@
+.schedule-layout {
+  display: contents;
+
+  &__spinner,
+  &__retry-fallback {
+    height: 100%;
+  }
+
+  &__spinner{
+    align-items: center;
+    justify-content: center;
+  }
+}
