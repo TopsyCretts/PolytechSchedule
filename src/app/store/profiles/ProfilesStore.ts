@@ -27,6 +27,9 @@ export class ProfilesStore {
   private profiles: Profile[] = []
 
   @observable
+  private currentProfile: Profile | null = null
+
+  @observable
   private readonly isInitialized: Promise<boolean>
 
   private resolveInitialized!: (value: boolean) => void
@@ -67,6 +70,20 @@ export class ProfilesStore {
   @computed
   get getProfiles() {
     return this.profiles
+  }
+
+  @computed
+  get getCurrentProfile() {
+    return this.currentProfile
+  }
+
+  @action
+  setCurrentProfileById(profileId: number): void {
+    const profile = this.profiles.find((profile) => profile.id === profileId)
+
+    if (profile) {
+      this.currentProfile = { ...profile }
+    }
   }
 
   async getOrCreateProfile(
@@ -157,7 +174,7 @@ export class ProfilesStore {
       name: profile.name,
       apiId: profile.apiId,
       profileType: profile.profileType,
-      lastUpdateAt: null,
+      lastUpdateAt: profile.lastUpdateAt ? profile.lastUpdateAt : null,
       selectedViewType: profile.selectedViewType,
     }
     if ("institute" in profile) {
@@ -165,6 +182,19 @@ export class ProfilesStore {
     }
 
     return await dbService.saveProfile(profileDb)
+  }
+
+  async updateLastUpdateTimeById(profileId: number) {
+    const profile = this.profiles.find((profile) => profile.id === profileId)
+    if (!profile) {
+      throw new Error(`Cannot update last update profile with id ${profileId}`)
+    }
+
+    if (this.getCurrentProfile?.id === profileId) {
+      this.currentProfile = { ...profile, lastUpdateAt: new Date() }
+    }
+
+    return await dbService.saveProfile({ ...profile, lastUpdateAt: new Date() })
   }
 
   private removeProfile(id: number) {

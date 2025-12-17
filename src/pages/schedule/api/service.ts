@@ -15,6 +15,8 @@ import type {
   ScheduleDataStatus,
 } from "@/entities/ScheduleData.ts"
 import { PROGRESS_STATUS } from "@shared/models/DataStatus.ts"
+import { mainContainer } from "@/app/store/mainContainer.ts"
+import { ProfilesStore } from "@/app/store/profiles/ProfilesStore.ts"
 
 const getScheduleByProfileOptions = (
   profile: BaseProfile,
@@ -23,7 +25,7 @@ const getScheduleByProfileOptions = (
   actualTeachers: TeacherData[]
 ) =>
   queryOptions({
-    queryKey: ["schedule", profile.profileType, profile.apiId],
+    queryKey: ["schedule", profile.profileType, profile.apiId, profile.id],
     queryFn: async (): Promise<ScheduleDataStatus | undefined> => {
       const existingScheduleData = await dbService.getSchedule(profile.id)
       let existingScheduleDataUi: ScheduleData | null = null
@@ -43,6 +45,7 @@ const getScheduleByProfileOptions = (
           profile.profileType === PROFILE_TYPE.student
             ? await getScheduleByGroupId(profile.apiId)
             : await getScheduleByTeacherId(profile.apiId)
+
         const newScheduleData = await toScheduleData(
           response.data,
           actualGroups,
@@ -51,7 +54,14 @@ const getScheduleByProfileOptions = (
         dbService.saveSchedule(profile.id, newScheduleData).then(() => {
           console.log(`Schedule saved successfully ${profile.id}`)
         })
-        console.log(newScheduleData)
+
+        mainContainer
+          .get(ProfilesStore)
+          .updateLastUpdateTimeById(profile.id)
+          .then(() => {
+            console.log(`Schedule ${profile.id}`)
+          })
+
         return { data: newScheduleData, status: PROGRESS_STATUS.success }
       } catch (error) {
         if (axios.isAxiosError(error) && !error.response && isCacheValid) {
@@ -72,6 +82,7 @@ const getScheduleByProfileOptions = (
       }
       return failureCount < 2
     },
+    networkMode: "always",
   })
 
 const useGetScheduleByProfileQuery = (

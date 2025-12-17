@@ -59,7 +59,10 @@ const ScheduleLayout = ({
 
   useEffect(() => {
     if (isError) {
-      setScheduleData((prev) => ({ ...prev, status: PROGRESS_STATUS.error }))
+      setScheduleData((prev) => ({
+        data: prev.data,
+        status: PROGRESS_STATUS.error,
+      }))
     }
   }, [isError])
 
@@ -77,7 +80,13 @@ const ScheduleLayout = ({
       status: scheduleData.status,
       resetError: refetch,
     }
-  }, [scheduleData, profile, currentDayData, i18n.language, refetch])
+  }, [
+    scheduleData,
+    profile.id,
+    currentDayData,
+    i18n.language,
+    refetch,
+  ])
 
   const isWeeksEmpty = scheduleData.data.weeks.length === 0
 

@@ -45,6 +45,9 @@ const profileLoader = async ({ params }: LoaderFunctionArgs) => {
     throw new Response("Profile creation failed", { status: 404 })
   }
   LocalStorageManager.set<number>(LOCAL_STORAGE_KEY.lastProfileId, profile.id)
+
+  profilesStore.setCurrentProfileById(profile.id)
+
   return { profile }
 }
 

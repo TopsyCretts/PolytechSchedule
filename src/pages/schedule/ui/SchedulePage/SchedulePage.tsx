@@ -1,17 +1,24 @@
 import "./SchedulePage.scss"
 import clsx from "clsx"
-import { useLoaderData } from "react-router"
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import { useInjection } from "inversify-react"
 import { observer } from "mobx-react-lite"
 import type { SchedulePageProps } from "@/pages/schedule/model/SchedulePageProps.ts"
-import type { profileLoader } from "@/app/routes/schedule/profileLoader.ts"
 import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
 import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
 import { ScheduleLayout } from "@/pages/schedule/ui/ScheduleLayout/ScheduleLayout.tsx"
+import { ProfilesStore } from "@/app/store/profiles/ProfilesStore.ts"
 
 const SchedulePage = observer(({ className }: SchedulePageProps) => {
-  const { profile } = useLoaderData<typeof profileLoader>()
+  const { getCurrentProfile: currentProfile } = useInjection(ProfilesStore)
+
+  useEffect(() => {
+    console.log(currentProfile?.id)
+  }, [currentProfile?.id])
+
+  if (currentProfile === null) {
+    throw new Response("Profile creation failed", { status: 404 })
+  }
 
   const { getInstitutes: institutes, getAllGroups } =
     useInjection(InstitutesStore)
@@ -25,7 +32,7 @@ const SchedulePage = observer(({ className }: SchedulePageProps) => {
     <main className={clsx(className, "schedule-page", "overflow-x-hidden")}>
       <ScheduleLayout
         className={"schedule-page__schedule-layout"}
-        profile={profile}
+        profile={currentProfile}
         teachers={teachers}
         actualGroups={actualGroups}
       />

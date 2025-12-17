@@ -104,6 +104,13 @@ class DatabaseService {
     return await tx.store.get(id)
   }
 
+  async getProfile(id: number): Promise<ProfileDB | undefined> {
+    const db = await this.init()
+    const tx = db.transaction(STORE_NAMES.profiles, "readonly")
+
+    return await tx.store.get(id)
+  }
+
   async getAll<K extends StoreName>(
     storeName: K,
     query?: IDBKeyRange,
@@ -130,7 +137,10 @@ class DatabaseService {
   async saveProfile(profile: ProfileDB): Promise<number> {
     const db = await this.init()
 
-    return await db.add(STORE_NAMES.profiles, profile as unknown as Profile)
+    return await db.put(
+      STORE_NAMES.profiles,
+      profile as unknown as Profile,
+    )
   }
 
   async deleteProfile(profileId: number): Promise<void> {
