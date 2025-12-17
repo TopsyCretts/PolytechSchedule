@@ -8,7 +8,7 @@ import useMediaQueryListEvent from "@shared/lib/useMediaQueryListEvent.ts"
 import { MATCH_MEDIA } from "@shared/constants/media.ts"
 import { Button } from "@shared/ui"
 import ArrowIcon from "@/assets/icons/arrow-left.svg?react"
-import ScheduleDataErrorPopover from "@/pages/schedule/ui/ScheduleDataErrorPopover"
+import DataStatusPopover from "@widgets/DataStatusPopover"
 import { memo } from "react"
 import type { BaseComponent } from "@shared/models/BaseComponent.ts"
 
@@ -69,7 +69,7 @@ const ScheduleWeekViewSubHeader = memo(
             selectedWeekStart={selectedWeek.startDate}
             onSelectedWeekChange={handleWeekSelection}
           />
-          <ScheduleDataErrorPopover
+          <DataStatusPopover
             className={"visible-mobile"}
             isReversed={true}
           />

@@ -8,7 +8,7 @@
 
   &__content {
     overflow-y: auto;
-    max-height: rem(480);
+    max-height: rem(300);
 
     @include mobile {
       max-height: rem(300);

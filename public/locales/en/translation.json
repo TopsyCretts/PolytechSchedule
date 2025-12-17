@@ -49,5 +49,8 @@
   "additional_info": "Add. info:",
   "offline_mode": "Offline mode.",
   "last_update_at": "Latest update:",
-  "there_is_no_schedule_for_profile": "No schedule found for this profile."
+  "there_is_no_schedule_for_profile": "No schedule found for this profile.",
+  "profile_has_not_updated_previously": "The profile has not been updated previously",
+  "data_update_error": "Data update error",
+  "schedule_is_current": "Schedule is current"
 }

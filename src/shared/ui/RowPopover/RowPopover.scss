@@ -1,6 +1,6 @@
 @use "../../../styles/helpers/index" as *;
 
-.out-of-date-popover {
+.row-popover {
   --offlineIndicatorContentMagin: calc(var(--button-height) - #{rem(5)});
 
   @include flex-center;
@@ -61,7 +61,8 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: left;
+    align-items: start;
+    justify-content: center;
     height: var(--button-height);
     margin-left: var(--offlineIndicatorContentMagin);
   }
@@ -72,23 +73,23 @@
     position: relative;
     z-index: 1;
 
-    & .out-of-date-popover__content {
+    & .row-popover__content {
       width: max-content;
     }
 
-    & .out-of-date-popover__inner {
+    & .row-popover__inner {
       column-gap: rem(10);
       margin-top: calc(-1 * #{rem(1)});
     }
   }
 
   &--reversed {
-    & .out-of-date-popover__inner {
+    & .row-popover__inner {
       right: 0;
       left: unset;
     }
 
-    & .out-of-date-popover__content {
+    & .row-popover__content {
       margin-left: 0;
       margin-right: var(--offlineIndicatorContentMagin);
     }

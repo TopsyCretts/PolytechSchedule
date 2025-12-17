@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@shared/constants/strings.ts"
 import { MATCH_MEDIA } from "@shared/constants/media.ts"
 import useMediaQueryListEvent from "@shared/lib/useMediaQueryListEvent.ts"
-import ScheduleDataErrorPopover from "@/pages/schedule/ui/ScheduleDataErrorPopover"
+import DataStatusPopover from "@widgets/DataStatusPopover"
 
 const ScheduleDayView = () => {
   const { t } = useTranslation()
@@ -38,7 +38,7 @@ const ScheduleDayView = () => {
           isDecrementActive={true}
         />
         <div className={"schedule-day-view__offline-indicator-wrapper"}>
-          <ScheduleDataErrorPopover
+          <DataStatusPopover
             className={"schedule-day-view__offline-indicator"}
             isReversed={isMatchesMedia}
           />

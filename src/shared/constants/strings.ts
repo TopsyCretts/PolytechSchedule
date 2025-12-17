@@ -50,4 +50,7 @@ export const STRINGS_RES = {
   offline_mode: "offline_mode",
   last_update_at: "last_update_at",
   there_is_no_schedule_for_profile: "there_is_no_schedule_for_profile",
+  profile_has_not_updated_previously: "profile_has_not_updated_previously",
+  data_update_error: "data_update_error",
+  schedule_is_current: "schedule_is_current",
 }

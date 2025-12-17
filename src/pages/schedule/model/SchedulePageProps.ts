@@ -3,6 +3,7 @@ import type { BaseProfile } from "@/entities/Profile.ts"
 import type { Locale } from "date-fns"
 import type { TeacherData } from "@/entities/Teachers.ts"
 import type { GroupData } from "@/entities/Group.ts"
+import type { ProgressStatus } from "@shared/models/DataStatus.ts"
 
 type SchedulePageProps = {
   className?: string
@@ -21,7 +22,7 @@ type ScheduleContextValues = {
   currentDayData: DayData
   setCurrentDayData: (dayData: DayData) => void
   locale: Locale
-  isFetchError: boolean
+  status: ProgressStatus
   resetError: () => void
 }
 

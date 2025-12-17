@@ -1,0 +1,23 @@
+@use "../../styles/helpers" as *;
+
+.data-status-popover {
+
+  &--success {
+    color: var(--color-green);
+  }
+
+  &--error {
+    & .row-popover__toggler {
+      color: var(--color-orange);
+    }
+  }
+}
+
+.data-status-popover-spinner {
+  @include square(var(--button-height));
+
+  & .spinner__svg {
+    width: rem(24) !important;
+    height: rem(24) !important;
+  }
+}

@@ -1,0 +1,17 @@
+.data-status-popover--success {
+  color: var(--color-green);
+}
+.data-status-popover--error .row-popover__toggler {
+  color: var(--color-orange);
+}
+
+.data-status-popover-spinner {
+  width: var(--button-height);
+  height: var(--button-height);
+}
+.data-status-popover-spinner .spinner__svg {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+}
+
+/*# sourceMappingURL=DataStatusPopover.css.map */

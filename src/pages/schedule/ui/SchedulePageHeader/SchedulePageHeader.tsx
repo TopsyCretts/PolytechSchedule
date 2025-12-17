@@ -3,18 +3,13 @@ import SchedulePageSwitcherMobile from "@/pages/schedule/ui/SchedulePageSwitcher
 import SchedulePageSwitcherDesktop from "@/pages/schedule/ui/SchedulePageSwitcher/SchedulePageSwitcherDesktop.tsx"
 import useMediaQueryListEvent from "@shared/lib/useMediaQueryListEvent.ts"
 import { MATCH_MEDIA } from "@shared/constants/media.ts"
-import useOffline from "@shared/lib/useOffline.ts"
 import { useMatch } from "react-router"
 import "./SchedulePageHeader.scss"
 import { APP_ROUTES } from "@/app/routes/routes.ts"
-import ScheduleDataErrorPopover from "@/pages/schedule/ui/ScheduleDataErrorPopover"
+import DataStatusPopover from "@widgets/DataStatusPopover"
 import type { BaseComponent } from "@shared/models/BaseComponent.ts"
-import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
 
 const SchedulePageHeader = ({ className }: BaseComponent) => {
-  const { isOffline } = useOffline()
-  const { isFetchError } = useScheduleData()
-
   const dayMatch = useMatch(APP_ROUTES.scheduleDay)
   const weekMatch = useMatch(APP_ROUTES.scheduleWeek)
 
@@ -22,22 +17,18 @@ const SchedulePageHeader = ({ className }: BaseComponent) => {
     MATCH_MEDIA.laptop
   )
 
-  const isSomethingWrong = isOffline || isFetchError
-
   return (
     <header
       className={clsx(
         className,
         "schedule-page-view-header",
-        isSomethingWrong && "schedule-page-view-header--grid",
+        "schedule-page-view-header--grid",
         "container-large",
         dayMatch !== null && "hidden",
         weekMatch !== null && "hidden-mobile"
       )}
     >
-      {isSomethingWrong && (
-        <div className={"schedule-page-view-header__spacer"}></div>
-      )}
+      <div className={"schedule-page-view-header__spacer"}></div>
       <SchedulePageSwitcherMobile
         className={clsx(
           "schedule-page-view-header__mobile-switcher",
@@ -48,7 +39,7 @@ const SchedulePageHeader = ({ className }: BaseComponent) => {
       <SchedulePageSwitcherDesktop
         className={clsx("schedule-page-view-header__switcher", "hidden-mobile")}
       />
-      <ScheduleDataErrorPopover
+      <DataStatusPopover
         className={"schedule-page-view-header__offline-indicator"}
         isReversed={isLaptop}
       />

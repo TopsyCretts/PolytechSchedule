@@ -1,4 +1,4 @@
-.out-of-date-popover {
+.row-popover {
   --offlineIndicatorContentMagin: calc(var(--button-height) - 0.3125rem);
   display: flex;
   justify-content: center;
@@ -9,7 +9,7 @@
   z-index: 0;
   display: flex;
 }
-.out-of-date-popover__toggler {
+.row-popover__toggler {
   padding: 0;
   background-color: transparent;
   border: none;
@@ -25,19 +25,19 @@
   cursor: pointer;
 }
 @media (hover: hover) {
-  .out-of-date-popover__toggler:hover {
+  .row-popover__toggler:hover {
     background-color: var(--select-active-bg);
   }
 }
 @media (hover: none) {
-  .out-of-date-popover__toggler:active {
+  .row-popover__toggler:active {
     background-color: var(--select-active-bg);
   }
 }
-.out-of-date-popover__icon {
+.row-popover__icon {
   flex-shrink: 0;
 }
-.out-of-date-popover__inner {
+.row-popover__inner {
   position: absolute;
   z-index: 200;
   top: 0;
@@ -53,42 +53,43 @@
   border-radius: var(--border-radius);
   backdrop-filter: var(--blur-20);
 }
-.out-of-date-popover__content-wrapper {
+.row-popover__content-wrapper {
   overflow: hidden;
 }
-.out-of-date-popover__body, .out-of-date-popover__title {
+.row-popover__body, .row-popover__title {
   font-size: 0.875rem;
   white-space: nowrap;
 }
-.out-of-date-popover__content {
+.row-popover__content {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: left;
+  align-items: start;
+  justify-content: center;
   height: var(--button-height);
   margin-left: var(--offlineIndicatorContentMagin);
 }
-.out-of-date-popover--opened {
+.row-popover--opened {
   border: var(--border-themed);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
   position: relative;
   z-index: 1;
 }
-.out-of-date-popover--opened .out-of-date-popover__content {
+.row-popover--opened .row-popover__content {
   width: max-content;
 }
-.out-of-date-popover--opened .out-of-date-popover__inner {
+.row-popover--opened .row-popover__inner {
   column-gap: 0.625rem;
   margin-top: calc(-1 * 0.0625rem);
 }
-.out-of-date-popover--reversed .out-of-date-popover__inner {
+.row-popover--reversed .row-popover__inner {
   right: 0;
   left: unset;
 }
-.out-of-date-popover--reversed .out-of-date-popover__content {
+.row-popover--reversed .row-popover__content {
   margin-left: 0;
   margin-right: var(--offlineIndicatorContentMagin);
 }
 
-/*# sourceMappingURL=OutOfDatePopover.css.map */
+/*# sourceMappingURL=RowPopover.css.map */

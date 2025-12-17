@@ -57,6 +57,12 @@ const ScheduleLayout = ({
     }
   }, [data])
 
+  useEffect(() => {
+    if (isError) {
+      setScheduleData((prev) => ({ ...prev, status: PROGRESS_STATUS.error }))
+    }
+  }, [isError])
+
   const [currentDayData, setCurrentDayData] = useState<DayData>(
     findEqualDayData(scheduleData.data.weeks, startOfToday())
   )
@@ -68,10 +74,10 @@ const ScheduleLayout = ({
       currentDayData: currentDayData,
       setCurrentDayData,
       locale: LANGUAGES_MAP[i18n.language].locale,
-      isFetchError: scheduleData.status === PROGRESS_STATUS.error || isError,
+      status: scheduleData.status,
       resetError: refetch,
     }
-  }, [scheduleData, profile, currentDayData, i18n.language, isError, refetch])
+  }, [scheduleData, profile, currentDayData, i18n.language, refetch])
 
   const isWeeksEmpty = scheduleData.data.weeks.length === 0
 
