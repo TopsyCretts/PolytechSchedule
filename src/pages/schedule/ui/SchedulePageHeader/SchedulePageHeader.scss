@@ -28,7 +28,7 @@
 
   &--grid {
     display: grid;
-    grid-template-columns: 1fr minmax(auto, rem(482)) 1fr;
+    grid-template-columns: var(--button-height) minmax(auto, rem(482)) var(--button-height);
     place-items: center center;
     column-gap: rem(8);
 

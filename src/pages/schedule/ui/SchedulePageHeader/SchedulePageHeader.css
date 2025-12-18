@@ -27,7 +27,7 @@
 }
 .schedule-page-view-header--grid {
   display: grid;
-  grid-template-columns: 1fr minmax(auto, 30.125rem) 1fr;
+  grid-template-columns: var(--button-height) minmax(auto, 30.125rem) var(--button-height);
   place-items: center center;
   column-gap: 0.5rem;
 }

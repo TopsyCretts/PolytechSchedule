@@ -25,6 +25,8 @@ const Profiles = observer(({ className }: ProfilesProps) => {
   const params = useParams()
   const [paramId, setParamId] = useState<string | undefined>()
 
+  console.log(match !== null)
+
   useEffect(() => {
     const newCurrentProfileId = params.profileApiId
     if (newCurrentProfileId !== undefined && newCurrentProfileId !== paramId) {
@@ -41,22 +43,25 @@ const Profiles = observer(({ className }: ProfilesProps) => {
   const profilesContainerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    scrollContainerToSelectedElement(
-      profilesContainerRef.current!,
-      paramId,
-      "horizontal"
-    )
-  }, [paramId])
-
-  useEffect(() => {
-    if (match) {
+    if (paramId) {
       scrollContainerToSelectedElement(
         profilesContainerRef.current!,
-        newProfileLinkId,
+        paramId,
         "horizontal"
       )
     }
-  }, [match])
+  }, [paramId])
+
+  useEffect(() => {
+    if (match !== null && profiles.length !== null) {
+      scrollContainerToSelectedElement(
+        profilesContainerRef.current!,
+        newProfileLinkId,
+        "horizontal",
+        2
+      )
+    }
+  }, [match, profiles.length])
 
   return (
     <section className={clsx(className, "profiles")}>
