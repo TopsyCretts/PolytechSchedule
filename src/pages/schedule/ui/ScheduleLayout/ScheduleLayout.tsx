@@ -27,6 +27,11 @@ import clsx from "clsx"
 
 const ScheduleContext = createContext<ScheduleContextValues | null>(null)
 
+const DEFAULT_VALUE = {
+  data: { weeks: [] },
+  status: PROGRESS_STATUS.init,
+}
+
 const ScheduleLayout = ({
   className,
   profile,
@@ -35,10 +40,8 @@ const ScheduleLayout = ({
 }: ScheduleLayoutProps) => {
   const { t, i18n } = useTranslation()
 
-  const [scheduleData, setScheduleData] = useState<ScheduleDataStatus>({
-    data: { weeks: [] },
-    status: PROGRESS_STATUS.init,
-  })
+  const [scheduleData, setScheduleData] =
+    useState<ScheduleDataStatus>(DEFAULT_VALUE)
 
   const [debouncedProfileId] = useDebounce(profile.id, 300)
 
@@ -50,6 +53,10 @@ const ScheduleLayout = ({
     actualGroups,
     teachers
   )
+
+  useEffect(() => {
+    setScheduleData(DEFAULT_VALUE)
+  }, [profile.id])
 
   useEffect(() => {
     if (data) {
@@ -81,8 +88,9 @@ const ScheduleLayout = ({
       resetError: refetch,
     }
   }, [
-    scheduleData,
-    profile.id,
+    scheduleData.data,
+    scheduleData.status,
+    profile,
     currentDayData,
     i18n.language,
     refetch,

@@ -17,7 +17,7 @@
     max-width: 25rem;
   }
 }
-.schedule-page-view-header__spacer {
+.schedule-page-view-header__spacer, .schedule-page-view-header__popover-wrapper {
   width: var(--button-height);
   height: var(--button-height);
 }
@@ -34,7 +34,7 @@
 .schedule-page-view-header--grid.schedule-page-view-header__switcher, .schedule-page-view-header--grid.schedule-page-view-header__mobile-switcher {
   grid-column: 2;
 }
-.schedule-page-view-header__offline-indicator {
+.schedule-page-view-header__data-status-popover {
   grid-column: 3;
   justify-self: start;
 }

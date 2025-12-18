@@ -59,13 +59,7 @@ const DataStatusPopover = memo(
               </time>
             </>
           ) : (
-            // t(STRINGS_RES.profile_has_not_updated_previously)
-            <>
-              {t(STRINGS_RES.last_update_at)}{" "}
-              <time dateTime={"YYYY-MM-DD HH:MM"}>
-                {format(Date.now(), "yyyy-MM-dd HH:mm")}
-              </time>
-            </>
+            t(STRINGS_RES.profile_has_not_updated_previously)
           ))}
       </RowPopover>
     )

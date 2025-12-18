@@ -83,6 +83,7 @@ const getScheduleByProfileOptions = (
       return failureCount < 2
     },
     networkMode: "always",
+    refetchOnReconnect: "always",
   })
 
 const useGetScheduleByProfileQuery = (

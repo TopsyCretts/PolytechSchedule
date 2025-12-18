@@ -16,7 +16,8 @@
     max-width: rem(400);
   }
 
-  &__spacer{
+  &__spacer,
+  &__popover-wrapper{
     @include square(var(--button-height));
   }
 
@@ -39,7 +40,7 @@
     }
   }
 
-  &__offline-indicator {
+  &__data-status-popover {
     grid-column: 3;
     justify-self: start;
   }

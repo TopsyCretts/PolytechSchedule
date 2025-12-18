@@ -39,10 +39,12 @@ const SchedulePageHeader = ({ className }: BaseComponent) => {
       <SchedulePageSwitcherDesktop
         className={clsx("schedule-page-view-header__switcher", "hidden-mobile")}
       />
-      <DataStatusPopover
-        className={"schedule-page-view-header__offline-indicator"}
-        isReversed={isLaptop}
-      />
+      <div className={"schedule-page-view-header__popover-wrapper"}>
+        <DataStatusPopover
+          className={"schedule-page-view-header__data-status-popover"}
+          isReversed={isLaptop}
+        />
+      </div>
     </header>
   )
 }
