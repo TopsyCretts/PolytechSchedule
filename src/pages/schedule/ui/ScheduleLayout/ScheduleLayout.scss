@@ -7,13 +7,13 @@
   &__retry-fallback {
     height: 100%;
 
-    @include mobile-above{
+    @include mobile-above {
       height: rem(600);
     }
   }
 
-  &__spinner{
-    align-items: center;
+  &__spinner {
     justify-content: center;
+    align-items: center;
   }
 }

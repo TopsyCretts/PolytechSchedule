@@ -12,16 +12,14 @@ body {
 }
 
 #root {
-
   height: 100%;
 
-  @include mobile{
+  @include mobile {
     display: flex;
     flex-direction: column;
     height: 100dvh;
     max-height: 100dvh;
   }
-
 }
 
 a,

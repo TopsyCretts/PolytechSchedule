@@ -8,13 +8,15 @@ import type { GroupData } from "@/entities/Group.ts"
 import type { TeacherData } from "@/entities/Teachers.ts"
 import { type BaseProfile, PROFILE_TYPE } from "@/entities/Profile.ts"
 import { dbService } from "@/app/store/indexDb/indexDb.ts"
-import axios from "axios"
 import { toScheduleUi } from "@/app/store/indexDb/models/ScheduleDataDB.ts"
 import type {
   ScheduleData,
   ScheduleDataStatus,
 } from "@/entities/ScheduleData.ts"
-import { PROGRESS_STATUS } from "@shared/models/DataStatus.ts"
+import {
+  PROGRESS_STATUS,
+  type ProgressStatus,
+} from "@shared/models/DataStatus.ts"
 import { mainContainer } from "@/app/store/mainContainer.ts"
 import { ProfilesStore } from "@/app/store/profiles/ProfilesStore.ts"
 
@@ -22,7 +24,8 @@ const getScheduleByProfileOptions = (
   profile: BaseProfile,
   onCacheData: (scheduleData: ScheduleDataStatus) => void,
   actualGroups: GroupData[],
-  actualTeachers: TeacherData[]
+  actualTeachers: TeacherData[],
+  initialStatus: ProgressStatus
 ) =>
   queryOptions({
     queryKey: ["schedule", profile.profileType, profile.apiId, profile.id],
@@ -36,7 +39,10 @@ const getScheduleByProfileOptions = (
         existingScheduleDataUi = toScheduleUi(existingScheduleData)
         onCacheData({
           data: existingScheduleDataUi,
-          status: PROGRESS_STATUS.loading,
+          status:
+            initialStatus === PROGRESS_STATUS.error
+              ? initialStatus
+              : PROGRESS_STATUS.loading,
         })
       }
 
@@ -64,23 +70,20 @@ const getScheduleByProfileOptions = (
 
         return { data: newScheduleData, status: PROGRESS_STATUS.success }
       } catch (error) {
-        if (axios.isAxiosError(error) && !error.response && isCacheValid) {
+        if (isCacheValid) {
           console.log("Using cached data due to network error")
-          return {
+          onCacheData({
             data: existingScheduleDataUi!,
             status: PROGRESS_STATUS.error,
-          }
+          })
         }
         throw error
       }
     },
     refetchOnWindowFocus: false,
     select: (data) => data,
-    retry: (failureCount, error) => {
-      if (axios.isAxiosError(error) && !error.response) {
-        return failureCount < 1
-      }
-      return failureCount < 2
+    retry: (failureCount) => {
+      return failureCount < 1
     },
     networkMode: "always",
     refetchOnReconnect: "always",
@@ -90,14 +93,16 @@ const useGetScheduleByProfileQuery = (
   profile: BaseProfile,
   onCacheData: (scheduleData: ScheduleDataStatus) => void,
   actualGroups: GroupData[],
-  actualTeachers: TeacherData[]
+  actualTeachers: TeacherData[],
+  initialStatus: ProgressStatus
 ) =>
   useQuery(
     getScheduleByProfileOptions(
       profile,
       onCacheData,
       actualGroups,
-      actualTeachers
+      actualTeachers,
+      initialStatus
     )
   )
 

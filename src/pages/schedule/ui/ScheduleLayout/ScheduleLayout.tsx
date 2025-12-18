@@ -51,7 +51,8 @@ const ScheduleLayout = ({
       setScheduleData(cachedData)
     },
     actualGroups,
-    teachers
+    teachers,
+    scheduleData.status
   )
 
   useEffect(() => {

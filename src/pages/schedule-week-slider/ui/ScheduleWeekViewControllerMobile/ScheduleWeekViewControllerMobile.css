@@ -36,7 +36,10 @@
 .schedule-week-view-controller-mobile__button--selected {
   border-color: var(--color-accent);
 }
-.schedule-week-view-controller-mobile__button--selected .schedule-week-view-controller-mobile__body, .schedule-week-view-controller-mobile__button--today .schedule-week-view-controller-mobile__body {
+.schedule-week-view-controller-mobile__button--selected
+  .schedule-week-view-controller-mobile__body,
+.schedule-week-view-controller-mobile__button--today
+  .schedule-week-view-controller-mobile__body {
   color: inherit;
 }
 

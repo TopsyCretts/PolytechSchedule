@@ -19,7 +19,8 @@
     background-color: var(--color-light-opacity-5);
   }
 }
-.calendar-day__header-desktop, .calendar-day__header-mobile {
+.calendar-day__header-desktop,
+.calendar-day__header-mobile {
   max-height: 1.5625rem;
 }
 .calendar-day__header-desktop {

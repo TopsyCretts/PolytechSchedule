@@ -22,15 +22,20 @@
   padding-left: 0.9375rem;
   white-space: nowrap;
 }
-.select__header, .select__group-title, .select__item {
+.select__header,
+.select__group-title,
+.select__item {
   display: flex;
   align-items: center;
   height: var(--button-height);
 }
-.select__header:not(:last-child), .select__group-title:not(:last-child), .select__item:not(:last-child) {
+.select__header:not(:last-child),
+.select__group-title:not(:last-child),
+.select__item:not(:last-child) {
   margin-bottom: 0.3125rem;
 }
-.select__button-toggler, .select__cross {
+.select__button-toggler,
+.select__cross {
   position: absolute;
   top: 0;
   right: 0;
@@ -54,7 +59,8 @@
   color: inherit;
   background-color: var(--select-bg);
 }
-.select__group-title, .select__item {
+.select__group-title,
+.select__item {
   padding-inline: 0.9375rem;
   user-select: none;
 }

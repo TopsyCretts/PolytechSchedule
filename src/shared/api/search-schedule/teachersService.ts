@@ -13,6 +13,7 @@ const getTeachersFromStorageOrRefetch = async () => {
   const lastUpdate = LocalStorageManager.get<number>(
     LOCAL_STORAGE_KEY.teachersLastUpdate
   )
+
   const now = Date.now()
   const teachersStore = mainContainer.get<TeachersStore>(TeachersStore)
   try {
@@ -26,19 +27,14 @@ const getTeachersFromStorageOrRefetch = async () => {
     LocalStorageManager.set(LOCAL_STORAGE_KEY.teachersLastUpdate, now)
     return newData.teachers
   } catch (e) {
-    if (axios.isAxiosError(e) && !e.response) {
-      console.log(e)
-      if (savedData.length === 0) {
-        console.log("Empty saved data")
-        throw e
-      }
-      teachersStore.setTeachersData({
-        lastUpdate: lastUpdate ? lastUpdate : Date.now(),
-        teachers: savedData,
-      })
-      return savedData
+    if (savedData.length === 0) {
+      throw e
     }
-    throw e
+    teachersStore.setTeachersData({
+      lastUpdate: lastUpdate ? lastUpdate : now,
+      teachers: savedData,
+    })
+    return savedData
   }
 }
 
@@ -53,7 +49,8 @@ const getTeachersQueryOptions = () => {
       }
       return failureCount < 2
     },
-    staleTime: 100000,
+    refetchOnReconnect: "always",
+    networkMode: "always",
   })
 }
 

@@ -137,10 +137,7 @@ class DatabaseService {
   async saveProfile(profile: ProfileDB): Promise<number> {
     const db = await this.init()
 
-    return await db.put(
-      STORE_NAMES.profiles,
-      profile as unknown as Profile,
-    )
+    return await db.put(STORE_NAMES.profiles, profile as unknown as Profile)
   }
 
   async deleteProfile(profileId: number): Promise<void> {

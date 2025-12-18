@@ -11,7 +11,6 @@ const scrollContainerToSelectedElement = (
       switch (direction) {
         case "horizontal": {
           const offsetLeft = profileElement.offsetLeft
-          console.log(offsetLeft)
 
           element.scrollTo({
             left: offsetLeft - offset,

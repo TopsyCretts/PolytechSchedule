@@ -48,7 +48,7 @@ const TeacherProfileCreationForm = ({
 
   return isFetching && teachers.length === 0 ? (
     <Spinner className={"profile-creation__loading-fallback"} />
-  ) : isError && teachers.length === 0 ? (
+  ) : isError ? (
     <RetryFallback
       className={"profile-creation__retry-fallback"}
       onRetry={refetch}

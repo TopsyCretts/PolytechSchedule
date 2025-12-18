@@ -31,17 +31,14 @@ const getInstitutes = async () => {
     )
     return newData.institutes
   } catch (e) {
-    if (axios.isAxiosError(e) && !e.response) {
-      if (savedData.length === 0) {
-        throw e
-      }
-      institutesStore.setInstitutesData({
-        lastUpdate: lastUpdate ? lastUpdate : null,
-        institutes: savedData,
-      })
-      return savedData
+    if (savedData.length === 0) {
+      throw e
     }
-    throw e
+    institutesStore.setInstitutesData({
+      lastUpdate: lastUpdate ? lastUpdate : null,
+      institutes: savedData,
+    })
+    return savedData
   }
 }
 
@@ -56,7 +53,8 @@ const getGroupsByInstitutesQueryOptions = () => {
       }
       return failureCount < 2
     },
-    staleTime: 100000,
+    networkMode: "always",
+    refetchOnReconnect: "always",
   })
 }
 

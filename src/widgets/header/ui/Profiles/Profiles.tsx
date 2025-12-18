@@ -25,8 +25,6 @@ const Profiles = observer(({ className }: ProfilesProps) => {
   const params = useParams()
   const [paramId, setParamId] = useState<string | undefined>()
 
-  console.log(match !== null)
-
   useEffect(() => {
     const newCurrentProfileId = params.profileApiId
     if (newCurrentProfileId !== undefined && newCurrentProfileId !== paramId) {

@@ -17,7 +17,7 @@
   }
 
   &__spacer,
-  &__popover-wrapper{
+  &__popover-wrapper {
     @include square(var(--button-height));
   }
 
@@ -28,7 +28,9 @@
 
   &--grid {
     display: grid;
-    grid-template-columns: var(--button-height) minmax(auto, rem(482)) var(--button-height);
+    grid-template-columns: var(--button-height) minmax(auto, rem(482)) var(
+        --button-height
+      );
     place-items: center center;
     column-gap: rem(8);
 

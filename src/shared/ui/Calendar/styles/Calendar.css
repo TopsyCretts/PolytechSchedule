@@ -25,7 +25,9 @@
   padding-bottom: 0.625rem;
   border-bottom: 0.125rem solid var(--calendarHeaderBorderColor);
 }
-.calendar__inner, .calendar__weekdays, .calendar__body {
+.calendar__inner,
+.calendar__weekdays,
+.calendar__body {
   min-width: 100%;
 }
 .calendar__body {
