@@ -1,7 +1,15 @@
 import type { LoaderFunctionArgs } from "react-router"
-import { PROFILE_TYPE, type ProfileType } from "@/entities/Profile.ts"
+import {
+  type Profile,
+  PROFILE_TYPE,
+  type ProfileType,
+} from "@/entities/Profile.ts"
 import { mainContainer } from "@/app/store/mainContainer.ts"
-import { ProfilesStore } from "@/app/store/profiles/ProfilesStore.ts"
+import {
+  createStudentProfile,
+  createTeacherProfile,
+  ProfilesStore,
+} from "@/app/store/profiles/ProfilesStore.ts"
 import { APP_ROUTES, routeWithParams } from "@/app/routes/routes.ts"
 import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
 import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
@@ -10,20 +18,22 @@ import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
 import { SCHEDULE_VIEW } from "@/entities/ScheduleData.ts"
 
 const profileLoader = async ({ params }: LoaderFunctionArgs) => {
-  const newProfileId = params.profileApiId
+  const newProfileApiId = params.profileApiId
   const newProfileType = params.profileType
 
-  if (!newProfileType && !newProfileId) {
+  if (!newProfileType && !newProfileApiId) {
+    console.log("AWdadwwad")
     throw new Response("Missing required fields", { status: 404 })
   }
 
   const profileType = newProfileType as ProfileType
 
   if (!Object.values(PROFILE_TYPE).includes(profileType)) {
+    console.log("AWdadwwad")
     throw new Response("Missing required fields", { status: 404 })
   }
 
-  const profileId = Number(newProfileId)
+  const profileApiId = Number(newProfileApiId)
 
   const institutesStore = mainContainer.get(InstitutesStore)
   const teachersStore = mainContainer.get(TeachersStore)
@@ -34,16 +44,25 @@ const profileLoader = async ({ params }: LoaderFunctionArgs) => {
   const profilesStore = mainContainer.get(ProfilesStore)
   await profilesStore.getIsInitialized
 
-  const profile = await profilesStore.getOrCreateProfile(profileType, profileId)
+  const savedProfile = profilesStore.getProfile(profileApiId, profileType)
 
-  if (!profile) {
-    throw new Response("Profile creation failed", { status: 404 })
+  if (savedProfile) {
+    LocalStorageManager.set<number>(
+      LOCAL_STORAGE_KEY.lastProfileId,
+      savedProfile.id
+    )
+    profilesStore.setCurrentProfileById(savedProfile.id)
+    return { savedProfile }
   }
-  LocalStorageManager.set<number>(LOCAL_STORAGE_KEY.lastProfileId, profile.id)
 
-  profilesStore.setCurrentProfileById(profile.id)
+  const tempProfile: Profile =
+    profileType === PROFILE_TYPE.student
+      ? createStudentProfile(profileApiId, "", "")
+      : createTeacherProfile(profileApiId, "")
+  
+  profilesStore.setCurrentProfile(tempProfile)
 
-  return { profile }
+  return { tempProfile }
 }
 
 const getScheduleProfileRoute = (

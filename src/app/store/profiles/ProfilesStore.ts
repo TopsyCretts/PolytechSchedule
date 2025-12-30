@@ -86,6 +86,11 @@ export class ProfilesStore {
     }
   }
 
+  @action
+  setCurrentProfile(profile: Profile): void {
+    this.currentProfile = { ...profile }
+  }
+
   async getOrCreateProfile(
     type: ProfileType,
     newProfileApiId: number
@@ -205,7 +210,7 @@ export class ProfilesStore {
   }
 }
 
-const createTeacherProfile = (
+export const createTeacherProfile = (
   apiId: number,
   teacherName: string
 ): TeacherProfile => {
@@ -219,7 +224,7 @@ const createTeacherProfile = (
   }
 }
 
-const createStudentProfile = (
+export const createStudentProfile = (
   apiId: number,
   name: string,
   institute: string

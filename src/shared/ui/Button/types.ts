@@ -1,6 +1,6 @@
 type Shape = "square" | "circle" | "default"
 
-type ButtonType = "primary" | "secondary" | "action"
+type ButtonType = "primary" | "secondary" | "action" | "header"
 
 type BorderRadiusSize = "xs" | "sm" | "md" | "lg" | "xl"
 

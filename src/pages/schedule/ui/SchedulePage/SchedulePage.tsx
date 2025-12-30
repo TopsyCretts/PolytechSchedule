@@ -13,6 +13,7 @@ const SchedulePage = observer(({ className }: SchedulePageProps) => {
   const { getCurrentProfile: currentProfile } = useInjection(ProfilesStore)
 
   if (currentProfile === null) {
+    console.log("awdawd")
     throw new Response("Profile creation failed", { status: 404 })
   }
 

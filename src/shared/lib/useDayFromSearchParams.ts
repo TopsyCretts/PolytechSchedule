@@ -25,7 +25,7 @@ const useSetDateToUrl = () => {
   const setDateToUrl = (date: Date) => {
     const formattedDate = format(date, QUERY_DATE_FORMAT)
     searchParams.set("date", formattedDate)
-    setSearchParams(searchParams)
+    setSearchParams(searchParams, { replace: true })
   }
 
   return {

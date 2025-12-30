@@ -54,16 +54,17 @@ const getScheduleByProfileOptions = (
           actualGroups,
           actualTeachers
         )
-        dbService.saveSchedule(profile.id, newScheduleData).then(() => {
-          console.log(`Schedule saved successfully ${profile.id}`)
-        })
-
-        mainContainer
-          .get(ProfilesStore)
-          .updateLastUpdateTimeById(profile.id)
-          .then(() => {
-            console.log(`Schedule ${profile.id}`)
+        if (profile.id !== 0) {
+          dbService.saveSchedule(profile.id, newScheduleData).then(() => {
+            console.log(`Schedule saved successfully ${profile.id}`)
           })
+          mainContainer
+            .get(ProfilesStore)
+            .updateLastUpdateTimeById(profile.id)
+            .then(() => {
+              console.log(`Schedule ${profile.id}`)
+            })
+        }
 
         return { data: newScheduleData, status: PROGRESS_STATUS.success }
       } catch (error) {

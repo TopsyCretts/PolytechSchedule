@@ -16,6 +16,7 @@ import type { GroupData } from "@/entities/Group.ts"
 import { useGetGroupsByInstitutesQuery } from "@/shared/api/search-schedule/institutesService.ts"
 import { PROFILE_TYPE } from "@/entities/Profile.ts"
 import RetryFallback from "@/widgets/RetryFallback"
+import { ProfilesStore } from "@/app/store/profiles/ProfilesStore.ts"
 
 const mapGroupsToSearchItems = (groups: GroupData[] | null): SearchItem[] => {
   if (groups === null) {
@@ -39,6 +40,8 @@ const StudentProfileCreationForm = observer(
   ({ className }: ProfileCreationFormProps) => {
     const { t } = useTranslation()
     const navigate = useNavigate()
+
+    const { getOrCreateProfile } = useInjection(ProfilesStore)
 
     const { isFetching, isError, refetch } = useGetGroupsByInstitutesQuery()
     const { getInstitutes: institutes, getGroupsByInstitute } =
@@ -64,18 +67,24 @@ const StudentProfileCreationForm = observer(
       []
     )
 
-    const handleGroupSelection = useCallback((group: SearchItem | null) => {
-      if (group !== null) {
-        setSelectedValues((prev) => ({
-          ...prev,
-          group: {
-            id: Number(group.id),
-            name: group.searchableValue,
-          },
-        }))
-        navigateToStudentProfile(group.id)
-      }
-    }, [])
+    const handleGroupSelection = useCallback(
+      async (group: SearchItem | null) => {
+        if (group !== null) {
+          const groupId = Number(group.id)
+
+          setSelectedValues((prev) => ({
+            ...prev,
+            group: {
+              id: groupId,
+              name: group.searchableValue,
+            },
+          }))
+          await getOrCreateProfile(PROFILE_TYPE.student, groupId)
+          navigateToStudentProfile(group.id)
+        }
+      },
+      []
+    )
 
     const navigateToStudentProfile = (groupId: number | string) => {
       navigate(

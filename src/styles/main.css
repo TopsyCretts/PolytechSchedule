@@ -376,27 +376,29 @@ svg * {
   --color-accent-themed: var(--color-accent-alt);
   --color-text-themed: var(--color-dark);
   --color-text-accent-themed: var(--color-gray-300);
-  --border-themed: var(--border-dark);
   --color-icon-themed: var(--color-dark);
+  --border-themed: var(--border-dark);
   --shadow-themed: var(--shadow);
   --select-bg: var(--color-light);
   --select-active-bg: var(--color-dark-opacity-10);
   --selected-profile-bg: var(--color-orange-opacity-60);
   --profile-hover-bg: var(--color-dark-opacity-10);
   --profile-hover-text-color: var(--color-dark);
+  --header-button-color: var(--color-dark);
   --lesson-card-bg: var(--color-light);
   --lesson-card-border: var(--color-light-opacity-5);
   --scrollbar-bg-color: transparent;
   color-scheme: dark light;
 }
 :root.dark-mode {
+  --header-button-color: var(--color-gray-100);
+  --header-bg-themed: var(--color-dark);
   --color-bg-themed: var(--color-dark);
   --color-accent-themed: var(--color-accent);
   --color-text-themed: var(--color-light);
   --color-text-accent-themed: var(--color-gray-100);
   --color-icon-themed: var(--color-light);
   --border-themed: var(--border-light);
-  --header-bg-themed: var(--color-dark);
   --select-bg: var(--color-light-opacity-5);
   --select-active-bg: var(--color-light-opacity-10);
   --lesson-card-bg: var(--color-light-opacity-10);

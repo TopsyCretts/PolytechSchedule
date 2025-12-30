@@ -44,6 +44,7 @@ const BurgerMenu = ({ className }: BurgerMenuProps) => {
       <Select.ButtonToggler
         className="buger-menu__button-toggler"
         shape={"square"}
+        buttonType={"header"}
       >
         <BurgerIcon />
       </Select.ButtonToggler>

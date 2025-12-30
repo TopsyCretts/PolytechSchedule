@@ -20,24 +20,31 @@
   opacity: 0.6;
 }
 .button--action {
+  --buttonBackgroundColor: var(--color-light-opacity-5);
+}
+.button--header {
+  --buttonBackgroundColor: var(--color-light-opacity-10);
+  --buttonTextColor: var(--header-button-color);
+}
+.button--action, .button--header {
   box-shadow: var(--shadow-themed);
   backdrop-filter: var(--blur-20);
 }
 @media (hover: hover) {
-  .button--action:hover {
+  .button--action:hover, .button--header:hover {
     --buttonTextColor: var(--color-light);
     --buttonBackgroundColor: var(--color-blue);
   }
-  .button--action:hover * {
+  .button--action:hover *, .button--header:hover * {
     color: inherit;
   }
 }
 @media (hover: none) {
-  .button--action:active {
+  .button--action:active, .button--header:active {
     --buttonTextColor: var(--color-light);
     --buttonBackgroundColor: var(--color-blue);
   }
-  .button--action:active * {
+  .button--action:active *, .button--header:active * {
     color: inherit;
   }
 }

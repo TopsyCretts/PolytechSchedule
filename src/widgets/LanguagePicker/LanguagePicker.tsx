@@ -33,6 +33,7 @@ const LanguagePicker = ({ className, isHiding }: LanguagePickerProps) => {
       <Select.ButtonToggler
         shape={"square"}
         onClick={() => {}}
+        buttonType={"header"}
         title={t(STRINGS_RES.change_language)}
       >
         <LanguageIcon />

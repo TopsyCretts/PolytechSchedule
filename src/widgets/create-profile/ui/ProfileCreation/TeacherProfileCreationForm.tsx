@@ -11,6 +11,7 @@ import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
 import { useNavigate } from "react-router"
 import { PROFILE_TYPE } from "@/entities/Profile.ts"
 import RetryFallback from "@/widgets/RetryFallback"
+import { ProfilesStore } from "@/app/store/profiles/ProfilesStore.ts"
 
 const mapTeachersToSearchItems = (dto: TeacherData[]): SearchItem[] => {
   return dto.map((item) => {
@@ -26,17 +27,20 @@ const TeacherProfileCreationForm = ({
   className,
 }: ProfileCreationFormProps) => {
   const { t } = useTranslation()
-
   const navigate = useNavigate()
+
+  const { getOrCreateProfile } = useInjection(ProfilesStore)
 
   const { isError, isFetching, refetch } = useGetTeachersQuery()
 
   const { getTeachers: teachers } = useInjection<TeachersStore>(TeachersStore)
 
-  const handleTeacherSelection = (newTeacher: SearchItem | null) => {
+  const handleTeacherSelection = async (newTeacher: SearchItem | null) => {
     if (newTeacher === null) {
       return
     }
+
+    await getOrCreateProfile(PROFILE_TYPE.student, Number(newTeacher.id))
     navigateToTeacherProfile(newTeacher.id.toString())
   }
 

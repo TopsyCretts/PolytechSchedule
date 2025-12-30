@@ -22,6 +22,7 @@ const ThemeToggler = ({ className, isHiding = false }: ThemePickerProps) => {
       className={clsx(className, isHiding && "hidden-mobile-s")}
       title={t(STRINGS_RES.change_theme)}
       onClick={toggleTheme}
+      buttonType={"header"}
       role={"switch"}
     >
       <ThemeIcon theme={theme} />
