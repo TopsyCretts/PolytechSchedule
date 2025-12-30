@@ -1,5 +1,5 @@
-import CalendarCell from "@shared/ui/Calendar/CalendarCell.tsx"
-import type { CalendarWeekProps } from "@shared/ui/Calendar/types.ts"
+import CalendarCell from "@/shared/ui/Calendar/CalendarCell.tsx"
+import type { CalendarWeekProps } from "@/shared/ui/Calendar/types.ts"
 import "./styles/CalendarWeek.scss"
 import clsx from "clsx"
 import { eachDayOfInterval, isEqual } from "date-fns"

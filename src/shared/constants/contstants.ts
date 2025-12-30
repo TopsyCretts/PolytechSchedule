@@ -1,5 +1,5 @@
-import type { ThemeObject } from "@shared/models/Theme.ts"
-import { STRINGS_RES } from "@shared/constants/strings.ts"
+import type { ThemeObject } from "@/shared/models/Theme.ts"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import type { Locale } from "date-fns"
 import { enUS, fr, ru } from "date-fns/locale"
 import type { LessonType } from "@/entities/ScheduleData.ts"
@@ -65,6 +65,8 @@ const LESSONS_MAP: Record<
 
 const CALENDAR_SPECIAL_MONTH_FORMAT = "MMMM-yyyy" as const
 
+const QUERY_DATE_FORMAT = "yyyy-MM-dd" as const
+
 const DB_NAME = "schedule-db"
 const DB_VERSION = 3
 
@@ -73,10 +75,6 @@ const LOCAL_STORAGE_KEY = {
   institutesLastUpdate: "institutes-last-update",
   teachersLastUpdate: "teachers-last-update",
   lastProfileId: "last-profile-id",
-} as const
-
-const SESSION_STORAGE_KEY = {
-  isLastProfileInitiated: "is-last-profile-init",
 } as const
 
 export {
@@ -90,5 +88,5 @@ export {
   DB_NAME,
   DB_VERSION,
   LOCAL_STORAGE_KEY,
-  SESSION_STORAGE_KEY,
+  QUERY_DATE_FORMAT,
 }

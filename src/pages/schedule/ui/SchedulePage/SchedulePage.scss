@@ -5,9 +5,10 @@
   flex-direction: column;
   width: 100%;
   max-width: 100%;
-  padding-bottom: rem(20);
+  padding-block: var(--spacing-xl);
 
   @include mobile {
     height: 100%;
+    padding-block: var(--spacing-md);
   }
 }

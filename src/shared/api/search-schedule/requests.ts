@@ -1,6 +1,6 @@
-import { axiosClient } from "@shared/api/axiosClient.ts"
-import type { TeachersDto } from "@shared/api/search-schedule/dto/TeachersDto.ts"
-import type { InstitutesDto } from "@shared/api/search-schedule/dto/InstitutesDto.ts"
+import { axiosClient } from "@/shared/api/axiosClient"
+import type { TeachersDto } from "@/shared/api/search-schedule/dto/TeachersDto"
+import type { InstitutesDto } from "@/shared/api/search-schedule/dto/InstitutesDto"
 
 const getGroupsByInstitutes = async () =>
   axiosClient.get<InstitutesDto>("/schedule/actual_groups", {

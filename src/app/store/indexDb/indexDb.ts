@@ -1,7 +1,7 @@
 import { type DBSchema, type IDBPDatabase, openDB } from "idb"
 import type { InstituteData } from "@/entities/Institute.ts"
 import type { TeacherData } from "@/entities/Teachers.ts"
-import { DB_NAME, DB_VERSION } from "@shared/constants/contstants.ts"
+import { DB_NAME, DB_VERSION } from "@/shared/constants/contstants.ts"
 import { type ScheduleData } from "@/entities/ScheduleData.ts"
 import type { ScheduleDataDB } from "@/app/store/indexDb/models/ScheduleDataDB.ts"
 import type { ProfileDB } from "@/app/store/indexDb/models/ProfileDB.ts"

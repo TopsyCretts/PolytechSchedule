@@ -8,15 +8,15 @@ import {
 import { lazy } from "react"
 import LayOut from "@/app/entrypoint/LayOut.tsx"
 import { mainLoader } from "@/app/routes/main/mainLoader.ts"
-import { WebLoaderIndicator } from "@shared/ui"
+import { WebLoaderIndicator } from "@/shared/ui"
 import { profileLoader } from "@/app/routes/schedule/profileLoader.ts"
-import HomePage from "@/pages/HomePage"
+import NewProfilePage from "@/pages/NewProfilePage"
 import ScheduleCalendarView from "@/pages/schedule-calendar"
 import SchedulePage from "@/pages/schedule"
 import ScheduleWeekSlider from "@/pages/schedule-week-slider"
-import ScheduleDayView from "@/pages/schedule-day"
+import weekLoader from "@/app/routes/schedule/weekLoader.ts"
 
-const RouterErrorElement = lazy(() => import("@shared/ui/RouterErrorElement"))
+const RouterErrorElement = lazy(() => import("@/shared/ui/RouterErrorElement"))
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"))
 
 const router = createBrowserRouter(
@@ -24,18 +24,24 @@ const router = createBrowserRouter(
     <Route
       path={"/"}
       element={<LayOut />}
+      loader={async () => mainLoader}
       errorElement={<RouterErrorElement />}
       hydrateFallbackElement={<WebLoaderIndicator />}
     >
       <Route
         index
-        element={<HomePage />}
         loader={mainLoader}
+        element={
+          <Navigate
+            to="/new-profile"
+            replace
+          />
+        }
         errorElement={<RouterErrorElement />}
       />
       <Route
         path={"new-profile"}
-        element={<HomePage />}
+        element={<NewProfilePage />}
         errorElement={<RouterErrorElement />}
       />
       <Route
@@ -72,12 +78,17 @@ const router = createBrowserRouter(
           />
           <Route
             path={"day"}
-            errorElement={<RouterErrorElement />}
-            element={<ScheduleDayView />}
+            element={
+              <Navigate
+                to="/"
+                replace
+              />
+            }
           />
         </Route>
         <Route
           path={"week"}
+          loader={weekLoader}
           errorElement={<RouterErrorElement />}
           element={<ScheduleWeekSlider />}
         />

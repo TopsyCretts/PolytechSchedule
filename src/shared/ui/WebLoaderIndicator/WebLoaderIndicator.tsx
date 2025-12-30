@@ -1,6 +1,5 @@
 import { motion } from "framer-motion"
-import { Logo } from "@shared/ui"
-import { Spinner } from "@shared/ui"
+import { Logo, Spinner } from "@/shared/ui"
 import "./WebLoaderIndicator.scss"
 
 const WebLoaderIndicator = () => {

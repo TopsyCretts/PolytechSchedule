@@ -16,7 +16,7 @@
   @include square(var(--button-height));
 
   & .spinner__svg {
-    width: rem(24) !important;
-    height: rem(24) !important;
+    width: var(--icon-size) !important;
+    height: var(--icon-size) !important;
   }
 }

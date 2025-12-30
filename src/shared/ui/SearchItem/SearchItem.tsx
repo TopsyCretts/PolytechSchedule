@@ -1,10 +1,10 @@
 import "./SearchItem.scss"
 import clsx from "clsx"
-import { IconButton } from "@shared/ui"
+import { IconButton } from "@/shared/ui"
 import type { SearchItemCoreProps } from "../SearchItem/types.ts"
 import { useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@shared/constants/strings.ts"
-import { isEnterKeyPressed } from "@shared/lib/isEnterKeyPressed.ts"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
+import { isEnterKeyPressed } from "@/shared/lib/isEnterKeyPressed.ts"
 
 interface SearchItemProps extends SearchItemCoreProps {
   headingChildren?: React.ReactNode

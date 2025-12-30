@@ -21,7 +21,6 @@ const APP_ROUTES = {
   scheduleIndex: "/schedule",
   scheduleCalendar: "schedule/:profileType/:profileApiId/calendar",
   scheduleWeek: "schedule/:profileType/:profileApiId/week",
-  scheduleDay: "schedule/:profileType/:profileApiId/calendar/day",
   notFound: "/not-found",
 } as const
 

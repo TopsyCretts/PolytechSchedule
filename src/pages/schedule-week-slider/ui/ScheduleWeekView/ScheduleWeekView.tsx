@@ -1,11 +1,11 @@
 import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
-import { WeekSlider } from "@shared/ui"
+import { WeekSlider } from "@/shared/ui"
 import * as React from "react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { type SwiperRef } from "swiper/react"
 import type { SelectedWeekSlide } from "@/pages/schedule-week-slider/lib/types.ts"
 import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
-import { type Day, startOfToday } from "date-fns"
+import { type Day } from "date-fns"
 import { findWeekSlide } from "@/pages/schedule-week-slider/lib/findWeekSlide.ts"
 import "./ScheduleWeekView.scss"
 import ScheduleWeekViewController from "@/pages/schedule-week-slider/ui/ScheduleWeekVIewController"
@@ -13,6 +13,8 @@ import ScheduleWeekViewSubHeader from "@/pages/schedule-week-slider/ui/ScheduleW
 import ScheduleWeekViewControllerMobile from "@/pages/schedule-week-slider/ui/ScheduleWeekViewControllerMobile"
 import { AnimatePresence, motion } from "framer-motion"
 import ArrowIcon from "@/assets/icons/arrow-long-right.svg?react"
+import clsx from "clsx"
+import { useGetDateFromUrl } from "@/shared/lib/useDayFromSearchParams.ts"
 
 interface SwipeState {
   isSwiping: boolean
@@ -29,8 +31,10 @@ const ScheduleWeekView = () => {
 
   const swiperRef = useRef<SwiperRef | null>(null)
 
+  const { getDateFromUrl } = useGetDateFromUrl()
+
   const [currentWeek, setCurrentWeek] = useState<SelectedWeekSlide>(
-    findWeekSlide(data.weeks, startOfToday())
+    findWeekSlide(data.weeks, getDateFromUrl())
   )
 
   const [animationDirection, setAnimationDirection] = useState(1)
@@ -249,7 +253,7 @@ const ScheduleWeekView = () => {
   }
 
   return (
-    <section className={"schedule-week-view"}>
+    <section className={clsx("schedule-week-view", "overflow-x-hidden")}>
       <header className={"schedule-week-view__header"}>
         <ScheduleWeekViewSubHeader
           handleWeekSelection={handleWeekSelection}
@@ -261,14 +265,14 @@ const ScheduleWeekView = () => {
           onNextWeek={handleNextWeek}
         />
         <ScheduleWeekViewControllerMobile
-          className={"visible-mobile"}
+          className={clsx("schedule-week-view__controller", "visible-mobile-s")}
           startWeekDate={currentWeek.weekData.start}
           currentSelectedDayNumber={currentWeek.activeDateIndex as Day}
           locale={locale}
           onWeekDayClick={goToIndex}
         />
         <ScheduleWeekViewController
-          className={"hidden-mobile"}
+          className={clsx("schedule-week-view__controller", "hidden-mobile-s")}
           locale={locale}
           scheduleWeekSlider={swiperRef}
           selectedWeekSlide={currentWeek}
@@ -307,6 +311,7 @@ const ScheduleWeekView = () => {
           >
             <WeekSlider
               swiperRef={swiperRef}
+              initialDate={getDateFromUrl()}
               weekData={currentWeek.weekData}
               locale={locale}
               profileType={profile.profileType}

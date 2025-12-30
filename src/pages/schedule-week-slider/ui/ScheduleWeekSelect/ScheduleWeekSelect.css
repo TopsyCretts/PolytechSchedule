@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  column-gap: 0.9375rem;
+  column-gap: var(--spacing-lg);
   height: var(--button-height);
 }
 .schedule-week-select__content {

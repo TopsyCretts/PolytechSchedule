@@ -1,5 +1,4 @@
 import "./styles/Calendar.scss"
-import clsx from "clsx"
 import {
   add,
   eachDayOfInterval,
@@ -17,142 +16,205 @@ import type {
   CalendarContextActions,
   CalendarContextValues,
   CalendarProps,
-} from "./types.ts"
-import CalendarWeek from "./CalendarWeek.tsx"
-import { createContext, useCallback, useMemo, useState } from "react"
-import CalendarChangeMonth from "./CalendarChangeMonth.tsx"
+  CalendarRef,
+} from "./types"
+import CalendarWeek from "./CalendarWeek"
+import {
+  createContext,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from "react"
+import CalendarChangeMonth from "./CalendarChangeMonth"
 import { ru } from "date-fns/locale"
-import { CALENDAR_SPECIAL_MONTH_FORMAT } from "@shared/constants/contstants.ts"
-import { formatDateToSpecialMonthString } from "@shared/lib/formatDateToSpecialMonthString.ts"
+import { CALENDAR_SPECIAL_MONTH_FORMAT } from "@/shared/constants/contstants"
+import { formatDateToSpecialMonthString } from "@/shared/lib/formatDateToSpecialMonthString"
+import { capitalizeFirstLatter } from "@/shared/lib/capitalizeFirstLatter"
+import clsx from "clsx"
 
 const CalendarContext = createContext<CalendarContextValues | null>(null)
-
 const CalendarActionsContext = createContext<CalendarContextActions | null>(
   null
 )
 
-const Calendar = ({
-  onMonthChange,
-  onSelectedDateChange,
-  dataToDisplay,
-  isSelectedDateCouldBeNull = true,
-  weekStartsOn = 1,
-  locale = ru,
-  initialMonth = null,
-  initialDate = null,
-}: CalendarProps) => {
-  const [currentMonth, setCurrentMonth] = useState(() => {
-    if (initialMonth !== null) {
-      return initialMonth
-    }
-    return formatDateToSpecialMonthString(startOfToday())
-  })
-
-  const firstDayOfCurrentMonth = useMemo(
-    () => parse(currentMonth, CALENDAR_SPECIAL_MONTH_FORMAT, new Date()),
-    [currentMonth]
-  )
-
-  const [selectedDate, setSelectedDate] = useState<Date | null>(initialDate)
-
-  const handleSelectedDateChange = useCallback(
-    (newDate: Date | null) => {
-      if (newDate === null && !isSelectedDateCouldBeNull) {
-        return
-      }
-      setSelectedDate(newDate)
-      onSelectedDateChange(newDate)
-    },
-    [onSelectedDateChange, isSelectedDateCouldBeNull]
-  )
-
-  const value: CalendarContextValues = useMemo(() => {
-    return {
-      currentMonth,
-      selectedDate,
-      monthFormat: CALENDAR_SPECIAL_MONTH_FORMAT,
-      locale,
-    }
-  }, [currentMonth, selectedDate, locale])
-
-  const handleMonthChange = useCallback(
-    (month: Date) => {
-      const monthString = formatDateToSpecialMonthString(month)
-      setCurrentMonth(monthString)
-      onMonthChange(monthString)
-    },
-    [onMonthChange]
-  )
-
-  const handleMonthIncrement = useCallback(() => {
-    const firstDayOfNextMonth = add(firstDayOfCurrentMonth, { months: 1 })
-    handleMonthChange(firstDayOfNextMonth)
-  }, [firstDayOfCurrentMonth, handleMonthChange])
-
-  const handleMonthDecrement = useCallback(() => {
-    const firstDayOfNextMonth = add(firstDayOfCurrentMonth, { months: -1 })
-    handleMonthChange(firstDayOfNextMonth)
-  }, [firstDayOfCurrentMonth, handleMonthChange])
-
-  const actionValue: CalendarContextActions = useMemo(() => {
-    return {
-      selectDate: handleSelectedDateChange,
-      incrementMonth: handleMonthIncrement,
-      decrementMonth: handleMonthDecrement,
-    }
-  }, [handleMonthIncrement, handleSelectedDateChange, handleMonthDecrement])
-
-  const weeks = eachWeekOfInterval(
+const Calendar = forwardRef<CalendarRef, CalendarProps>(
+  (
     {
-      start: startOfWeek(startOfMonth(firstDayOfCurrentMonth), {
-        weekStartsOn,
-      }),
-      end: endOfWeek(endOfMonth(firstDayOfCurrentMonth), {
-        weekStartsOn,
-      }),
+      className,
+      onMonthChange,
+      onSelectedDateChange,
+      dataToDisplay,
+      isSelectedDateCouldBeNull = true,
+      weekStartsOn = 1,
+      locale = ru,
+      initialDate = null,
     },
-    { weekStartsOn }
-  )
+    ref
+  ) => {
+    const [currentMonth, setCurrentMonth] = useState(() =>
+      formatDateToSpecialMonthString(initialDate ?? startOfToday())
+    )
 
-  const weekDaysString = useMemo(() => {
-    return eachDayOfInterval({
-      start: startOfWeek(new Date(), { weekStartsOn: 1 }),
-      end: endOfWeek(new Date(), { weekStartsOn: 1 }),
-    }).map((day) => format(day, "EEEEEE", { locale }))
-  }, [locale])
+    const firstDayOfCurrentMonth = useMemo(
+      () => parse(currentMonth, CALENDAR_SPECIAL_MONTH_FORMAT, new Date()),
+      [currentMonth]
+    )
 
-  return (
-    <CalendarContext.Provider value={value}>
-      <CalendarActionsContext.Provider value={actionValue}>
-        <div className={clsx("calendar")}>
-          <header className="calendar__header">
-            <CalendarChangeMonth className={"calendar__month-switch"} />
-          </header>
-          <div className="calendar__inner">
-            <div className="calendar__weekdays">
-              {weekDaysString.map((day) => (
-                <span key={day}>{day}</span>
-              ))}
+    const [selectedDate, setSelectedDate] = useState<Date | null>(initialDate)
+
+    useEffect(() => {
+      setSelectedDate(initialDate)
+    }, [initialDate])
+
+    const handleSelectedDateChange = useCallback(
+      (newDate: Date | null) => {
+        if (newDate === null && !isSelectedDateCouldBeNull) {
+          return
+        }
+        setSelectedDate(newDate)
+        onSelectedDateChange(newDate)
+      },
+      [onSelectedDateChange, isSelectedDateCouldBeNull]
+    )
+
+    const handleMonthChange = useCallback(
+      (month: Date) => {
+        const monthString = formatDateToSpecialMonthString(month)
+        setCurrentMonth(monthString)
+        onMonthChange(monthString)
+      },
+      [onMonthChange]
+    )
+
+    const handleMonthIncrement = useCallback(() => {
+      const firstDayOfNextMonth = add(firstDayOfCurrentMonth, { months: 1 })
+      handleMonthChange(firstDayOfNextMonth)
+    }, [firstDayOfCurrentMonth, handleMonthChange])
+
+    const handleMonthDecrement = useCallback(() => {
+      const firstDayOfPrevMonth = add(firstDayOfCurrentMonth, { months: -1 })
+      handleMonthChange(firstDayOfPrevMonth)
+    }, [firstDayOfCurrentMonth, handleMonthChange])
+
+    const value = useMemo<CalendarContextValues>(
+      () => ({
+        currentMonth,
+        selectedDate,
+        monthFormat: CALENDAR_SPECIAL_MONTH_FORMAT,
+        locale,
+      }),
+      [currentMonth, selectedDate, locale]
+    )
+
+    const actionValue = useMemo<CalendarContextActions>(
+      () => ({
+        selectDate: handleSelectedDateChange,
+        incrementMonth: handleMonthIncrement,
+        decrementMonth: handleMonthDecrement,
+      }),
+      [handleMonthIncrement, handleSelectedDateChange, handleMonthDecrement]
+    )
+
+    const weeks = eachWeekOfInterval(
+      {
+        start: startOfWeek(startOfMonth(firstDayOfCurrentMonth), {
+          weekStartsOn,
+        }),
+        end: endOfWeek(endOfMonth(firstDayOfCurrentMonth), {
+          weekStartsOn,
+        }),
+      },
+      { weekStartsOn }
+    )
+
+    const weekDaysString = useMemo(
+      () =>
+        eachDayOfInterval({
+          start: startOfWeek(new Date(), { weekStartsOn: 1 }),
+          end: endOfWeek(new Date(), { weekStartsOn: 1 }),
+        }).map((day) =>
+          capitalizeFirstLatter(format(day, "EEEEEE", { locale }))
+        ),
+      [locale]
+    )
+
+    const calendarMethods = useMemo(
+      () => ({
+        goNextMonth: handleMonthIncrement,
+        goPreviousMonth: handleMonthDecrement,
+        goNextDay: () => {
+          if (selectedDate) {
+            const nextDay = add(selectedDate, { days: 1 })
+            handleSelectedDateChange(nextDay)
+            if (
+              format(nextDay, "M") !== format(selectedDate, "M") &&
+              format(selectedDate, "M") === format(firstDayOfCurrentMonth, "M")
+            ) {
+              handleMonthIncrement()
+            }
+          }
+        },
+        goPreviousDay: () => {
+          if (selectedDate) {
+            const previousDay = add(selectedDate, { days: -1 })
+            handleSelectedDateChange(previousDay)
+            if (
+              format(previousDay, "M") !== format(selectedDate, "M") &&
+              format(selectedDate, "M") === format(firstDayOfCurrentMonth, "M")
+            ) {
+              handleMonthDecrement()
+            }
+          }
+        },
+        selectDate: handleSelectedDateChange,
+      }),
+      [
+        handleMonthIncrement,
+        handleMonthDecrement,
+        handleSelectedDateChange,
+        selectedDate,
+        firstDayOfCurrentMonth,
+      ]
+    )
+
+    useImperativeHandle(ref, () => calendarMethods, [calendarMethods])
+
+    return (
+      <CalendarContext.Provider value={value}>
+        <CalendarActionsContext.Provider value={actionValue}>
+          <div className={clsx(className, "calendar")}>
+            <header className="calendar__header">
+              <CalendarChangeMonth className="calendar__month-switch" />
+            </header>
+            <div className="calendar__inner">
+              <div className="calendar__weekdays">
+                {weekDaysString.map((day) => (
+                  <span key={day}>{day}</span>
+                ))}
+              </div>
+              <div className="calendar__body">
+                {weeks.map((date) => (
+                  <CalendarWeek
+                    key={date.toString()}
+                    weekData={{
+                      start: date,
+                      end: add(endOfWeek(date), { days: 1 }),
+                      days: dataToDisplay.weeks.find((week) =>
+                        isEqual(date, week.start)
+                      )?.days,
+                    }}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-          <div className="calendar__body">
-            {weeks.map((date) => (
-              <CalendarWeek
-                key={date.toString()}
-                weekData={{
-                  start: date,
-                  end: add(endOfWeek(date), { days: 1 }),
-                  days: dataToDisplay.weeks.find((week) =>
-                    isEqual(date, week.start)
-                  )?.days,
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      </CalendarActionsContext.Provider>
-    </CalendarContext.Provider>
-  )
-}
+        </CalendarActionsContext.Provider>
+      </CalendarContext.Provider>
+    )
+  }
+)
 
 export { Calendar, CalendarActionsContext, CalendarContext }

@@ -8,7 +8,7 @@
   &__theme-type {
     display: flex;
     align-items: center;
-    column-gap: rem(10);
+    column-gap: var(--spacing-xs);
     white-space: nowrap;
   }
 }

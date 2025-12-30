@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react"
 import { useDebounce } from "use-debounce"
-import type { SearchItem } from "@shared/models/Search.ts"
+import type { SearchItem } from "@/shared/models/Search"
 
 const useSearchableList = (searchItems: SearchItem[]) => {
   const [searchTerm, setSearchTerm] = useState("")

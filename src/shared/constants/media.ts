@@ -3,6 +3,7 @@ const pxToRem = (pixels: number) => {
 }
 
 const MATCH_MEDIA = {
+  laptopAbove: window.matchMedia(`(width > ${pxToRem(1400.98)}rem)`),
   laptop: window.matchMedia(`(width <= ${pxToRem(1400.98)}rem)`),
   tablet: window.matchMedia(`(width <= ${pxToRem(1023.98)}rem)`),
   mobile: window.matchMedia(`(width <= ${pxToRem(767.99)}rem)`),

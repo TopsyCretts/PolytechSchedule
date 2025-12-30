@@ -1,10 +1,10 @@
-import "./HomePage.scss"
+import "./NewProfilePage.scss"
 import clsx from "clsx"
-import { ProfileCreation } from "@widgets/create-profile/ui/ProfileCreation"
+import { ProfileCreation } from "@/widgets/create-profile/ui/ProfileCreation"
 import { useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@shared/constants/strings.ts"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
 
-const HomePage = () => {
+const NewProfilePage = () => {
   const { t } = useTranslation()
 
   return (
@@ -16,4 +16,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default NewProfilePage

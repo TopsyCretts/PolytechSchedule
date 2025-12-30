@@ -1,13 +1,13 @@
 import "./LanguagePicker.scss"
 import clsx from "clsx"
-import { Select } from "@shared/ui"
-import LanguageIcon from "@assets/icons/language.svg?react"
+import { Select } from "@/shared/ui"
+import LanguageIcon from "@/assets/icons/language.svg?react"
 import {
   LANGUAGE_SELECTABLE_VALUES,
   LANGUAGES_KEYS,
-} from "@shared/constants/contstants.ts"
+} from "@/shared/constants/contstants.ts"
 import i18next from "i18next"
-import { STRINGS_RES } from "@shared/constants/strings.ts"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import { useTranslation } from "react-i18next"
 
 interface LanguagePickerProps {
@@ -31,7 +31,7 @@ const LanguagePicker = ({ className, isHiding }: LanguagePickerProps) => {
       )}
     >
       <Select.ButtonToggler
-        isSquare
+        shape={"square"}
         onClick={() => {}}
         title={t(STRINGS_RES.change_language)}
       >

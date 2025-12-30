@@ -1,4 +1,5 @@
 import type { Locale } from "date-fns"
+import type { BaseComponent } from "@/shared/models/BaseComponent.ts"
 
 interface CalendarContextValues {
   currentMonth: string
@@ -13,15 +14,22 @@ interface CalendarContextActions {
   incrementMonth: () => void
 }
 
-interface CalendarProps {
+interface CalendarProps extends BaseComponent {
   initialDate?: Date | null
   dataToDisplay: CalendarData
-  initialMonth?: string | null
   onMonthChange: (month: string) => void
   onSelectedDateChange: (date: Date | null) => void
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
   isSelectedDateCouldBeNull?: boolean
   locale?: Locale
+}
+
+type CalendarRef = {
+  goNextMonth: () => void
+  goPreviousMonth: () => void
+  goNextDay: () => void
+  goPreviousDay: () => void
+  selectDate: (date: Date | null) => void
 }
 
 interface CalendarData {
@@ -56,6 +64,7 @@ export type {
   CalendarContextValues,
   CalendarContextActions,
   CalendarProps,
+  CalendarRef,
   CalendarData,
   CalendarWeekProps,
   WeekData,

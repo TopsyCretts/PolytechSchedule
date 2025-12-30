@@ -1,13 +1,13 @@
-import { Button } from "@shared/ui"
 import { format, parse } from "date-fns"
-import { capitalizeFirstLatter } from "@shared/lib/capitalizeFirstLatter.ts"
-import ArrowLeftIcon from "@assets/icons/arrow-left.svg?react"
+import { capitalizeFirstLatter } from "@/shared/lib/capitalizeFirstLatter.ts"
+import ArrowLeftIcon from "@/assets/icons/arrow-left.svg?react"
 import clsx from "clsx"
 import {
   useCalendar,
   useCalendarActions,
-} from "@shared/ui/Calendar/useCalendar.ts"
+} from "@/shared/ui/Calendar/useCalendar.ts"
 import "./styles/CalendarMonthSwitch.scss"
+import Button from "@/shared/ui/Button"
 
 interface CalendarChangeMonthProps {
   className?: string
@@ -23,7 +23,7 @@ const CalendarChangeMonth = ({ className }: CalendarChangeMonthProps) => {
     <div className={clsx(className, "month-switch")}>
       <Button
         className={"month-switch__left"}
-        isSquare
+        shape={"square"}
         onClick={decrementMonth}
       >
         <ArrowLeftIcon />
@@ -47,7 +47,7 @@ const CalendarChangeMonth = ({ className }: CalendarChangeMonthProps) => {
       </time>
       <Button
         className={"month-switch__right"}
-        isSquare
+        shape={"square"}
         onClick={incrementMonth}
       >
         <ArrowLeftIcon />

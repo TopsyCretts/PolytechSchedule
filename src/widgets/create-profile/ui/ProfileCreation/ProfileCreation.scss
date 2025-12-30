@@ -2,13 +2,13 @@
 
 .profile-creation {
   &__inner {
-    @include border-shadow-themed(var(--border-radius-large), false);
+    @include border-shadow-themed(var(--border-radius-xl));
 
-    margin-top: rem(30);
-    padding: rem(30);
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-hg);
 
     @include mobile {
-      padding: rem(15);
+      padding: var(--spacing-lg);
     }
   }
 
@@ -21,10 +21,12 @@
   &__form {
     display: flex;
     flex-direction: column;
-    row-gap: rem(20);
+    row-gap: var(--spacing-xl);
   }
 
-  &__next-button {
-    margin-top: rem(40);
+  &__institutes-select {
+    & .search-item__trailing-icon:not(.search-item__trailing-icon--cross) {
+      display: none !important;
+    }
   }
 }

@@ -1,5 +1,3 @@
-import type { InstituteType } from "@/entities/Institute.ts"
-
 interface SearchFieldProps {
   className?: string
   id: string
@@ -28,6 +26,6 @@ interface SearchListProps {
   onItemClick: (item: SearchItem) => void
 }
 
-type SearchItemType = InstituteType | "group" | "teacher"
+type SearchItemType = "institute" | "group" | "teacher"
 
 export type { SearchFormProps, SearchFieldProps, SearchItem, SearchListProps }

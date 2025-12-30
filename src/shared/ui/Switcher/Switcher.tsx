@@ -3,7 +3,7 @@ import clsx from "clsx"
 import type {
   SwitcherItemProps,
   SwitcherProps,
-} from "@shared/ui/Switcher/types.ts"
+} from "@/shared/ui/Switcher/types"
 
 const Switcher = <T extends string>({
   className,

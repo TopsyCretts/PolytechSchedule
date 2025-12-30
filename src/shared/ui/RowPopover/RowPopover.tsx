@@ -2,7 +2,7 @@ import "./RowPopover.scss"
 import clsx from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
-import type { BaseComponentWithChildren } from "@shared/models/BaseComponent.ts"
+import type { BaseComponentWithChildren } from "@/shared/models/BaseComponent.ts"
 import { useTranslation } from "react-i18next"
 
 interface RowPopover extends BaseComponentWithChildren {

@@ -2,13 +2,13 @@
   z-index: 0 !important;
   width: 100%;
   height: 100%;
-  padding-top: 1.25rem;
+  padding-top: var(--spacing-lg);
 }
 .week-slider__slide {
   z-index: 0 !important;
   overflow-y: auto;
   overscroll-behavior: none;
-  max-width: 31.875rem;
+  max-width: calc(var(--week-slide-width) + 2 * var(--week-slide-padding-x));
   height: 100%;
   padding-bottom: 0.625rem;
   touch-action: pan-y;

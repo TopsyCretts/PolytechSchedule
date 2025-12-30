@@ -1,15 +1,22 @@
-import { Calendar } from "@shared/ui"
+import { Calendar } from "@/shared/ui"
 import CalendarLessons from "@/pages/schedule-calendar/ui/CalendarLessons"
-import ScheduleDayItem from "@shared/ui/ScheduleDayItem"
+import ScheduleDayItem from "@/shared/ui/ScheduleDayItem"
 import clsx from "clsx"
 import "./ScheduleCalendarView.scss"
 import { AnimatePresence, motion } from "framer-motion"
-import { useDebounce } from "use-debounce"
 import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
-import { MATCH_MEDIA } from "@shared/constants/media.ts"
-import { useLocation, useNavigate } from "react-router"
+import { MATCH_MEDIA } from "@/shared/constants/media.ts"
+import { useNavigate } from "react-router"
 import { findEqualDayData } from "@/pages/schedule-calendar/lib/findEqualDayData.ts"
-import useMediaQueryListEvent from "@shared/lib/useMediaQueryListEvent.ts"
+import useMediaQueryListEvent from "@/shared/lib/useMediaQueryListEvent.ts"
+import { useRef } from "react"
+import type { CalendarRef } from "@/shared/ui/Calendar/types.ts"
+import DayController from "@/shared/ui/DayController"
+import { format, isToday } from "date-fns"
+import DataStatusPopover from "@/widgets/DataStatusPopover"
+import { routeWithParams } from "@/app/routes/routes.ts"
+import { useSetDateToUrl } from "@/shared/lib/useDayFromSearchParams.ts"
+import { QUERY_DATE_FORMAT } from "@/shared/constants/contstants.ts"
 
 interface ScheduleCalendarProps {
   className?: string
@@ -17,63 +24,100 @@ interface ScheduleCalendarProps {
 
 const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
   const navigate = useNavigate()
-  const location = useLocation()
+  const calendar = useRef<CalendarRef>(null)
 
   const { isMatchesMedia: isLaptop } = useMediaQueryListEvent(
     MATCH_MEDIA.laptop
   )
 
+  const { setDateToUrl } = useSetDateToUrl()
+
   const { data, profile, currentDayData, setCurrentDayData, locale } =
     useScheduleData()
 
-  const [debouncedDay] = useDebounce(currentDayData, 200)
-
-  const navigateToDay = () =>
-    navigate(`${location.pathname}/day${location.search}`)
+  const navigateToWeek = (date: Date) => {
+    navigate(
+      routeWithParams(
+        "/schedule",
+        [profile.profileType, profile.apiId.toString()],
+        { date: format(date, QUERY_DATE_FORMAT) },
+        "week"
+      )
+    )
+  }
 
   const handleDateSelect = (date: Date | null) => {
-    if (date === null) {
-      if (isLaptop) {
-        navigateToDay()
-      }
-      return
-    }
-    const dayData = findEqualDayData(data.weeks, date)
+    setDateToUrl(date!)
+    const dayData = findEqualDayData(data.weeks, date!)
     setCurrentDayData(dayData)
     if (isLaptop) {
-      navigateToDay()
+      navigateToWeek(date!)
     }
+  }
+
+  const handleNextDay = () => {
+    calendar.current?.goNextDay()
+  }
+
+  const handlePrevDay = () => {
+    calendar.current?.goPreviousDay()
   }
 
   return (
     <section
-      className={clsx(className, "schedule-calendar", "container-large")}
+      className={clsx(className, "container-large", "schedule-calendar-view")}
     >
       <h2 className="visually-hidden">Calendar schedule</h2>
-      <Calendar
-        dataToDisplay={{
-          weeks: data.weeks.map((week) => {
-            return {
-              ...week,
-              days: week.days.map(({ date, lessons }) => {
-                return {
-                  date: date,
-                  contentToDisplay: <CalendarLessons lessons={lessons} />,
-                }
-              }),
-            }
-          }),
-        }}
-        locale={locale}
-        onMonthChange={() => {}}
-        initialDate={isLaptop ? null : currentDayData.date}
-        isSelectedDateCouldBeNull={isLaptop}
-        onSelectedDateChange={handleDateSelect}
-      />
-      <AnimatePresence>
-        {debouncedDay.date.getTime() === currentDayData.date.getTime() && (
+      <div className={"schedule-calendar-view__calendar-wrapper"}>
+        <div className={"schedule-calendar-view__popover-wrapper"}>
+          <DataStatusPopover
+            className={clsx(
+              "schedule-calendar-view__popover",
+              "hidden-mobile-s"
+            )}
+            isReversed={true}
+          />
+        </div>
+        <Calendar
+          ref={calendar}
+          dataToDisplay={{
+            weeks: data.weeks.map((week) => {
+              return {
+                ...week,
+                days: week.days.map(({ date, lessons }) => {
+                  return {
+                    date: date,
+                    contentToDisplay: <CalendarLessons lessons={lessons} />,
+                  }
+                }),
+              }
+            }),
+          }}
+          locale={locale}
+          onMonthChange={() => {}}
+          initialDate={isLaptop ? null : currentDayData.date}
+          isSelectedDateCouldBeNull={isLaptop}
+          onSelectedDateChange={handleDateSelect}
+        />
+      </div>
+      <div className={clsx("schedule-calendar-view__day", "hidden-laptop")}>
+        <DayController
+          className={"schedule-calendar-view__day-controller"}
+          day={currentDayData.date}
+          locale={locale}
+          isActive={isToday(currentDayData.date)}
+          decrement={handlePrevDay}
+          increment={handleNextDay}
+          isDecrementActive={true}
+          isIncrementActive={true}
+        />
+        <AnimatePresence mode={"wait"}>
           <motion.div
-            className={"hidden-laptop"}
+            key={currentDayData.date.getTime()}
+            className={clsx(
+              "schedule-calendar-view__day-item-wrapper",
+              "hidden-laptop"
+            )}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -81,14 +125,15 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
           >
             <ScheduleDayItem
               key={currentDayData.date.toString()}
-              className={"schedule-calendar__day-item"}
+              className={"schedule-calendar-view__day-item"}
               dayData={currentDayData}
               locale={locale}
               profileType={profile.profileType}
+              isTitleIsHidden={true}
             />
           </motion.div>
-        )}
-      </AnimatePresence>
+        </AnimatePresence>
+      </div>
     </section>
   )
 }

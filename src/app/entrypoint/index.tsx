@@ -5,7 +5,7 @@ import { QueryClientProvider } from "@tanstack/react-query"
 import { ErrorBoundary } from "react-error-boundary"
 import { mainContainer } from "@/app/store/mainContainer.ts"
 import { Provider } from "inversify-react"
-import { queryClient } from "@shared/api"
+import { queryClient } from "@/shared/api"
 import AppRouter from "../routes/router.tsx"
 import { OfflineProvider, ThemeProvider } from "@/app/providers"
 

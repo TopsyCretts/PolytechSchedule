@@ -52,5 +52,6 @@
   "there_is_no_schedule_for_profile": "No schedule found for this profile.",
   "profile_has_not_updated_previously": "The profile has not been updated previously",
   "data_update_error": "Data update error",
-  "schedule_is_current": "Schedule is current"
+  "schedule_is_current": "Schedule is current",
+  "calendar": "Calendar"
 }

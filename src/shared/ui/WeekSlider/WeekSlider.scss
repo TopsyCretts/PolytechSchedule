@@ -4,13 +4,13 @@
   z-index: 0 !important;
   width: 100%;
   height: 100%;
-  padding-top: rem(20);
+  padding-top: var(--spacing-lg);
 
   &__slide {
     z-index: 0 !important;
     overflow-y: auto;
     overscroll-behavior: none;
-    max-width: rem(510);
+    max-width: calc(var(--week-slide-width) + 2 * var(--week-slide-padding-x));
     height: 100%;
     padding-bottom: rem(10);
     touch-action: pan-y;

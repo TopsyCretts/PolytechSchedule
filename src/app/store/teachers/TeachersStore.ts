@@ -9,7 +9,7 @@ import type { TeacherData, TeachersData } from "@/entities/Teachers.ts"
 import { injectable } from "inversify"
 import { dbService, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
 import { LocalStorageManager } from "@/app/store/browser-storages"
-import { LOCAL_STORAGE_KEY } from "@shared/constants/contstants.ts"
+import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
 
 @injectable()
 export class TeachersStore {

@@ -3,11 +3,12 @@
   flex-direction: column;
   width: 100%;
   max-width: 100%;
-  padding-bottom: 1.25rem;
+  padding-block: var(--spacing-xl);
 }
 @media (width <= 47.999375rem) {
   .schedule-page {
     height: 100%;
+    padding-block: var(--spacing-md);
   }
 }
 

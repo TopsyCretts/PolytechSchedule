@@ -1,22 +1,43 @@
-.schedule-calendar {
+.schedule-calendar-view {
   display: flex;
-  justify-content: center;
-  gap: 1.25rem;
-}
-@media (width <= 87.56125rem) {
-  .schedule-calendar {
-    flex-direction: column;
-    width: 100%;
-    max-width: 54.375rem;
-  }
-}
-.schedule-calendar {
+  justify-content: start;
+  column-gap: var(--spacing-xl);
   transition-duration: 0.2s;
 }
-@media (width > 87.56125rem) {
-  .schedule-calendar__day-item {
-    min-width: 32.1875rem;
+@media (width <= 87.56125rem) {
+  .schedule-calendar-view {
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+    max-width: 54.375rem;
+    padding-inline: 0;
   }
+}
+@media (width <= 47.999375rem) {
+  .schedule-calendar-view {
+    justify-content: start;
+  }
+}
+.schedule-calendar-view__calendar-wrapper {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+}
+.schedule-calendar-view__popover-wrapper {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-xl);
+}
+.schedule-calendar-view__day {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  row-gap: var(--spacing-lg);
+  width: 100%;
+  max-width: calc(100% - 54.375rem - var(--spacing-xl));
+}
+.schedule-calendar-view__day-item {
+  width: 100%;
 }
 
 /*# sourceMappingURL=ScheduleCalendarView.css.map */

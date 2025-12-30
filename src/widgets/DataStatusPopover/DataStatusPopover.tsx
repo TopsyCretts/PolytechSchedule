@@ -1,15 +1,15 @@
 import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
-import useOffline from "@shared/lib/useOffline.ts"
-import RowPopover from "@shared/ui/RowPopover"
+import useOffline from "@/shared/lib/useOffline.ts"
+import RowPopover from "@/shared/ui/RowPopover"
 import { memo } from "react"
 import clsx from "clsx"
-import { STRINGS_RES } from "@shared/constants/strings.ts"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import { format } from "date-fns"
 import InfoIcon from "@/assets/icons/info.svg?react"
 import CheckIcon from "@/assets/icons/rounded-check.svg?react"
 import { useTranslation } from "react-i18next"
 import "./DataStatusPopover.scss"
-import { PROGRESS_STATUS } from "@shared/models/DataStatus.ts"
+import { PROGRESS_STATUS } from "@/shared/models/DataStatus.ts"
 
 type ScheduleDataErrorPopoverProps = {
   className: string

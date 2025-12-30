@@ -77,15 +77,10 @@
   clip-path: inset(100%) !important;
 }
 
-@mixin border-shadow-themed($borderRadius: 0, $isDarkShadowEnabled: true) {
+@mixin border-shadow-themed($borderRadius: 0, $disableBackdrop: false) {
   border: var(--border-themed);
   border-radius: $borderRadius;
-
-  @if $isDarkShadowEnabled {
-    box-shadow: var(--shadow);
-  } @else {
-    box-shadow: var(--shadow-themed);
-  }
+  box-shadow: var(--shadow-themed);
 }
 
 @mixin container-max-width($width, $padding-x) {

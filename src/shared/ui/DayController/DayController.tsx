@@ -1,8 +1,9 @@
 import "./DayController.scss"
 import clsx from "clsx"
 import { format, type Locale } from "date-fns"
-import ArrowLeftIcon from "@assets/icons/arrow-left.svg?react"
-import { capitalizeFirstLatter } from "@shared/lib/capitalizeFirstLatter.ts"
+import ArrowLeftIcon from "@/assets/icons/arrow-left.svg?react"
+import { capitalizeFirstLatter } from "@/shared/lib/capitalizeFirstLatter.ts"
+import Button from "@/shared/ui/Button"
 
 interface DayControllerProps {
   className?: string
@@ -34,45 +35,43 @@ const DayController = ({
       )}
     >
       {decrement !== undefined && (
-        <button
-          className={clsx(
-            "day-controller__left",
-            !isDecrementActive && "day-controller__inactive-button"
-          )}
+        <Button
+          className={clsx("day-controller__left")}
+          shape={"square"}
+          disabled={!isDecrementActive}
           onClick={decrement}
         >
           <ArrowLeftIcon />
-        </button>
+        </Button>
       )}
-      <time
-        className="day-controller__title"
-        dateTime={format(day, "MM-dd")}
-      >
-        {format(day, "d", {
-          locale: locale,
-        })}{" "}
-        {capitalizeFirstLatter(
-          format(day, "MMMM", {
+      <h3 className="day-controller__title text-16">
+        <time dateTime={format(day, "MM-dd")}>
+          {format(day, "d", {
             locale: locale,
-          })
-        )}
-        {", "}
-        {capitalizeFirstLatter(
-          format(day, "EEEE", {
-            locale: locale,
-          })
-        )}
-      </time>
-      {increment !== undefined && (
-        <button
-          className={clsx(
-            "day-controller__right",
-            !isIncrementActive && "day-controller__inactive-button"
+          })}{" "}
+          {capitalizeFirstLatter(
+            format(day, "MMMM", {
+              locale: locale,
+            })
           )}
+          {", "}
+          {capitalizeFirstLatter(
+            format(day, "EEEE", {
+              locale: locale,
+            })
+          )}
+        </time>
+      </h3>
+
+      {increment !== undefined && (
+        <Button
+          className={clsx("day-controller__right")}
+          shape={"square"}
+          disabled={!isIncrementActive}
           onClick={increment}
         >
           <ArrowLeftIcon />
-        </button>
+        </Button>
       )}
     </div>
   )

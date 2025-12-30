@@ -4,22 +4,41 @@
   --font-family-base: "Open Sans", sans-serif;
   --letter-spacing: -0.01em;
 
-  --border-radius-small: #{rem(8)};
-  --border-radius: #{rem(12)};
-  --border-radius-medium: #{rem(16)};
-  --border-radius-large: #{rem(20)};
+  --border-radius-xs: #{rem(4)};
+  --border-radius-sm: #{rem(8)};
+  --border-radius-md: #{rem(12)};
+  --border-radius-lg: #{rem(16)};
+  --border-radius-xl: #{rem(20)};
 
-  --container-width-extra-small: #{rem(482)};
-  --container-width-small: #{rem(542)};
-  --container-width: #{rem(900)};
-  --container-width-large: #{rem(1360)};
+  --container-width-xs: #{rem(482)};
+  --container-width-sm: #{rem(542)};
+  --container-width-md: #{rem(900)};
+  --container-width-lg: #{rem(1360)};
   --container-padding-x: #{rem(16)};
 
+  --spacing-xs: #{rem(4)};
+  --spacing-sm: #{rem(8)};
+  --spacing-md: #{rem(12)};
+  --spacing-lg: #{rem(16)};
+  --spacing-xl: #{rem(20)};
+  --spacing-hg: #{rem(30)};
+
+  --icon-size: #{rem(24)};
+
   --calendar-cell-width: #{rem(100)};
+  --calendar-cell-min-width: #{rem(52)};
   --calendar-cell-height: #{rem(130)};
+  --calendar-grid-template-columns: repeat(
+    7,
+    minmax(var(--calendar-cell-min-width), var(--calendar-cell-width))
+  );
+
+  --week-slide-width: #{rem(443)};
+  --week-slide-padding-x: var(--spacing-md);
 
   --button-height: #{rem(44)};
   --input-height: #{rem(60)};
+  --switcher-height-sm: #{rem(48)};
 
   --z-index-backdrop: 100;
   --z-index-select: 200;

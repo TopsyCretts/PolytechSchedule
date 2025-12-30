@@ -3,17 +3,17 @@
 .search-item {
   display: flex;
   align-items: center;
-  column-gap: rem(10);
+  column-gap: var(--spacing-md);
   height: var(--button-height);
-  padding: rem(6) rem(10);
+  padding-inline: var(--spacing-md);
   background-color: var(--color-light-opacity-10);
   border: var(--border-themed);
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-md);
   cursor: pointer;
 
   &__heading,
   svg * {
-    @include square(rem(24));
+    @include square(var(--icon-size));
 
     flex-shrink: 0;
   }
@@ -35,7 +35,7 @@
     }
 
     &--cross {
-      color: var(--color-gray);
+      color: var(--color-gray-100);
     }
   }
 }

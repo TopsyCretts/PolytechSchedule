@@ -1,35 +1,43 @@
 .button {
+  --buttonBackgroundColor: var(--color-light-opacity-10);
+  --buttonTextColor: var(--color-icon-themed);
   padding: 0;
   background-color: transparent;
   border: none;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--buttonTextColor);
+  background-color: var(--buttonBackgroundColor);
   border: var(--border-themed);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  color: inherit;
-  background-color: var(--color-light-opacity-10);
-  backdrop-filter: var(--blur-20);
+  backdrop-filter: var(--blur-10);
+  box-shadow: var(--shadow-themed);
 }
 .button svg * {
-  color: var(--color-icon-themed);
+  color: var(--buttonTextColor);
+}
+.button:disabled {
+  opacity: 0.6;
+}
+.button--action {
+  box-shadow: var(--shadow-themed);
+  backdrop-filter: var(--blur-20);
 }
 @media (hover: hover) {
-  .button:hover {
-    color: var(--color-light);
-    background-color: var(--color-accent-themed);
+  .button--action:hover {
+    --buttonTextColor: var(--color-light);
+    --buttonBackgroundColor: var(--color-blue);
   }
-  .button:hover svg * {
+  .button--action:hover * {
     color: inherit;
   }
 }
 @media (hover: none) {
-  .button:active {
-    color: var(--color-light);
-    background-color: var(--color-accent-themed);
+  .button--action:active {
+    --buttonTextColor: var(--color-light);
+    --buttonBackgroundColor: var(--color-blue);
   }
-  .button:active svg * {
+  .button--action:active * {
     color: inherit;
   }
 }
@@ -37,8 +45,59 @@
   width: var(--button-height);
   height: var(--button-height);
 }
-.button--disabled {
-  opacity: 0.6;
+.button--circle {
+  border-radius: 50%;
+}
+.button--primary {
+  --buttonBackgroundColor: var(--color-blue);
+  --buttonTextColor: var(--color-light);
+  border-color: var(--color-light-opacity-10);
+  box-shadow: var(--shadow);
+}
+@media (hover: hover) {
+  .button--primary:hover {
+    --buttonBackgroundColor: var(--color-blue-light);
+  }
+}
+@media (hover: none) {
+  .button--primary:active {
+    --buttonBackgroundColor: var(--color-blue-light);
+  }
+}
+.button--secondary {
+  --buttonBackgroundColor: transparent;
+  --buttonTextColor: var(--color-blue);
+  border-color: inherit;
+}
+@media (hover: hover) {
+  .button--secondary:hover {
+    --buttonBackgroundColor: var(--color-dark-opacity-50);
+    --buttonTextColor: var(--color-blue);
+    border-color: var(--buttonTextColor);
+  }
+  .button--secondary:hover * {
+    color: var(--buttonTextColor);
+  }
+}
+@media (hover: none) {
+  .button--secondary:active {
+    --buttonBackgroundColor: var(--color-dark-opacity-50);
+    --buttonTextColor: var(--color-blue);
+    border-color: var(--buttonTextColor);
+  }
+  .button--secondary:active * {
+    color: var(--buttonTextColor);
+  }
+}
+.button--primary:active, .button--secondary:active {
+  --buttonBackgroundColor: var(--color-dark);
+}
+.button--primary:disabled, .button--secondary:disabled {
+  --buttonBackgroundColor: var(--color-gray-100);
+  --buttonTextColor: var(--color-light-opacity-50);
+}
+.button--borderless {
+  border: none !important;
 }
 
 /*# sourceMappingURL=Button.css.map */

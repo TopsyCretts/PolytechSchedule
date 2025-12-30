@@ -1,17 +1,22 @@
 @use "../../../../styles/helpers" as *;
 
 .header {
-  padding-top: rem(30);
+  padding-top: var(--spacing-hg);
+
+  @include mobile {
+    padding-top: var(--spacing-sm);
+  }
 
   &__inner,
   &__main {
-    @include border-shadow-themed(var(--border-radius-large), false);
+    @include border-shadow-themed(var(--border-radius-xl));
   }
 
   &__attention {
     @include flex-center;
 
     margin-bottom: rem(8);
+    font-size: rem(12);
     text-align: center;
   }
 
@@ -26,17 +31,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    column-gap: rem(8);
+    column-gap: var(--spacing-sm);
     height: rem(68);
-    padding: rem(10) rem(12);
-    background-color: var(--header-bg-themed);
+    padding: var(--spacing-md);
+    background-color: var(--color-bg-themed);
     box-shadow: none;
+
+    @include mobile {
+      padding: var(--spacing-sm);
+    }
   }
 
   &__controls {
     @include flex-center;
 
-    column-gap: rem(10);
+    column-gap: var(--spacing-md);
   }
 
   &__link {
@@ -48,7 +57,7 @@
     display: inline-flex;
     height: 100%;
     text-decoration: none;
-    color: var(--color-gray);
+    color: var(--color-gray-100);
 
     @include hover {
       &::after {
@@ -59,7 +68,7 @@
         width: calc(100% + #{rem(10)});
         height: calc(100% + #{rem(4)});
         background-color: var(--color-blue-opacity-20);
-        border-radius: var(--border-radius);
+        border-radius: var(--border-radius-md);
         transition: var(--transition-duration);
       }
 
@@ -69,7 +78,7 @@
 
   &__logo {
     & .logo__image {
-      @include square(rem(44));
+      @include square(var(--button-height));
 
       flex-shrink: 0;
     }
@@ -88,9 +97,9 @@
     width: 100%;
     max-width: 100%;
     height: rem(53);
-    margin-top: calc(-1 * var(--border-radius-large));
-    border-bottom-left-radius: var(--border-radius-large);
-    border-bottom-right-radius: var(--border-radius-large);
+    margin-top: calc(-1 * var(--border-radius-xl));
+    border-bottom-left-radius: var(--border-radius-xl);
+    border-bottom-right-radius: var(--border-radius-xl);
     pointer-events: auto;
     scrollbar-width: thin;
   }

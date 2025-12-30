@@ -1,16 +1,16 @@
 import "./Profiles.scss"
 import clsx from "clsx"
-import ProfileItem from "@widgets/header/ui/ProfileItem"
+import ProfileItem from "@/widgets/header/ui/ProfileItem"
 import { useTranslation } from "react-i18next"
-import NewProfileItem from "@widgets/header/ui/NewProfileItem"
-import { STRINGS_RES } from "@shared/constants/strings.ts"
+import NewProfileItem from "@/widgets/header/ui/NewProfileItem"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import { useInjection } from "inversify-react"
 import { ProfilesStore } from "@/app/store/profiles/ProfilesStore.ts"
 import { observer } from "mobx-react-lite"
 import { useMatch, useParams } from "react-router"
 import { useEffect, useRef, useState } from "react"
 import { APP_ROUTES } from "@/app/routes/routes.ts"
-import scrollContainerToSelectedElement from "@shared/lib/scrollContainerToSelectedElement.ts"
+import scrollContainerToSelectedElement from "@/shared/lib/scrollContainerToSelectedElement.ts"
 
 interface ProfilesProps {
   className?: string

@@ -1,19 +1,19 @@
 import "./BurgerMenu.scss"
 import clsx from "clsx"
 import { useCallback } from "react"
-import type { ThemeType } from "@shared/models/Theme.ts"
-import { Select } from "@shared/ui"
+import type { ThemeType } from "@/shared/models/Theme.ts"
+import { Select } from "@/shared/ui"
 import {
   LANGUAGE_SELECTABLE_VALUES,
   themeArray,
-} from "@shared/constants/contstants.ts"
-import "@widgets/ThemeToggler/ThemeToggler.scss"
-import { ThemeItem } from "@widgets/ThemeToggler/utils"
-import BurgerIcon from "@assets/icons/burger.svg?react"
+} from "@/shared/constants/contstants.ts"
+import "@/widgets/ThemeToggler/ThemeToggler.scss"
+import { ThemeItem } from "@/widgets/ThemeToggler/utils"
+import BurgerIcon from "@/assets/icons/burger.svg?react"
 import i18next from "i18next"
 import { useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@shared/constants/strings.ts"
-import { useTheme } from "@shared/lib/useTheme.ts"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
+import { useTheme } from "@/shared/lib/useTheme.ts"
 
 interface BurgerMenuProps {
   className?: string
@@ -43,7 +43,7 @@ const BurgerMenu = ({ className }: BurgerMenuProps) => {
     <Select className={clsx(className, "burger-menu", "visible-mobile-s")}>
       <Select.ButtonToggler
         className="buger-menu__button-toggler"
-        isSquare
+        shape={"square"}
       >
         <BurgerIcon />
       </Select.ButtonToggler>

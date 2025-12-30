@@ -1,15 +1,15 @@
-import { Select } from "@shared/ui"
+import { Select } from "@/shared/ui"
 import { format } from "date-fns"
 import "./ScheduleWeekSelect.scss"
 import { useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@shared/constants/strings.ts"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import { mapWeekDataToWeeksByYear } from "../../lib/mapWeekDataToWeeksByYear"
 import type { ScheduleWeekSelectProps, WeeksByYear } from "../../lib/types.ts"
 import { useEffect, useMemo, useRef } from "react"
 import { getWeekByFormatedString } from "@/pages/schedule-week-slider/lib/getWeekByFormatedString.ts"
-import ScheduleWeekStringToggler from "@/pages/schedule-week-slider/ui/ScheduleWeekSelect/ScheduleWeekStringToggler.tsx"
+import ScheduleWeekSelectToggler from "@/pages/schedule-week-slider/ui/ScheduleWeekSelect/ScheduleWeekSelectToggler.tsx"
 import clsx from "clsx"
-import scrollContainerToSelectedElement from "@shared/lib/scrollContainerToSelectedElement.ts"
+import scrollContainerToSelectedElement from "@/shared/lib/scrollContainerToSelectedElement.ts"
 
 const ScheduleWeekSelect = ({
   className,
@@ -41,9 +41,9 @@ const ScheduleWeekSelect = ({
   return (
     <div className={clsx(className, "schedule-week-select")}>
       <Select className={"schedule-week-select__select"}>
-        <ScheduleWeekStringToggler>
+        <ScheduleWeekSelectToggler>
           {selectedWeek !== undefined ? selectedWeek : "Ошибка в поиске недель"}
-        </ScheduleWeekStringToggler>
+        </ScheduleWeekSelectToggler>
         <Select.Backdrop />
         <Select.Container>
           <Select.Header>{t(STRINGS_RES.week_other)}</Select.Header>

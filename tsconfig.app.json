@@ -3,12 +3,7 @@
     "composite": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@components/*": ["./src/components/*"],
-      "@assets/*": ["./src/assets/*"],
-      "@widgets/*": ["./src/widgets/*"],
-      "@shared/*": ["./src/shared/*"],
-      "@hooks/*": ["./src/domain/hooks/*"]
+      "@/*": ["./src/*"]
     },
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 

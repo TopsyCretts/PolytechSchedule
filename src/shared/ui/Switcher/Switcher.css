@@ -1,21 +1,26 @@
 .switcher__body {
   height: var(--input-height);
-  padding: 0.375rem;
+  padding: var(--spacing-xs);
   background-color: var(--color-light-opacity-10);
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-themed);
   backdrop-filter: var(--blur-10);
+}
+@media (width <= 30.06125rem) {
+  .switcher__body {
+    height: var(--switcher-height-sm);
+  }
 }
 .switcher__list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  column-gap: 0.375rem;
+  column-gap: var(--spacing-md);
   height: 100%;
 }
 .switcher__item--selected .switcher__button {
   font-weight: 600;
   color: var(--color-light);
-  background-color: var(--color-accent);
+  background-color: var(--color-blue);
   box-shadow: var(--shadow);
 }
 .switcher__button {
@@ -30,7 +35,7 @@
   height: 100%;
   font-weight: 400;
   color: var(--color-text-accent-themed);
-  border-radius: var(--border-radius-small);
+  border-radius: var(--border-radius-sm);
 }
 @media (hover: hover) {
   .switcher__button:hover {

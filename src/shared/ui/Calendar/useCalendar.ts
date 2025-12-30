@@ -1,7 +1,7 @@
 import {
   CalendarActionsContext,
   CalendarContext,
-} from "@shared/ui/Calendar/Calendar.tsx"
+} from "@/shared/ui/Calendar/Calendar.tsx"
 import { useContext } from "react"
 
 const useCalendar = () => {

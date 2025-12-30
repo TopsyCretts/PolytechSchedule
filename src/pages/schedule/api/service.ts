@@ -9,16 +9,13 @@ import type { TeacherData } from "@/entities/Teachers.ts"
 import { type BaseProfile, PROFILE_TYPE } from "@/entities/Profile.ts"
 import { dbService } from "@/app/store/indexDb/indexDb.ts"
 import { toScheduleUi } from "@/app/store/indexDb/models/ScheduleDataDB.ts"
-import type {
-  ScheduleData,
-  ScheduleDataStatus,
-} from "@/entities/ScheduleData.ts"
+import type { ScheduleData, ScheduleDataStatus } from "@/entities/ScheduleData"
 import {
   PROGRESS_STATUS,
   type ProgressStatus,
-} from "@shared/models/DataStatus.ts"
-import { mainContainer } from "@/app/store/mainContainer.ts"
-import { ProfilesStore } from "@/app/store/profiles/ProfilesStore.ts"
+} from "@/shared/models/DataStatus"
+import { mainContainer } from "@/app/store/mainContainer"
+import { ProfilesStore } from "@/app/store/profiles/ProfilesStore"
 
 const getScheduleByProfileOptions = (
   profile: BaseProfile,

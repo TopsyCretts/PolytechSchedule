@@ -24,7 +24,7 @@ const CalendarLesson = ({
       )}
     >
       <div className="calendar-lesson__title">
-        #{lessonNumber} {lessonName}
+        {lessonNumber}. {lessonName}
       </div>
     </li>
   )

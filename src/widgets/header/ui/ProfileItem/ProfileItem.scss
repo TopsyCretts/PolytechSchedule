@@ -8,7 +8,7 @@
   &--active {
     min-width: fit-content;
     white-space: nowrap;
-    color: var(--color-light);
+    color: var(--color-text-themed);
     background-color: var(--selected-profile-bg);
 
     &::before {
@@ -18,7 +18,7 @@
 
     & .profile-item__cross,
     &::before {
-      @include square(rem(24));
+      @include square(var(--icon-size));
     }
   }
 

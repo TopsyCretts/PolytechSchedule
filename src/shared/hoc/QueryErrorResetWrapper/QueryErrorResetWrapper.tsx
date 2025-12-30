@@ -1,5 +1,5 @@
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary"
-import RetryFallback from "@widgets/RetryFallback"
+import RetryFallback from "@/widgets/RetryFallback"
 import { QueryErrorResetBoundary } from "@tanstack/react-query"
 import clsx from "clsx"
 

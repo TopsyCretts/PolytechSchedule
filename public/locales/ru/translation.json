@@ -52,5 +52,6 @@
   "there_is_no_schedule_for_profile": "Не найдено расписание для этого профиля.",
   "profile_has_not_updated_previously": "Профиль ранее не обновлялся",
   "data_update_error": "Ошибка обновления данных",
-  "schedule_is_current": "Расписание актуально"
+  "schedule_is_current": "Расписание актуально",
+  "calendar": "Календарь"
 }

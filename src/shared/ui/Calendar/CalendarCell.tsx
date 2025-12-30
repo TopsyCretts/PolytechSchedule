@@ -1,21 +1,19 @@
-import type { CalendarCellProps } from "@shared/ui/Calendar/types.ts"
+import type { CalendarCellProps } from "@/shared/ui/Calendar/types.ts"
 import { format, getMonth, isEqual, isToday, parse } from "date-fns"
 import clsx from "clsx"
 import "./styles/CalendarCell.scss"
 import {
   useCalendar,
   useCalendarActions,
-} from "@shared/ui/Calendar/useCalendar.ts"
+} from "@/shared/ui/Calendar/useCalendar"
 import { memo } from "react"
-import { capitalizeFirstLatter } from "@shared/lib/capitalizeFirstLatter.ts"
-import { isEnterKeyPressed } from "@shared/lib/isEnterKeyPressed.ts"
+import { isEnterKeyPressed } from "@/shared/lib/isEnterKeyPressed.ts"
 
 const CalendarCell = memo(
   ({
     className,
     cellData,
     dateDisplayFormatDesktop = "d",
-    dateDisplayFormatMobile = "d, EEEEEE",
   }: CalendarCellProps) => {
     const { selectedDate, currentMonth, monthFormat, locale } = useCalendar()
     const { selectDate } = useCalendarActions()
@@ -45,25 +43,10 @@ const CalendarCell = memo(
         }}
       >
         <time
-          className="calendar-day__header-desktop"
+          className="calendar-day__header"
           dateTime={format(cellData.date, "MM-dd")}
         >
           {format(cellData.date, dateDisplayFormatDesktop, { locale })}
-        </time>
-        <time
-          className="calendar-day__header-mobile"
-          dateTime={format(cellData.date, "MM-dd")}
-        >
-          {format(cellData.date, dateDisplayFormatMobile, { locale })
-            .split(", ")
-            .map((str, i) => {
-              if (i === 1) {
-                return capitalizeFirstLatter(str)
-              }
-              return str
-            })
-            .concat()
-            .join(", ")}
         </time>
         <div className="calendar-day__body">{cellData.contentToDisplay}</div>
       </div>

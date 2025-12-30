@@ -1,9 +1,9 @@
-import type { SearchListProps } from "@shared/models/Search.ts"
+import type { SearchListProps } from "@/shared/models/Search.ts"
 import { AnimatePresence, motion } from "framer-motion"
 import clsx from "clsx"
-import SearchItemWithType from "@shared/ui/SearchItem/SearchItemWithType.tsx"
+import SearchItemWithType from "@/shared/ui/SearchItem/SearchItemWithType.tsx"
 import { useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@shared/constants/strings.ts"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
 
 const SearchList = ({ items, selectedItem, onItemClick }: SearchListProps) => {
   const { t } = useTranslation()
@@ -12,6 +12,7 @@ const SearchList = ({ items, selectedItem, onItemClick }: SearchListProps) => {
     <AnimatePresence>
       {selectedItem === null && (
         <motion.div
+          className={"search-select__list-wrapper"}
           initial={{ height: "auto", opacity: 0 }}
           animate={{ height: "auto", opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}

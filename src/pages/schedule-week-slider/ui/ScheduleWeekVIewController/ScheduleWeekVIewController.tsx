@@ -1,4 +1,4 @@
-import DayController from "@shared/ui/DayController"
+import DayController from "@/shared/ui/DayController"
 import {
   eachDayOfInterval,
   isSameWeek,
@@ -9,7 +9,7 @@ import {
 import { type RefObject, useEffect, useState } from "react"
 import type { SwiperClass, SwiperRef } from "swiper/react"
 import type { SelectedWeekSlide } from "@/pages/schedule-week-slider/lib/types.ts"
-import type { BaseComponent } from "@shared/models/BaseComponent.ts"
+import type { BaseComponent } from "@/shared/models/BaseComponent.ts"
 
 interface ScheduleWeekViewControllerProps extends BaseComponent {
   locale: Locale
@@ -55,7 +55,7 @@ const ScheduleWeekVIewController = ({
     ) {
       setSelectedDate(weekDays[selectedWeekSlide.activeDateIndex])
     }
-  }, [selectedWeekSlide.activeDateIndex])
+  }, [selectedWeekSlide.activeDateIndex, weekDays])
 
   useEffect(() => {
     setWeekDays(

@@ -6,7 +6,7 @@
 .theme-picker__theme-type {
   display: flex;
   align-items: center;
-  column-gap: 0.625rem;
+  column-gap: var(--spacing-xs);
   white-space: nowrap;
 }
 

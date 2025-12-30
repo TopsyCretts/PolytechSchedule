@@ -1,37 +1,27 @@
 @use "../../../../styles/helpers" as *;
 
 .schedule-week-view-sub-header {
-  @include flex-center;
-
-  min-width: 100%;
-  padding-block: rem(12);
-
   &__inner {
     @include flex-center;
 
-    column-gap: rem(15);
+    justify-content: space-between;
+    column-gap: var(--spacing-lg);
     width: 100%;
-
-    @include mobile {
-      display: grid;
-      place-items: center center;
-      grid-template-columns: repeat(3, minmax(rem(44), auto));
-      justify-content: space-between;
-    }
   }
 
-  &__arrow-button {
-    &--prev {
-      rotate: 0.25turn;
-    }
+  &__link {
+    @include flex-center(true);
 
-    &--next {
-      rotate: -0.25turn;
-    }
+    column-gap: var(--spacing-sm);
+    height: var(--button-height);
+    padding-inline: var(--spacing-md);
+    font-size: rem(14) !important;
+  }
 
-    @include mobile {
-      display: none;
-    }
+  &__icon {
+    @include square(var(--icon-size));
+
+    flex-shrink: 0;
   }
 
   &__week-select {

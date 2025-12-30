@@ -52,5 +52,6 @@
   "there_is_no_schedule_for_profile": "Aucun planning n'a été trouvé pour ce profil.",
   "profile_has_not_updated_previously": "Ce profil n'a pas été mis à jour précédemment",
   "data_update_error": "Erreur de mise à jour des données",
-  "schedule_is_current": "L'horaire est à jour"
+  "schedule_is_current": "L'horaire est à jour",
+  "calendar": "Calendrier"
 }

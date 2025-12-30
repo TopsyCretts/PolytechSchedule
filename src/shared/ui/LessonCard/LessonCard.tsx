@@ -2,15 +2,15 @@ import "./LessonCard.scss"
 import clsx from "clsx"
 import { Link } from "react-router"
 import type { LessonData } from "@/entities/ScheduleData.ts"
-import type { ProfileType } from "@/entities/Profile.ts"
+import { PROFILE_TYPE, type ProfileType } from "@/entities/Profile.ts"
 import { format, isWithinInterval } from "date-fns"
 import { memo } from "react"
-import { LessonTypeIcon } from "@shared/ui"
+import { LessonTypeIcon } from "@/shared/ui"
 import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
-import { LESSONS_MAP } from "@shared/constants/contstants.ts"
+import { LESSONS_MAP } from "@/shared/constants/contstants.ts"
 import { useTranslation } from "react-i18next"
-import RemoteIcon from "@assets/icons/remote.svg?react"
-import { STRINGS_RES } from "@shared/constants/strings.ts"
+import RemoteIcon from "@/assets/icons/remote.svg?react"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
 
 interface LessonCardProps {
   className?: string
@@ -85,19 +85,19 @@ const LessonCard = memo(
               </div>
             )}
             <ul className="lesson-card__link-list">
-              {profileType === "student"
+              {profileType === PROFILE_TYPE.student
                 ? lessonData.teachers.map((teacher, index) => (
                     <GetLinkOrString
                       key={index}
                       data={teacher}
-                      profileType={"teacher"}
+                      profileType={PROFILE_TYPE.teacher}
                     />
                   ))
                 : lessonData.groups.map((group, index) => (
                     <GetLinkOrString
                       key={index}
                       data={group}
-                      profileType={"student"}
+                      profileType={PROFILE_TYPE.student}
                     />
                   ))}
             </ul>

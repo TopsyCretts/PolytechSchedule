@@ -1,4 +1,4 @@
-import type { ThemeObject, ThemeType } from "@shared/models/Theme.ts"
+import type { ThemeObject, ThemeType } from "@/shared/models/Theme.ts"
 
 interface ThemeIconProps {
   theme: ThemeType

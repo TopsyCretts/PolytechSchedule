@@ -1,42 +1,57 @@
-import { useRouteLoaderData } from "react-router"
+import { useParams } from "react-router"
 import { AnimatePresence, motion } from "framer-motion"
-import type { Profile, StudentProfile } from "@/entities/Profile.ts"
+import { PROFILE_TYPE } from "@/entities/Profile.ts"
 import { observer } from "mobx-react-lite"
+import { useInjection } from "inversify-react"
+import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
+import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
 import "./HeaderProfileLabel.scss"
-import type { profileLoader } from "@/app/routes/schedule/profileLoader.ts"
-import { useDebounce } from "use-debounce"
-
-const castProfileAsStudent = (profile: Profile): StudentProfile => {
-  return profile as StudentProfile
-}
 
 const HeaderProfileLabel = observer(() => {
-  const loaderData = useRouteLoaderData<typeof profileLoader>("schedule")
-  const [debouncedProfile] = useDebounce(loaderData, 200)
+  const { profileApiId, profileType } = useParams()
+  const { getInstituteByGroupId } = useInjection(InstitutesStore)
+  const { getTeacherById } = useInjection(TeachersStore)
+
+  if (!profileApiId) {
+    return null
+  }
+
+  const id = Number(profileApiId)
+  const isStudent = profileType === PROFILE_TYPE.student
+  const isTeacher = profileType === PROFILE_TYPE.teacher
+
+  const institute = isStudent ? getInstituteByGroupId(id) : null
+  const teacher = isTeacher ? getTeacherById(id) : null
+
+  if (!institute && !teacher) {
+    return null
+  }
 
   return (
-    <AnimatePresence>
-      {loaderData !== undefined &&
-        debouncedProfile !== undefined &&
-        loaderData.profile.id === debouncedProfile.profile.id && (
-          <motion.div
-            className={"header-profile-label"}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            {debouncedProfile.profile.profileType === "student" && (
-              <div className={"header-profile-label__institute hidden-mobile"}>
-                {castProfileAsStudent(debouncedProfile.profile).institute}
-                <div className="header-profile-label__dash">{"-"}</div>
-              </div>
-            )}
-            <div className="header-profile-label__name">
-              {debouncedProfile.profile.name}
+    <AnimatePresence mode="wait">
+      <motion.div
+        className="header-profile-label"
+        key={profileApiId}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+      >
+        {isStudent && institute && (
+          <>
+            <div className="header-profile-label__institute hidden-mobile">
+              {institute.institute}
+              <div className="header-profile-label__dash">-</div>
             </div>
-          </motion.div>
+            <div className="header-profile-label__name">
+              {institute.group.name}
+            </div>
+          </>
         )}
+        {isTeacher && teacher && (
+          <div className="header-profile-label__name">{teacher.name}</div>
+        )}
+      </motion.div>
     </AnimatePresence>
   )
 })

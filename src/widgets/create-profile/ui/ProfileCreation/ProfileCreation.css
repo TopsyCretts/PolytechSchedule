@@ -1,13 +1,13 @@
 .profile-creation__inner {
   border: var(--border-themed);
-  border-radius: var(--border-radius-large);
+  border-radius: var(--border-radius-xl);
   box-shadow: var(--shadow-themed);
-  margin-top: 1.875rem;
-  padding: 1.875rem;
+  margin-top: var(--spacing-xl);
+  padding: var(--spacing-hg);
 }
 @media (width <= 47.999375rem) {
   .profile-creation__inner {
-    padding: 0.9375rem;
+    padding: var(--spacing-lg);
   }
 }
 .profile-creation__loading-fallback, .profile-creation__retry-fallback {
@@ -16,10 +16,10 @@
 .profile-creation__body, .profile-creation__form {
   display: flex;
   flex-direction: column;
-  row-gap: 1.25rem;
+  row-gap: var(--spacing-xl);
 }
-.profile-creation__next-button {
-  margin-top: 2.5rem;
+.profile-creation__institutes-select .search-item__trailing-icon:not(.search-item__trailing-icon--cross) {
+  display: none !important;
 }
 
 /*# sourceMappingURL=ProfileCreation.css.map */

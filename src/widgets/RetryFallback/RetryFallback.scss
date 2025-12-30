@@ -7,12 +7,12 @@
     @include flex-center;
 
     flex-direction: column;
-    row-gap: rem(15);
+    row-gap: var(--spacing-lg);
   }
 
   &__button {
     width: 100%;
-    padding-inline: rem(10);
+    padding-inline: var(--spacing-md);
   }
 
   &__title {

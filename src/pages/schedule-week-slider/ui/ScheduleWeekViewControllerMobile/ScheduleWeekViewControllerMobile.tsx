@@ -5,15 +5,17 @@ import {
   eachDayOfInterval,
   endOfWeek,
   format,
+  isBefore,
   isSameDay,
   isToday,
   type Locale,
+  startOfToday,
   startOfWeek,
 } from "date-fns"
 import clsx from "clsx"
-import { Button } from "@shared/ui"
-import { capitalizeFirstLatter } from "@shared/lib/capitalizeFirstLatter.ts"
-import type { BaseComponent } from "@shared/models/BaseComponent.ts"
+import { Button } from "@/shared/ui"
+import { capitalizeFirstLatter } from "@/shared/lib/capitalizeFirstLatter.ts"
+import type { BaseComponent } from "@/shared/models/BaseComponent.ts"
 
 interface ScheduleWeekViewControllerMobileProps extends BaseComponent {
   startWeekDate: Date
@@ -47,9 +49,13 @@ const ScheduleWeekViewControllerMobile = memo(
               isToday(day) &&
                 "schedule-week-view-controller-mobile__button--today",
               isSameDay(day, weekDays[currentSelectedDayNumber]) &&
-                "schedule-week-view-controller-mobile__button--selected"
+                "schedule-week-view-controller-mobile__button--selected",
+              isBefore(day, startOfToday()) &&
+                "schedule-week-view-controller-mobile__button--past"
             )}
             onClick={() => onWeekDayClick(index)}
+            buttonType={"secondary"}
+            borderRadiusSize={"sm"}
           >
             <h4
               className={"schedule-week-view-controller-mobile__title text-14"}

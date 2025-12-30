@@ -3,17 +3,21 @@
 .switcher {
   &__body {
     height: var(--input-height);
-    padding: rem(6);
+    padding: var(--spacing-xs);
     background-color: var(--color-light-opacity-10);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-themed);
     backdrop-filter: var(--blur-10);
+
+    @include mobile-s {
+      height: var(--switcher-height-sm);
+    }
   }
 
   &__list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    column-gap: rem(6);
+    column-gap: var(--spacing-md);
     height: 100%;
   }
 
@@ -22,7 +26,7 @@
       & .switcher__button {
         font-weight: 600;
         color: var(--color-light);
-        background-color: var(--color-accent);
+        background-color: var(--color-blue);
         box-shadow: var(--shadow);
       }
     }
@@ -37,7 +41,7 @@
     height: 100%;
     font-weight: 400;
     color: var(--color-text-accent-themed);
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-sm);
 
     @include hover {
       font-weight: 600;

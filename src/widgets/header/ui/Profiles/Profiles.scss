@@ -21,7 +21,7 @@
 
     width: 100%;
     min-width: fit-content;
-    padding-top: var(--border-radius-large);
+    padding-top: var(--border-radius-xl);
 
     & a {
       transition-duration: 0s;
@@ -50,6 +50,11 @@
 
     &__profiles {
       width: 100%;
+    }
+
+    @include hover {
+      color: var(--profile-hover-text-color);
+      background-color: var(--profile-hover-bg);
     }
   }
 }

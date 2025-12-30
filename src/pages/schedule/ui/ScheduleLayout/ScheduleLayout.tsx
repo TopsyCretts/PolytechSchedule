@@ -11,19 +11,18 @@ import type {
 } from "@/pages/schedule/model/SchedulePageProps.ts"
 import { useTranslation } from "react-i18next"
 import type { DayData, ScheduleDataStatus } from "@/entities/ScheduleData.ts"
-import { PROGRESS_STATUS } from "@shared/models/DataStatus.ts"
+import { PROGRESS_STATUS } from "@/shared/models/DataStatus.ts"
 import { useDebounce } from "use-debounce"
 import { useGetScheduleByProfileQuery } from "@/pages/schedule/api/service.ts"
 import { findEqualDayData } from "@/pages/schedule-calendar/lib/findEqualDayData.ts"
-import { startOfToday } from "date-fns"
-import { LANGUAGES_MAP } from "@shared/constants/contstants.ts"
-import { Spinner } from "@shared/ui"
-import RetryFallback from "@widgets/RetryFallback"
-import { STRINGS_RES } from "@shared/constants/strings.ts"
-import SchedulePageHeader from "@/pages/schedule/ui/SchedulePageHeader/SchedulePageHeader.tsx"
+import { LANGUAGES_MAP } from "@/shared/constants/contstants.ts"
+import { Spinner } from "@/shared/ui"
+import RetryFallback from "@/widgets/RetryFallback"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import { Outlet } from "react-router"
 import "./ScheduleLayout.scss"
 import clsx from "clsx"
+import { useGetDateFromUrl } from "@/shared/lib/useDayFromSearchParams.ts"
 
 const ScheduleContext = createContext<ScheduleContextValues | null>(null)
 
@@ -39,11 +38,13 @@ const ScheduleLayout = ({
   actualGroups,
 }: ScheduleLayoutProps) => {
   const { t, i18n } = useTranslation()
-
+  const { getDateFromUrl } = useGetDateFromUrl()
+  const [debouncedProfileId] = useDebounce(profile.id, 300)
   const [scheduleData, setScheduleData] =
     useState<ScheduleDataStatus>(DEFAULT_VALUE)
-
-  const [debouncedProfileId] = useDebounce(profile.id, 300)
+  const [currentDayData, setCurrentDayData] = useState<DayData>(() =>
+    findEqualDayData(DEFAULT_VALUE.data.weeks, getDateFromUrl())
+  )
 
   const { data, isFetching, isError, refetch } = useGetScheduleByProfileQuery(
     profile,
@@ -66,6 +67,12 @@ const ScheduleLayout = ({
   }, [data])
 
   useEffect(() => {
+    setCurrentDayData(
+      findEqualDayData(scheduleData.data.weeks, currentDayData.date)
+    )
+  }, [scheduleData])
+
+  useEffect(() => {
     if (isError) {
       setScheduleData((prev) => ({
         data: prev.data,
@@ -74,28 +81,25 @@ const ScheduleLayout = ({
     }
   }, [isError])
 
-  const [currentDayData, setCurrentDayData] = useState<DayData>(
-    findEqualDayData(scheduleData.data.weeks, startOfToday())
-  )
-
-  const value: ScheduleContextValues = useMemo(() => {
-    return {
+  const value = useMemo<ScheduleContextValues>(
+    () => ({
       data: scheduleData.data,
-      profile: profile,
-      currentDayData: currentDayData,
+      profile,
+      currentDayData,
       setCurrentDayData,
       locale: LANGUAGES_MAP[i18n.language].locale,
       status: scheduleData.status,
       resetError: refetch,
-    }
-  }, [
-    scheduleData.data,
-    scheduleData.status,
-    profile,
-    currentDayData,
-    i18n.language,
-    refetch,
-  ])
+    }),
+    [
+      scheduleData.data,
+      scheduleData.status,
+      profile,
+      currentDayData,
+      i18n.language,
+      refetch,
+    ]
+  )
 
   const isWeeksEmpty = scheduleData.data.weeks.length === 0
 
@@ -103,11 +107,11 @@ const ScheduleLayout = ({
 
   if (isWeeksEmpty) {
     if (isFetching) {
-      content = <Spinner className={"schedule-layout__spinner"} />
+      content = <Spinner className="schedule-layout__spinner" />
     } else if (isError) {
       content = (
         <RetryFallback
-          className={"schedule-layout__spinner"}
+          className="schedule-layout__spinner"
           onRetry={refetch}
         />
       )
@@ -119,14 +123,9 @@ const ScheduleLayout = ({
       )
     }
   } else if (debouncedProfileId !== profile.id) {
-    content = <Spinner className={"schedule-layout__spinner"} />
+    content = <Spinner className="schedule-layout__spinner" />
   } else {
-    content = (
-      <>
-        <SchedulePageHeader className={"schedule-layout__header"} />
-        <Outlet />
-      </>
-    )
+    content = <Outlet />
   }
 
   return (

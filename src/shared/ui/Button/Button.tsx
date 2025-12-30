@@ -5,9 +5,12 @@ import type { ButtonProps } from "./types.ts"
 const Button = ({
   className,
   children,
-  isSquare,
+  shape = "default",
+  buttonType = "action",
+  borderRadiusSize = "md",
   type = "button",
   stopPropagation = true,
+  isBorderless = false,
   onClick,
   disabled,
   ...restProps
@@ -17,8 +20,10 @@ const Button = ({
       className={clsx(
         className,
         "button",
-        isSquare && "button--square",
-        disabled && "button--disabled"
+        `button--${buttonType}`,
+        shape === "square" && "button--square",
+        `border-radius-${borderRadiusSize}`,
+        isBorderless && "button--borderless"
       )}
       onClick={(e) => {
         if (stopPropagation) {

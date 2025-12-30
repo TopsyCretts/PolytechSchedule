@@ -6,19 +6,14 @@ import { APP_ROUTES, routeWithParams } from "@/app/routes/routes.ts"
 import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
 import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
 import { LocalStorageManager } from "@/app/store/browser-storages"
-import { LOCAL_STORAGE_KEY } from "@shared/constants/contstants.ts"
+import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
 import { SCHEDULE_VIEW } from "@/entities/ScheduleData.ts"
 
 const profileLoader = async ({ params }: LoaderFunctionArgs) => {
   const newProfileId = params.profileApiId
   const newProfileType = params.profileType
 
-  if (
-    !newProfileType ||
-    !newProfileId ||
-    newProfileType.trim() === "" ||
-    newProfileId.trim() === ""
-  ) {
+  if (!newProfileType && !newProfileId) {
     throw new Response("Missing required fields", { status: 404 })
   }
 

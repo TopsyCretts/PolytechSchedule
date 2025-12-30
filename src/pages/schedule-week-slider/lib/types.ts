@@ -1,7 +1,7 @@
 import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
 import type { Locale } from "date-fns"
-import type { SelectOption } from "@shared/ui/Select/types"
-import type { BaseComponent } from "@shared/models/BaseComponent.ts"
+import type { SelectOption } from "@/shared/ui/Select/types"
+import type { BaseComponent } from "@/shared/models/BaseComponent.ts"
 
 interface ScheduleWeekSelectProps extends BaseComponent {
   weekData: ScheduleWeekData[]

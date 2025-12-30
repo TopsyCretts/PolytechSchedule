@@ -1,16 +1,16 @@
-import { SearchSelect, Spinner } from "@shared/ui"
+import { SearchSelect, Spinner } from "@/shared/ui"
 import { useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@shared/constants/strings.ts"
-import type { ProfileCreationFormProps } from "@widgets/create-profile/ui/ProfileCreation/types.ts"
-import { useGetTeachersQuery } from "@shared/api/search-schedule/teachersService.ts"
-import type { SearchItem } from "@shared/models/Search.ts"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
+import type { ProfileCreationFormProps } from "@/widgets/create-profile/ui/ProfileCreation/types.ts"
+import { useGetTeachersQuery } from "@/shared/api/search-schedule/teachersService.ts"
+import type { SearchItem } from "@/shared/models/Search.ts"
 import { useInjection } from "inversify-react"
 import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
 import type { TeacherData } from "@/entities/Teachers.ts"
 import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
 import { useNavigate } from "react-router"
 import { PROFILE_TYPE } from "@/entities/Profile.ts"
-import RetryFallback from "@widgets/RetryFallback"
+import RetryFallback from "@/widgets/RetryFallback"
 
 const mapTeachersToSearchItems = (dto: TeacherData[]): SearchItem[] => {
   return dto.map((item) => {
@@ -57,6 +57,7 @@ const TeacherProfileCreationForm = ({
     <form className={className}>
       <SearchSelect
         id={"teachers"}
+        className={"profile-creation__teachers-select"}
         label={t(STRINGS_RES.teacher_other)}
         searchItems={mapTeachersToSearchItems(teachers)}
         placeholder={t(STRINGS_RES.enter_the_name)}

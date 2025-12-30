@@ -53,4 +53,5 @@ export const STRINGS_RES = {
   profile_has_not_updated_previously: "profile_has_not_updated_previously",
   data_update_error: "data_update_error",
   schedule_is_current: "schedule_is_current",
+  calendar: "calendar",
 }

@@ -1,4 +1,4 @@
-import { IconButton } from "@shared/ui"
+import { IconButton } from "@/shared/ui"
 import clsx from "clsx"
 import "./ProfileItem.scss"
 import { NavLink, useNavigate } from "react-router"

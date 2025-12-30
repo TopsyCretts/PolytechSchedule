@@ -1,20 +1,22 @@
 @use "../../../../styles/helpers" as *;
 
 .calendar-week {
-  overflow-x: auto;
-  width: 100%;
-  border-radius: var(--border-radius-medium);
+  border-radius: var(--border-radius-lg);
 
   &__list {
     display: grid;
-    grid-template-columns: repeat(7, var(--calendar-cell-width));
-    gap: rem(15);
+    grid-template-columns: var(--calendar-grid-template-columns);
+    column-gap: var(--spacing-md);
     height: 100%;
     min-height: calc(var(--calendar-cell-height) + #{rem(8)});
     padding: rem(4);
+
+    @include mobile {
+      column-gap: var(--spacing-xs);
+    }
   }
 
   &__item {
-    width: var(--calendar-cell-width);
+    max-width: var(--calendar-cell-width);
   }
 }

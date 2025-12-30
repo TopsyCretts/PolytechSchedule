@@ -1,4 +1,4 @@
-import type { ThemeItemProps } from "@widgets/ThemeToggler/types"
+import type { ThemeItemProps } from "@/widgets/ThemeToggler/types"
 import { ThemeIcon } from "./index.ts"
 import { useTranslation } from "react-i18next"
 

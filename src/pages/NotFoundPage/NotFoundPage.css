@@ -43,7 +43,7 @@
   text-decoration: none;
   color: var(--color-light);
   background-color: var(--color-accent);
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-md);
 }
 @media (hover: hover) {
   .not-found-page__home-link:hover {

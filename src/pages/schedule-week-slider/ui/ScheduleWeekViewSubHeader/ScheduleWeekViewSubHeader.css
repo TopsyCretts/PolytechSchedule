@@ -1,35 +1,24 @@
-.schedule-week-view-sub-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 100%;
-  padding-block: 0.75rem;
-}
 .schedule-week-view-sub-header__inner {
   display: flex;
   justify-content: center;
   align-items: center;
-  column-gap: 0.9375rem;
+  justify-content: space-between;
+  column-gap: var(--spacing-lg);
   width: 100%;
 }
-@media (width <= 47.999375rem) {
-  .schedule-week-view-sub-header__inner {
-    display: grid;
-    place-items: center center;
-    grid-template-columns: repeat(3, minmax(2.75rem, auto));
-    justify-content: space-between;
-  }
+.schedule-week-view-sub-header__link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: var(--spacing-sm);
+  height: var(--button-height);
+  padding-inline: var(--spacing-md);
+  font-size: 0.875rem !important;
 }
-.schedule-week-view-sub-header__arrow-button--prev {
-  rotate: 0.25turn;
-}
-.schedule-week-view-sub-header__arrow-button--next {
-  rotate: -0.25turn;
-}
-@media (width <= 47.999375rem) {
-  .schedule-week-view-sub-header__arrow-button {
-    display: none;
-  }
+.schedule-week-view-sub-header__icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  flex-shrink: 0;
 }
 .schedule-week-view-sub-header__week-select {
   place-self: center center;

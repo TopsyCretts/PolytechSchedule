@@ -1,7 +1,7 @@
 interface IconButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string
-  iconType: "cross" | "right-arrow"
+  iconType: IconButtonType
   onClick: () => void
 }
 

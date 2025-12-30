@@ -10,7 +10,7 @@ import type { InstitutesData } from "@/entities/Institute.ts"
 import type { GroupData } from "@/entities/Group.ts"
 import { dbService, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
 import { LocalStorageManager } from "@/app/store/browser-storages"
-import { LOCAL_STORAGE_KEY } from "@shared/constants/contstants.ts"
+import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
 
 @injectable()
 export class InstitutesStore {

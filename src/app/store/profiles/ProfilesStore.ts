@@ -18,7 +18,7 @@ import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
 import { dbService, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
 import { SCHEDULE_VIEW } from "@/entities/ScheduleData.ts"
 import { LocalStorageManager } from "@/app/store/browser-storages"
-import { LOCAL_STORAGE_KEY } from "@shared/constants/contstants.ts"
+import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
 import type { ProfileDB } from "@/app/store/indexDb/models/ProfileDB.ts"
 
 @injectable()

@@ -7,7 +7,7 @@
   display: flex;
 
   &__wrapper {
-    @include border-shadow-themed(var(--border-radius));
+    @include border-shadow-themed(var(--border-radius-md));
 
     position: absolute;
     z-index: var(--z-index-select);
@@ -21,7 +21,7 @@
   &__header {
     justify-content: space-between;
     margin-bottom: rem(5);
-    padding-left: rem(15);
+    padding-left: var(--spacing-md);
     white-space: nowrap;
   }
 
@@ -51,23 +51,23 @@
   &__sting-toggler {
     @include reset-button;
     @include flex-center(true);
-    @include border-shadow-themed(var(--border-radius), false);
+    @include border-shadow-themed(var(--border-radius), true);
 
     column-gap: rem(5);
     height: var(--button-height);
-    padding-inline: rem(8);
+    padding-inline: var(--spacing-sm);
     color: inherit;
     background-color: var(--select-bg);
   }
 
   &__group-title,
   &__item {
-    padding-inline: rem(15);
+    padding-inline: var(--spacing-md);
     user-select: none;
   }
 
   &__group {
-    border-top: rem(1) solid var(--color-gray);
+    border-top: rem(1) solid var(--color-gray-100);
   }
 
   &__list {

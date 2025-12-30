@@ -1,14 +1,14 @@
 import "./ProfileCreation.scss"
 import clsx from "clsx"
-import { Spinner, Switcher } from "@shared/ui"
+import { Spinner, Switcher } from "@/shared/ui"
 import { Suspense, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@shared/constants/strings.ts"
-import StudentProfileCreationForm from "@widgets/create-profile/ui/ProfileCreation/StudentProfileCreationForm.tsx"
-import TeacherProfileCreationForm from "@widgets/create-profile/ui/ProfileCreation/TeacherProfileCreationForm.tsx"
-import QueryErrorResetWrapper from "@shared/hoc/QueryErrorResetWrapper/QueryErrorResetWrapper.tsx"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
+import StudentProfileCreationForm from "@/widgets/create-profile/ui/ProfileCreation/StudentProfileCreationForm.tsx"
+import TeacherProfileCreationForm from "@/widgets/create-profile/ui/ProfileCreation/TeacherProfileCreationForm.tsx"
+import QueryErrorResetWrapper from "@/shared/hoc/QueryErrorResetWrapper/QueryErrorResetWrapper.tsx"
 import { PROFILE_TYPE } from "@/entities/Profile.ts"
-import type { BaseComponent } from "@shared/models/BaseComponent.ts"
+import type { BaseComponent } from "@/shared/models/BaseComponent.ts"
 
 const ProfileCreation = ({ className }: BaseComponent) => {
   const { t } = useTranslation()

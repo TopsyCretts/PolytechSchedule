@@ -2,9 +2,9 @@
 
 .lesson-card {
   display: flex;
+  column-gap: var(--spacing-md);
   width: 100%;
   max-width: 100%;
-  padding-inline: rem(10);
 
   &__duration,
   &__inner,
@@ -44,25 +44,23 @@
   &__inner,
   &__body {
     justify-content: center;
-    row-gap: rem(8);
+    row-gap: var(--spacing-md);
   }
 
   &__inner {
+    @include border-shadow-themed(var(--border-radius-xl));
+
     width: 100%;
-    padding: rem(10) rem(16) rem(16);
+    padding: var(--spacing-md) var(--spacing-xl) var(--spacing-xl);
     background-color: var(--lesson-card-bg);
-    border: rem(1) solid var(--lesson-card-border);
-    border-radius: var(--border-radius-large);
-    box-shadow: var(--shadow-themed);
   }
 
   &__path-indicator {
-    display: flex;
+    @include flex-center;
+
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    row-gap: rem(11);
-    margin-right: rem(16);
+    row-gap: var(--spacing-md);
+    width: var(--icon-size);
     padding-top: rem(6);
     color: var(--color-blue);
     border-radius: 50%;

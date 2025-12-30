@@ -1,8 +1,8 @@
 import "./RetryFallback.scss"
 import clsx from "clsx"
-import { AccentButton } from "@shared/ui"
 import { useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@shared/constants/strings.ts"
+import { STRINGS_RES } from "@/shared/constants/strings"
+import { Button } from "@/shared/ui"
 
 interface RetryFallbackProps {
   className?: string
@@ -18,12 +18,13 @@ const RetryFallback = ({ className, onRetry }: RetryFallbackProps) => {
         <h3 className="retry-fallback__title">
           {t(STRINGS_RES.something_went_wrong)}
         </h3>
-        <AccentButton
+        <Button
           className={"retry-fallback__button"}
+          buttonType={"primary"}
           onClick={onRetry}
         >
           {t(STRINGS_RES.retry)}
-        </AccentButton>
+        </Button>
       </div>
     </div>
   )

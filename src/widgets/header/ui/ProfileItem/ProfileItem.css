@@ -6,17 +6,16 @@
 .profile-item--active {
   min-width: fit-content;
   white-space: nowrap;
-  color: var(--color-light);
+  color: var(--color-text-themed);
   background-color: var(--selected-profile-bg);
 }
 .profile-item--active::before {
   content: "";
   margin-left: 0.3125rem;
 }
-.profile-item--active .profile-item__cross,
-.profile-item--active::before {
-  width: 1.5rem;
-  height: 1.5rem;
+.profile-item--active .profile-item__cross, .profile-item--active::before {
+  width: var(--icon-size);
+  height: var(--icon-size);
 }
 .profile-item__cross {
   margin-right: 0.3125rem;

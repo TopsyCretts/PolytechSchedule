@@ -1,22 +1,21 @@
 import { useTranslation } from "react-i18next"
 import { useCallback, useState } from "react"
-import { SearchSelect, Spinner } from "@shared/ui"
-import { STRINGS_RES } from "@shared/constants/strings.ts"
+import { SearchSelect, Spinner } from "@/shared/ui"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import type {
   ProfileCreationFormProps,
   StudentProfileCreationValues,
-} from "@widgets/create-profile/ui/ProfileCreation/types.ts"
-import { toInstituteUi } from "@/entities/Institute.ts"
-import type { SearchItem } from "@shared/models/Search.ts"
+} from "@/widgets/create-profile/ui/ProfileCreation/types.ts"
+import type { SearchItem } from "@/shared/models/Search.ts"
 import { useNavigate } from "react-router"
 import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
 import { useInjection } from "inversify-react"
 import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
 import { observer } from "mobx-react-lite"
 import type { GroupData } from "@/entities/Group.ts"
-import { useGetGroupsByInstitutesQuery } from "@shared/api/search-schedule/institutesService.ts"
+import { useGetGroupsByInstitutesQuery } from "@/shared/api/search-schedule/institutesService.ts"
 import { PROFILE_TYPE } from "@/entities/Profile.ts"
-import RetryFallback from "@widgets/RetryFallback"
+import RetryFallback from "@/widgets/RetryFallback"
 
 const mapGroupsToSearchItems = (groups: GroupData[] | null): SearchItem[] => {
   if (groups === null) {
@@ -96,14 +95,22 @@ const StudentProfileCreationForm = observer(
       <form className={className}>
         <SearchSelect
           id={"institutes"}
+          className={"profile-creation__institutes-select"}
           label={t(STRINGS_RES.institute_other)}
-          searchItems={institutes.institutes.map((item) => toInstituteUi(item))}
+          searchItems={institutes.institutes.map(
+            (item): SearchItem => ({
+              id: item.id,
+              searchableValue: item.name,
+              type: "institute",
+            })
+          )}
           placeholder={t(STRINGS_RES.enter_the_institute)}
           onSelectedChange={handleInstituteSelection}
         />
         {selectedValues.institute && (
           <SearchSelect
             id={"groups"}
+            className={"profile-creation__groups-select"}
             label={t(STRINGS_RES.group_other)}
             searchItems={mapGroupsToSearchItems(
               getGroupsByInstitute(selectedValues.institute.id)

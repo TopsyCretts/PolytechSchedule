@@ -1,18 +1,18 @@
 .search-item {
   display: flex;
   align-items: center;
-  column-gap: 0.625rem;
+  column-gap: var(--spacing-md);
   height: var(--button-height);
-  padding: 0.375rem 0.625rem;
+  padding-inline: var(--spacing-md);
   background-color: var(--color-light-opacity-10);
   border: var(--border-themed);
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-md);
   cursor: pointer;
 }
 .search-item__heading,
 .search-item svg * {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: var(--icon-size);
+  height: var(--icon-size);
   flex-shrink: 0;
 }
 .search-item__title {
@@ -42,7 +42,7 @@
   }
 }
 .search-item__trailing-icon--cross {
-  color: var(--color-gray);
+  color: var(--color-gray-100);
 }
 
 /*# sourceMappingURL=SearchItem.css.map */

@@ -3,17 +3,14 @@
 .calendar {
   --calendarHeaderBorderColor: var(--select-active-bg);
 
-  @include border-shadow-themed(var(--border-radius-medium), false);
-
-  --cellWidth: #{rem(100)};
-  --cellHeight: #{rem(130)};
+  @include border-shadow-themed(var(--border-radius-lg));
 
   width: 100%;
   max-width: rem(843);
-  padding: rem(12) rem(20);
+  padding: var(--spacing-md) var(--spacing-xl);
 
   @include mobile {
-    padding: rem(12) rem(15);
+    padding: var(--spacing-md);
   }
 
   &__header {
@@ -22,38 +19,54 @@
     width: 100%;
     height: 100%;
     max-height: rem(64);
-    margin-bottom: rem(10);
-    padding-bottom: rem(10);
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
     border-bottom: rem(2) solid var(--calendarHeaderBorderColor);
   }
 
-  &__inner,
-  &__weekdays,
-  &__body {
-    min-width: 100%;
-  }
-
-  &__body {
+  &__inner {
     @include flex-center;
 
     flex-direction: column;
-    row-gap: rem(15);
+    width: 100%;
+    max-width: 100%;
+
+    @include tablet {
+      overflow-x: auto;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    row-gap: var(--spacing-lg);
+
+    @include mobile {
+      row-gap: var(--spacing-sm);
+    }
   }
 
   &__weekdays {
-    overflow-x: auto;
     display: grid;
-    grid-template-columns: repeat(7, var(--cellWidth));
-    gap: rem(15);
+    grid-template-columns: var(--calendar-grid-template-columns);
+    place-items: center;
+    gap: var(--spacing-md);
+
+    @include mobile {
+      gap: var(--spacing-xs);
+    }
 
     & span {
       @include flex-center(true);
 
       font-weight: 700;
-    }
 
-    @include laptop {
-      display: none;
+      @include mobile {
+        min-width: var(--calendar-cell-min-width);
+      }
     }
   }
 }

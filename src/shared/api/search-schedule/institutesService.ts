@@ -1,12 +1,12 @@
 import { LocalStorageManager } from "@/app/store/browser-storages"
-import { mainContainer } from "@/app/store/mainContainer.ts"
-import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
-import { getGroupsByInstitutes } from "@shared/api/search-schedule/requests.ts"
-import { type InstitutesData, toInstituteData } from "@/entities/Institute.ts"
+import { mainContainer } from "@/app/store/mainContainer"
+import { InstitutesStore } from "@/app/store/institutes/InstitutesStore"
+import { getGroupsByInstitutes } from "@/shared/api/search-schedule/requests"
+import { type InstitutesData, toInstituteData } from "@/entities/Institute"
 import { queryOptions, useQuery } from "@tanstack/react-query"
-import { dbService, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
+import { dbService, STORE_NAMES } from "@/app/store/indexDb/indexDb"
 import axios from "axios"
-import { LOCAL_STORAGE_KEY } from "@shared/constants/contstants.ts"
+import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants"
 
 const getInstitutes = async () => {
   const savedData = await dbService.getAll(STORE_NAMES.institutes)

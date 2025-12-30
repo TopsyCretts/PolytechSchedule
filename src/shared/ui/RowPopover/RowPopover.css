@@ -21,7 +21,7 @@
   position: absolute;
   z-index: 210;
   color: inherit;
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-md);
   cursor: pointer;
 }
 @media (hover: hover) {
@@ -50,7 +50,7 @@
   padding: 0.625rem;
   color: inherit;
   background-color: var(--select-bg);
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-md);
   backdrop-filter: var(--blur-20);
 }
 .row-popover__content-wrapper {
@@ -71,8 +71,8 @@
 }
 .row-popover--opened {
   border: var(--border-themed);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-themed);
   position: relative;
   z-index: 1;
 }

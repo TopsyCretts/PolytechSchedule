@@ -1,9 +1,9 @@
 import "./SearchField.scss"
 import clsx from "clsx"
-import SearchIcon from "@assets/icons/search.svg?react"
-import type { SearchFieldProps } from "@shared/models/Search.ts"
+import SearchIcon from "@/assets/icons/search.svg?react"
+import type { SearchFieldProps } from "@/shared/models/Search.ts"
 import { type ChangeEvent, useState } from "react"
-import { IconButton } from "@shared/ui"
+import { IconButton } from "@/shared/ui"
 
 const SearchField = ({
   className,

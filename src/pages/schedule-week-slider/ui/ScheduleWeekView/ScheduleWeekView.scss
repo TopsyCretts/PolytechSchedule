@@ -9,6 +9,7 @@
     @include flex-center;
 
     flex-direction: column;
+    row-gap: var(--spacing-lg);
 
     @include mobile {
       max-width: calc(#{rem(380)} + 2 * var(--container-padding-x));
@@ -25,7 +26,7 @@
   &__indicator {
     @include abs-x;
     @include flex-center;
-    @include border-shadow-themed(var(--border-radius-small));
+    @include border-shadow-themed(var(--border-radius-sm));
 
     background-color: var(--select-bg);
     pointer-events: none;

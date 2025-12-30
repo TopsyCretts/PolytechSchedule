@@ -2,8 +2,8 @@ import type { RefObject } from "react"
 import type {
   BaseComponent,
   BaseComponentWithChildren,
-} from "@shared/models/BaseComponent.ts"
-import type { ButtonProps } from "@shared/ui/Button/types.ts"
+} from "@/shared/models/BaseComponent.ts"
+import type { ButtonProps } from "@/shared/ui/Button/types.ts"
 
 interface SelectValues {
   isOpen: boolean

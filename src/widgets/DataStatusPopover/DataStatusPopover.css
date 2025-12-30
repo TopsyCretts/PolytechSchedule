@@ -10,8 +10,8 @@
   height: var(--button-height);
 }
 .data-status-popover-spinner .spinner__svg {
-  width: 1.5rem !important;
-  height: 1.5rem !important;
+  width: var(--icon-size) !important;
+  height: var(--icon-size) !important;
 }
 
 /*# sourceMappingURL=DataStatusPopover.css.map */

@@ -1,4 +1,4 @@
-import type { BaseComponent } from "@shared/models/BaseComponent.ts"
+import type { BaseComponent } from "@/shared/models/BaseComponent.ts"
 
 interface SwitcherProps<T extends string> extends BaseComponent {
   currentItem: SwitcherOption<T>

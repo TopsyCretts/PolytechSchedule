@@ -11,21 +11,21 @@
 
 .container {
   @include container-max-width(
-    var(--container-width),
+    var(--container-width-md),
     var(--container-padding-x)
   );
 }
 
 .container-extra-small {
   @include container-max-width(
-    var(--container-width-extra-small),
+    var(--container-width-xs),
     var(--container-padding-x)
   );
 }
 
 .container-small {
   @include container-max-width(
-    var(--container-width-small),
+    var(--container-width-sm),
     var(--container-padding-x)
   );
 }
@@ -36,7 +36,7 @@
 
 .container-extra-large {
   @include container-max-width(
-    var(--container-width-large),
+    var(--container-width-lg),
     var(--container-padding-x)
   );
 }
@@ -60,14 +60,24 @@
   display: none !important;
 }
 
-.hidden-mobile-s,
+.hidden-mobile-s {
+  @include mobile-s {
+    display: none !important;
+  }
+}
+
+.visible-mobile-s {
+  @include mobile-s-above {
+    display: none !important;
+  }
+}
+
 .hidden-mobile {
   @include mobile {
     display: none !important;
   }
 }
 
-.visible-mobile-s,
 .visible-mobile {
   @include mobile-above {
     display: none !important;
@@ -98,14 +108,27 @@
   }
 }
 
-.hover-orange-20 {
-  @include hover {
-    color: var(--color-light);
-    background-color: var(--color-orange-opacity-20);
-  }
-}
-
 .overflow-x-hidden {
   -ms-overflow-x: hidden;
   overflow-x: hidden;
+}
+
+.border-radius-xs {
+  border-radius: var(--border-radius-xs);
+}
+
+.border-radius-sm {
+  border-radius: var(--border-radius-sm);
+}
+
+.border-radius-md {
+  border-radius: var(--border-radius-md);
+}
+
+.border-radius-lg {
+  border-radius: var(--border-radius-lg);
+}
+
+.border-radius-xl {
+  border-radius: var(--border-radius-xl);
 }

@@ -1,6 +1,6 @@
-import type { TeacherData } from "@/entities/Teachers.ts"
-import type { GroupData } from "@/entities/Group.ts"
-import type { DataStatus } from "@shared/models/DataStatus.ts"
+import type { TeacherData } from "@/entities/Teachers"
+import type { GroupData } from "@/entities/Group"
+import type { DataStatus } from "@/shared/models/DataStatus"
 
 const SCHEDULE_VIEW = {
   calendar: "calendar",

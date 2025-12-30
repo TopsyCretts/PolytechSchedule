@@ -1,7 +1,5 @@
-import AccentButton from "./AccentButton"
 import Button from "./Button"
 import IconButton from "./IconButton"
-import InstituteIcon from "./InstituteIcon"
 import Logo from "./Logo"
 import SearchField from "./SearchField"
 import SearchItem from "./SearchItem"
@@ -17,10 +15,8 @@ import ScheduleDayItem from "./ScheduleDayItem"
 import WeekSlider from "./WeekSlider/WeekSlider"
 
 export {
-  AccentButton,
   Button,
   IconButton,
-  InstituteIcon,
   Logo,
   SearchField,
   SearchItem,

@@ -11,6 +11,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  row-gap: var(--spacing-lg);
 }
 @media (width <= 47.999375rem) {
   .schedule-week-view__header {
@@ -19,8 +20,7 @@
     padding-inline: var(--container-padding-x);
   }
 }
-.schedule-week-view__slider-container,
-.schedule-week-view__slider-container-wrapper {
+.schedule-week-view__slider-container, .schedule-week-view__slider-container-wrapper {
   flex: 1;
   position: relative;
   overflow-y: hidden;
@@ -35,8 +35,8 @@
   justify-content: center;
   align-items: center;
   border: var(--border-themed);
-  border-radius: var(--border-radius-small);
-  box-shadow: var(--shadow);
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-themed);
   background-color: var(--select-bg);
   pointer-events: none;
 }

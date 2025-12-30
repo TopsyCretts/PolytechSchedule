@@ -9,9 +9,9 @@ import {
   THEME_TYPE,
   type ThemeContextValues,
   type ThemeType,
-} from "@shared/models/Theme.ts"
+} from "@/shared/models/Theme.ts"
 import { LocalStorageManager } from "@/app/store/browser-storages"
-import { LOCAL_STORAGE_KEY } from "@shared/constants/contstants.ts"
+import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
 
 interface ThemeProviderProps {
   children: React.ReactNode
