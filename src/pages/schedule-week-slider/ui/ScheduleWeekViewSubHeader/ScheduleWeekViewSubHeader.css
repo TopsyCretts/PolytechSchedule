@@ -6,6 +6,11 @@
   column-gap: var(--spacing-lg);
   width: 100%;
 }
+@media (width <= 30.06125rem) {
+  .schedule-week-view-sub-header__inner {
+    column-gap: var(--spacing-sm);
+  }
+}
 .schedule-week-view-sub-header__link {
   display: inline-flex;
   justify-content: center;

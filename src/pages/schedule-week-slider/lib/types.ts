@@ -4,20 +4,18 @@ import type { SelectOption } from "@/shared/ui/Select/types"
 import type { BaseComponent } from "@/shared/models/BaseComponent.ts"
 
 interface ScheduleWeekSelectProps extends BaseComponent {
-  weekData: ScheduleWeekData[]
   startWeekFormat: string
   locale: Locale
   selectedWeekStart: Date
-  onSelectedWeekChange: (weekData: ScheduleWeekData) => void
+  onSelectedWeekChange: (weekStartDate: Date) => void
 }
 
 interface WeeksByYear {
-  year: Date
+  year: number
   weeks: SelectOption[]
 }
 
 interface SelectedWeekSlide {
-  index: number
   weekData: ScheduleWeekData
   activeDateIndex: number
 }

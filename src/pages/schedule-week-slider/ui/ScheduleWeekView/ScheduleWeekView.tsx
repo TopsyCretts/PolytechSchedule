@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { type SwiperRef } from "swiper/react"
 import type { SelectedWeekSlide } from "@/pages/schedule-week-slider/lib/types.ts"
 import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
-import { type Day } from "date-fns"
+import { add, type Day, isAfter, isBefore, sub } from "date-fns"
 import { findWeekSlide } from "@/pages/schedule-week-slider/lib/findWeekSlide.ts"
 import "./ScheduleWeekView.scss"
 import ScheduleWeekViewController from "@/pages/schedule-week-slider/ui/ScheduleWeekVIewController"
@@ -15,6 +15,11 @@ import { AnimatePresence, motion } from "framer-motion"
 import ArrowIcon from "@/assets/icons/arrow-long-right.svg?react"
 import clsx from "clsx"
 import { useGetDateFromUrl } from "@/shared/lib/useDayFromSearchParams.ts"
+import getWeekDataByWeekStart from "@/pages/schedule-week-slider/lib/getWeekDataByWeekStart.ts"
+import {
+  maxWeekStartDate,
+  minWeekStartDate,
+} from "@/pages/schedule-week-slider/lib/minAndMaxWeekStartDate.ts"
 
 interface SwipeState {
   isSwiping: boolean
@@ -45,38 +50,40 @@ const ScheduleWeekView = () => {
 
   const handleWeekSelection = useCallback(
     (weekData: ScheduleWeekData, initialDay?: number) => {
-      const newActiveIndex = data.weeks.indexOf(weekData)
-      if (newActiveIndex !== -1) {
-        if (newActiveIndex > currentWeek.index) {
-          setAnimationDirection(1)
-        } else {
-          setAnimationDirection(-1)
-        }
-        setCurrentWeek((prev) => ({
-          index: newActiveIndex,
-          weekData: weekData,
-          activeDateIndex: initialDay ?? prev.activeDateIndex,
-        }))
+      const newWeekStart = weekData.start
+      const currentWeekStart = currentWeek.weekData.start
+      if (isAfter(newWeekStart, currentWeekStart)) {
+        setAnimationDirection(1)
+      } else {
+        setAnimationDirection(-1)
       }
+      setCurrentWeek((prev) => ({
+        weekData: weekData,
+        activeDateIndex: initialDay ?? prev.activeDateIndex,
+      }))
     },
-    [currentWeek.index, data.weeks]
+    [currentWeek, data.weeks]
   )
 
-  const handleNextWeek = useCallback(() => {
-    const nextIndex = currentWeek.index + 1
-    if (data.weeks.length > nextIndex) {
-      const weekData = data.weeks[nextIndex]
-      handleWeekSelection(weekData, 0)
+  const handleNextWeek = (forceInitialDate: number | null = null) => {
+    const maxWeekStart = maxWeekStartDate()
+    const nextWeekStart = add(currentWeek.weekData.start, { weeks: 1 })
+    if (isAfter(nextWeekStart, maxWeekStart)) {
+      return
     }
-  }, [handleWeekSelection])
+    const weekData = getWeekDataByWeekStart(data.weeks, nextWeekStart)
+    handleWeekSelection(weekData, forceInitialDate ? forceInitialDate : 0)
+  }
 
-  const handlePrevWeek = useCallback(() => {
-    const nextIndex = currentWeek.index - 1
-    if (nextIndex >= 0) {
-      const weekData = data.weeks[nextIndex]
-      handleWeekSelection(weekData, 6)
+  const handlePrevWeek = (forceInitialDate: number | null = null) => {
+    const minWeekStart = minWeekStartDate()
+    const prevWeekStart = sub(currentWeek.weekData.start, { weeks: 1 })
+    if (isBefore(prevWeekStart, minWeekStart)) {
+      return
     }
-  }, [handleWeekSelection])
+    const weekData = getWeekDataByWeekStart(data.weeks, prevWeekStart)
+    handleWeekSelection(weekData, forceInitialDate ? forceInitialDate : 6)
+  }
 
   const [swipe, setSwipe] = useState<SwipeState>({
     isSwiping: false,
@@ -111,7 +118,7 @@ const ScheduleWeekView = () => {
       "week-day-" + currentWeek.activeDateIndex
     )
     checkScroll()
-  }, [swiperRef.current, currentWeek, checkScroll]) 
+  }, [swiperRef.current, currentWeek, checkScroll])
 
   const handleTouchStart = useCallback(
     (e: React.TouchEvent) => {
@@ -145,12 +152,8 @@ const ScheduleWeekView = () => {
       const isSwipingUp = deltaY < 0
       const isSwipingDown = deltaY > 0
 
-      const canSwipeUp =
-        swipe.isAtBottom &&
-        isSwipingUp &&
-        currentWeek.index < data.weeks.length - 1
-      const canSwipeDown =
-        swipe.isAtTop && isSwipingDown && currentWeek.index > 0
+      const canSwipeUp = swipe.isAtBottom && isSwipingUp
+      const canSwipeDown = swipe.isAtTop && isSwipingDown
 
       if (canSwipeUp || canSwipeDown) {
         if (e.cancelable) {
@@ -207,23 +210,11 @@ const ScheduleWeekView = () => {
     const absDeltaY = Math.abs(deltaY)
 
     if (absDeltaY >= thresholdToSwipeStop) {
-      let newActiveIndex = 0
-      if (
-        swipe.isAtBottom &&
-        deltaY < 0 &&
-        data.weeks.length > currentWeek.index + 1
-      ) {
-        newActiveIndex = currentWeek.index + 1
-        setAnimationDirection(1)
-      } else if (swipe.isAtTop && deltaY > 0 && currentWeek.index - 1 >= 0) {
-        newActiveIndex = currentWeek.index - 1
-        setAnimationDirection(-1)
+      if (swipe.isAtBottom && deltaY < 0) {
+        handleNextWeek(currentWeek.activeDateIndex)
+      } else if (swipe.isAtTop && deltaY > 0) {
+        handlePrevWeek(currentWeek.activeDateIndex)
       }
-      setCurrentWeek({
-        activeDateIndex: 0,
-        index: newActiveIndex,
-        weekData: data.weeks[newActiveIndex],
-      })
     }
     setSwipe((prev) => ({ ...prev, currentY: 0, startY: 0, isSwiping: false }))
   }
@@ -259,7 +250,6 @@ const ScheduleWeekView = () => {
           handleWeekSelection={handleWeekSelection}
           selectedWeek={{
             startDate: currentWeek.weekData.start,
-            index: currentWeek.index,
           }}
           onPrevWeek={handlePrevWeek}
           onNextWeek={handleNextWeek}
@@ -286,7 +276,7 @@ const ScheduleWeekView = () => {
           custom={animationDirection}
         >
           <motion.div
-            key={currentWeek.index}
+            key={currentWeek.weekData.start.toString()}
             ref={wrapperRef}
             className="schedule-week-view__slider-container"
             custom={animationDirection}

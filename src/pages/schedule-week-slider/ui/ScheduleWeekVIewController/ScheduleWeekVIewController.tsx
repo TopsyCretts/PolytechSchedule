@@ -64,7 +64,7 @@ const ScheduleWeekVIewController = ({
         end: selectedWeekSlide.weekData.end,
       })
     )
-  }, [selectedWeekSlide.index])
+  }, [selectedWeekSlide.weekData.start.toString()])
 
   const handleNext = () => {
     const scheduleSwiper = scheduleWeekSlider.current?.swiper

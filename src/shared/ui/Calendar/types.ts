@@ -2,10 +2,12 @@ import type { Locale } from "date-fns"
 import type { BaseComponent } from "@/shared/models/BaseComponent.ts"
 
 interface CalendarContextValues {
-  currentMonth: string
+  currentMonth: Date
   selectedDate: Date | null
   monthFormat: string
   locale: Locale
+  isMonthIncrementAvailable: boolean
+  isMonthDecrementAvailable: boolean
 }
 
 interface CalendarContextActions {
@@ -15,9 +17,9 @@ interface CalendarContextActions {
 }
 
 interface CalendarProps extends BaseComponent {
-  initialDate?: Date | null
+  initialDate: Date | null
   dataToDisplay: CalendarData
-  onMonthChange: (month: string) => void
+  onMonthChange: (month: Date) => void
   onSelectedDateChange: (date: Date | null) => void
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
   isSelectedDateCouldBeNull?: boolean
@@ -30,6 +32,8 @@ type CalendarRef = {
   goNextDay: () => void
   goPreviousDay: () => void
   selectDate: (date: Date | null) => void
+  isMonthIncrementAvailable: boolean
+  isMonthDecrementAvailable: boolean
 }
 
 interface CalendarData {

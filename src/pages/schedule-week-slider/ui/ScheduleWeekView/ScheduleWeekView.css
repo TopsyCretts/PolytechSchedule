@@ -17,7 +17,6 @@
   .schedule-week-view__header {
     max-width: calc(23.75rem + 2 * var(--container-padding-x));
     margin-inline: auto;
-    padding-inline: var(--container-padding-x);
   }
 }
 .schedule-week-view__slider-container, .schedule-week-view__slider-container-wrapper {

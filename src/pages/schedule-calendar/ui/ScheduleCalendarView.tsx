@@ -95,7 +95,7 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
           }}
           locale={locale}
           onMonthChange={() => {}}
-          initialDate={isLaptop ? null : currentDayData.date}
+          initialDate={currentDayData.date}
           isSelectedDateCouldBeNull={isLaptop}
           onSelectedDateChange={handleDateSelect}
         />

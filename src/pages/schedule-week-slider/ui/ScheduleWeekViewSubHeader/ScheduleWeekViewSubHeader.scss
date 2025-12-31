@@ -7,6 +7,10 @@
     justify-content: space-between;
     column-gap: var(--spacing-lg);
     width: 100%;
+
+    @include mobile-s{
+      column-gap: var(--spacing-sm);
+    }
   }
 
   &__link {

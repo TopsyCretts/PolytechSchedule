@@ -14,7 +14,6 @@
     @include mobile {
       max-width: calc(#{rem(380)} + 2 * var(--container-padding-x));
       margin-inline: auto;
-      padding-inline: var(--container-padding-x);
     }
   }
 

@@ -6,6 +6,7 @@
   width: 100%;
   max-width: 100%;
   padding-block: var(--spacing-xl);
+  padding-inline: var(--spacing-lg);
 
   @include mobile {
     height: 100%;

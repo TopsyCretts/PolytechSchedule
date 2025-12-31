@@ -5,12 +5,15 @@ import {
   eachWeekOfInterval,
   endOfMonth,
   endOfWeek,
+  endOfYear,
   format,
+  isAfter,
+  isBefore,
   isEqual,
-  parse,
   startOfMonth,
   startOfToday,
   startOfWeek,
+  sub,
 } from "date-fns"
 import type {
   CalendarContextActions,
@@ -31,9 +34,12 @@ import {
 import CalendarChangeMonth from "./CalendarChangeMonth"
 import { ru } from "date-fns/locale"
 import { CALENDAR_SPECIAL_MONTH_FORMAT } from "@/shared/constants/contstants"
-import { formatDateToSpecialMonthString } from "@/shared/lib/formatDateToSpecialMonthString"
 import { capitalizeFirstLatter } from "@/shared/lib/capitalizeFirstLatter"
 import clsx from "clsx"
+import {
+  maxWeekStartDate,
+  minWeekStartDate,
+} from "@/pages/schedule-week-slider/lib/minAndMaxWeekStartDate.ts"
 
 const CalendarContext = createContext<CalendarContextValues | null>(null)
 const CalendarActionsContext = createContext<CalendarContextActions | null>(
@@ -50,20 +56,65 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
       isSelectedDateCouldBeNull = true,
       weekStartsOn = 1,
       locale = ru,
-      initialDate = null,
+      initialDate = startOfToday(),
     },
     ref
   ) => {
-    const [currentMonth, setCurrentMonth] = useState(() =>
-      formatDateToSpecialMonthString(initialDate ?? startOfToday())
-    )
+    const [startOfCurrentMonth, setStartOfCurrentMonth] = useState(() => {
+      const lastDayOfMaxYear = endOfYear(maxWeekStartDate())
+      const startOfYear = minWeekStartDate()
+      if (isAfter(endOfYear(initialDate!), endOfYear(maxWeekStartDate()))) {
+        return startOfMonth(lastDayOfMaxYear)
+      } else if(isBefore(initialDate!, startOfYear)) {
+        return startOfMonth(startOfYear)
+      }else {
+        return startOfMonth(initialDate!)
+      }
+    })
 
-    const firstDayOfCurrentMonth = useMemo(
-      () => parse(currentMonth, CALENDAR_SPECIAL_MONTH_FORMAT, new Date()),
-      [currentMonth]
-    )
+    const isDateOutOfRange = useCallback((date: Date) => {
+      const minWeekStart = minWeekStartDate()
+      const maxWeekStart = maxWeekStartDate()
+      return (
+        isBefore(date, minWeekStart) ||
+        isAfter(date, endOfWeek(maxWeekStart, { weekStartsOn: 1 }))
+      )
+    }, [])
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(initialDate)
+
+    const [isMonthIncrementAvailable, setIsMonthIncrementAvailable] = useState(
+      !isDateOutOfRange(
+        add(endOfWeek(endOfMonth(startOfCurrentMonth), { weekStartsOn: 1 }), {
+          days: 1,
+        })
+      )
+    )
+
+    const [isMonthDecrementAvailable, setIsMonthDecrementAvailable] = useState(
+      !isDateOutOfRange(
+        sub(startOfWeek(startOfCurrentMonth, { weekStartsOn: 1 }), {
+          days: 1,
+        })
+      )
+    )
+
+    useEffect(() => {
+      setIsMonthIncrementAvailable(
+        !isDateOutOfRange(
+          add(endOfWeek(endOfMonth(startOfCurrentMonth), { weekStartsOn: 1 }), {
+            days: 1,
+          })
+        )
+      )
+      setIsMonthDecrementAvailable(
+        !isDateOutOfRange(
+          sub(startOfWeek(startOfCurrentMonth, { weekStartsOn: 1 }), {
+            days: 1,
+          })
+        )
+      )
+    }, [isDateOutOfRange, startOfCurrentMonth])
 
     useEffect(() => {
       setSelectedDate(initialDate)
@@ -82,31 +133,42 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
 
     const handleMonthChange = useCallback(
       (month: Date) => {
-        const monthString = formatDateToSpecialMonthString(month)
-        setCurrentMonth(monthString)
-        onMonthChange(monthString)
+        setStartOfCurrentMonth(month)
+        onMonthChange(month)
       },
       [onMonthChange]
     )
 
     const handleMonthIncrement = useCallback(() => {
-      const firstDayOfNextMonth = add(firstDayOfCurrentMonth, { months: 1 })
-      handleMonthChange(firstDayOfNextMonth)
-    }, [firstDayOfCurrentMonth, handleMonthChange])
+      if (isMonthIncrementAvailable) {
+        const firstDayOfNextMonth = add(startOfCurrentMonth, { months: 1 })
+        handleMonthChange(firstDayOfNextMonth)
+      }
+    }, [startOfCurrentMonth, handleMonthChange, isMonthIncrementAvailable])
 
     const handleMonthDecrement = useCallback(() => {
-      const firstDayOfPrevMonth = add(firstDayOfCurrentMonth, { months: -1 })
-      handleMonthChange(firstDayOfPrevMonth)
-    }, [firstDayOfCurrentMonth, handleMonthChange])
+      if (isMonthDecrementAvailable) {
+        const firstDayOfPrevMonth = add(startOfCurrentMonth, { months: -1 })
+        handleMonthChange(firstDayOfPrevMonth)
+      }
+    }, [startOfCurrentMonth, handleMonthChange, isMonthDecrementAvailable])
 
     const value = useMemo<CalendarContextValues>(
       () => ({
-        currentMonth,
+        currentMonth: startOfCurrentMonth,
         selectedDate,
         monthFormat: CALENDAR_SPECIAL_MONTH_FORMAT,
         locale,
+        isMonthIncrementAvailable,
+        isMonthDecrementAvailable,
       }),
-      [currentMonth, selectedDate, locale]
+      [
+        startOfCurrentMonth,
+        selectedDate,
+        locale,
+        isMonthIncrementAvailable,
+        isMonthDecrementAvailable,
+      ]
     )
 
     const actionValue = useMemo<CalendarContextActions>(
@@ -120,10 +182,10 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
 
     const weeks = eachWeekOfInterval(
       {
-        start: startOfWeek(startOfMonth(firstDayOfCurrentMonth), {
+        start: startOfWeek(startOfCurrentMonth, {
           weekStartsOn,
         }),
-        end: endOfWeek(endOfMonth(firstDayOfCurrentMonth), {
+        end: endOfWeek(endOfMonth(startOfCurrentMonth), {
           weekStartsOn,
         }),
       },
@@ -148,10 +210,13 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
         goNextDay: () => {
           if (selectedDate) {
             const nextDay = add(selectedDate, { days: 1 })
+            if (isDateOutOfRange(nextDay)) {
+              return
+            }
             handleSelectedDateChange(nextDay)
             if (
               format(nextDay, "M") !== format(selectedDate, "M") &&
-              format(selectedDate, "M") === format(firstDayOfCurrentMonth, "M")
+              format(selectedDate, "M") === format(startOfCurrentMonth, "M")
             ) {
               handleMonthIncrement()
             }
@@ -159,24 +224,31 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
         },
         goPreviousDay: () => {
           if (selectedDate) {
-            const previousDay = add(selectedDate, { days: -1 })
+            const previousDay = sub(selectedDate, { days: 1 })
+            if (isDateOutOfRange(previousDay)) {
+              return
+            }
             handleSelectedDateChange(previousDay)
             if (
               format(previousDay, "M") !== format(selectedDate, "M") &&
-              format(selectedDate, "M") === format(firstDayOfCurrentMonth, "M")
+              format(selectedDate, "M") === format(startOfCurrentMonth, "M")
             ) {
               handleMonthDecrement()
             }
           }
         },
         selectDate: handleSelectedDateChange,
+        isMonthIncrementAvailable,
+        isMonthDecrementAvailable,
       }),
       [
         handleMonthIncrement,
         handleMonthDecrement,
         handleSelectedDateChange,
         selectedDate,
-        firstDayOfCurrentMonth,
+        startOfCurrentMonth,
+        isMonthIncrementAvailable,
+        isMonthDecrementAvailable,
       ]
     )
 

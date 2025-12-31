@@ -3,7 +3,7 @@ import {
   getScheduleByGroupId,
   getScheduleByTeacherId,
 } from "@/pages/schedule/api/requests.ts"
-import { toScheduleData } from "@/pages/schedule/lib/toScheduleData.ts"
+import { toScheduleData } from "@/pages/schedule/api/toScheduleData.ts"
 import type { GroupData } from "@/entities/Group.ts"
 import type { TeacherData } from "@/entities/Teachers.ts"
 import { type BaseProfile, PROFILE_TYPE } from "@/entities/Profile.ts"

@@ -1,19 +1,17 @@
 import { Select } from "@/shared/ui"
-import { format } from "date-fns"
+import { format, parse } from "date-fns"
 import "./ScheduleWeekSelect.scss"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
-import { mapWeekDataToWeeksByYear } from "../../lib/mapWeekDataToWeeksByYear"
 import type { ScheduleWeekSelectProps, WeeksByYear } from "../../lib/types.ts"
 import { useEffect, useMemo, useRef } from "react"
-import { getWeekByFormatedString } from "@/pages/schedule-week-slider/lib/getWeekByFormatedString.ts"
 import ScheduleWeekSelectToggler from "@/pages/schedule-week-slider/ui/ScheduleWeekSelect/ScheduleWeekSelectToggler.tsx"
 import clsx from "clsx"
 import scrollContainerToSelectedElement from "@/shared/lib/scrollContainerToSelectedElement.ts"
+import { generateAvailableYearsWithWeeks } from "@/pages/schedule-week-slider/lib/generateAvailableYearsWithWeeks.ts"
 
 const ScheduleWeekSelect = ({
   className,
-  weekData,
   startWeekFormat,
   locale,
   selectedWeekStart,
@@ -23,13 +21,13 @@ const ScheduleWeekSelect = ({
   const formatedSelectedString = format(selectedWeekStart, startWeekFormat)
 
   const weeksByYears = useMemo(() => {
-    return mapWeekDataToWeeksByYear(weekData, startWeekFormat, locale)
-  }, [weekData, startWeekFormat, locale])
+    return generateAvailableYearsWithWeeks(startWeekFormat, locale)
+  }, [locale])
 
   const handleSelection = (key: string) => {
-    const data = getWeekByFormatedString(key, startWeekFormat, weekData)
-    if (data !== null) {
-      onSelectedWeekChange(data)
+    const date = parse(key, startWeekFormat, new Date())
+    if (date !== null) {
+      onSelectedWeekChange(date)
     }
   }
 
@@ -90,7 +88,7 @@ const Content = ({
       {weekByYears.map((weeksByYear) => (
         <Select.OptionsGroup
           key={weeksByYear.year.toString()}
-          title={format(weeksByYear.year, "yyyy")}
+          title={weeksByYear.year.toString()}
           values={weeksByYear.weeks}
           initialSelectedOptionsKeys={[formatedSelectedString]}
           onOptionChange={handleSelection}

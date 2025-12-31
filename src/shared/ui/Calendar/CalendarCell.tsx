@@ -1,5 +1,5 @@
 import type { CalendarCellProps } from "@/shared/ui/Calendar/types.ts"
-import { format, getMonth, isEqual, isToday, parse } from "date-fns"
+import { format, getMonth, isEqual, isToday } from "date-fns"
 import clsx from "clsx"
 import "./styles/CalendarCell.scss"
 import {
@@ -15,7 +15,7 @@ const CalendarCell = memo(
     cellData,
     dateDisplayFormatDesktop = "d",
   }: CalendarCellProps) => {
-    const { selectedDate, currentMonth, monthFormat, locale } = useCalendar()
+    const { selectedDate, currentMonth, locale } = useCalendar()
     const { selectDate } = useCalendarActions()
 
     const isSelected =
@@ -28,8 +28,7 @@ const CalendarCell = memo(
           "calendar-day",
           isToday(cellData.date) && "calendar-day--current",
           isSelected && "calendar-day--selected",
-          getMonth(cellData.date) !==
-            getMonth(parse(currentMonth, monthFormat, new Date())) &&
+          getMonth(cellData.date) !== getMonth(currentMonth) &&
             "calendar-day--not-current-month"
         )}
         tabIndex={0}

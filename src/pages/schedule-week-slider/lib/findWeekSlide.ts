@@ -1,36 +1,23 @@
 import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
 import type { SelectedWeekSlide } from "@/pages/schedule-week-slider/lib/types.ts"
-import { getDay, isAfter, isEqual, startOfWeek } from "date-fns"
+import { getDay, startOfWeek } from "date-fns"
+import getWeekDataByWeekStart from "@/pages/schedule-week-slider/lib/getWeekDataByWeekStart.ts"
+import { getAvailableDateInRange } from "@/pages/schedule-week-slider/lib/minAndMaxWeekStartDate.ts"
 
 export const findWeekSlide = (
-  weekData: ScheduleWeekData[],
+  weeksData: ScheduleWeekData[],
   dateToFindWeek: Date
 ): SelectedWeekSlide => {
-  const weekIndex = weekData.findIndex((week) =>
-    isEqual(week.start, startOfWeek(dateToFindWeek, { weekStartsOn: 1 }))
-  )
+  const availableDateToFindWeek = getAvailableDateInRange(dateToFindWeek)
 
-  if (weekIndex > -1) {
-    return {
-      index: weekIndex,
-      weekData: weekData[weekIndex],
-      activeDateIndex: getDay(dateToFindWeek) - 1,
-    }
-  }
-
-  const lastWeekIndex = weekData.length - 1
-
-  if (isAfter(dateToFindWeek, weekData[lastWeekIndex].end)) {
-    return {
-      index: lastWeekIndex,
-      weekData: weekData[lastWeekIndex],
-      activeDateIndex: 6,
-    }
-  }
+  const weekStart = startOfWeek(availableDateToFindWeek, { weekStartsOn: 1 })
+  const weekData = getWeekDataByWeekStart(weeksData, weekStart)
 
   return {
-    index: 0,
-    weekData: weekData[0],
-    activeDateIndex: 0,
+    weekData,
+    activeDateIndex:
+      getDay(availableDateToFindWeek) - 1 < 0
+        ? 6
+        : getDay(availableDateToFindWeek) - 1,
   }
 }

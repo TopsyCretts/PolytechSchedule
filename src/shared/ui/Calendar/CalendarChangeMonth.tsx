@@ -1,4 +1,4 @@
-import { format, parse } from "date-fns"
+import { format } from "date-fns"
 import { capitalizeFirstLatter } from "@/shared/lib/capitalizeFirstLatter.ts"
 import ArrowLeftIcon from "@/assets/icons/arrow-left.svg?react"
 import clsx from "clsx"
@@ -14,33 +14,32 @@ interface CalendarChangeMonthProps {
 }
 
 const CalendarChangeMonth = ({ className }: CalendarChangeMonthProps) => {
-  const { monthFormat, currentMonth, locale } = useCalendar()
+  const { currentMonth, locale } = useCalendar()
   const { decrementMonth, incrementMonth } = useCalendarActions()
-
-  const month = parse(currentMonth, monthFormat, new Date())
-
+  const { isMonthDecrementAvailable, isMonthIncrementAvailable } = useCalendar()
   return (
     <div className={clsx(className, "month-switch")}>
       <Button
         className={"month-switch__left"}
         shape={"square"}
         onClick={decrementMonth}
+        disabled={!isMonthDecrementAvailable}
       >
         <ArrowLeftIcon />
       </Button>
       <time
         className="month-switch__title"
-        dateTime={format(month, "yyyy-MM", { locale: locale })}
+        dateTime={format(currentMonth, "yyyy-MM", { locale: locale })}
       >
         <span className="month-switch__month-name">
           {capitalizeFirstLatter(
-            format(month, "LLLL", {
+            format(currentMonth, "LLLL", {
               locale: locale,
             })
           )}
         </span>
         <span className="month-switch__year">
-          {format(month, "yo", {
+          {format(currentMonth, "yo", {
             locale: locale,
           })}
         </span>
@@ -49,6 +48,7 @@ const CalendarChangeMonth = ({ className }: CalendarChangeMonthProps) => {
         className={"month-switch__right"}
         shape={"square"}
         onClick={incrementMonth}
+        disabled={!isMonthIncrementAvailable}
       >
         <ArrowLeftIcon />
       </Button>

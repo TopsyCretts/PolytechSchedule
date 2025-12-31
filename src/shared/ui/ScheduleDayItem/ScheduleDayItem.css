@@ -43,7 +43,7 @@
   font-size: clamp(0.875rem, 0.7884615385rem + 0.3846153846vw, 1.25rem);
   display: flex;
   align-items: center;
-  max-height: clamp(12.5rem, 9.6153846154rem + 12.8205128205vw, 25rem);
+  height: clamp(12.5rem, 9.6153846154rem + 12.8205128205vw, 25rem);
   text-align: center;
   color: var(--color-text-accent-themed);
 }

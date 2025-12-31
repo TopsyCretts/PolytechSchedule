@@ -1,7 +1,6 @@
 import "./ScheduleWeekViewSubHeader.scss"
 import ScheduleWeekSelect from "@/pages/schedule-week-slider/ui/ScheduleWeekSelect/ScheduleWeekSelect.tsx"
 import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
-import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
 import clsx from "clsx"
 import { Button } from "@/shared/ui"
 import ArrowIcon from "@/assets/icons/arrow-left.svg?react"
@@ -15,10 +14,12 @@ import { useNavigate } from "react-router"
 import { routeWithParams } from "@/app/routes/routes.ts"
 import { format } from "date-fns"
 import { QUERY_DATE_FORMAT } from "@/shared/constants/contstants.ts"
+import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
+import getWeekDataByWeekStart from "@/pages/schedule-week-slider/lib/getWeekDataByWeekStart.ts"
 
 interface ScheduleWeekViewHeaderProps extends BaseComponent {
   handleWeekSelection: (data: ScheduleWeekData) => void
-  selectedWeek: { startDate: Date; index: number }
+  selectedWeek: { startDate: Date }
   onNextWeek: () => void
   onPrevWeek: () => void
 }
@@ -33,7 +34,7 @@ const ScheduleWeekViewSubHeader = memo(
     const navigate = useNavigate()
 
     const { getDateFromUrl } = useGetDateFromUrl()
-    const { data, locale, profile } = useScheduleData()
+    const { locale, profile, data: scheduleData } = useScheduleData()
 
     const handleLinkClick = () => {
       navigate(
@@ -44,6 +45,10 @@ const ScheduleWeekViewSubHeader = memo(
           "calendar"
         )
       )
+    }
+
+    const handleWeekChange = (weekStart: Date) => {
+      handleWeekSelection(getWeekDataByWeekStart(scheduleData.weeks, weekStart))
     }
 
     return (
@@ -60,11 +65,10 @@ const ScheduleWeekViewSubHeader = memo(
           </Button>
           <ScheduleWeekSelect
             className={"schedule-week-view-sub-header__week-select"}
-            weekData={data.weeks}
             startWeekFormat={"dd-MM-yyyy"}
             locale={locale}
             selectedWeekStart={selectedWeek.startDate}
-            onSelectedWeekChange={handleWeekSelection}
+            onSelectedWeekChange={handleWeekChange}
           />
           <DataStatusPopover
             className={""}
