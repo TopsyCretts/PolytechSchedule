@@ -10,12 +10,11 @@ const getWeekDataByWeekStart = (
   )
   if (weekData) {
     return weekData
-  } else {
-    return {
-      start: weekStart,
-      end: add(weekStart, { days: 6 }),
-      days: [],
-    }
+  }
+  return {
+    start: weekStart,
+    end: add(weekStart, { days: 6 }),
+    days: [],
   }
 }
 

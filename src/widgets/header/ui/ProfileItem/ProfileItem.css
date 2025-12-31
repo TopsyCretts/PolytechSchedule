@@ -13,7 +13,8 @@
   content: "";
   margin-left: 0.3125rem;
 }
-.profile-item--active .profile-item__cross, .profile-item--active::before {
+.profile-item--active .profile-item__cross,
+.profile-item--active::before {
   width: var(--icon-size);
   height: var(--icon-size);
 }

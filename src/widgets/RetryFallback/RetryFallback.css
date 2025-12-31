@@ -12,8 +12,8 @@
 }
 .retry-fallback__button {
   width: 100%;
-  padding-inline: var(--spacing-md);
   height: var(--button-height);
+  padding-inline: var(--spacing-md);
 }
 .retry-fallback__title {
   color: var(--color-text-accent-themed);

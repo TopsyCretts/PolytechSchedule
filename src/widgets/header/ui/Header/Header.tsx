@@ -1,8 +1,7 @@
 import "./Header.scss"
 import clsx from "clsx"
 import { Logo } from "@/shared/ui"
-import ArrowIcon from "@/assets/icons/arrow-left.svg?react"
-import { Link, useMatch } from "react-router"
+import { Link, useMatch, useParams } from "react-router"
 import LanguagePicker from "@/widgets/LanguagePicker"
 import ThemeToggler from "@/widgets/ThemeToggler"
 import BurgerMenu from "@/widgets/BurgerMenu"
@@ -10,12 +9,22 @@ import type { HeaderControlsProps } from "@/widgets/header/lib/types.ts"
 import Profiles from "@/widgets/header/ui/Profiles"
 import { Trans, useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
-import { ORIGINAL_SITE } from "@/shared/constants/contstants.ts"
+import {
+  ORIGINAL_SITE,
+  QUERY_DATE_FORMAT,
+} from "@/shared/constants/contstants.ts"
 import HeaderProfileLabel from "@/widgets/header/ui/HeaderProfileLabel/HeaderProfileLabel.tsx"
+import { format, startOfToday } from "date-fns"
+import type { ProfileType } from "@/entities/Profile.ts"
+import useMediaQueryListEvent from "@/shared/lib/useMediaQueryListEvent.ts"
+import { MATCH_MEDIA } from "@/shared/constants/media.ts"
+import { SCHEDULE_VIEW } from "@/entities/ScheduleData.ts"
+import { APP_ROUTES, routeWithParams } from "@/app/routes/routes.ts"
+import ArrowIcon from "@/assets/icons/arrow-long-right.svg?react"
 
 const Header = () => {
-  const location = useMatch("/")
-  const isHome = location?.pathname === "/"
+  const location = useMatch(APP_ROUTES.newProfile)
+  const isHome = location?.pathname === APP_ROUTES.newProfile
 
   return (
     <header className={clsx("header", "container")}>
@@ -23,7 +32,10 @@ const Header = () => {
       <div className="header__inner">
         <div className="header__main">
           <HeaderLink isHomePage={isHome} />
-          <HeaderProfileLabel />
+          <div className="header__profile-label-wrapper">
+            <HeaderProfileLabel />
+            <MoveOnTodayLink />
+          </div>
           <HeaderControls isHomePage={isHome} />
         </div>
         <div className="header__extra">
@@ -40,19 +52,40 @@ const HeaderLink = ({ isHomePage }: HeaderControlsProps) => {
   return (
     <Link
       className="header__link"
-      to="/"
+      to="/new-profile"
     >
-      {!isHomePage && (
-        <ArrowIcon
-          className={"header__arrow-icon"}
-          width={24}
-          height={24}
-        />
-      )}
       <Logo
         className="header__logo h3"
         isTitle={isHomePage}
       />
+    </Link>
+  )
+}
+
+const MoveOnTodayLink = () => {
+  const { profileApiId, profileType } = useParams()
+  const { t } = useTranslation()
+
+  const { isMatchesMedia: isLaptop } = useMediaQueryListEvent(
+    MATCH_MEDIA.laptop
+  )
+
+  if (!profileApiId || (profileType as ProfileType) === undefined) {
+    return null
+  }
+
+  return (
+    <Link
+      className="header__today-link"
+      to={routeWithParams(
+        "/schedule",
+        [profileType!, profileApiId.toString()],
+        { date: format(startOfToday(), QUERY_DATE_FORMAT) },
+        isLaptop ? SCHEDULE_VIEW.week : SCHEDULE_VIEW.calendar
+      )}
+    >
+      {t(STRINGS_RES.on_today)} {format(startOfToday(), "dd.MM")}
+      <ArrowIcon className={"header__icon"} />
     </Link>
   )
 }

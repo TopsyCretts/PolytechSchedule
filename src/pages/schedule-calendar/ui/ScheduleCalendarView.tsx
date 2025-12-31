@@ -9,13 +9,16 @@ import { MATCH_MEDIA } from "@/shared/constants/media.ts"
 import { useNavigate } from "react-router"
 import { findEqualDayData } from "@/pages/schedule-calendar/lib/findEqualDayData.ts"
 import useMediaQueryListEvent from "@/shared/lib/useMediaQueryListEvent.ts"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import type { CalendarRef } from "@/shared/ui/Calendar/types.ts"
 import DayController from "@/shared/ui/DayController"
-import { format, isToday } from "date-fns"
+import { format, isEqual, isToday } from "date-fns"
 import DataStatusPopover from "@/widgets/DataStatusPopover"
 import { routeWithParams } from "@/app/routes/routes.ts"
-import { useSetDateToUrl } from "@/shared/lib/useDayFromSearchParams.ts"
+import {
+  useGetDateFromUrl,
+  useSetDateToUrl,
+} from "@/shared/lib/useDayFromSearchParams.ts"
 import { QUERY_DATE_FORMAT } from "@/shared/constants/contstants.ts"
 
 interface ScheduleCalendarProps {
@@ -54,6 +57,16 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
       navigateToWeek(date!)
     }
   }
+
+  const { dateFromUrl } = useGetDateFromUrl()
+
+  useEffect(() => {
+    const currentSelectedDate = calendar.current?.selectedDate
+    if (currentSelectedDate && !isEqual(currentSelectedDate, dateFromUrl)) {
+      const dayData = findEqualDayData(data.weeks, dateFromUrl!)
+      setCurrentDayData(dayData)
+    }
+  }, [dateFromUrl])
 
   const handleNextDay = () => {
     calendar.current?.goNextDay()

@@ -54,4 +54,5 @@ export const STRINGS_RES = {
   data_update_error: "data_update_error",
   schedule_is_current: "schedule_is_current",
   calendar: "calendar",
+  on_today: "on_today",
 }

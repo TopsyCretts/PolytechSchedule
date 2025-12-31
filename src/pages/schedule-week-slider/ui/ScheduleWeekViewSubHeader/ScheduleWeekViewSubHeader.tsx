@@ -33,7 +33,7 @@ const ScheduleWeekViewSubHeader = memo(
     const { t } = useTranslation()
     const navigate = useNavigate()
 
-    const { getDateFromUrl } = useGetDateFromUrl()
+    const { dateFromUrl } = useGetDateFromUrl()
     const { locale, profile, data: scheduleData } = useScheduleData()
 
     const handleLinkClick = () => {
@@ -41,7 +41,7 @@ const ScheduleWeekViewSubHeader = memo(
         routeWithParams(
           "/schedule",
           [profile.profileType, profile.apiId.toString()],
-          { date: format(getDateFromUrl(), QUERY_DATE_FORMAT) },
+          { date: format(dateFromUrl, QUERY_DATE_FORMAT) },
           "calendar"
         )
       )

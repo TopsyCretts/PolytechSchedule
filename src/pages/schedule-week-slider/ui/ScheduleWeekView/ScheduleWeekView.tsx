@@ -5,7 +5,15 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { type SwiperRef } from "swiper/react"
 import type { SelectedWeekSlide } from "@/pages/schedule-week-slider/lib/types.ts"
 import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
-import { add, type Day, isAfter, isBefore, sub } from "date-fns"
+import {
+  add,
+  type Day,
+  isAfter,
+  isBefore,
+  isEqual,
+  startOfDay,
+  sub,
+} from "date-fns"
 import { findWeekSlide } from "@/pages/schedule-week-slider/lib/findWeekSlide.ts"
 import "./ScheduleWeekView.scss"
 import ScheduleWeekViewController from "@/pages/schedule-week-slider/ui/ScheduleWeekVIewController"
@@ -14,7 +22,10 @@ import ScheduleWeekViewControllerMobile from "@/pages/schedule-week-slider/ui/Sc
 import { AnimatePresence, motion } from "framer-motion"
 import ArrowIcon from "@/assets/icons/arrow-long-right.svg?react"
 import clsx from "clsx"
-import { useGetDateFromUrl } from "@/shared/lib/useDayFromSearchParams.ts"
+import {
+  useGetDateFromUrl,
+  useSetDateToUrl,
+} from "@/shared/lib/useDayFromSearchParams.ts"
 import getWeekDataByWeekStart from "@/pages/schedule-week-slider/lib/getWeekDataByWeekStart.ts"
 import {
   maxWeekStartDate,
@@ -33,14 +44,33 @@ interface SwipeState {
 
 const ScheduleWeekView = () => {
   const { data, profile, locale } = useScheduleData()
-
   const swiperRef = useRef<SwiperRef | null>(null)
 
-  const { getDateFromUrl } = useGetDateFromUrl()
+  const { dateFromUrl } = useGetDateFromUrl()
+  const { setDateToUrl } = useSetDateToUrl()
+
+  const [isNotFirstRender, setNotFirstRender] = useState(false)
+
+  useEffect(() => {
+    setNotFirstRender(true)
+  }, [])
 
   const [currentWeek, setCurrentWeek] = useState<SelectedWeekSlide>(
-    findWeekSlide(data.weeks, getDateFromUrl())
+    findWeekSlide(data.weeks, dateFromUrl)
   )
+
+  useEffect(() => {
+    const currentSelectedDay =
+      currentWeek.weekData.days[currentWeek.activeDateIndex]?.date
+    if (!currentSelectedDay) {
+      return
+    }
+    if (!isEqual(startOfDay(currentSelectedDay), dateFromUrl)) {
+      const newSlide = findWeekSlide(data.weeks, dateFromUrl)
+      swiperRef.current?.swiper?.slideTo(newSlide.activeDateIndex)
+      setCurrentWeek(newSlide)
+    }
+  }, [dateFromUrl])
 
   const [animationDirection, setAnimationDirection] = useState(1)
 
@@ -306,6 +336,10 @@ const ScheduleWeekView = () => {
               locale={locale}
               profileType={profile.profileType}
               onSlideChange={(newActiveIndex) => {
+                const newDate = currentWeek.weekData.days[newActiveIndex]?.date
+                if (newDate && isNotFirstRender) {
+                  setDateToUrl(newDate)
+                }
                 setCurrentWeek((prev) => ({
                   ...prev,
                   activeDateIndex: newActiveIndex,

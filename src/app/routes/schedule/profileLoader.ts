@@ -59,7 +59,7 @@ const profileLoader = async ({ params }: LoaderFunctionArgs) => {
     profileType === PROFILE_TYPE.student
       ? createStudentProfile(profileApiId, "", "")
       : createTeacherProfile(profileApiId, "")
-  
+
   profilesStore.setCurrentProfile(tempProfile)
 
   return { tempProfile }

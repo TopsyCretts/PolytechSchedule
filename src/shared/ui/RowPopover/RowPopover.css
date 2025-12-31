@@ -56,7 +56,8 @@
 .row-popover__content-wrapper {
   overflow: hidden;
 }
-.row-popover__body, .row-popover__title {
+.row-popover__body,
+.row-popover__title {
   font-size: 0.875rem;
   white-space: nowrap;
 }

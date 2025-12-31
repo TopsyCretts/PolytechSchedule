@@ -65,11 +65,10 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
       const startOfYear = minWeekStartDate()
       if (isAfter(endOfYear(initialDate!), endOfYear(maxWeekStartDate()))) {
         return startOfMonth(lastDayOfMaxYear)
-      } else if(isBefore(initialDate!, startOfYear)) {
+      } else if (isBefore(initialDate!, startOfYear)) {
         return startOfMonth(startOfYear)
-      }else {
-        return startOfMonth(initialDate!)
       }
+      return startOfMonth(initialDate!)
     })
 
     const isDateOutOfRange = useCallback((date: Date) => {
@@ -240,6 +239,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
         selectDate: handleSelectedDateChange,
         isMonthIncrementAvailable,
         isMonthDecrementAvailable,
+        selectedDate,
       }),
       [
         handleMonthIncrement,
@@ -249,6 +249,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
         startOfCurrentMonth,
         isMonthIncrementAvailable,
         isMonthDecrementAvailable,
+        selectedDate,
       ]
     )
 

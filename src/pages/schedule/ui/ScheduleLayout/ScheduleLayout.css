@@ -1,11 +1,13 @@
 .schedule-layout {
   display: contents;
 }
-.schedule-layout__spinner, .schedule-layout__retry-fallback {
+.schedule-layout__spinner,
+.schedule-layout__retry-fallback {
   height: 100%;
 }
 @media (width > 47.999375rem) {
-  .schedule-layout__spinner, .schedule-layout__retry-fallback {
+  .schedule-layout__spinner,
+  .schedule-layout__retry-fallback {
     height: 37.5rem;
   }
 }

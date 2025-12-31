@@ -26,25 +26,30 @@
   --buttonBackgroundColor: var(--color-light-opacity-10);
   --buttonTextColor: var(--header-button-color);
 }
-.button--action, .button--header {
+.button--action,
+.button--header {
   box-shadow: var(--shadow-themed);
   backdrop-filter: var(--blur-20);
 }
 @media (hover: hover) {
-  .button--action:hover, .button--header:hover {
+  .button--action:hover,
+  .button--header:hover {
     --buttonTextColor: var(--color-light);
     --buttonBackgroundColor: var(--color-blue);
   }
-  .button--action:hover *, .button--header:hover * {
+  .button--action:hover *,
+  .button--header:hover * {
     color: inherit;
   }
 }
 @media (hover: none) {
-  .button--action:active, .button--header:active {
+  .button--action:active,
+  .button--header:active {
     --buttonTextColor: var(--color-light);
     --buttonBackgroundColor: var(--color-blue);
   }
-  .button--action:active *, .button--header:active * {
+  .button--action:active *,
+  .button--header:active * {
     color: inherit;
   }
 }
@@ -96,10 +101,12 @@
     color: var(--buttonTextColor);
   }
 }
-.button--primary:active, .button--secondary:active {
+.button--primary:active,
+.button--secondary:active {
   --buttonBackgroundColor: var(--color-dark);
 }
-.button--primary:disabled, .button--secondary:disabled {
+.button--primary:disabled,
+.button--secondary:disabled {
   --buttonBackgroundColor: var(--color-gray-100);
   --buttonTextColor: var(--color-light-opacity-50);
 }

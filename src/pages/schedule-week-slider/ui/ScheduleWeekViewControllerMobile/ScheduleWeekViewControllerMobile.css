@@ -43,9 +43,14 @@
   color: var(--color-blue) !important;
   border-color: currentColor;
 }
-.schedule-week-view-controller-mobile__button--selected .schedule-week-view-controller-mobile__body,
-.schedule-week-view-controller-mobile__button--selected .schedule-week-view-controller-mobile__title, .schedule-week-view-controller-mobile__button--today .schedule-week-view-controller-mobile__body,
-.schedule-week-view-controller-mobile__button--today .schedule-week-view-controller-mobile__title {
+.schedule-week-view-controller-mobile__button--selected
+  .schedule-week-view-controller-mobile__body,
+.schedule-week-view-controller-mobile__button--selected
+  .schedule-week-view-controller-mobile__title,
+.schedule-week-view-controller-mobile__button--today
+  .schedule-week-view-controller-mobile__body,
+.schedule-week-view-controller-mobile__button--today
+  .schedule-week-view-controller-mobile__title {
   color: currentColor;
   border-color: currentColor;
 }

@@ -19,7 +19,8 @@
     margin-inline: auto;
   }
 }
-.schedule-week-view__slider-container, .schedule-week-view__slider-container-wrapper {
+.schedule-week-view__slider-container,
+.schedule-week-view__slider-container-wrapper {
   flex: 1;
   position: relative;
   overflow-y: hidden;

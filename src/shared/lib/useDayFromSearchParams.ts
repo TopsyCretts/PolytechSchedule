@@ -1,21 +1,28 @@
-import { format, parse, startOfToday } from "date-fns"
+import { format, parse, startOfDay, startOfToday } from "date-fns"
 import { useSearchParams } from "react-router"
 import { QUERY_DATE_FORMAT } from "@/shared/constants/contstants.ts"
+import { useCallback, useEffect, useState } from "react"
 
 const useGetDateFromUrl = () => {
   const [searchParams] = useSearchParams()
 
-  const getDateFromUrl = () => {
+  const getDateFromUrl = useCallback(() => {
     const dateParam = searchParams.get("date")
     if (!dateParam) {
       return startOfToday()
     }
 
-    return parse(dateParam, QUERY_DATE_FORMAT, new Date())
-  }
+    return startOfDay(parse(dateParam, QUERY_DATE_FORMAT, new Date()))
+  }, [searchParams])
+
+  const [dateFromUrl, setDateFromUrl] = useState(getDateFromUrl())
+
+  useEffect(() => {
+    setDateFromUrl(getDateFromUrl())
+  }, [getDateFromUrl])
 
   return {
-    getDateFromUrl,
+    dateFromUrl,
   }
 }
 

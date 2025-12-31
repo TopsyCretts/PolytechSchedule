@@ -38,12 +38,12 @@ const ScheduleLayout = ({
   actualGroups,
 }: ScheduleLayoutProps) => {
   const { t, i18n } = useTranslation()
-  const { getDateFromUrl } = useGetDateFromUrl()
+  const { dateFromUrl } = useGetDateFromUrl()
   const [debouncedProfileId] = useDebounce(profile.id, 300)
   const [scheduleData, setScheduleData] =
     useState<ScheduleDataStatus>(DEFAULT_VALUE)
   const [currentDayData, setCurrentDayData] = useState<DayData>(() =>
-    findEqualDayData(DEFAULT_VALUE.data.weeks, getDateFromUrl())
+    findEqualDayData(DEFAULT_VALUE.data.weeks, dateFromUrl)
   )
 
   const { data, isFetching, isError, refetch } = useGetScheduleByProfileQuery(

@@ -34,6 +34,7 @@ type CalendarRef = {
   selectDate: (date: Date | null) => void
   isMonthIncrementAvailable: boolean
   isMonthDecrementAvailable: boolean
+  selectedDate: Date | null
 }
 
 interface CalendarData {

@@ -10,15 +10,18 @@
     padding: var(--spacing-lg);
   }
 }
-.profile-creation__loading-fallback, .profile-creation__retry-fallback {
+.profile-creation__loading-fallback,
+.profile-creation__retry-fallback {
   height: 25rem;
 }
-.profile-creation__body, .profile-creation__form {
+.profile-creation__body,
+.profile-creation__form {
   display: flex;
   flex-direction: column;
   row-gap: var(--spacing-xl);
 }
-.profile-creation__institutes-select .search-item__trailing-icon:not(.search-item__trailing-icon--cross) {
+.profile-creation__institutes-select
+  .search-item__trailing-icon:not(.search-item__trailing-icon--cross) {
   display: none !important;
 }
 
