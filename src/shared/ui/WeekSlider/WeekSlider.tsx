@@ -6,9 +6,9 @@ import {
 } from "swiper/react"
 import {
   eachDayOfInterval,
+  getDay,
   isEqual,
   type Locale,
-  startOfDay,
   startOfToday,
 } from "date-fns"
 import ScheduleDayItem from "@/shared/ui/ScheduleDayItem"
@@ -31,7 +31,7 @@ interface WeekSliderProps {
   profileType: ProfileType
   locale: Locale
   weekData: ScheduleWeekData
-  initialDate?: Date
+  initialDay?: number
   onSlideChange: (index: number) => void
   swiperRef: RefObject<SwiperRef | null>
   onScroll: (event: UIEvent) => void
@@ -44,7 +44,7 @@ const WeekSlider = ({
   swiperRef,
   onSlideChange,
   onScroll,
-  initialDate = startOfToday(),
+  initialDay = getDay(startOfToday()),
 }: WeekSliderProps) => {
   const weekDays = eachDayOfInterval({
     start: weekData.start,
@@ -53,15 +53,7 @@ const WeekSlider = ({
 
   const { isMatchesMedia } = useMediaQueryListEvent(MATCH_MEDIA.mobile_s)
 
-  const [activeindex, setActiveIndex] = useState<number>(() => {
-    const index = weekDays.findIndex((day) =>
-      isEqual(startOfDay(day), startOfDay(initialDate))
-    )
-    if (index > -1) {
-      return index
-    }
-    return 0
-  })
+  const [activeindex, setActiveIndex] = useState<number>(initialDay)
 
   const newWeekData = weekDays.map((day) => {
     const dayData = weekData.days.find((dayData) => isEqual(dayData.date, day))

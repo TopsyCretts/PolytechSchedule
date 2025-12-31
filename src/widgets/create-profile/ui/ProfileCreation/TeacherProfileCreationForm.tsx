@@ -40,7 +40,7 @@ const TeacherProfileCreationForm = ({
       return
     }
 
-    await getOrCreateProfile(PROFILE_TYPE.student, Number(newTeacher.id))
+    await getOrCreateProfile(PROFILE_TYPE.teacher, Number(newTeacher.id))
     navigateToTeacherProfile(newTeacher.id.toString())
   }
 

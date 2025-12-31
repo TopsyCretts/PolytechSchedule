@@ -44,7 +44,7 @@ const ScheduleWeekView = () => {
   }, [])
 
   const handleWeekSelection = useCallback(
-    (weekData: ScheduleWeekData) => {
+    (weekData: ScheduleWeekData, initialDay?: number) => {
       const newActiveIndex = data.weeks.indexOf(weekData)
       if (newActiveIndex !== -1) {
         if (newActiveIndex > currentWeek.index) {
@@ -52,11 +52,11 @@ const ScheduleWeekView = () => {
         } else {
           setAnimationDirection(-1)
         }
-        setCurrentWeek({
+        setCurrentWeek((prev) => ({
           index: newActiveIndex,
           weekData: weekData,
-          activeDateIndex: 0,
-        })
+          activeDateIndex: initialDay ?? prev.activeDateIndex,
+        }))
       }
     },
     [currentWeek.index, data.weeks]
@@ -66,7 +66,7 @@ const ScheduleWeekView = () => {
     const nextIndex = currentWeek.index + 1
     if (data.weeks.length > nextIndex) {
       const weekData = data.weeks[nextIndex]
-      handleWeekSelection(weekData)
+      handleWeekSelection(weekData, 0)
     }
   }, [handleWeekSelection])
 
@@ -74,7 +74,7 @@ const ScheduleWeekView = () => {
     const nextIndex = currentWeek.index - 1
     if (nextIndex >= 0) {
       const weekData = data.weeks[nextIndex]
-      handleWeekSelection(weekData)
+      handleWeekSelection(weekData, 6)
     }
   }, [handleWeekSelection])
 
@@ -111,7 +111,7 @@ const ScheduleWeekView = () => {
       "week-day-" + currentWeek.activeDateIndex
     )
     checkScroll()
-  }, [swiperRef.current, currentWeek, checkScroll])
+  }, [swiperRef.current, currentWeek, checkScroll]) 
 
   const handleTouchStart = useCallback(
     (e: React.TouchEvent) => {
@@ -311,7 +311,7 @@ const ScheduleWeekView = () => {
           >
             <WeekSlider
               swiperRef={swiperRef}
-              initialDate={getDateFromUrl()}
+              initialDay={currentWeek.activeDateIndex}
               weekData={currentWeek.weekData}
               locale={locale}
               profileType={profile.profileType}

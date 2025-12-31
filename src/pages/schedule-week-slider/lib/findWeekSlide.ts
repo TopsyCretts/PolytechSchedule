@@ -1,6 +1,6 @@
 import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
 import type { SelectedWeekSlide } from "@/pages/schedule-week-slider/lib/types.ts"
-import { getDay, isEqual, startOfWeek } from "date-fns"
+import { getDay, isAfter, isEqual, startOfWeek } from "date-fns"
 
 export const findWeekSlide = (
   weekData: ScheduleWeekData[],
@@ -14,7 +14,17 @@ export const findWeekSlide = (
     return {
       index: weekIndex,
       weekData: weekData[weekIndex],
-      activeDateIndex: getDay(dateToFindWeek),
+      activeDateIndex: getDay(dateToFindWeek) - 1,
+    }
+  }
+
+  const lastWeekIndex = weekData.length - 1
+
+  if (isAfter(dateToFindWeek, weekData[lastWeekIndex].end)) {
+    return {
+      index: lastWeekIndex,
+      weekData: weekData[lastWeekIndex],
+      activeDateIndex: 6,
     }
   }
 
