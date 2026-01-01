@@ -1,0 +1,13 @@
+@use "../../../styles/helpers/index" as *;
+
+.logo {
+  @include flex-center(true);
+
+  column-gap: rem(15);
+  padding-right: rem(6);
+
+  &__title {
+    padding-right: rem(3);
+    color: inherit;
+  }
+}

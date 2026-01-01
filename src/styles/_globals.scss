@@ -1,7 +1,7 @@
 @use "./helpers" as *;
 
 body {
-  height: 100%;
+  height: 100dvh;
   max-height: 100dvh;
   font-family: var(--font-family-base), sans-serif;
   font-size: rem(16);
@@ -9,6 +9,17 @@ body {
   letter-spacing: var(--letter-spacing);
   color: var(--color-text-themed);
   background-color: var(--color-bg-themed);
+}
+
+#root {
+  height: 100%;
+
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    max-height: 100dvh;
+  }
 }
 
 a,
@@ -34,4 +45,18 @@ a {
       color: var(--color-orange);
     }
   }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: var(--scrollbar-bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-accent-themed);
+}
+
+* {
+  scrollbar-color: var(--color-accent-themed) var(--scrollbar-bg-color);
+  scrollbar-width: thin;
 }

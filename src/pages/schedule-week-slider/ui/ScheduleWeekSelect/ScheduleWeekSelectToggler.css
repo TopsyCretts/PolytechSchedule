@@ -1,0 +1,30 @@
+.schedule-week-select-toggler {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  column-gap: var(--spacing-sm);
+  height: var(--button-height);
+  padding-inline: var(--spacing-md);
+}
+.schedule-week-select-toggler__body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.schedule-week-select-toggler__title {
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+.schedule-week-select-toggler__current-item {
+  font-size: 0.75rem;
+  color: var(--color-text-accent-themed);
+}
+.schedule-week-select-toggler__arrows {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  flex-shrink: 0;
+}
+
+/*# sourceMappingURL=ScheduleWeekSelectToggler.css.map */

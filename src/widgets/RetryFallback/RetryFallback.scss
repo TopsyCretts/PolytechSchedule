@@ -1,0 +1,22 @@
+@use "../../styles/helpers/index" as *;
+
+.retry-fallback {
+  @include flex-center;
+
+  &__body {
+    @include flex-center;
+
+    flex-direction: column;
+    row-gap: var(--spacing-lg);
+  }
+
+  &__button {
+    width: 100%;
+    height: var(--button-height);
+    padding-inline: var(--spacing-md);
+  }
+
+  &__title {
+    color: var(--color-text-accent-themed);
+  }
+}

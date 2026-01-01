@@ -1,8 +1,8 @@
 name: dev_deploy.yml
 on:
-  push:
+  pull_request:
     branches:
-      - development
+      - dev
 
 jobs:
   update_job:
@@ -10,9 +10,18 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Executing update.sh script on VPS
-        uses: applebot/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          script: ./schedule/dev/scripts/update.sh
+          script: |
+            echo "🚀 Starting deployment..."
+            cd
+            cd ${{ secrets.DEV_FOLDER }}
+            git checkout dev
+            echo "Pulling latest changes..."
+            git pull
+            echo "Starting Docker containers..."
+            docker compose -f compose_dev.yaml up
+            echo "✅ Deployment completed!"

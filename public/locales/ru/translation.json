@@ -37,5 +37,22 @@
   "close": "Закрыть",
   "select": "Выбрать",
   "remove": "Убрать",
-  "back": "Назад"
+  "back": "Назад",
+  "lecture": "Лекция",
+  "practice": "Практика",
+  "exam": "Экзамен",
+  "laboratory": "Лабораторная",
+  "schedule": "Расписание",
+  "there_are_no_classes": "Сегодня в расписании нет занятий.",
+  "remote_lesson": "Дистант",
+  "lesson_name_not_specified": "Название не указано",
+  "additional_info": "Доп. инф.:",
+  "offline_mode": "Оффлайн-режим.",
+  "last_update_at": "Последнее обновление:",
+  "there_is_no_schedule_for_profile": "Не найдено расписание для этого профиля.",
+  "profile_has_not_updated_previously": "Профиль ранее не обновлялся",
+  "data_update_error": "Ошибка обновления данных",
+  "schedule_is_current": "Расписание актуально",
+  "calendar": "Календарь",
+  "on_today": "На сегодня"
 }

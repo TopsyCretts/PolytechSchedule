@@ -1,0 +1,97 @@
+@use "../../../styles/helpers/index" as *;
+
+.row-popover {
+  --offlineIndicatorContentMagin: calc(var(--button-height) - #{rem(5)});
+
+  @include flex-center;
+  @include square(var(--button-height));
+
+  position: relative;
+  z-index: 0;
+  display: flex;
+
+  &__toggler {
+    @include reset-button;
+    @include flex-center;
+    @include square(var(--button-height));
+
+    position: absolute;
+    z-index: 210;
+    color: inherit;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+
+    @include hover {
+      background-color: var(--select-active-bg);
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
+  }
+
+  &__inner {
+    position: absolute;
+    z-index: 200;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    max-width: rem(330);
+    height: var(--button-height);
+    padding: rem(10);
+    color: inherit;
+    background-color: var(--select-bg);
+    border-radius: var(--border-radius-md);
+    backdrop-filter: var(--blur-20);
+  }
+
+  &__content-wrapper {
+    overflow: hidden;
+  }
+
+  &__body,
+  &__title {
+    font-size: rem(14);
+    white-space: nowrap;
+  }
+
+  &__content {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    height: var(--button-height);
+    margin-left: var(--offlineIndicatorContentMagin);
+  }
+
+  &--opened {
+    @include border-shadow-themed(var(--border-radius-md));
+
+    position: relative;
+    z-index: 1;
+
+    & .row-popover__content {
+      width: max-content;
+    }
+
+    & .row-popover__inner {
+      column-gap: rem(10);
+      margin-top: calc(-1 * #{rem(1)});
+    }
+  }
+
+  &--reversed {
+    & .row-popover__inner {
+      right: 0;
+      left: unset;
+    }
+
+    & .row-popover__content {
+      margin-left: 0;
+      margin-right: var(--offlineIndicatorContentMagin);
+    }
+  }
+}

@@ -8,7 +8,7 @@ await i18next
   .use(Backend)
   .use(initReactI18next)
   .init({
-    debug: true,
+    debug: import.meta.env.DEV,
     lng: localStorage.getItem("i18nextLng") || "ru",
     supportedLngs: ["en", "ru", "fr"],
     fallbackLng: "ru",

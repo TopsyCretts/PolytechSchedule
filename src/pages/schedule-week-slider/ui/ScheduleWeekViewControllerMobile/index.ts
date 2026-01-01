@@ -1,0 +1,3 @@
+import ScheduleWeekViewControllerMobile from "./ScheduleWeekViewControllerMobile"
+
+export default ScheduleWeekViewControllerMobile

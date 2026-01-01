@@ -1,0 +1,16 @@
+.schedule-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  padding-block: var(--spacing-xl);
+  padding-inline: var(--spacing-lg);
+}
+@media (width <= 47.999375rem) {
+  .schedule-page {
+    height: 100%;
+    padding-block: var(--spacing-md);
+  }
+}
+
+/*# sourceMappingURL=SchedulePage.css.map */

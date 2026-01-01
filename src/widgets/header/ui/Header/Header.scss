@@ -1,0 +1,127 @@
+@use "../../../../styles/helpers" as *;
+
+.header {
+  padding-top: var(--spacing-hg);
+
+  @include mobile {
+    padding-top: var(--spacing-sm);
+  }
+
+  &__inner,
+  &__main {
+    @include border-shadow-themed(var(--border-radius-xl));
+  }
+
+  &__attention {
+    @include flex-center;
+
+    margin-bottom: rem(8);
+    font-size: rem(12);
+    text-align: center;
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 1;
+    height: rem(103);
+    transition-duration: var(--transition-duration);
+  }
+
+  &__main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: var(--spacing-sm);
+    height: rem(68);
+    padding: var(--spacing-md);
+    background-color: var(--color-bg-themed);
+    box-shadow: none;
+
+    @include mobile {
+      padding: var(--spacing-sm);
+    }
+  }
+
+  &__controls {
+    @include flex-center;
+
+    column-gap: var(--spacing-md);
+  }
+
+  &__link {
+    @include flex-center(true);
+
+    flex-shrink: 0;
+    position: relative;
+    z-index: 0;
+    height: 100%;
+    text-decoration: none;
+    color: var(--color-gray-100);
+
+    @include hover {
+      &::after {
+        @include abs-center;
+
+        content: "";
+        z-index: -1;
+        width: calc(100% + #{rem(8)});
+        height: calc(100% + #{rem(10)});
+        background-color: var(--color-blue-opacity-20);
+        border-radius: var(--border-radius-md);
+        transition: var(--transition-duration);
+      }
+
+      color: var(--color-light);
+    }
+  }
+
+  &__logo {
+    & .logo__image {
+      @include square(var(--button-height));
+
+      flex-shrink: 0;
+    }
+
+    padding-right: rem(6);
+
+    & .title {
+      padding-right: rem(3);
+    }
+  }
+
+  &__profile-label-wrapper {
+    @include flex-center;
+
+    flex-direction: column;
+  }
+
+  &__today-link {
+    @include flex-center(true);
+
+    column-gap: var(--spacing-xs);
+    text-decoration: none;
+    color: var(--color-orange);
+
+    @include hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__icon {
+    @include square(18);
+  }
+
+  &__extra {
+    position: absolute;
+    z-index: -1;
+    overflow-y: hidden;
+    width: 100%;
+    max-width: 100%;
+    height: rem(53);
+    margin-top: calc(-1 * var(--border-radius-xl));
+    border-bottom-left-radius: var(--border-radius-xl);
+    border-bottom-right-radius: var(--border-radius-xl);
+    pointer-events: auto;
+    scrollbar-width: thin;
+  }
+}

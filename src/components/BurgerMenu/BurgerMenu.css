@@ -1,9 +1,0 @@
-.burger-menu {
-  width: var(--button-height);
-  height: var(--button-height);
-}
-.burger-menu .select__wrapper {
-  min-width: 12.5rem;
-}
-
-/*# sourceMappingURL=BurgerMenu.css.map */

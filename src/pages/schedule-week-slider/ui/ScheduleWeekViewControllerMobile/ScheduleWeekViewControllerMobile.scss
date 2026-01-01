@@ -1,0 +1,57 @@
+@use "../../../../styles/helpers" as *;
+
+.schedule-week-view-controller-mobile {
+  @include flex-center;
+
+  justify-content: space-between;
+  column-gap: rem(6);
+  width: 100%;
+
+  &__title {
+    font-weight: 400;
+    color: var(--color-text-themed);
+  }
+
+  &__body {
+    color: var(--color-text-accent-themed);
+  }
+
+  &__button {
+    @include flex-center;
+
+    flex-direction: column;
+    width: 100%;
+    min-width: rem(41);
+    max-width: var(--button-height);
+    max-height: var(--button-height);
+    padding-block: var(--spacing-xs);
+    border: var(--border-themed);
+
+    &--today {
+      color: var(--color-text-themed);
+      border-color: var(--color-orange);
+
+      @include hover {
+        color: var(--color-blue);
+      }
+    }
+
+    &--selected {
+      color: var(--color-blue) !important;
+      border-color: currentColor;
+    }
+
+    &--selected,
+    &--today {
+      & .schedule-week-view-controller-mobile__body,
+      .schedule-week-view-controller-mobile__title {
+        color: currentColor;
+        border-color: currentColor;
+      }
+    }
+
+    &--past {
+      opacity: 0.5;
+    }
+  }
+}

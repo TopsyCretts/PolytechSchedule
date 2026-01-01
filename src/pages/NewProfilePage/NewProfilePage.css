@@ -1,0 +1,10 @@
+.home-page {
+  padding-bottom: 12.5rem;
+}
+@media (width <= 47.999375rem) {
+  .home-page {
+    padding-bottom: 3.125rem;
+  }
+}
+
+/*# sourceMappingURL=NewProfilePage.css.map */

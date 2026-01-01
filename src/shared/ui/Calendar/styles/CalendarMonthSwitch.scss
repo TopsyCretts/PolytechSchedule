@@ -1,0 +1,30 @@
+@use "../../../../styles/helpers" as *;
+
+.month-switch {
+  @include flex-center;
+
+  column-gap: rem(10);
+
+  &__title {
+    @include flex-center(true);
+
+    column-gap: rem(15);
+    min-width: rem(180);
+    height: var(--button-height);
+  }
+
+  &__month-name {
+    font-size: rem(20);
+    font-weight: 700;
+  }
+
+  &__year {
+    padding-top: rem(4);
+    padding-bottom: rem(1);
+    font-size: rem(16);
+  }
+
+  &__right {
+    rotate: 180deg;
+  }
+}

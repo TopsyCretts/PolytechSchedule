@@ -1,0 +1,13 @@
+.logo {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.9375rem;
+  padding-right: 0.375rem;
+}
+.logo__title {
+  padding-right: 0.1875rem;
+  color: inherit;
+}
+
+/*# sourceMappingURL=Logo.css.map */

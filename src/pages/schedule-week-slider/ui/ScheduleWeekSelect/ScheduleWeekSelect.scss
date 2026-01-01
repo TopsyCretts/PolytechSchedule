@@ -1,0 +1,21 @@
+@use "../../../../styles/helpers" as *;
+
+.schedule-week-select {
+  @include flex-center;
+
+  column-gap: var(--spacing-lg);
+  height: var(--button-height);
+
+  &__content {
+    overflow-y: auto;
+    max-height: rem(300);
+
+    @include mobile {
+      max-height: rem(300);
+    }
+
+    @include mobile-s {
+      max-height: rem(250);
+    }
+  }
+}

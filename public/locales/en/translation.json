@@ -37,5 +37,22 @@
   "close": "Close",
   "select": "Select",
   "remove": "Remove",
-  "back": "Back"
+  "back": "Back",
+  "lecture": "Lecture",
+  "practice": "Practice",
+  "exam": "Exam",
+  "laboratory": "Laboratory",
+  "schedule": "Schedule",
+  "there_are_no_classes": "There are no classes on the schedule today.",
+  "remote_lesson": "Remotely",
+  "lesson_name_not_specified": "Name not specified",
+  "additional_info": "Add. info:",
+  "offline_mode": "Offline mode.",
+  "last_update_at": "Latest update:",
+  "there_is_no_schedule_for_profile": "No schedule found for this profile.",
+  "profile_has_not_updated_previously": "The profile has not been updated previously",
+  "data_update_error": "Data update error",
+  "schedule_is_current": "Schedule is current",
+  "calendar": "Calendar",
+  "on_today": "For today"
 }

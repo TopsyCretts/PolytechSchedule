@@ -1,0 +1,32 @@
+@use "../../../styles/helpers" as *;
+
+.day-controller {
+  @include flex-center;
+
+  column-gap: var(--spacing-lg);
+
+  &__title {
+    @include flex-center(true);
+    @include border-shadow-themed(var(--border-radius-md));
+
+    min-width: rem(220);
+    height: var(--button-height);
+    font-weight: 700;
+    background-color: var(--select-bg);
+    transition-duration: var(--transition-duration);
+
+    @include mobile {
+      font-size: rem(14);
+    }
+  }
+
+  &__right {
+    rotate: 180deg;
+  }
+
+  &--active {
+    & .day-controller__title {
+      border: rem(1) solid var(--color-orange);
+    }
+  }
+}

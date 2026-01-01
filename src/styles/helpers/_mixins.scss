@@ -77,17 +77,41 @@
   clip-path: inset(100%) !important;
 }
 
-@mixin border-shadow-themed($borderRadius: 0, $isDarkShadowEnabled: true) {
+@mixin border-shadow-themed($borderRadius: 0, $disableBackdrop: false) {
   border: var(--border-themed);
   border-radius: $borderRadius;
-
-  @if $isDarkShadowEnabled {
-    box-shadow: var(--shadow);
-  } @else {
-    box-shadow: var(--shadow-themed);
-  }
+  box-shadow: var(--shadow-themed);
 }
 
 @mixin container-max-width($width, $padding-x) {
+  width: 100%;
   max-width: calc($width + 2 * $padding-x);
+}
+
+@mixin text-overflow-ellipsis($line-clamp: 2) {
+  flex-shrink: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: #{$line-clamp};
+  -webkit-box-orient: vertical;
+}
+
+@mixin generate-color-opacities($color-name, $color-value) {
+  @for $i from 1 through 9 {
+    $opacity: $i * 10;
+    $opacity-decimal: $opacity / 100;
+
+    --color-#{$color-name}-opacity-#{$opacity}: rgb(
+      #{$color-value} / #{$opacity-decimal}
+    );
+  }
+}
+
+@mixin stretch-container-to-available-size {
+  flex: 1;
+  position: relative;
+  overflow-y: hidden;
+  display: flex;
+  min-height: 0;
 }

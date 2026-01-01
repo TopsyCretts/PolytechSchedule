@@ -1,0 +1,29 @@
+@use "../../../../styles/helpers/index" as *;
+
+.profile-item {
+  border-right: var(--border-themed);
+  border-bottom: var(--border-themed);
+  transition-duration: var(--transition-duration);
+
+  &--active {
+    min-width: fit-content;
+    white-space: nowrap;
+    color: var(--color-text-themed);
+    background-color: var(--selected-profile-bg);
+
+    &::before {
+      content: "";
+      margin-left: rem(5);
+    }
+
+    & .profile-item__cross,
+    &::before {
+      @include square(var(--icon-size));
+    }
+  }
+
+  &__cross {
+    margin-right: rem(5);
+    color: inherit;
+  }
+}

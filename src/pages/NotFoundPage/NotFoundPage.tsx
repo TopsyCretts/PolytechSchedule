@@ -3,7 +3,7 @@ import clsx from "clsx"
 import { Link } from "react-router"
 import NotfoundIcon from "@/assets/icons/404.svg"
 import { Trans, useTranslation } from "react-i18next"
-import { STRINGS_RES } from "@/constants/strings.ts"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
 
 const NotFoundPage = () => {
   const { t } = useTranslation()

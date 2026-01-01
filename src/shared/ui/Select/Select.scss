@@ -1,0 +1,104 @@
+@use "../../../styles/helpers" as *;
+
+.select {
+  --buttonZIndex: var(--z-index-select);
+
+  position: relative;
+  display: flex;
+
+  &__wrapper {
+    @include border-shadow-themed(var(--border-radius-md));
+
+    position: absolute;
+    z-index: var(--z-index-select);
+    top: 0;
+    right: 0;
+    overflow: hidden;
+    background-color: var(--select-bg);
+    backdrop-filter: var(--blur-20);
+  }
+
+  &__header {
+    justify-content: space-between;
+    margin-bottom: rem(5);
+    padding-left: var(--spacing-md);
+    white-space: nowrap;
+  }
+
+  &__header,
+  &__group-title,
+  &__item {
+    display: flex;
+    align-items: center;
+    height: var(--button-height);
+
+    &:not(:last-child) {
+      margin-bottom: rem(5);
+    }
+  }
+
+  &__button-toggler,
+  &__cross {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  &__cross {
+    z-index: calc(var(--z-index-select) + 1);
+  }
+
+  &__sting-toggler {
+    @include reset-button;
+    @include flex-center(true);
+    @include border-shadow-themed(var(--border-radius), true);
+
+    column-gap: rem(5);
+    height: var(--button-height);
+    padding-inline: var(--spacing-sm);
+    color: inherit;
+    background-color: var(--select-bg);
+  }
+
+  &__group-title,
+  &__item {
+    padding-inline: var(--spacing-md);
+    user-select: none;
+  }
+
+  &__group {
+    border-top: rem(1) solid var(--color-gray-100);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    counter-reset: custom-counter;
+  }
+
+  &__item {
+    white-space: nowrap;
+    cursor: pointer;
+    transition-duration: var(--transition-duration);
+
+    @include hover {
+      background-color: var(--color-orange-opacity-20);
+    }
+
+    &--selected {
+      background-color: var(--select-active-bg);
+    }
+
+    &--numerated {
+      --counterContent: "№" counter(custom-counter) "\00a0";
+
+      counter-increment: custom-counter;
+
+      &::before {
+        content: var(--counterContent);
+        color: var(--color-orange);
+      }
+    }
+  }
+}

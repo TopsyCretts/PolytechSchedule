@@ -37,5 +37,22 @@
   "close": "Fermer",
   "select": "Choisir",
   "remove": "Supprimer",
-  "back": ""
+  "back": "Retour",
+  "lecture": "Conférence",
+  "practice": "Pratique",
+  "exam": "Examen",
+  "laboratory": "Laboratoire",
+  "schedule": "Calendrier",
+  "there_are_no_classes": "Il n'y a pas de cours au programme aujourd'hui.",
+  "remote_lesson": "Télécommande",
+  "lesson_name_not_specified": "Nom non précisé",
+  "additional_info": "Compl. info:",
+  "offline_mode": "Mode hors ligne.",
+  "last_update_at": "Dernière mise à jour :",
+  "there_is_no_schedule_for_profile": "Aucun planning n'a été trouvé pour ce profil.",
+  "profile_has_not_updated_previously": "Ce profil n'a pas été mis à jour précédemment",
+  "data_update_error": "Erreur de mise à jour des données",
+  "schedule_is_current": "L'horaire est à jour",
+  "calendar": "Calendrier",
+  "on_today": "Pour aujourd'hui"
 }

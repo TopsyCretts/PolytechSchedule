@@ -1,0 +1,9 @@
+.calendar-lessons {
+  width: 100%;
+}
+.calendar-lessons__list {
+  display: flex;
+  flex-direction: column;
+}
+
+/*# sourceMappingURL=CalendarLessons.css.map */

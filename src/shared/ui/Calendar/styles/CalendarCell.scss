@@ -1,0 +1,40 @@
+@use "../../../../styles/helpers" as *;
+
+.calendar-day {
+  @include border-shadow-themed(var(--border-radius-lg));
+
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  max-height: rem(130);
+  padding-block: var(--spacing-sm);
+  background-color: var(--color-light-opacity-10);
+  cursor: pointer;
+  transition-duration: var(--transition-duration);
+
+  @include hover {
+    background-color: var(--color-light-opacity-5);
+  }
+
+  &__header {
+    @include flex-center;
+
+    max-height: rem(25);
+
+    @include mobile {
+      max-height: rem(18);
+    }
+  }
+
+  &--current {
+    border-color: var(--color-orange);
+  }
+
+  &--selected {
+    border-color: var(--color-blue);
+  }
+
+  &--not-current-month {
+    opacity: 40%;
+  }
+}
