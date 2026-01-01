@@ -1,0 +1,28 @@
+name: main_deploy.yml
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  update_job:
+    name: Update main server
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Deploying main
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            echo "🚀 Starting deployment...";
+            cd;
+            cd ${{ secrets.MAIN_FOLDER }};
+            git checkout main;
+            echo "Pulling latest changes...";
+            git pull;
+            echo "Starting Docker containers...";
+            docker compose -f compose_main.yaml up -d;
+            docker system prune -af;
+            echo "✅ Deployment completed!";
