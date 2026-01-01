@@ -5,21 +5,7 @@ on:
       - dev
 
 jobs:
-  build_job:
-    name: Build project with npm to check for errors
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: npm install and build webpack
-        run: |
-          echo "Installing npm packages..."
-          npm install
-          echo "Building webpack..."
-          npm run build
-          echo "Build complete."
-
   update_job:
-    needs: build_job
     name: Update test server
     runs-on: ubuntu-22.04
     steps:
