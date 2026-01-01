@@ -1,11 +1,25 @@
 name: dev_deploy.yml
 on:
-  push:
+  pull_request:
     branches:
       - dev
 
 jobs:
+  build_job:
+    name: Build project with npm to check for errors
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: npm install and build webpack
+        run: |
+          echo "Installing npm packages..."
+          npm install
+          echo "Building webpack..."
+          npm run build
+          echo "Build complete."
+
   update_job:
+    needs: build_job
     name: Update test server
     runs-on: ubuntu-22.04
     steps:
@@ -15,4 +29,13 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          script: ./schedule/dev/scripts/update.sh
+          script: |
+            echo "🚀 Starting deployment..."
+            cd
+            cd ${{ secrets.DEV_FOLDER }}
+            git checkout dev
+            echo "Pulling latest changes..."
+            git pull
+            echo "Starting Docker containers..."
+            docker compose -f compose_dev.yaml up
+            echo "✅ Deployment completed!"
