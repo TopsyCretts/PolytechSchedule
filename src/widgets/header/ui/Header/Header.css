@@ -6,7 +6,8 @@
     padding-top: var(--spacing-sm);
   }
 }
-.header__inner, .header__main {
+.header__inner,
+.header__main {
   border: var(--border-themed);
   border-radius: var(--border-radius-xl);
   box-shadow: var(--shadow-themed);

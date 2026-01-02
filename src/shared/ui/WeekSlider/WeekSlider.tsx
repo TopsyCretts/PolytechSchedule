@@ -16,13 +16,7 @@ import type { ProfileType } from "@/entities/Profile.ts"
 import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
 // @ts-ignore
 import "swiper/css"
-import {
-  type RefObject,
-  type UIEvent,
-  useCallback,
-  useMemo,
-  useState,
-} from "react"
+import { type RefObject, type UIEvent, useCallback, useState } from "react"
 import "./WeekSlider.scss"
 import useMediaQueryListEvent from "@/shared/lib/useMediaQueryListEvent"
 import { MATCH_MEDIA } from "@/shared/constants/media"
@@ -32,9 +26,22 @@ interface WeekSliderProps {
   locale: Locale
   weekData: ScheduleWeekData
   initialDay?: number
-  onSlideChange: (index: number) => void
+  onSlideChange: (index: number, day: Date) => void
   swiperRef: RefObject<SwiperRef | null>
   onScroll: (event: UIEvent) => void
+}
+
+const STATIC_SWIPER_PROPS: SwiperProps = {
+  grabCursor: true,
+  spaceBetween: 0,
+  centeredSlides: true,
+  slidesPerView: "auto",
+  roundLengths: true,
+  speed: 500,
+  style: {
+    width: "100vw",
+  },
+  direction: "horizontal",
 }
 
 const WeekSlider = ({
@@ -63,21 +70,6 @@ const WeekSlider = ({
     return { date: day, lessons: [] }
   })
 
-  const swiperParams: SwiperProps = useMemo(() => {
-    return {
-      grabCursor: true,
-      spaceBetween: 0,
-      centeredSlides: true,
-      slidesPerView: "auto",
-      roundLengths: true,
-      speed: 500,
-      style: {
-        width: "100vw",
-      },
-      direction: "horizontal",
-    }
-  }, [])
-
   const goToIndex = useCallback(
     (index: number) => {
       swiperRef.current?.swiper.slideTo(index)
@@ -85,14 +77,21 @@ const WeekSlider = ({
     [swiperRef]
   )
 
+  const handleSlideChange = (newActiveIndex: number) => {
+    setActiveIndex(newActiveIndex)
+    const newDay: Date = weekDays[newActiveIndex]
+    if (newDay) {
+      onSlideChange(newActiveIndex, newDay)
+    }
+  }
+
   return (
     <Swiper
       ref={swiperRef}
-      {...swiperParams}
+      {...STATIC_SWIPER_PROPS}
       className={"week-slider"}
-      onSlideChange={(swiper) => {
-        setActiveIndex(swiper.activeIndex)
-        onSlideChange(swiper.activeIndex)
+      onSlideChange={({ activeIndex }) => {
+        handleSlideChange(activeIndex)
       }}
       initialSlide={activeindex}
       touchMoveStopPropagation={true}

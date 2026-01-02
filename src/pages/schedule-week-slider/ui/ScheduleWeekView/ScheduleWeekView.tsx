@@ -1,19 +1,11 @@
 import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
 import { WeekSlider } from "@/shared/ui"
 import * as React from "react"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { type SwiperRef } from "swiper/react"
 import type { SelectedWeekSlide } from "@/pages/schedule-week-slider/lib/types.ts"
 import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
-import {
-  add,
-  type Day,
-  isAfter,
-  isBefore,
-  isEqual,
-  startOfDay,
-  sub,
-} from "date-fns"
+import { add, type Day, isAfter, isBefore, isEqual, sub } from "date-fns"
 import { findWeekSlide } from "@/pages/schedule-week-slider/lib/findWeekSlide.ts"
 import "./ScheduleWeekView.scss"
 import ScheduleWeekViewController from "@/pages/schedule-week-slider/ui/ScheduleWeekVIewController"
@@ -59,24 +51,28 @@ const ScheduleWeekView = () => {
     findWeekSlide(data.weeks, dateFromUrl)
   )
 
-  useEffect(() => {
-    const currentSelectedDay =
-      currentWeek.weekData.days[currentWeek.activeDateIndex]?.date
-    if (!currentSelectedDay) {
-      return
-    }
-    if (!isEqual(startOfDay(currentSelectedDay), dateFromUrl)) {
-      const newSlide = findWeekSlide(data.weeks, dateFromUrl)
-      swiperRef.current?.swiper?.slideTo(newSlide.activeDateIndex)
-      setCurrentWeek(newSlide)
-    }
-  }, [dateFromUrl])
-
-  const [animationDirection, setAnimationDirection] = useState(1)
-
   const goToIndex = useCallback((index: number) => {
     swiperRef.current?.swiper?.slideTo(index)
   }, [])
+
+  useEffect(() => {
+    const currentDay =
+      currentWeek.weekData.days[currentWeek.activeDateIndex]?.date
+    if (currentDay && isEqual(dateFromUrl, currentDay)) {
+      return
+    }
+    const newSlide = findWeekSlide(data.weeks, dateFromUrl)
+    if (isEqual(newSlide.weekData.start, currentWeek.weekData.start)) {
+      if (newSlide.activeDateIndex === currentWeek.activeDateIndex) {
+        return
+      }
+      goToIndex(newSlide.activeDateIndex)
+      return
+    }
+    handleWeekSelection(newSlide.weekData, newSlide.activeDateIndex)
+  }, [dateFromUrl, goToIndex])
+
+  const [animationDirection, setAnimationDirection] = useState(1)
 
   const handleWeekSelection = useCallback(
     (weekData: ScheduleWeekData, initialDay?: number) => {
@@ -258,20 +254,36 @@ const ScheduleWeekView = () => {
     return Math.min((deltaY / thresholdToSwipeStop) * maxSize, maxSize)
   }
 
-  const variants = {
-    enter: (direction: number) => ({
-      y: direction > 0 ? "100%" : "-100%",
-      opacity: 0,
+  const variants = useMemo(
+    () => ({
+      enter: (direction: number) => ({
+        y: direction > 0 ? "100%" : "-100%",
+        opacity: 0,
+      }),
+      center: {
+        y: 0,
+        opacity: 1,
+      },
+      exit: (direction: number) => ({
+        y: direction > 0 ? "-100%" : "100%",
+        opacity: 0,
+      }),
     }),
-    center: {
-      y: 0,
-      opacity: 1,
+    []
+  )
+
+  const handleSlideChange = useCallback(
+    (newActiveIndex: number, newDay: Date) => {
+      if (newDay && isNotFirstRender) {
+        setDateToUrl(newDay)
+      }
+      setCurrentWeek((prev) => ({
+        ...prev,
+        activeDateIndex: newActiveIndex,
+      }))
     },
-    exit: (direction: number) => ({
-      y: direction > 0 ? "-100%" : "100%",
-      opacity: 0,
-    }),
-  }
+    [isNotFirstRender, setDateToUrl]
+  )
 
   return (
     <section className={clsx("schedule-week-view", "overflow-x-hidden")}>
@@ -325,7 +337,6 @@ const ScheduleWeekView = () => {
                       : 0)) ||
                 0,
             }}
-            onAnimationEnd={() => goToIndex(0)}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
@@ -335,16 +346,7 @@ const ScheduleWeekView = () => {
               weekData={currentWeek.weekData}
               locale={locale}
               profileType={profile.profileType}
-              onSlideChange={(newActiveIndex) => {
-                const newDate = currentWeek.weekData.days[newActiveIndex]?.date
-                if (newDate && isNotFirstRender) {
-                  setDateToUrl(newDate)
-                }
-                setCurrentWeek((prev) => ({
-                  ...prev,
-                  activeDateIndex: newActiveIndex,
-                }))
-              }}
+              onSlideChange={handleSlideChange}
               onScroll={checkScroll}
             />
           </motion.div>

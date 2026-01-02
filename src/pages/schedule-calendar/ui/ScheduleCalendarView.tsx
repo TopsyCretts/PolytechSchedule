@@ -12,7 +12,7 @@ import useMediaQueryListEvent from "@/shared/lib/useMediaQueryListEvent.ts"
 import { useEffect, useRef } from "react"
 import type { CalendarRef } from "@/shared/ui/Calendar/types.ts"
 import DayController from "@/shared/ui/DayController"
-import { format, isEqual, isToday } from "date-fns"
+import { format, isToday } from "date-fns"
 import DataStatusPopover from "@/widgets/DataStatusPopover"
 import { routeWithParams } from "@/app/routes/routes.ts"
 import {
@@ -49,6 +49,8 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
     )
   }
 
+  const { dateFromUrl } = useGetDateFromUrl()
+
   const handleDateSelect = (date: Date | null) => {
     setDateToUrl(date!)
     const dayData = findEqualDayData(data.weeks, date!)
@@ -58,14 +60,10 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
     }
   }
 
-  const { dateFromUrl } = useGetDateFromUrl()
-
   useEffect(() => {
-    const currentSelectedDate = calendar.current?.selectedDate
-    if (currentSelectedDate && !isEqual(currentSelectedDate, dateFromUrl)) {
-      const dayData = findEqualDayData(data.weeks, dateFromUrl!)
-      setCurrentDayData(dayData)
-    }
+    const dayData = findEqualDayData(data.weeks, dateFromUrl!)
+    setCurrentDayData(dayData)
+    calendar.current?.selectDate(dateFromUrl)
   }, [dateFromUrl])
 
   const handleNextDay = () => {

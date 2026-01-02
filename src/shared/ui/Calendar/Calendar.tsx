@@ -119,23 +119,37 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
       setSelectedDate(initialDate)
     }, [initialDate])
 
-    const handleSelectedDateChange = useCallback(
-      (newDate: Date | null) => {
-        if (newDate === null && !isSelectedDateCouldBeNull) {
-          return
-        }
-        setSelectedDate(newDate)
-        onSelectedDateChange(newDate)
-      },
-      [onSelectedDateChange, isSelectedDateCouldBeNull]
-    )
-
     const handleMonthChange = useCallback(
       (month: Date) => {
         setStartOfCurrentMonth(month)
         onMonthChange(month)
       },
       [onMonthChange]
+    )
+
+    const handleSelectedDateChange = useCallback(
+      (newDate: Date | null) => {
+        if (newDate === null && !isSelectedDateCouldBeNull) {
+          return
+        }
+        const currentMonthNumber = selectedDate?.getMonth()
+        const newMonthNumber = newDate?.getMonth()
+        if (
+          currentMonthNumber !== undefined &&
+          newMonthNumber !== undefined &&
+          newMonthNumber - currentMonthNumber !== 0
+        ) {
+          handleMonthChange(startOfMonth(newDate!))
+        }
+        setSelectedDate(newDate)
+        onSelectedDateChange(newDate)
+      },
+      [
+        isSelectedDateCouldBeNull,
+        selectedDate,
+        onSelectedDateChange,
+        handleMonthChange,
+      ]
     )
 
     const handleMonthIncrement = useCallback(() => {
@@ -213,12 +227,6 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
               return
             }
             handleSelectedDateChange(nextDay)
-            if (
-              format(nextDay, "M") !== format(selectedDate, "M") &&
-              format(selectedDate, "M") === format(startOfCurrentMonth, "M")
-            ) {
-              handleMonthIncrement()
-            }
           }
         },
         goPreviousDay: () => {
@@ -228,12 +236,6 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
               return
             }
             handleSelectedDateChange(previousDay)
-            if (
-              format(previousDay, "M") !== format(selectedDate, "M") &&
-              format(selectedDate, "M") === format(startOfCurrentMonth, "M")
-            ) {
-              handleMonthDecrement()
-            }
           }
         },
         selectDate: handleSelectedDateChange,
