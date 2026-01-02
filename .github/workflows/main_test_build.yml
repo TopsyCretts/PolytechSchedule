@@ -1,0 +1,17 @@
+name: main_test_build.yml
+on:
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          echo "Npm install";
+          npm install;
+          echo "Build";
+          npm run build;
+          echo "Build complete!";
