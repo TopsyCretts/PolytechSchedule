@@ -5,6 +5,8 @@ import { LessonCard } from "@/shared/ui"
 import type { ProfileType } from "@/entities/Profile.ts"
 import { format, type Locale } from "date-fns"
 import { capitalizeFirstLatter } from "@/shared/lib/capitalizeFirstLatter.ts"
+import { useTranslation } from "react-i18next"
+import { STRINGS_RES } from "@/shared/constants/strings.ts"
 
 interface ScheduleDayItemProps {
   className?: string
@@ -21,6 +23,8 @@ const ScheduleDayItem = ({
   locale,
   isTitleIsHidden = false,
 }: ScheduleDayItemProps) => {
+  const { t } = useTranslation()
+
   return (
     <div className={clsx(className, "schedule-day-item")}>
       {!isTitleIsHidden && (
@@ -50,7 +54,7 @@ const ScheduleDayItem = ({
           </ul>
         ) : (
           <div className="schedule-day-item__empty-lessons">
-            There are no classes on the schedule today.
+            {t(STRINGS_RES.there_are_no_classes)}
           </div>
         )}
       </div>

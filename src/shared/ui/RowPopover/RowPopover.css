@@ -1,5 +1,5 @@
 .row-popover {
-  --offlineIndicatorContentMagin: calc(var(--button-height) - 0.3125rem);
+  --offlineIndicatorContentMargin: calc(var(--button-height) - 0.3125rem);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,7 +68,7 @@
   justify-content: center;
   align-items: start;
   height: var(--button-height);
-  margin-left: var(--offlineIndicatorContentMagin);
+  margin-left: var(--offlineIndicatorContentMargin);
 }
 .row-popover--opened {
   border: var(--border-themed);
@@ -90,7 +90,7 @@
 }
 .row-popover--reversed .row-popover__content {
   margin-left: 0;
-  margin-right: var(--offlineIndicatorContentMagin);
+  margin-right: var(--offlineIndicatorContentMargin);
 }
 
 /*# sourceMappingURL=RowPopover.css.map */

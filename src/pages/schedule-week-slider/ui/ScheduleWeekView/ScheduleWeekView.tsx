@@ -1,19 +1,11 @@
 import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
 import { WeekSlider } from "@/shared/ui"
 import * as React from "react"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { type SwiperRef } from "swiper/react"
 import type { SelectedWeekSlide } from "@/pages/schedule-week-slider/lib/types.ts"
 import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
-import {
-  add,
-  type Day,
-  isAfter,
-  isBefore,
-  isEqual,
-  startOfDay,
-  sub,
-} from "date-fns"
+import { add, type Day, isAfter, isBefore, isEqual, sub } from "date-fns"
 import { findWeekSlide } from "@/pages/schedule-week-slider/lib/findWeekSlide.ts"
 import "./ScheduleWeekView.scss"
 import ScheduleWeekViewController from "@/pages/schedule-week-slider/ui/ScheduleWeekVIewController"
@@ -32,7 +24,7 @@ import {
   minWeekStartDate,
 } from "@/pages/schedule-week-slider/lib/minAndMaxWeekStartDate.ts"
 
-interface SwipeState {
+interface VerticalSwipeState {
   isSwiping: boolean
   startY: number
   currentY: number
@@ -59,24 +51,28 @@ const ScheduleWeekView = () => {
     findWeekSlide(data.weeks, dateFromUrl)
   )
 
-  useEffect(() => {
-    const currentSelectedDay =
-      currentWeek.weekData.days[currentWeek.activeDateIndex]?.date
-    if (!currentSelectedDay) {
-      return
-    }
-    if (!isEqual(startOfDay(currentSelectedDay), dateFromUrl)) {
-      const newSlide = findWeekSlide(data.weeks, dateFromUrl)
-      swiperRef.current?.swiper?.slideTo(newSlide.activeDateIndex)
-      setCurrentWeek(newSlide)
-    }
-  }, [dateFromUrl])
-
-  const [animationDirection, setAnimationDirection] = useState(1)
-
   const goToIndex = useCallback((index: number) => {
     swiperRef.current?.swiper?.slideTo(index)
   }, [])
+
+  useEffect(() => {
+    const currentDay =
+      currentWeek.weekData.days[currentWeek.activeDateIndex]?.date
+    if (currentDay && isEqual(dateFromUrl, currentDay)) {
+      return
+    }
+    const newSlide = findWeekSlide(data.weeks, dateFromUrl)
+    if (isEqual(newSlide.weekData.start, currentWeek.weekData.start)) {
+      if (newSlide.activeDateIndex === currentWeek.activeDateIndex) {
+        return
+      }
+      goToIndex(newSlide.activeDateIndex)
+      return
+    }
+    handleWeekSelection(newSlide.weekData, newSlide.activeDateIndex)
+  }, [dateFromUrl, goToIndex])
+
+  const [animationDirection, setAnimationDirection] = useState(1)
 
   const handleWeekSelection = useCallback(
     (weekData: ScheduleWeekData, initialDay?: number) => {
@@ -115,7 +111,7 @@ const ScheduleWeekView = () => {
     handleWeekSelection(weekData, forceInitialDate ? forceInitialDate : 6)
   }
 
-  const [swipe, setSwipe] = useState<SwipeState>({
+  const [verticalSwipe, setVerticalSwipe] = useState<VerticalSwipeState>({
     isSwiping: false,
     startY: 0,
     currentY: 0,
@@ -123,6 +119,9 @@ const ScheduleWeekView = () => {
     isAtBottom: false,
     initialScrollTop: 0,
     scrollHeight: 0,
+  })
+  const [horizontalSwipe, setHorizontalSwipe] = useState({
+    startX: 0,
   })
 
   const contentRef = useRef<HTMLElement>(null)
@@ -135,7 +134,7 @@ const ScheduleWeekView = () => {
       const isAtTop = scrollTop === 0
       const isAtBottom = Math.abs(scrollHeight - clientHeight - scrollTop) < 1
 
-      setSwipe((prev) => ({
+      setVerticalSwipe((prev) => ({
         ...prev,
         isAtTop: isAtTop,
         isAtBottom: isAtBottom,
@@ -157,7 +156,7 @@ const ScheduleWeekView = () => {
         checkScroll()
         const { scrollTop, scrollHeight, clientHeight } = currentContent
         const clientY = e.touches[0].clientY
-        setSwipe((prev) => ({
+        setVerticalSwipe((prev) => ({
           ...prev,
           isSwiping: true,
           startY: clientY,
@@ -174,36 +173,40 @@ const ScheduleWeekView = () => {
     const currentWrapper = wrapperRef.current
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (!swipe.isSwiping) {
+      if (!verticalSwipe.isSwiping) {
         return
       }
 
-      const deltaY = e.touches[0].clientY - swipe.startY
+      const deltaY = e.touches[0].clientY - verticalSwipe.startY
       const isSwipingUp = deltaY < 0
       const isSwipingDown = deltaY > 0
 
-      const canSwipeUp = swipe.isAtBottom && isSwipingUp
-      const canSwipeDown = swipe.isAtTop && isSwipingDown
+      const canSwipeUp = verticalSwipe.isAtBottom && isSwipingUp
+      const canSwipeDown = verticalSwipe.isAtTop && isSwipingDown
 
       if (canSwipeUp || canSwipeDown) {
         if (e.cancelable) {
           e.preventDefault()
         }
 
-        setSwipe((prev) => ({ ...prev, currentY: e.touches[0].clientY }))
+        setVerticalSwipe((prev) => ({
+          ...prev,
+          currentY: e.touches[0].clientY,
+        }))
       }
     }
 
     currentWrapper?.addEventListener("touchmove", handleTouchMove, {
       passive: false,
     })
+
     return () => {
       currentWrapper?.removeEventListener("touchmove", handleTouchMove)
     }
   }, [
-    swipe.isAtBottom,
-    swipe.isAtTop,
-    swipe.isSwiping,
+    verticalSwipe.isAtBottom,
+    verticalSwipe.isAtTop,
+    verticalSwipe.isSwiping,
     contentRef.current,
     wrapperRef.current,
   ])
@@ -212,22 +215,25 @@ const ScheduleWeekView = () => {
   const thresholdToSwipeStart = 20
 
   const topHeight =
-    swipe.currentY -
-    swipe.startY -
-    swipe.initialScrollTop -
+    verticalSwipe.currentY -
+    verticalSwipe.startY -
+    verticalSwipe.initialScrollTop -
     thresholdToSwipeStart
 
   const bottomHeight =
-    swipe.currentY -
-    swipe.startY +
-    (swipe.scrollHeight + thresholdToSwipeStart - swipe.initialScrollTop)
+    verticalSwipe.currentY -
+    verticalSwipe.startY +
+    (verticalSwipe.scrollHeight +
+      thresholdToSwipeStart -
+      verticalSwipe.initialScrollTop)
 
-  const showTopIndicator = swipe.isAtTop && swipe.isSwiping && topHeight > 0
+  const showTopIndicator =
+    verticalSwipe.isAtTop && verticalSwipe.isSwiping && topHeight > 0
   const showBottomIndicator =
-    swipe.isAtBottom && swipe.isSwiping && bottomHeight < 0
+    verticalSwipe.isAtBottom && verticalSwipe.isSwiping && bottomHeight < 0
 
   const handleTouchEnd = () => {
-    if (!swipe.isSwiping) {
+    if (!verticalSwipe.isSwiping) {
       return
     }
 
@@ -240,13 +246,18 @@ const ScheduleWeekView = () => {
     const absDeltaY = Math.abs(deltaY)
 
     if (absDeltaY >= thresholdToSwipeStop) {
-      if (swipe.isAtBottom && deltaY < 0) {
+      if (verticalSwipe.isAtBottom && deltaY < 0) {
         handleNextWeek(currentWeek.activeDateIndex)
-      } else if (swipe.isAtTop && deltaY > 0) {
+      } else if (verticalSwipe.isAtTop && deltaY > 0) {
         handlePrevWeek(currentWeek.activeDateIndex)
       }
     }
-    setSwipe((prev) => ({ ...prev, currentY: 0, startY: 0, isSwiping: false }))
+    setVerticalSwipe((prev) => ({
+      ...prev,
+      currentY: 0,
+      startY: 0,
+      isSwiping: false,
+    }))
   }
 
   const getIndicatorSize = () => {
@@ -258,19 +269,55 @@ const ScheduleWeekView = () => {
     return Math.min((deltaY / thresholdToSwipeStop) * maxSize, maxSize)
   }
 
-  const variants = {
-    enter: (direction: number) => ({
-      y: direction > 0 ? "100%" : "-100%",
-      opacity: 0,
+  const variants = useMemo(
+    () => ({
+      enter: (direction: number) => ({
+        y: direction > 0 ? "100%" : "-100%",
+        opacity: 0,
+      }),
+      center: {
+        y: 0,
+        opacity: 1,
+      },
+      exit: (direction: number) => ({
+        y: direction > 0 ? "-100%" : "100%",
+        opacity: 0,
+      }),
     }),
-    center: {
-      y: 0,
-      opacity: 1,
+    []
+  )
+
+  const handleSlideChange = useCallback(
+    (newActiveIndex: number, newDay: Date) => {
+      if (newDay && isNotFirstRender) {
+        setDateToUrl(newDay)
+      }
+      setCurrentWeek((prev) => ({
+        ...prev,
+        activeDateIndex: newActiveIndex,
+      }))
     },
-    exit: (direction: number) => ({
-      y: direction > 0 ? "-100%" : "100%",
-      opacity: 0,
-    }),
+    [isNotFirstRender, setDateToUrl]
+  )
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    setHorizontalSwipe((prevState) => ({
+      ...prevState,
+      startX: e.clientX,
+    }))
+  }
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    const div = e.clientX - horizontalSwipe.startX
+
+    if (Math.abs(div) > 250) {
+      if (div < 0 && currentWeek.activeDateIndex === 6) {
+        handleNextWeek(0)
+      } else if (div > 0 && currentWeek.activeDateIndex === 0) {
+        handlePrevWeek(6)
+      }
+    }
+    setHorizontalSwipe({ startX: 0 })
   }
 
   return (
@@ -317,7 +364,7 @@ const ScheduleWeekView = () => {
             transition={{ duration: 0.4, ease: "linear" }}
             style={{
               translateY:
-                (swipe.isSwiping &&
+                (verticalSwipe.isSwiping &&
                   (showTopIndicator
                     ? getIndicatorSize()
                     : showBottomIndicator
@@ -325,7 +372,8 @@ const ScheduleWeekView = () => {
                       : 0)) ||
                 0,
             }}
-            onAnimationEnd={() => goToIndex(0)}
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
@@ -335,16 +383,7 @@ const ScheduleWeekView = () => {
               weekData={currentWeek.weekData}
               locale={locale}
               profileType={profile.profileType}
-              onSlideChange={(newActiveIndex) => {
-                const newDate = currentWeek.weekData.days[newActiveIndex]?.date
-                if (newDate && isNotFirstRender) {
-                  setDateToUrl(newDate)
-                }
-                setCurrentWeek((prev) => ({
-                  ...prev,
-                  activeDateIndex: newActiveIndex,
-                }))
-              }}
+              onSlideChange={handleSlideChange}
               onScroll={checkScroll}
             />
           </motion.div>

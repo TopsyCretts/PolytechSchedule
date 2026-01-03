@@ -1,3 +1,9 @@
+@media (width <= 25.06125rem) {
+  .schedule-week-view-sub-header {
+    min-width: 100%;
+    max-width: 100%;
+  }
+}
 .schedule-week-view-sub-header__inner {
   display: flex;
   justify-content: center;
@@ -9,6 +15,13 @@
 @media (width <= 30.06125rem) {
   .schedule-week-view-sub-header__inner {
     column-gap: var(--spacing-sm);
+  }
+}
+@media (width <= 25.06125rem) {
+  .schedule-week-view-sub-header__inner {
+    justify-content: start;
+    min-width: 100%;
+    max-width: 100%;
   }
 }
 .schedule-week-view-sub-header__link {

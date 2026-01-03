@@ -19,7 +19,6 @@ export const mainLoader = async () => {
 
     if (profile) {
       const isDesktop = MATCH_MEDIA.laptopAbove.matches
-
       const route = getScheduleProfileRoute(
         profile.apiId.toString(),
         profile.profileType,

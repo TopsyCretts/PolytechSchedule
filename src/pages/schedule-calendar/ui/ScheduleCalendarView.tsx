@@ -39,6 +39,7 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
     useScheduleData()
 
   const navigateToWeek = (date: Date) => {
+    console.log("awdawdadw")
     navigate(
       routeWithParams(
         "/schedule",
@@ -49,6 +50,8 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
     )
   }
 
+  const { dateFromUrl } = useGetDateFromUrl()
+
   const handleDateSelect = (date: Date | null) => {
     setDateToUrl(date!)
     const dayData = findEqualDayData(data.weeks, date!)
@@ -58,13 +61,11 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
     }
   }
 
-  const { dateFromUrl } = useGetDateFromUrl()
-
   useEffect(() => {
-    const currentSelectedDate = calendar.current?.selectedDate
-    if (currentSelectedDate && !isEqual(currentSelectedDate, dateFromUrl)) {
+    if (!isEqual(currentDayData.date, dateFromUrl!)) {
       const dayData = findEqualDayData(data.weeks, dateFromUrl!)
       setCurrentDayData(dayData)
+      calendar.current?.selectDate(dateFromUrl)
     }
   }, [dateFromUrl])
 
@@ -88,6 +89,7 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
               "schedule-calendar-view__popover",
               "hidden-mobile-s"
             )}
+            type={"row"}
             isReversed={true}
           />
         </div>

@@ -19,15 +19,16 @@ import CrossIcon from "@/assets/icons/cross.svg?react"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import { isEnterKeyPressed } from "@/shared/lib/isEnterKeyPressed.ts"
+import useOpenModal from "@/shared/lib/useOpenModal.ts"
 
 const SelectContext = createContext<SelectValues | null>(null)
 
 const Select = ({ className, children }: SelectProps) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const { isOpen, toggleModal } = useOpenModal()
 
   const memoizedContextValues: SelectValues = {
     isOpen,
-    toggle: () => setIsOpen((prev) => !prev),
+    toggle: toggleModal,
   }
 
   return (

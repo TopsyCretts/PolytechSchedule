@@ -19,10 +19,11 @@ jobs:
             echo "🚀 Starting deployment...";
             cd;
             cd ${{ secrets.DEV_FOLDER }};
-            git checkout dev;
+            git checkout staging;
             echo "Pulling latest changes...";
             git pull;
             echo "Starting Docker containers...";
-            docker compose -f compose_staging.yaml up -d;
+            docker compose -f compose_staging.yaml down;
+            docker compose -f compose_staging.yaml up -d --build;
             docker system prune -af;
             echo "✅ Deployment completed!";

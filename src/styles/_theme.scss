@@ -73,6 +73,8 @@
 
   --scrollbar-bg-color: transparent;
 
+  --bookmark-popover-border-color-themed: var(--color-dark-opacity-10);
+
   color-scheme: dark light;
 
   &.dark-mode {
@@ -96,5 +98,7 @@
     --shadow-themed: none;
 
     --scrollbar-bg-color: var(--color-light-opacity-10);
+
+    --bookmark-popover-border-color-themed: var(--color-light-opacity-5);
   }
 }

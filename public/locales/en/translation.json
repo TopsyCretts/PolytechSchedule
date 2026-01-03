@@ -43,7 +43,7 @@
   "exam": "Exam",
   "laboratory": "Laboratory",
   "schedule": "Schedule",
-  "there_are_no_classes": "There are no classes on the schedule today.",
+  "there_are_no_classes": "There are no classes on this day.",
   "remote_lesson": "Remotely",
   "lesson_name_not_specified": "Name not specified",
   "additional_info": "Add. info:",
