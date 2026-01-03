@@ -3,20 +3,20 @@
 .book-mark-popover {
   --bookMarkPopoverHeight: #{rem(52)};
   --bookMarkClipPath: polygon(
-      10.43px 5.46px,
-      11.78px 2.73px,
-      14.56px 1px,
-      17.60px 1px,
-      calc(100% - 1px) 1px,
-      calc(100% - 1px) 51px,
-      17.51px 51px,
-      14.51px 51px,
-      11.77px 49.32px,
-      10.40px 46.66px,
-      1.88px 30.08px,
-      0.73px 27.83px,
-      0.70px 25.16px,
-      1.83px 22.89px
+      #{rem(10.43)} #{rem(5.46)},
+      #{rem(11.78)} #{rem(2.73)},
+      #{rem(14.56)} #{rem(1)},
+      #{rem(17.60)} #{rem(1)},
+      calc(100% - #{rem(1)}) #{rem(1)},
+      calc(100% - #{rem(1)}) #{rem(51)},
+      #{rem(17.51)} #{rem(51)},
+      #{rem(14.51)} #{rem(51)},
+      #{rem(11.77)} #{rem(49.32)},
+      #{rem(10.40)} #{rem(46.66)},
+      #{rem( 1.88)} #{rem(30.08)},
+      #{rem(0.73)} #{rem(27.83)},
+      #{rem(0.70)} #{rem(25.16)},
+      #{rem(1.83)} #{rem(22.89)}
   );
 
   @include flex-center;
@@ -53,17 +53,19 @@
     position: absolute;
     z-index: 300;
     right: 0;
+    overflow: hidden;
+    clip-path: var(--bookMarkClipPath);
 
     &::after {
       @include abs-center;
 
       content: "";
       z-index: -1;
-      min-width: 100%;
+      width: 100%;
       height: var(--bookMarkPopoverHeight);
       background-color: var(--color-bg-themed);
       clip-path: var(--bookMarkClipPath);
-      scale: 0.98;
+      scale: 0.95;
     }
 
     &::before {
@@ -79,16 +81,17 @@
   }
 
   &__content {
-    display: flex;
+    @include flex-center;
 
-    justify-content: start;
-    align-items: start;
-    flex-direction: column;
     overflow: hidden;
     margin-right: var(--spacing-md);
   }
 
   &--opened {
     z-index: var(--z-index-select);
+
+    & .book-mark-popover__inner::after {
+      scale: 0.99;
+    }
   }
 }

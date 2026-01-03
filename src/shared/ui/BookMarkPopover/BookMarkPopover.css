@@ -1,20 +1,20 @@
 .book-mark-popover {
   --bookMarkPopoverHeight: 3.25rem;
   --bookMarkClipPath: polygon(
-      10.43px 5.46px,
-      11.78px 2.73px,
-      14.56px 1px,
-      17.60px 1px,
-      calc(100% - 1px) 1px,
-      calc(100% - 1px) 51px,
-      17.51px 51px,
-      14.51px 51px,
-      11.77px 49.32px,
-      10.40px 46.66px,
-      1.88px 30.08px,
-      0.73px 27.83px,
-      0.70px 25.16px,
-      1.83px 22.89px
+      0.651875rem 0.34125rem,
+      0.73625rem 0.170625rem,
+      0.91rem 0.0625rem,
+      1.1rem 0.0625rem,
+      calc(100% - 0.0625rem) 0.0625rem,
+      calc(100% - 0.0625rem) 3.1875rem,
+      1.094375rem 3.1875rem,
+      0.906875rem 3.1875rem,
+      0.735625rem 3.0825rem,
+      0.65rem 2.91625rem,
+      0.1175rem 1.88rem,
+      0.045625rem 1.739375rem,
+      0.04375rem 1.5725rem,
+      0.114375rem 1.430625rem
   );
   display: flex;
   justify-content: center;
@@ -51,6 +51,8 @@
   position: absolute;
   z-index: 300;
   right: 0;
+  overflow: hidden;
+  clip-path: var(--bookMarkClipPath);
 }
 .book-mark-popover__inner::after {
   position: absolute;
@@ -59,11 +61,11 @@
   translate: -50% -50%;
   content: "";
   z-index: -1;
-  min-width: 100%;
+  width: 100%;
   height: var(--bookMarkPopoverHeight);
   background-color: var(--color-bg-themed);
   clip-path: var(--bookMarkClipPath);
-  scale: 0.98;
+  scale: 0.95;
 }
 .book-mark-popover__inner::before {
   position: absolute;
@@ -79,14 +81,16 @@
 }
 .book-mark-popover__content {
   display: flex;
-  justify-content: start;
-  align-items: start;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   margin-right: var(--spacing-md);
 }
 .book-mark-popover--opened {
   z-index: var(--z-index-select);
+}
+.book-mark-popover--opened .book-mark-popover__inner::after {
+  scale: 0.99;
 }
 
 /*# sourceMappingURL=BookMarkPopover.css.map */
