@@ -23,6 +23,7 @@ jobs:
             echo "Pulling latest changes...";
             git pull;
             echo "Starting Docker containers...";
+            docker compose -f compose_main.yaml down;
             docker compose -f compose_main.yaml up -d;
             docker system prune -af;
             echo "✅ Deployment completed!";
