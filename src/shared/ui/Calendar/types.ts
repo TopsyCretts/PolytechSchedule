@@ -31,7 +31,7 @@ type CalendarRef = {
   goPreviousMonth: () => void
   goNextDay: () => void
   goPreviousDay: () => void
-  selectDate: (date: Date | null) => void
+  selectDate: (date: Date | null, redirect?: boolean) => void
   isMonthIncrementAvailable: boolean
   isMonthDecrementAvailable: boolean
   selectedDate: Date | null

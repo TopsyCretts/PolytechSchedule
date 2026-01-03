@@ -15,6 +15,10 @@
       max-width: calc(#{rem(380)} + 2 * var(--container-padding-x));
       margin-inline: auto;
     }
+
+    @include mobile-xs {
+      margin-inline: 0;
+    }
   }
 
   &__slider-container,

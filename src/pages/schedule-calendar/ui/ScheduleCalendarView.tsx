@@ -12,7 +12,7 @@ import useMediaQueryListEvent from "@/shared/lib/useMediaQueryListEvent.ts"
 import { useEffect, useRef } from "react"
 import type { CalendarRef } from "@/shared/ui/Calendar/types.ts"
 import DayController from "@/shared/ui/DayController"
-import { format, isToday } from "date-fns"
+import { format, isEqual, isToday } from "date-fns"
 import DataStatusPopover from "@/widgets/DataStatusPopover"
 import { routeWithParams } from "@/app/routes/routes.ts"
 import {
@@ -39,6 +39,7 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
     useScheduleData()
 
   const navigateToWeek = (date: Date) => {
+    console.log("awdawdadw")
     navigate(
       routeWithParams(
         "/schedule",
@@ -61,9 +62,11 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
   }
 
   useEffect(() => {
-    const dayData = findEqualDayData(data.weeks, dateFromUrl!)
-    setCurrentDayData(dayData)
-    calendar.current?.selectDate(dateFromUrl)
+    if (!isEqual(currentDayData.date, dateFromUrl!)) {
+      const dayData = findEqualDayData(data.weeks, dateFromUrl!)
+      setCurrentDayData(dayData)
+      calendar.current?.selectDate(dateFromUrl)
+    }
   }, [dateFromUrl])
 
   const handleNextDay = () => {
@@ -86,6 +89,7 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
               "schedule-calendar-view__popover",
               "hidden-mobile-s"
             )}
+            type={"row"}
             isReversed={true}
           />
         </div>

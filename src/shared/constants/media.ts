@@ -8,6 +8,7 @@ const MATCH_MEDIA = {
   tablet: window.matchMedia(`(width <= ${pxToRem(1023.98)}rem)`),
   mobile: window.matchMedia(`(width <= ${pxToRem(767.99)}rem)`),
   mobile_s: window.matchMedia(`(width <= ${pxToRem(480.98)}rem)`),
+  mobile_xs: window.matchMedia(`(width <= ${pxToRem(400.98)}rem)`),
 }
 
 export { MATCH_MEDIA, pxToRem }

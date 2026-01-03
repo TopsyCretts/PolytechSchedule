@@ -24,7 +24,7 @@ import {
   minWeekStartDate,
 } from "@/pages/schedule-week-slider/lib/minAndMaxWeekStartDate.ts"
 
-interface SwipeState {
+interface VerticalSwipeState {
   isSwiping: boolean
   startY: number
   currentY: number
@@ -111,7 +111,7 @@ const ScheduleWeekView = () => {
     handleWeekSelection(weekData, forceInitialDate ? forceInitialDate : 6)
   }
 
-  const [swipe, setSwipe] = useState<SwipeState>({
+  const [verticalSwipe, setVerticalSwipe] = useState<VerticalSwipeState>({
     isSwiping: false,
     startY: 0,
     currentY: 0,
@@ -119,6 +119,9 @@ const ScheduleWeekView = () => {
     isAtBottom: false,
     initialScrollTop: 0,
     scrollHeight: 0,
+  })
+  const [horizontalSwipe, setHorizontalSwipe] = useState({
+    startX: 0,
   })
 
   const contentRef = useRef<HTMLElement>(null)
@@ -131,7 +134,7 @@ const ScheduleWeekView = () => {
       const isAtTop = scrollTop === 0
       const isAtBottom = Math.abs(scrollHeight - clientHeight - scrollTop) < 1
 
-      setSwipe((prev) => ({
+      setVerticalSwipe((prev) => ({
         ...prev,
         isAtTop: isAtTop,
         isAtBottom: isAtBottom,
@@ -153,7 +156,7 @@ const ScheduleWeekView = () => {
         checkScroll()
         const { scrollTop, scrollHeight, clientHeight } = currentContent
         const clientY = e.touches[0].clientY
-        setSwipe((prev) => ({
+        setVerticalSwipe((prev) => ({
           ...prev,
           isSwiping: true,
           startY: clientY,
@@ -170,36 +173,40 @@ const ScheduleWeekView = () => {
     const currentWrapper = wrapperRef.current
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (!swipe.isSwiping) {
+      if (!verticalSwipe.isSwiping) {
         return
       }
 
-      const deltaY = e.touches[0].clientY - swipe.startY
+      const deltaY = e.touches[0].clientY - verticalSwipe.startY
       const isSwipingUp = deltaY < 0
       const isSwipingDown = deltaY > 0
 
-      const canSwipeUp = swipe.isAtBottom && isSwipingUp
-      const canSwipeDown = swipe.isAtTop && isSwipingDown
+      const canSwipeUp = verticalSwipe.isAtBottom && isSwipingUp
+      const canSwipeDown = verticalSwipe.isAtTop && isSwipingDown
 
       if (canSwipeUp || canSwipeDown) {
         if (e.cancelable) {
           e.preventDefault()
         }
 
-        setSwipe((prev) => ({ ...prev, currentY: e.touches[0].clientY }))
+        setVerticalSwipe((prev) => ({
+          ...prev,
+          currentY: e.touches[0].clientY,
+        }))
       }
     }
 
     currentWrapper?.addEventListener("touchmove", handleTouchMove, {
       passive: false,
     })
+
     return () => {
       currentWrapper?.removeEventListener("touchmove", handleTouchMove)
     }
   }, [
-    swipe.isAtBottom,
-    swipe.isAtTop,
-    swipe.isSwiping,
+    verticalSwipe.isAtBottom,
+    verticalSwipe.isAtTop,
+    verticalSwipe.isSwiping,
     contentRef.current,
     wrapperRef.current,
   ])
@@ -208,22 +215,25 @@ const ScheduleWeekView = () => {
   const thresholdToSwipeStart = 20
 
   const topHeight =
-    swipe.currentY -
-    swipe.startY -
-    swipe.initialScrollTop -
+    verticalSwipe.currentY -
+    verticalSwipe.startY -
+    verticalSwipe.initialScrollTop -
     thresholdToSwipeStart
 
   const bottomHeight =
-    swipe.currentY -
-    swipe.startY +
-    (swipe.scrollHeight + thresholdToSwipeStart - swipe.initialScrollTop)
+    verticalSwipe.currentY -
+    verticalSwipe.startY +
+    (verticalSwipe.scrollHeight +
+      thresholdToSwipeStart -
+      verticalSwipe.initialScrollTop)
 
-  const showTopIndicator = swipe.isAtTop && swipe.isSwiping && topHeight > 0
+  const showTopIndicator =
+    verticalSwipe.isAtTop && verticalSwipe.isSwiping && topHeight > 0
   const showBottomIndicator =
-    swipe.isAtBottom && swipe.isSwiping && bottomHeight < 0
+    verticalSwipe.isAtBottom && verticalSwipe.isSwiping && bottomHeight < 0
 
   const handleTouchEnd = () => {
-    if (!swipe.isSwiping) {
+    if (!verticalSwipe.isSwiping) {
       return
     }
 
@@ -236,13 +246,18 @@ const ScheduleWeekView = () => {
     const absDeltaY = Math.abs(deltaY)
 
     if (absDeltaY >= thresholdToSwipeStop) {
-      if (swipe.isAtBottom && deltaY < 0) {
+      if (verticalSwipe.isAtBottom && deltaY < 0) {
         handleNextWeek(currentWeek.activeDateIndex)
-      } else if (swipe.isAtTop && deltaY > 0) {
+      } else if (verticalSwipe.isAtTop && deltaY > 0) {
         handlePrevWeek(currentWeek.activeDateIndex)
       }
     }
-    setSwipe((prev) => ({ ...prev, currentY: 0, startY: 0, isSwiping: false }))
+    setVerticalSwipe((prev) => ({
+      ...prev,
+      currentY: 0,
+      startY: 0,
+      isSwiping: false,
+    }))
   }
 
   const getIndicatorSize = () => {
@@ -284,6 +299,26 @@ const ScheduleWeekView = () => {
     },
     [isNotFirstRender, setDateToUrl]
   )
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    setHorizontalSwipe((prevState) => ({
+      ...prevState,
+      startX: e.clientX,
+    }))
+  }
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    const div = e.clientX - horizontalSwipe.startX
+
+    if (Math.abs(div) > 250) {
+      if (div < 0 && currentWeek.activeDateIndex === 6) {
+        handleNextWeek(0)
+      } else if (div > 0 && currentWeek.activeDateIndex === 0) {
+        handlePrevWeek(6)
+      }
+    }
+    setHorizontalSwipe({ startX: 0 })
+  }
 
   return (
     <section className={clsx("schedule-week-view", "overflow-x-hidden")}>
@@ -329,7 +364,7 @@ const ScheduleWeekView = () => {
             transition={{ duration: 0.4, ease: "linear" }}
             style={{
               translateY:
-                (swipe.isSwiping &&
+                (verticalSwipe.isSwiping &&
                   (showTopIndicator
                     ? getIndicatorSize()
                     : showBottomIndicator
@@ -337,6 +372,8 @@ const ScheduleWeekView = () => {
                       : 0)) ||
                 0,
             }}
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >

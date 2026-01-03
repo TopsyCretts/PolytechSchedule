@@ -1,6 +1,11 @@
 @use "../../../../styles/helpers" as *;
 
 .schedule-week-view-sub-header {
+  @include mobile-xs {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
   &__inner {
     @include flex-center;
 
@@ -10,6 +15,12 @@
 
     @include mobile-s {
       column-gap: var(--spacing-sm);
+    }
+
+    @include mobile-xs {
+      justify-content: start;
+      min-width: 100%;
+      max-width: 100%;
     }
   }
 

@@ -19,8 +19,12 @@
     margin-inline: auto;
   }
 }
-.schedule-week-view__slider-container,
-.schedule-week-view__slider-container-wrapper {
+@media (width <= 25.06125rem) {
+  .schedule-week-view__header {
+    margin-inline: 0;
+  }
+}
+.schedule-week-view__slider-container, .schedule-week-view__slider-container-wrapper {
   flex: 1;
   position: relative;
   overflow-y: hidden;
