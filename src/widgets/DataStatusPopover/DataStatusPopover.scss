@@ -2,12 +2,12 @@
 
 .data-status-popover {
   &--success {
-    color: var(--color-green);
+    color: var(--color-green) !important;
   }
 
   &--error {
-    & .row-popover__toggler {
-      color: var(--color-orange);
+    & {
+      color: var(--color-orange) !important;
     }
   }
 }
