@@ -1,7 +1,20 @@
 .book-mark-popover {
   --bookMarkPopoverHeight: 3.25rem;
-  --bookMarkClipPath: path(
-      "M10.4274 5.45939C11.7751 2.72875 14.5562 1 17.6013 1L221.043 1V51H17.5126C14.5138 51 11.7668 49.3229 10.3966 46.6554L1.88375 30.0835C0.725826 27.8293 0.704379 25.1599 1.82593 22.8874L10.4274 5.45939Z"
+  --bookMarkClipPath: polygon(
+      10.43px 5.46px,
+      11.78px 2.73px,
+      14.56px 1px,
+      17.60px 1px,
+      calc(100% - 1px) 1px,
+      calc(100% - 1px) 51px,
+      17.51px 51px,
+      14.51px 51px,
+      11.77px 49.32px,
+      10.40px 46.66px,
+      1.88px 30.08px,
+      0.73px 27.83px,
+      0.70px 25.16px,
+      1.83px 22.89px
   );
   display: flex;
   justify-content: center;
@@ -38,8 +51,6 @@
   position: absolute;
   z-index: 300;
   right: 0;
-  overflow: hidden;
-  clip-path: var(--bookMarkClipPath);
 }
 .book-mark-popover__inner::after {
   position: absolute;
@@ -48,7 +59,7 @@
   translate: -50% -50%;
   content: "";
   z-index: -1;
-  width: 100%;
+  min-width: 100%;
   height: var(--bookMarkPopoverHeight);
   background-color: var(--color-bg-themed);
   clip-path: var(--bookMarkClipPath);
@@ -68,8 +79,9 @@
 }
 .book-mark-popover__content {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
   overflow: hidden;
   margin-right: var(--spacing-md);
 }
