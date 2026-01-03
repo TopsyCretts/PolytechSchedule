@@ -1,8 +1,8 @@
-name: dev_deploy.yml
+name: staging_deploy.yml
 on:
   push:
     branches:
-      - "dev"
+      - "staging"
 
 jobs:
   update_job:
@@ -23,6 +23,6 @@ jobs:
             echo "Pulling latest changes...";
             git pull;
             echo "Starting Docker containers...";
-            docker compose -f compose_dev.yaml up -d;
+            docker compose -f compose_staging.yaml up -d;
             docker system prune -af;
             echo "✅ Deployment completed!";

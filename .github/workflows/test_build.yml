@@ -1,8 +1,15 @@
 name: main_test_build.yml
 on:
+  push:
+    branches:
+      - "main"
+      - "staging"
+      - "dev"
   pull_request:
     branches:
       - "main"
+      - "staging"
+      - "dev"
 
 jobs:
   build:
