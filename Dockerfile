@@ -3,7 +3,7 @@
 ARG NODE_VERSION=24.3.0
 
 FROM node:${NODE_VERSION}-alpine
-
+ARG BUILD_MODE=staging
 WORKDIR /usr/src/app
 
 # Copy package files
@@ -14,7 +14,11 @@ RUN npm ci
 
 # Copy source and build
 COPY . .
-RUN npm run build
+RUN if [ "$BUILD_MODE" == "staging" ]; then \
+ npm run build:staging; \
+    else \
+  npm run build;  \
+fi
 
 # Install serve globally as root
 RUN npm install -g serve
