@@ -1,7 +1,7 @@
 @use "../../../styles/helpers/index" as *;
 
 .row-popover {
-  --offlineIndicatorContentMagin: calc(var(--button-height) - #{rem(5)});
+  --offlineIndicatorContentMargin: calc(var(--button-height) - #{rem(5)});
 
   @include flex-center;
   @include square(var(--button-height));
@@ -64,7 +64,7 @@
     justify-content: center;
     align-items: start;
     height: var(--button-height);
-    margin-left: var(--offlineIndicatorContentMagin);
+    margin-left: var(--offlineIndicatorContentMargin);
   }
 
   &--opened {
@@ -91,7 +91,7 @@
 
     & .row-popover__content {
       margin-left: 0;
-      margin-right: var(--offlineIndicatorContentMagin);
+      margin-right: var(--offlineIndicatorContentMargin);
     }
   }
 }

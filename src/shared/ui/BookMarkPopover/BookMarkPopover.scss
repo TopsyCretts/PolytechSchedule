@@ -1,0 +1,80 @@
+@use "../../../styles/helpers" as *;
+
+.book-mark-popover {
+  --bookMarkPopoverHeight: #{rem(52)};
+  --bookMarkClipPath: path(
+      "M10.4274 5.45939C11.7751 2.72875 14.5562 1 17.6013 1L221.043 1V51H17.5126C14.5138 51 11.7668 49.3229 10.3966 46.6554L1.88375 30.0835C0.725826 27.8293 0.704379 25.1599 1.82593 22.8874L10.4274 5.45939Z"
+  );
+
+  @include flex-center;
+
+  position: fixed;
+  right: 0;
+  width: rem(38);
+  height: var(--bookMarkPopoverHeight);
+
+  &__toggler {
+    @include reset-button;
+    @include flex-center(true);
+
+    width: rem(39);
+    height: var(--bookMarkPopoverHeight);
+    padding-left: rem(5);
+    color: inherit;
+    cursor: pointer;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+  }
+
+  &__body,
+  &__title {
+    font-size: rem(14);
+    white-space: nowrap;
+  }
+
+  &__inner {
+    @include flex-center;
+
+    position: absolute;
+    z-index: 300;
+    right: 0;
+    overflow: hidden;
+    clip-path: var(--bookMarkClipPath);
+
+    &::after {
+      @include abs-center;
+
+      content: "";
+      z-index: -1;
+      width: 100%;
+      height: var(--bookMarkPopoverHeight);
+      background-color: var(--color-bg-themed);
+      clip-path: var(--bookMarkClipPath);
+      scale: 0.98;
+    }
+
+    &::before {
+      @include abs-center;
+
+      content: "";
+      z-index: -2;
+      width: 100%;
+      height: var(--bookMarkPopoverHeight);
+      background-color: var(--bookmark-popover-border-color-themed);
+      clip-path: var(--bookMarkClipPath);
+    }
+  }
+
+  &__content {
+    @include flex-center;
+
+    overflow: hidden;
+    margin-right: var(--spacing-md);
+  }
+
+  &--opened {
+    z-index: var(--z-index-select);
+  }
+}

@@ -1,9 +1,9 @@
 import "./RowPopover.scss"
 import clsx from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
-import { useState } from "react"
 import type { BaseComponentWithChildren } from "@/shared/models/BaseComponent.ts"
 import { useTranslation } from "react-i18next"
+import useOpenModal from "@/shared/lib/useOpenModal.ts"
 
 interface RowPopover extends BaseComponentWithChildren {
   togglerContent: React.ReactNode
@@ -20,11 +20,7 @@ const RowPopover = ({
 }: RowPopover) => {
   const { t } = useTranslation()
 
-  const [isOpen, setIsOpen] = useState(false)
-
-  const toggleIsOpen = () => {
-    setIsOpen((prev) => !prev)
-  }
+  const { isOpen, toggleModal } = useOpenModal()
 
   return (
     <div
@@ -34,7 +30,7 @@ const RowPopover = ({
         isOpen && "row-popover--opened",
         isReversed && "row-popover--reversed"
       )}
-      onClick={toggleIsOpen}
+      onClick={toggleModal}
     >
       <button
         className={"row-popover__toggler"}
