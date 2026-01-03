@@ -39,7 +39,6 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
     useScheduleData()
 
   const navigateToWeek = (date: Date) => {
-    console.log("awdawdadw")
     navigate(
       routeWithParams(
         "/schedule",
@@ -65,7 +64,6 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
     if (!isEqual(currentDayData.date, dateFromUrl!)) {
       const dayData = findEqualDayData(data.weeks, dateFromUrl!)
       setCurrentDayData(dayData)
-      calendar.current?.selectDate(dateFromUrl)
     }
   }, [dateFromUrl])
 

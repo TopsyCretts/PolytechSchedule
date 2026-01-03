@@ -1,8 +1,8 @@
 .data-status-popover--success {
-  color: var(--color-green);
+  color: var(--color-green) !important;
 }
-.data-status-popover--error .row-popover__toggler {
-  color: var(--color-orange);
+.data-status-popover--error {
+  color: var(--color-orange) !important;
 }
 
 .data-status-popover-spinner {
