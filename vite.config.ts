@@ -3,6 +3,7 @@ import svgr from "vite-plugin-svgr"
 import react from "@vitejs/plugin-react"
 import path from "path"
 import { VitePWA, type VitePWAOptions } from "vite-plugin-pwa"
+import viteYandexCounterPlugin from "./src/vite-yandex-counter-plugin.ts"
 
 const pwaOptions: Partial<VitePWAOptions> = {
   mode: "development",
@@ -72,23 +73,28 @@ const pwaOptions: Partial<VitePWAOptions> = {
   },
 }
 
-export default defineConfig({
-  plugins: [
-    react(),
-    svgr({
-      include: "**/*.svg?react",
-    }),
-    VitePWA(pwaOptions),
-  ],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
+export default defineConfig(() => {
+  return {
+    plugins: [
+      react(),
+      svgr({
+        include: "**/*.svg?react",
+      }),
+      VitePWA(pwaOptions),
+      viteYandexCounterPlugin({
+        productionOnly: process.env.VITE_APP_ENV !== "development",
+      }),
+    ],
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+      },
     },
-  },
-  css: {
-    postcss: "./postcss.config.cjs",
-  },
-  server: {
-    port: 3000,
-  },
+    css: {
+      postcss: "./postcss.config.cjs",
+    },
+    server: {
+      port: 3000,
+    },
+  }
 })
