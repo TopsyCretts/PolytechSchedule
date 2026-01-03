@@ -310,7 +310,7 @@ const ScheduleWeekView = () => {
   const handlePointerUp = (e: React.PointerEvent) => {
     const div = e.clientX - horizontalSwipe.startX
 
-    if (Math.abs(div) > 250) {
+    if (Math.abs(div) > 150) {
       if (div < 0 && currentWeek.activeDateIndex === 6) {
         handleNextWeek(0)
       } else if (div > 0 && currentWeek.activeDateIndex === 0) {
