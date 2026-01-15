@@ -39,7 +39,7 @@ const ScheduleLayout = ({
 }: ScheduleLayoutProps) => {
   const { t, i18n } = useTranslation()
   const { dateFromUrl } = useGetDateFromUrl()
-  const [debouncedProfileId] = useDebounce(profile.id, 300)
+  const [debouncedKeyForLoading] = useDebounce(profile.apiId + profile.id, 300)
   const [scheduleData, setScheduleData] =
     useState<ScheduleDataStatus>(DEFAULT_VALUE)
   const [currentDayData, setCurrentDayData] = useState<DayData>(() =>
@@ -122,7 +122,7 @@ const ScheduleLayout = ({
         </h1>
       )
     }
-  } else if (debouncedProfileId !== profile.id) {
+  } else if (debouncedKeyForLoading !== profile.apiId + profile.id) {
     content = <Spinner className="schedule-layout__spinner" />
   } else {
     content = <Outlet />

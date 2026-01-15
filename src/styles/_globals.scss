@@ -1,10 +1,18 @@
 @use "./helpers" as *;
 
 :root {
+
+  @include mobile{
+    scrollbar-gutter: auto;
+  }
+
   &.modal-open {
     overflow: hidden;
-    padding-right: var(--scrollbar-width, 17px) !important;
     scrollbar-gutter: auto;
+
+    @include mobile-above {
+      padding-right: 11px;
+    }
   }
 }
 

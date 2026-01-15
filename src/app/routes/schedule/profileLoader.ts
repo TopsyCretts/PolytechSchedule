@@ -22,14 +22,12 @@ const profileLoader = async ({ params }: LoaderFunctionArgs) => {
   const newProfileType = params.profileType
 
   if (!newProfileType && !newProfileApiId) {
-    console.log("AWdadwwad")
     throw new Response("Missing required fields", { status: 404 })
   }
 
   const profileType = newProfileType as ProfileType
 
   if (!Object.values(PROFILE_TYPE).includes(profileType)) {
-    console.log("AWdadwwad")
     throw new Response("Missing required fields", { status: 404 })
   }
 
