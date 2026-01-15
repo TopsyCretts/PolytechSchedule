@@ -82,7 +82,8 @@
 .book-mark-popover__content {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
+  flex-direction: column;
   overflow: hidden;
   margin-right: var(--spacing-md);
 }

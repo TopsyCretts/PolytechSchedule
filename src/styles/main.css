@@ -583,10 +583,19 @@ svg * {
   border-radius: var(--border-radius-xl);
 }
 
+@media (width <= 47.999375rem) {
+  :root {
+    scrollbar-gutter: auto;
+  }
+}
 :root.modal-open {
   overflow: hidden;
-  padding-right: var(--scrollbar-width, 17px) !important;
   scrollbar-gutter: auto;
+}
+@media (width > 47.999375rem) {
+  :root.modal-open {
+    padding-right: 11px;
+  }
 }
 
 body {

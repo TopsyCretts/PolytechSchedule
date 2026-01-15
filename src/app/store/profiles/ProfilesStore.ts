@@ -151,7 +151,7 @@ export class ProfilesStore {
   }
 
   @action
-  removeProfileAndReturnClosest(profileId: number) {
+  async removeProfileAndReturnClosest(profileId: number) {
     const index = this.profiles.findIndex((profile) => profile.id === profileId)
     const nearestLeftIndex = index - 1
 
@@ -161,7 +161,7 @@ export class ProfilesStore {
 
     const nearestRightIndexAfterRemove = index
 
-    this.removeProfile(profileId)
+    await this.removeProfile(profileId)
 
     if (nearestRightIndexAfterRemove < this.profiles.length) {
       return this.profiles[nearestRightIndexAfterRemove]
@@ -192,7 +192,7 @@ export class ProfilesStore {
   async updateLastUpdateTimeById(profileId: number) {
     const profile = this.profiles.find((profile) => profile.id === profileId)
     if (!profile) {
-      throw new Error(`Cannot update last update profile with id ${profileId}`)
+      return 0
     }
 
     if (this.getCurrentProfile?.id === profileId) {
@@ -202,10 +202,8 @@ export class ProfilesStore {
     return await dbService.saveProfile({ ...profile, lastUpdateAt: new Date() })
   }
 
-  private removeProfile(id: number) {
-    dbService
-      .deleteProfile(id)
-      .then(() => console.log(`Profile deleted successfully `))
+  private async removeProfile(id: number) {
+    await dbService.deleteProfile(id)
     LocalStorageManager.set(LOCAL_STORAGE_KEY.lastProfileId, null)
   }
 }

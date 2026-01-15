@@ -33,8 +33,8 @@ const ProfileItem = observer(
 
     const navigate = useNavigate()
 
-    const handleRemove = () => {
-      const nearestProfile = removeProfileAndReturnClosest(profileId)
+    const handleRemove = async () => {
+      const nearestProfile = await removeProfileAndReturnClosest(profileId)
       if (nearestProfile !== null) {
         navigate(
           getScheduleProfileRoute(
