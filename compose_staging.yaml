@@ -2,6 +2,8 @@ services:
   staging:
     build:
       context: .
+      args:
+        - BUILD_MODE=staging
     environment:
       NODE_ENV: staging
     ports:
