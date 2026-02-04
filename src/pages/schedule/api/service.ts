@@ -46,7 +46,7 @@ const getScheduleByProfileOptions = (
       try {
         const response =
           profile.profileType === PROFILE_TYPE.student
-            ? await getScheduleByGroupId(profile.apiId)
+            ? await getScheduleByGroupId(profile.name)
             : await getScheduleByTeacherId(profile.apiId)
 
         const newScheduleData = await toScheduleData(
@@ -54,22 +54,17 @@ const getScheduleByProfileOptions = (
           actualGroups,
           actualTeachers
         )
-        if (profile.id !== 0) {
-          dbService.saveSchedule(profile.id, newScheduleData).then(() => {
-            console.log(`Schedule saved successfully ${profile.id}`)
-          })
-          mainContainer
+
+        if (profile.id > 0) {
+          await dbService.saveSchedule(profile.id, newScheduleData)
+          await mainContainer
             .get(ProfilesStore)
             .updateLastUpdateTimeById(profile.id)
-            .then(() => {
-              console.log(`Schedule ${profile.id}`)
-            })
         }
 
         return { data: newScheduleData, status: PROGRESS_STATUS.success }
       } catch (error) {
         if (isCacheValid) {
-          console.log("Using cached data due to network error")
           onCacheData({
             data: existingScheduleDataUi!,
             status: PROGRESS_STATUS.error,

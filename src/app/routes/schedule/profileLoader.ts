@@ -1,4 +1,4 @@
-import type { LoaderFunctionArgs } from "react-router"
+import { type LoaderFunctionArgs, redirect } from "react-router"
 import {
   type Profile,
   PROFILE_TYPE,
@@ -22,14 +22,12 @@ const profileLoader = async ({ params }: LoaderFunctionArgs) => {
   const newProfileType = params.profileType
 
   if (!newProfileType && !newProfileApiId) {
-    console.log("AWdadwwad")
     throw new Response("Missing required fields", { status: 404 })
   }
 
   const profileType = newProfileType as ProfileType
 
   if (!Object.values(PROFILE_TYPE).includes(profileType)) {
-    console.log("AWdadwwad")
     throw new Response("Missing required fields", { status: 404 })
   }
 
@@ -55,10 +53,19 @@ const profileLoader = async ({ params }: LoaderFunctionArgs) => {
     return { savedProfile }
   }
 
+  const profileName =
+    profileType === PROFILE_TYPE.student
+      ? institutesStore.getInstituteByGroupId(profileApiId)?.group.name
+      : teachersStore.getTeacherById(profileApiId)?.name
+
+  if (profileName === undefined) {
+    throw redirect(APP_ROUTES.newProfile)
+  }
+
   const tempProfile: Profile =
     profileType === PROFILE_TYPE.student
-      ? createStudentProfile(profileApiId, "", "")
-      : createTeacherProfile(profileApiId, "")
+      ? createStudentProfile(profileApiId, profileName ?? "", "")
+      : createTeacherProfile(profileApiId, profileName ?? "")
 
   profilesStore.setCurrentProfile(tempProfile)
 

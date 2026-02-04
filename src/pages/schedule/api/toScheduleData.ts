@@ -26,98 +26,87 @@ const toWeekData = (
   allActualGroups: GroupData[],
   actualTeachers: TeacherData[]
 ): ScheduleWeekData[] => {
-  const parseDto = (
-    weeksDto: ScheduleWeekDto[]
-  ): Array<ScheduleWeekData | null> => {
-    return weeksDto.map((weekDto) => {
-      const firstDateOfWeekString = weekDto.days.find((_, index) => index === 0)
-        ?.info.date
-      if (firstDateOfWeekString !== undefined) {
-        const weekStart = startOfWeek(firstDateOfWeekString!, {
-          weekStartsOn: 1,
-        })
-        const weekEnd = endOfWeek(firstDateOfWeekString!, { weekStartsOn: 1 })
-        return {
-          start: weekStart,
-          end: weekEnd,
-          days: weekDto.days.map((dayDto): DayData => {
+  const parseDaysDto = (weeksDto: ScheduleWeekDto[]): Array<DayData> => {
+    const resultData: Array<DayData> = []
+
+    weeksDto.forEach((weekDto) => {
+      weekDto.days.forEach((dayDto) => {
+        const dayData: DayData = {
+          date: parseISO(dayDto.info.date),
+          lessons: dayDto.lessons.map((lesson): LessonData => {
             return {
-              date: parseISO(dayDto.info.date),
-              lessons: dayDto.lessons.map((lesson): LessonData => {
-                return {
-                  name: lesson.lessonName,
-                  type: getLessonType(lesson.type),
-                  start: parseISO(lesson.startAt),
-                  end: parseISO(lesson.endAt),
-                  lessonNumber: lesson.number || 1,
-                  teachers: getTeachersByIds(
-                    [
-                      {
-                        teacherName: lesson.teacherName,
-                        teacherId: lesson.teacherId,
-                      },
-                      {
-                        teacherId: lesson.additionalTeacherId,
-                        teacherName: lesson.additionalTeacherName,
-                      },
-                    ],
-                    actualTeachers
-                  ),
-                  groups: getGroupsByNames(lesson.groups, allActualGroups),
-                  auditory: lesson.auditoryName,
-                  isDistant: false,
-                  additionalInfo: lesson.subInfo,
-                }
-              }),
+              name: lesson.lessonName,
+              type: getLessonType(lesson.type),
+              start: parseISO(lesson.startAt),
+              end: parseISO(lesson.endAt),
+              lessonNumber: lesson.number || 1,
+              teachers: getTeachersByIds(
+                [
+                  {
+                    teacherName: lesson.teacherName,
+                    teacherId: lesson.teacherId,
+                  },
+                  {
+                    teacherId: lesson.additionalTeacherId,
+                    teacherName: lesson.additionalTeacherName,
+                  },
+                ],
+                actualTeachers
+              ),
+              groups: getGroupsByNames(lesson.groups, allActualGroups),
+              auditory: lesson.auditoryName,
+              isDistant: false,
+              additionalInfo: lesson.subInfo,
             }
           }),
         }
-      }
-      return null
+        resultData.push(dayData)
+      })
     })
+
+    return resultData
   }
 
-  const parsedWeeks = parseDto(weeksDto)
+  const allDaysData = parseDaysDto(weeksDto)
 
-  const filteredWeeks: ScheduleWeekData[] = parsedWeeks.filter(
-    (item) => item !== null
-  )
-
-  const mergeWeeks = (weeks: ScheduleWeekData[]) => {
+  const mergeDaysToWeeks = (days: DayData[]) => {
     // string - Date.toString()
     const mergedWeeks: Map<string, ScheduleWeekData> = new Map()
 
-    weeks.forEach((week) => {
+    days.forEach((day) => {
+      const weekStart = startOfWeek(day.date, { weekStartsOn: 1 })
       // если нет в мапе, то добавляем
-      if (!mergedWeeks.has(week.start.toString())) {
-        mergedWeeks.set(week.start.toString(), week)
+      if (!mergedWeeks.has(weekStart.toString())) {
+        const newWeek: ScheduleWeekData = {
+          start: weekStart,
+          end: endOfWeek(weekStart),
+          days: [day],
+        }
+        mergedWeeks.set(weekStart.toString(), newWeek)
       } else {
         // неделя с такой датой уже есть в мапе, поэтому мерджим ее с week
-        const existingWeek = mergedWeeks.get(week.start.toString())
+        const existingWeek = mergedWeeks.get(weekStart.toString())
         if (existingWeek) {
           // мапа даты дня и сам день (<дата, день>)
           // инициализируем existingWeek.days
           const mergedDays: Map<string, DayData> = new Map(
             existingWeek.days.map((data) => [data.date.toString(), data])
           )
-          // проходимся по week.days аналогично:
           // если нет в mergedDays - добавляем, а если есть - мерджим
-          week.days.forEach((day) => {
-            if (!mergedDays.has(day.date.toString())) {
-              mergedDays.set(day.date.toString(), day)
-            } else {
-              // мерджим уроки
-              const existingDay = mergedDays.get(day.date.toString())
-              if (existingDay) {
-                mergedDays.set(day.date.toString(), {
-                  ...day,
-                  lessons: [...existingDay.lessons, ...day.lessons],
-                })
-              }
+          if (!mergedDays.has(day.date.toString())) {
+            mergedDays.set(day.date.toString(), day)
+          } else {
+            // мерджим уроки
+            const existingDay = mergedDays.get(day.date.toString())
+            if (existingDay) {
+              mergedDays.set(day.date.toString(), {
+                ...day,
+                lessons: [...existingDay.lessons, ...day.lessons],
+              })
             }
-          })
+          }
 
-          mergedWeeks.set(week.start.toString(), {
+          mergedWeeks.set(weekStart.toString(), {
             ...existingWeek,
             days: [...mergedDays.values()],
           })
@@ -127,7 +116,7 @@ const toWeekData = (
     return [...mergedWeeks.values()]
   }
 
-  return mergeWeeks(filteredWeeks)
+  return mergeDaysToWeeks(allDaysData)
 }
 
 const getGroupsByNames = (
