@@ -4,12 +4,12 @@ import { InstitutesStore } from "@/app/store/institutes/InstitutesStore"
 import { getGroupsByInstitutes } from "@/shared/api/search-schedule/requests"
 import { type InstitutesData, toInstituteData } from "@/entities/Institute"
 import { queryOptions, useQuery } from "@tanstack/react-query"
-import { dbService, STORE_NAMES } from "@/app/store/indexDb/indexDb"
+import { DBRepository, STORE_NAMES } from "@/app/store/indexDb/indexDb"
 import axios from "axios"
 import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants"
 
 const getInstitutes = async () => {
-  const savedData = await dbService.getAll(STORE_NAMES.institutes)
+  const savedData = await DBRepository.getAll(STORE_NAMES.institutes)
   const lastUpdate = LocalStorageManager.get<number>(
     LOCAL_STORAGE_KEY.institutesLastUpdate
   )

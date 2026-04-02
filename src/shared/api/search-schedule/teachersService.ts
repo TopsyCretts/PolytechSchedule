@@ -4,12 +4,12 @@ import { LocalStorageManager } from "@/app/store/browser-storages"
 import { mainContainer } from "@/app/store/mainContainer.ts"
 import { TeachersStore } from "@/app/store/teachers/TeachersStore"
 import type { TeachersData } from "@/entities/Teachers.ts"
-import { dbService, STORE_NAMES } from "@/app/store/indexDb/indexDb"
+import { DBRepository, STORE_NAMES } from "@/app/store/indexDb/indexDb"
 import axios from "axios"
 import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants"
 
 const getTeachersFromStorageOrRefetch = async () => {
-  const savedData = await dbService.getAll(STORE_NAMES.teachers)
+  const savedData = await DBRepository.getAll(STORE_NAMES.teachers)
   const lastUpdate = LocalStorageManager.get<number>(
     LOCAL_STORAGE_KEY.teachersLastUpdate
   )

@@ -37,7 +37,7 @@ interface ScheduleDB extends DBSchema {
   }
 }
 
-class DatabaseService {
+class DatabaseRepository {
   private db: IDBPDatabase<ScheduleDB> | null = null
 
   async init(): Promise<IDBPDatabase<ScheduleDB>> {
@@ -104,13 +104,6 @@ class DatabaseService {
     return await tx.store.get(id)
   }
 
-  async getProfile(id: number): Promise<ProfileDB | undefined> {
-    const db = await this.init()
-    const tx = db.transaction(STORE_NAMES.profiles, "readonly")
-
-    return await tx.store.get(id)
-  }
-
   async getAll<K extends StoreName>(
     storeName: K,
     query?: IDBKeyRange,
@@ -147,4 +140,4 @@ class DatabaseService {
   }
 }
 
-export const dbService = new DatabaseService()
+export const DBRepository = new DatabaseRepository()

@@ -20,7 +20,7 @@ type ScheduleContextValues = {
   data: ScheduleData
   profile: BaseProfile
   currentDayData: DayData
-  setCurrentDayData: (dayData: DayData) => void
+  setCurrentDayDataByDate: (date: Date) => void
   locale: Locale
   status: ProgressStatus
   resetError: () => void

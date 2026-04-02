@@ -62,6 +62,8 @@ const HeaderLink = ({ isHomePage }: HeaderControlsProps) => {
   )
 }
 
+const goToCurrentDayEvent = new CustomEvent("goToCurrentDayEvent", {})
+
 const MoveOnTodayLink = () => {
   const { profileApiId, profileType } = useParams()
   const { t } = useTranslation()
@@ -83,6 +85,7 @@ const MoveOnTodayLink = () => {
         { date: format(startOfToday(), QUERY_DATE_FORMAT) },
         isLaptop ? SCHEDULE_VIEW.week : SCHEDULE_VIEW.calendar
       )}
+      onClick={() => window.dispatchEvent(goToCurrentDayEvent)}
     >
       {t(STRINGS_RES.on_today)} {format(startOfToday(), "dd.MM")}
       <ArrowIcon className={"header__icon"} />

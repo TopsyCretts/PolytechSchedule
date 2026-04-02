@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { type SwiperRef } from "swiper/react"
 import type { SelectedWeekSlide } from "@/pages/schedule-week-slider/lib/types.ts"
 import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
-import { add, type Day, isAfter, isBefore, isEqual, sub } from "date-fns"
+import { add, type Day, isAfter, isBefore, startOfToday, sub } from "date-fns"
 import { findWeekSlide } from "@/pages/schedule-week-slider/lib/findWeekSlide.ts"
 import "./ScheduleWeekView.scss"
 import ScheduleWeekViewController from "@/pages/schedule-week-slider/ui/ScheduleWeekVIewController"
@@ -14,10 +14,6 @@ import ScheduleWeekViewControllerMobile from "@/pages/schedule-week-slider/ui/Sc
 import { AnimatePresence, motion } from "framer-motion"
 import ArrowIcon from "@/assets/icons/arrow-long-right.svg?react"
 import clsx from "clsx"
-import {
-  useGetDateFromUrl,
-  useSetDateToUrl,
-} from "@/shared/lib/useDayFromSearchParams.ts"
 import getWeekDataByWeekStart from "@/pages/schedule-week-slider/lib/getWeekDataByWeekStart.ts"
 import {
   maxWeekStartDate,
@@ -35,42 +31,32 @@ interface VerticalSwipeState {
 }
 
 const ScheduleWeekView = () => {
-  const { data, profile, locale } = useScheduleData()
+  const { data, profile, currentDayData, setCurrentDayDataByDate, locale } =
+    useScheduleData()
   const swiperRef = useRef<SwiperRef | null>(null)
 
-  const { dateFromUrl } = useGetDateFromUrl()
-  const { setDateToUrl } = useSetDateToUrl()
-
-  const [isNotFirstRender, setNotFirstRender] = useState(false)
-
-  useEffect(() => {
-    setNotFirstRender(true)
-  }, [])
-
   const [currentWeek, setCurrentWeek] = useState<SelectedWeekSlide>(
-    findWeekSlide(data.weeks, dateFromUrl)
+    findWeekSlide(data.weeks, currentDayData.date)
   )
-
   const goToIndex = useCallback((index: number) => {
     swiperRef.current?.swiper?.slideTo(index)
   }, [])
 
   useEffect(() => {
-    const currentDay =
-      currentWeek.weekData.days[currentWeek.activeDateIndex]?.date
-    if (currentDay && isEqual(dateFromUrl, currentDay)) {
-      return
-    }
-    const newSlide = findWeekSlide(data.weeks, dateFromUrl)
-    if (isEqual(newSlide.weekData.start, currentWeek.weekData.start)) {
-      if (newSlide.activeDateIndex === currentWeek.activeDateIndex) {
-        return
+    const onToday = () => {
+      const newSlide = findWeekSlide(data.weeks, startOfToday())
+      if (newSlide.activeDateIndex !== currentWeek.activeDateIndex) {
+        setCurrentWeek(newSlide)
+        goToIndex(newSlide.activeDateIndex)
       }
-      goToIndex(newSlide.activeDateIndex)
-      return
     }
-    handleWeekSelection(newSlide.weekData, newSlide.activeDateIndex)
-  }, [dateFromUrl, goToIndex])
+
+    window.addEventListener("goToCurrentDayEvent", onToday)
+
+    return () => {
+      window.removeEventListener("goToCurrentDayEvent", onToday)
+    }
+  }, [currentDayData.date, currentWeek, data.weeks, goToIndex])
 
   const [animationDirection, setAnimationDirection] = useState(1)
 
@@ -88,7 +74,7 @@ const ScheduleWeekView = () => {
         activeDateIndex: initialDay ?? prev.activeDateIndex,
       }))
     },
-    [currentWeek, data.weeks]
+    [currentWeek]
   )
 
   const handleNextWeek = (forceInitialDate: number | null = null) => {
@@ -110,6 +96,19 @@ const ScheduleWeekView = () => {
     const weekData = getWeekDataByWeekStart(data.weeks, prevWeekStart)
     handleWeekSelection(weekData, forceInitialDate ? forceInitialDate : 6)
   }
+
+  const handleSlideChange = useCallback(
+    (newActiveIndex: number, newDay: Date) => {
+      if (newDay) {
+        setCurrentDayDataByDate(newDay)
+      }
+      setCurrentWeek((prev) => ({
+        ...prev,
+        activeDateIndex: newActiveIndex,
+      }))
+    },
+    [setCurrentDayDataByDate]
+  )
 
   const [verticalSwipe, setVerticalSwipe] = useState<VerticalSwipeState>({
     isSwiping: false,
@@ -285,19 +284,6 @@ const ScheduleWeekView = () => {
       }),
     }),
     []
-  )
-
-  const handleSlideChange = useCallback(
-    (newActiveIndex: number, newDay: Date) => {
-      if (newDay && isNotFirstRender) {
-        setDateToUrl(newDay)
-      }
-      setCurrentWeek((prev) => ({
-        ...prev,
-        activeDateIndex: newActiveIndex,
-      }))
-    },
-    [isNotFirstRender, setDateToUrl]
   )
 
   const handlePointerDown = (e: React.PointerEvent) => {

@@ -7,7 +7,7 @@ import {
 } from "mobx"
 import type { TeacherData, TeachersData } from "@/entities/Teachers.ts"
 import { injectable } from "inversify"
-import { dbService, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
+import { DBRepository, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
 import { LocalStorageManager } from "@/app/store/browser-storages"
 import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
 
@@ -35,8 +35,7 @@ export class TeachersStore {
   }
 
   private init() {
-    dbService
-      .getAll(STORE_NAMES.teachers)
+    DBRepository.getAll(STORE_NAMES.teachers)
       .catch(() => {
         this.rejectInitialized()
       })
@@ -64,7 +63,7 @@ export class TeachersStore {
   @action
   setTeachersData(data: TeachersData) {
     this.teachersData = { ...data }
-    dbService.saveAllTeachers(data.teachers).then()
+    DBRepository.saveAllTeachers(data.teachers).then()
   }
 
   getTeacherById(teacherId: number): TeacherData | null {

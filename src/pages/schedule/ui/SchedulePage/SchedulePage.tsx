@@ -27,6 +27,7 @@ const SchedulePage = observer(({ className }: SchedulePageProps) => {
   return (
     <main className={clsx(className, "schedule-page", "overflow-x-hidden")}>
       <ScheduleLayout
+        key={currentProfile.id}
         className={"schedule-page__schedule-layout"}
         profile={currentProfile}
         teachers={teachers}

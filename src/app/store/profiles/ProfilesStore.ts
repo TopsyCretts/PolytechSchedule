@@ -15,7 +15,7 @@ import {
 } from "mobx"
 import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
 import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
-import { dbService, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
+import { DBRepository, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
 import { SCHEDULE_VIEW } from "@/entities/ScheduleData.ts"
 import { LocalStorageManager } from "@/app/store/browser-storages"
 import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
@@ -49,8 +49,7 @@ export class ProfilesStore {
 
   @action
   initProfiles() {
-    dbService
-      .getAll(STORE_NAMES.profiles)
+    DBRepository.getAll(STORE_NAMES.profiles)
       .then((profiles) => {
         runInAction(() => {
           this.profiles = [...profiles]
@@ -186,7 +185,7 @@ export class ProfilesStore {
       profileDb = { ...profileDb, institute: profile.institute }
     }
 
-    return await dbService.saveProfile(profileDb)
+    return await DBRepository.saveProfile(profileDb)
   }
 
   async updateLastUpdateTimeById(profileId: number) {
@@ -199,11 +198,14 @@ export class ProfilesStore {
       this.currentProfile = { ...profile, lastUpdateAt: new Date() }
     }
 
-    return await dbService.saveProfile({ ...profile, lastUpdateAt: new Date() })
+    return await DBRepository.saveProfile({
+      ...profile,
+      lastUpdateAt: new Date(),
+    })
   }
 
   private async removeProfile(id: number) {
-    await dbService.deleteProfile(id)
+    await DBRepository.deleteProfile(id)
     LocalStorageManager.set(LOCAL_STORAGE_KEY.lastProfileId, null)
   }
 }

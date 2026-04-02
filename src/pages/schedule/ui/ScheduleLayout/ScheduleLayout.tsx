@@ -1,6 +1,7 @@
 import {
   createContext,
   type ReactNode,
+  useCallback,
   useEffect,
   useMemo,
   useState,
@@ -22,7 +23,11 @@ import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import { Outlet } from "react-router"
 import "./ScheduleLayout.scss"
 import clsx from "clsx"
-import { useGetDateFromUrl } from "@/shared/lib/useDayFromSearchParams.ts"
+import {
+  useGetDateFromUrl,
+  useSetDateToUrl,
+} from "@/shared/lib/useDayFromSearchParams.ts"
+import { startOfToday } from "date-fns"
 
 const ScheduleContext = createContext<ScheduleContextValues | null>(null)
 
@@ -56,9 +61,25 @@ const ScheduleLayout = ({
     scheduleData.status
   )
 
+  const { setDateToUrl } = useSetDateToUrl()
+
+  const setCurrentDayDataByDate = useCallback(
+    (date: Date) => {
+      setDateToUrl(date!)
+      setCurrentDayData(findEqualDayData(scheduleData.data.weeks, date))
+    },
+    [scheduleData.data.weeks, setDateToUrl]
+  )
+
   useEffect(() => {
-    setScheduleData(DEFAULT_VALUE)
-  }, [profile.id])
+    const onToday = () => {
+      setCurrentDayDataByDate(startOfToday())
+    }
+    window.addEventListener("goToCurrentDayEvent", onToday)
+    return () => {
+      window.removeEventListener("goToCurrentDayEvent", onToday)
+    }
+  }, [setCurrentDayDataByDate])
 
   useEffect(() => {
     if (data) {
@@ -86,7 +107,7 @@ const ScheduleLayout = ({
       data: scheduleData.data,
       profile,
       currentDayData,
-      setCurrentDayData,
+      setCurrentDayDataByDate,
       locale: LANGUAGES_MAP[i18n.language].locale,
       status: scheduleData.status,
       resetError: refetch,
@@ -96,6 +117,7 @@ const ScheduleLayout = ({
       scheduleData.status,
       profile,
       currentDayData,
+      setCurrentDayDataByDate,
       i18n.language,
       refetch,
     ]

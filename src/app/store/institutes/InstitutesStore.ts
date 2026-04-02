@@ -8,7 +8,7 @@ import {
 } from "mobx"
 import type { InstitutesData } from "@/entities/Institute.ts"
 import type { GroupData } from "@/entities/Group.ts"
-import { dbService, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
+import { DBRepository, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
 import { LocalStorageManager } from "@/app/store/browser-storages"
 import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
 
@@ -37,8 +37,7 @@ export class InstitutesStore {
   }
 
   private init() {
-    dbService
-      .getAll(STORE_NAMES.institutes)
+    DBRepository.getAll(STORE_NAMES.institutes)
       .catch(() => {
         this.rejectInitialized()
       })
@@ -66,7 +65,7 @@ export class InstitutesStore {
   @action
   setInstitutesData(data: InstitutesData) {
     this.institutesData = { ...data }
-    dbService.saveAllInstitutes(data.institutes).then()
+    DBRepository.saveAllInstitutes(data.institutes).then()
   }
 
   getGroupsByInstitute(instituteId: number): GroupData[] | null {

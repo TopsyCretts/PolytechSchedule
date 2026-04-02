@@ -7,7 +7,7 @@ import { toScheduleData } from "@/pages/schedule/api/toScheduleData.ts"
 import type { GroupData } from "@/entities/Group.ts"
 import type { TeacherData } from "@/entities/Teachers.ts"
 import { type BaseProfile, PROFILE_TYPE } from "@/entities/Profile.ts"
-import { dbService } from "@/app/store/indexDb/indexDb.ts"
+import { DBRepository } from "@/app/store/indexDb/indexDb.ts"
 import { toScheduleUi } from "@/app/store/indexDb/models/ScheduleDataDB.ts"
 import type { ScheduleData, ScheduleDataStatus } from "@/entities/ScheduleData"
 import {
@@ -27,7 +27,7 @@ const getScheduleByProfileOptions = (
   queryOptions({
     queryKey: ["schedule", profile.profileType, profile.apiId, profile.id],
     queryFn: async (): Promise<ScheduleDataStatus | undefined> => {
-      const existingScheduleData = await dbService.getSchedule(profile.id)
+      const existingScheduleData = await DBRepository.getSchedule(profile.id)
       let existingScheduleDataUi: ScheduleData | null = null
 
       const isCacheValid = existingScheduleData !== undefined
@@ -56,7 +56,7 @@ const getScheduleByProfileOptions = (
         )
 
         if (profile.id > 0) {
-          await dbService.saveSchedule(profile.id, newScheduleData)
+          await DBRepository.saveSchedule(profile.id, newScheduleData)
           await mainContainer
             .get(ProfilesStore)
             .updateLastUpdateTimeById(profile.id)

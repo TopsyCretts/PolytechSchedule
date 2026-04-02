@@ -1,6 +1,6 @@
 import { LocalStorageManager } from "@/app/store/browser-storages"
 import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
-import { dbService, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
+import { DBRepository, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
 import { redirect } from "react-router"
 import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
 import { MATCH_MEDIA } from "@/shared/constants/media.ts"
@@ -11,7 +11,7 @@ export const mainLoader = async () => {
   )
 
   if (lastUsedProfileId !== null) {
-    const profiles = await dbService.getAll(STORE_NAMES.profiles)
+    const profiles = await DBRepository.getAll(STORE_NAMES.profiles)
     if (profiles.length === 0) {
       return
     }

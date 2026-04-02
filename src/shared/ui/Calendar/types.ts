@@ -6,8 +6,8 @@ interface CalendarContextValues {
   selectedDate: Date | null
   monthFormat: string
   locale: Locale
-  isMonthIncrementAvailable: boolean
-  isMonthDecrementAvailable: boolean
+  isMonthIncrementAvailable: () => boolean
+  isMonthDecrementAvailable: () => boolean
 }
 
 interface CalendarContextActions {
@@ -18,6 +18,7 @@ interface CalendarContextActions {
 
 interface CalendarProps extends BaseComponent {
   initialDate: Date | null
+  selectedDate?: Date | null
   dataToDisplay: CalendarData
   onMonthChange: (month: Date) => void
   onSelectedDateChange: (date: Date | null) => void
@@ -32,8 +33,8 @@ type CalendarRef = {
   goNextDay: () => void
   goPreviousDay: () => void
   selectDate: (date: Date | null, redirect?: boolean) => void
-  isMonthIncrementAvailable: boolean
-  isMonthDecrementAvailable: boolean
+  isMonthIncrementAvailable: () => boolean
+  isMonthDecrementAvailable: () => boolean
   selectedDate: Date | null
 }
 
