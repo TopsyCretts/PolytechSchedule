@@ -1,10 +1,8 @@
-@use "../../../../styles/helpers" as *;
-
 .schedule-week-view-controller-mobile {
   @include flex-center;
 
   justify-content: space-between;
-  column-gap: rem(6);
+  column-gap: remText(6);
   width: 100%;
 
   &__title {
@@ -21,7 +19,7 @@
 
     flex-direction: column;
     width: 100%;
-    min-width: rem(41);
+    min-width: remText(41);
     max-width: var(--button-height);
     max-height: var(--button-height);
     padding-block: var(--spacing-xs);

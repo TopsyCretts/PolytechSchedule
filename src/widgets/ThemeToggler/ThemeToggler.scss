@@ -1,5 +1,3 @@
-@use "../../styles/helpers/index" as *;
-
 .theme-picker {
   @include square(var(--button-height));
 

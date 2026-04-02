@@ -1,5 +1,3 @@
-@use "../../../styles/helpers" as *;
-
 .week-slider {
   z-index: 0 !important;
   width: 100%;
@@ -12,7 +10,7 @@
     overscroll-behavior: none;
     max-width: calc(var(--week-slide-width) + 2 * var(--week-slide-padding-x));
     height: 100%;
-    padding-bottom: rem(10);
+    padding-bottom: remText(10);
     touch-action: pan-y;
   }
 }

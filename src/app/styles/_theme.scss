@@ -1,4 +1,4 @@
-@use "./helpers" as *;
+@use "helpers/index" as *;
 
 :root {
   --color-light: #f8f9fc;
@@ -42,11 +42,11 @@
   --blur-10: blur(10px);
   --blur-20: blur(20px);
 
-  --border-light: #{rem(1)} solid var(--color-light-opacity-5);
-  --border-dark: #{rem(1)} solid var(--color-dark-opacity-10);
-  --border-blue: #{rem(1)} solid var(--color-blue);
+  --border-light: #{remText(1)} solid var(--color-light-opacity-5);
+  --border-dark: #{remText(1)} solid var(--color-dark-opacity-10);
+  --border-blue: #{remText(1)} solid var(--color-blue);
 
-  --button-border: #{rem(1)} solid var(--color-dark-opacity-10);
+  --button-border: #{remText(1)} solid var(--color-dark-opacity-10);
   --button-border-themed: var(--button-border);
 
   --color-bg-themed: var(--color-light);

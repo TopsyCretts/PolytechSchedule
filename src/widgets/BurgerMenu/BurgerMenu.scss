@@ -1,5 +1,3 @@
-@use "../../styles/helpers/index" as *;
-
 .burger-menu {
   @include square(var(--button-height));
 }

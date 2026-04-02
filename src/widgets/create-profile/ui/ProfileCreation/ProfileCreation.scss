@@ -1,5 +1,3 @@
-@use "../../../../styles/helpers/index" as *;
-
 .profile-creation {
   &__inner {
     @include border-shadow-themed(var(--border-radius-xl));
@@ -14,7 +12,7 @@
 
   &__loading-fallback,
   &__retry-fallback {
-    height: rem(400);
+    height: remText(400);
   }
 
   &__body,

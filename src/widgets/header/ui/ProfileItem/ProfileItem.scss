@@ -1,5 +1,3 @@
-@use "../../../../styles/helpers/index" as *;
-
 .profile-item {
   border-right: var(--border-themed);
   border-bottom: var(--border-themed);
@@ -13,7 +11,7 @@
 
     &::before {
       content: "";
-      margin-left: rem(5);
+      margin-left: remText(5);
     }
 
     & .profile-item__cross,
@@ -23,7 +21,7 @@
   }
 
   &__cross {
-    margin-right: rem(5);
+    margin-right: remText(5);
     color: inherit;
   }
 }

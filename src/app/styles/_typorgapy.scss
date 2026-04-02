@@ -1,4 +1,4 @@
-@use "helpers" as *;
+@use "helpers/index" as *;
 
 h1,
 .h1 {
@@ -25,11 +25,11 @@ h3,
 }
 
 .text-16 {
-  font-size: rem(16);
+  font-size: remText(16);
 }
 
 .text-14 {
-  font-size: rem(14);
+  font-size: remText(14);
 }
 
 .bold {

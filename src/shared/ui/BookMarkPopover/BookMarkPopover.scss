@@ -1,38 +1,36 @@
-@use "../../../styles/helpers" as *;
-
 .book-mark-popover {
-  --bookMarkPopoverHeight: #{rem(52)};
+  --bookMarkPopoverHeight: #{remText(52)};
   --bookMarkClipPath: polygon(
-      #{rem(10.43)} #{rem(5.46)},
-      #{rem(11.78)} #{rem(2.73)},
-      #{rem(14.56)} #{rem(1)},
-      #{rem(17.60)} #{rem(1)},
-      calc(100% - #{rem(1)}) #{rem(1)},
-      calc(100% - #{rem(1)}) #{rem(51)},
-      #{rem(17.51)} #{rem(51)},
-      #{rem(14.51)} #{rem(51)},
-      #{rem(11.77)} #{rem(49.32)},
-      #{rem(10.40)} #{rem(46.66)},
-      #{rem( 1.88)} #{rem(30.08)},
-      #{rem(0.73)} #{rem(27.83)},
-      #{rem(0.70)} #{rem(25.16)},
-      #{rem(1.83)} #{rem(22.89)}
+      #{remText(10.43)} #{remText(5.46)},
+      #{remText(11.78)} #{remText(2.73)},
+      #{remText(14.56)} #{remText(1)},
+      #{remText(17.60)} #{remText(1)},
+      calc(100% - #{remText(1)}) #{remText(1)},
+      calc(100% - #{remText(1)}) #{remText(51)},
+      #{remText(17.51)} #{remText(51)},
+      #{remText(14.51)} #{remText(51)},
+      #{remText(11.77)} #{remText(49.32)},
+      #{remText(10.40)} #{remText(46.66)},
+      #{remText( 1.88)} #{remText(30.08)},
+      #{remText(0.73)} #{remText(27.83)},
+      #{remText(0.70)} #{remText(25.16)},
+      #{remText(1.83)} #{remText(22.89)}
   );
 
   @include flex-center;
 
   position: fixed;
   right: 0;
-  width: rem(38);
+  width: remText(38);
   height: var(--bookMarkPopoverHeight);
 
   &__toggler {
     @include reset-button;
     @include flex-center(true);
 
-    width: rem(39);
+    width: remText(39);
     height: var(--bookMarkPopoverHeight);
-    padding-left: rem(5);
+    padding-left: remText(5);
     color: inherit;
     cursor: pointer;
   }
@@ -43,7 +41,7 @@
 
   &__body,
   &__title {
-    font-size: rem(14);
+    font-size: remText(14);
     white-space: nowrap;
   }
 

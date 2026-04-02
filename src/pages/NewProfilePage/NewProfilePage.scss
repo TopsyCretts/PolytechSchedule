@@ -1,9 +1,7 @@
-@use "../../styles/helpers" as *;
-
 .home-page {
-  padding-bottom: rem(200);
+  padding-bottom: remText(200);
 
   @include mobile {
-    padding-bottom: rem(50);
+    padding-bottom: remText(50);
   }
 }

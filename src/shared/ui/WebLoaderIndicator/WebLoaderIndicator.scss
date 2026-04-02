@@ -1,6 +1,3 @@
-@use "../../../styles/helpers/index" as *;
-@use "../../../styles/helpers/functions" as *;
-
 .web-loader-indicator {
   @include flex-center;
 
@@ -12,11 +9,11 @@
   &__body {
     @include flex-center;
 
-    column-gap: rem(20);
-    padding-inline: rem(10);
+    column-gap: remText(20);
+    padding-inline: remText(10);
 
     @include mobile {
-      column-gap: rem(5);
+      column-gap: remText(5);
     }
   }
 

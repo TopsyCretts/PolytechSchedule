@@ -1,4 +1,4 @@
-@use "./helpers" as *;
+@use "helpers/index" as *;
 
 :root {
 
@@ -20,7 +20,7 @@ body {
   height: 100dvh;
   max-height: 100dvh;
   font-family: var(--font-family-base), sans-serif;
-  font-size: rem(16);
+  font-size: remText(16);
   font-weight: 400;
   letter-spacing: var(--letter-spacing);
   color: var(--color-text-themed);
