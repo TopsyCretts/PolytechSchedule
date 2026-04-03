@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { OfflineContext } from "@/app/providers/OfflineProvider.tsx"
+import { OfflineContext } from "@/shared/models/providers/OfflineProvider.tsx"
 
 const useOffline = () => {
   const context = useContext(OfflineContext)

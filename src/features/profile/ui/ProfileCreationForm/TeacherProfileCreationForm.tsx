@@ -7,12 +7,12 @@ import type { SearchItem } from "@/shared/models/Search.ts"
 import { useInjection } from "inversify-react"
 import { TeachersStore } from "@/entities/teachers/model/TeachersStore.ts"
 import type { TeacherData } from "@/entities/teachers/model/Teachers.ts"
-import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
-import { useNavigate } from "react-router"
+import { generatePath, useNavigate } from "react-router"
 import { PROFILE_TYPE } from "@/entities/profile/model/Profile.ts"
 import RetryFallback from "@/widgets/RetryFallback"
 import { ProfilesManagerStore } from "@/features/profile/model/ProfilesManagerStore.ts"
 import { observer } from "mobx-react-lite"
+import { APP_ROUTES } from "@/shared/constants/routes.ts"
 
 const mapTeachersToSearchItems = (dto: TeacherData[]): SearchItem[] => {
   return dto.map((item) => {
@@ -45,9 +45,15 @@ const TeacherProfileCreationForm = observer(
     }
 
     const navigateToTeacherProfile = (teacherId: string) => {
-      navigate(getScheduleProfileRoute(teacherId, PROFILE_TYPE.teacher), {
-        replace: true,
-      })
+      navigate(
+        generatePath(APP_ROUTES.scheduleCalendar, {
+          profileApiId: teacherId,
+          profileType: PROFILE_TYPE.teacher,
+        }),
+        {
+          replace: true,
+        }
+      )
     }
 
     return isFetching && teachers.length === 0 ? (

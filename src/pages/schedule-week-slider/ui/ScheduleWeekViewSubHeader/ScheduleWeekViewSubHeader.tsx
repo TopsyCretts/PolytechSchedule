@@ -9,14 +9,13 @@ import { memo } from "react"
 import type { BaseComponent } from "@/shared/models/BaseComponent.ts"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
-import { useGetDateFromUrl } from "@/shared/lib/useDayFromSearchParams.ts"
-import { useNavigate } from "react-router"
-import { routeWithParams } from "@/app/routes/routes.ts"
-import { format } from "date-fns"
+import { generatePath, useNavigate } from "react-router"
+import { APP_ROUTES } from "@/shared/constants/routes.ts"
+import { format, startOfToday } from "date-fns"
 import { QUERY_DATE_FORMAT } from "@/shared/constants/contstants.ts"
 import type { ScheduleWeekData } from "@/entities/schedule/model/ScheduleData.ts"
 import getWeekDataByWeekStart from "@/pages/schedule-week-slider/lib/getWeekDataByWeekStart.ts"
-import useMediaQueryListEvent from "@/shared/lib/useMediaQueryListEvent.ts"
+import useMediaQueryListEvent from "@/shared/hooks/useMediaQueryListEvent.ts"
 import { MATCH_MEDIA } from "@/shared/constants/media.ts"
 
 interface ScheduleWeekViewHeaderProps extends BaseComponent {
@@ -36,18 +35,19 @@ const ScheduleWeekViewSubHeader = memo(
     const navigate = useNavigate()
     const { isMatchesMedia } = useMediaQueryListEvent(MATCH_MEDIA.mobile_xs)
 
-    const { dateFromUrl } = useGetDateFromUrl()
-    const { locale, profile, data: scheduleData } = useScheduleData()
+    const {
+      locale,
+      profile,
+      data: scheduleData,
+      currentDayData,
+    } = useScheduleData()
 
     const handleLinkClick = () => {
-      navigate(
-        routeWithParams(
-          "/schedule",
-          [profile.profileType, profile.apiId.toString()],
-          { date: format(dateFromUrl, QUERY_DATE_FORMAT) },
-          "calendar"
-        )
-      )
+      const route = `${generatePath(APP_ROUTES.scheduleCalendar, {
+        profileType: profile.profileType!,
+        profileApiId: profile.apiId.toString(),
+      })}?date=${format(currentDayData.date ?? startOfToday(), QUERY_DATE_FORMAT)}`
+      navigate(route)
     }
 
     const handleWeekChange = (weekStart: Date) => {

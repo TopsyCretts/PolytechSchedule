@@ -1,6 +1,6 @@
 import "./LessonCard.scss"
 import clsx from "clsx"
-import { Link } from "react-router"
+import { generatePath, Link } from "react-router"
 import type { LessonData } from "@/entities/schedule/model/ScheduleData.ts"
 import {
   PROFILE_TYPE,
@@ -8,12 +8,12 @@ import {
 } from "@/entities/profile/model/Profile.ts"
 import { format, isWithinInterval } from "date-fns"
 import { memo } from "react"
-import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
 import { LESSONS_MAP } from "@/shared/constants/contstants.ts"
 import { useTranslation } from "react-i18next"
 import RemoteIcon from "@/assets/icons/remote.svg?react"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import LessonTypeIcon from "@/entities/schedule/ui/LessonTypeIcon"
+import { APP_ROUTES } from "@/shared/constants/routes.ts"
 
 interface LessonCardProps {
   className?: string
@@ -129,7 +129,12 @@ const GetLinkOrString = ({
     return <span> {data}</span>
   }
   return (
-    <Link to={getScheduleProfileRoute(data.id.toString(), profileType)}>
+    <Link
+      to={generatePath(APP_ROUTES.scheduleCalendar, {
+        profileApiId: data.id.toString(),
+        profileType,
+      })}
+    >
       {data.name}
     </Link>
   )

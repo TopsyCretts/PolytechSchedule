@@ -29,7 +29,7 @@ import clsx from "clsx"
 import {
   useGetDateFromUrl,
   useSetDateToUrl,
-} from "@/shared/lib/useDayFromSearchParams.ts"
+} from "@/shared/hooks/useDayFromSearchParams.ts"
 import { startOfToday } from "date-fns"
 
 const ScheduleContext = createContext<ScheduleContextValues | null>(null)

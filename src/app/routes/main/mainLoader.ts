@@ -1,9 +1,9 @@
 import { LocalStorageRepository } from "@/shared/models/browser-storages"
 import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
 import { DBRepository, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
-import { redirect } from "react-router"
-import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
+import { generatePath, redirect } from "react-router"
 import { MATCH_MEDIA } from "@/shared/constants/media.ts"
+import { APP_ROUTES } from "@/shared/constants/routes.ts"
 
 export const mainLoader = async () => {
   const lastUsedProfileId = Number(
@@ -19,10 +19,12 @@ export const mainLoader = async () => {
 
     if (profile) {
       const isDesktop = MATCH_MEDIA.laptopAbove.matches
-      const route = getScheduleProfileRoute(
-        profile.apiId.toString(),
-        profile.profileType,
-        isDesktop ? "calendar" : "week"
+      const route = generatePath(
+        isDesktop ? APP_ROUTES.scheduleCalendar : APP_ROUTES.scheduleWeek,
+        {
+          profileApiId: profile.apiId.toString(),
+          profileType: profile.profileType,
+        }
       )
 
       return redirect(`${route}`)

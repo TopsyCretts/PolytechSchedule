@@ -13,7 +13,7 @@ import BurgerIcon from "@/assets/icons/burger.svg?react"
 import i18next from "i18next"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
-import { useTheme } from "@/shared/lib/useTheme.ts"
+import { useTheme } from "@/shared/hooks/useTheme.ts"
 
 interface BurgerMenuProps {
   className?: string

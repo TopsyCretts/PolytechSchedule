@@ -6,14 +6,14 @@ import "./ScheduleCalendarView.scss"
 import { AnimatePresence, motion } from "framer-motion"
 import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
 import { MATCH_MEDIA } from "@/shared/constants/media.ts"
-import { useNavigate } from "react-router"
-import useMediaQueryListEvent from "@/shared/lib/useMediaQueryListEvent.ts"
+import { generatePath, useNavigate } from "react-router"
+import useMediaQueryListEvent from "@/shared/hooks/useMediaQueryListEvent.ts"
 import { useCallback, useRef } from "react"
 import type { CalendarRef } from "@/shared/ui/Calendar/types.ts"
 import DayController from "@/shared/ui/DayController"
 import { format, isToday } from "date-fns"
 import DataStatusPopover from "@/widgets/DataStatusPopover"
-import { routeWithParams } from "@/app/routes/routes.ts"
+import { APP_ROUTES } from "@/shared/constants/routes.ts"
 import { QUERY_DATE_FORMAT } from "@/shared/constants/contstants.ts"
 
 interface ScheduleCalendarProps {
@@ -34,12 +34,10 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
   const navigateToWeek = useCallback(
     (date: Date) => {
       navigate(
-        routeWithParams(
-          "/schedule",
-          [profile.profileType, profile.apiId.toString()],
-          { date: format(date, QUERY_DATE_FORMAT) },
-          "week"
-        )
+        `${generatePath(APP_ROUTES.scheduleWeek, {
+          profileType: profile.profileType!,
+          profileApiId: profile.apiId.toString(),
+        })}?date=${format(date, QUERY_DATE_FORMAT)}`
       )
     },
     [navigate, profile]

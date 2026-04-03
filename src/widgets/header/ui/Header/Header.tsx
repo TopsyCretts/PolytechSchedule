@@ -1,7 +1,7 @@
 import "./Header.scss"
 import clsx from "clsx"
 import { Logo } from "@/shared/ui"
-import { Link, useMatch, useParams } from "react-router"
+import { generatePath, Link, useMatch, useParams } from "react-router"
 import LanguagePicker from "@/widgets/LanguagePicker"
 import ThemeToggler from "@/widgets/ThemeToggler"
 import BurgerMenu from "@/widgets/BurgerMenu"
@@ -16,10 +16,9 @@ import {
 import HeaderProfileLabel from "@/widgets/header/ui/HeaderProfileLabel/HeaderProfileLabel.tsx"
 import { format, startOfToday } from "date-fns"
 import type { ProfileType } from "@/entities/profile/model/Profile.ts"
-import useMediaQueryListEvent from "@/shared/lib/useMediaQueryListEvent.ts"
+import useMediaQueryListEvent from "@/shared/hooks/useMediaQueryListEvent.ts"
 import { MATCH_MEDIA } from "@/shared/constants/media.ts"
-import { SCHEDULE_VIEW } from "@/entities/schedule/model/ScheduleData.ts"
-import { APP_ROUTES, routeWithParams } from "@/app/routes/routes.ts"
+import { APP_ROUTES } from "@/shared/constants/routes.ts"
 import ArrowIcon from "@/assets/icons/arrow-long-right.svg?react"
 
 const Header = () => {
@@ -79,12 +78,10 @@ const MoveOnTodayLink = () => {
   return (
     <Link
       className="header__today-link"
-      to={routeWithParams(
-        "/schedule",
-        [profileType!, profileApiId.toString()],
-        { date: format(startOfToday(), QUERY_DATE_FORMAT) },
-        isLaptop ? SCHEDULE_VIEW.week : SCHEDULE_VIEW.calendar
-      )}
+      to={`${generatePath(
+        isLaptop ? APP_ROUTES.scheduleWeek : APP_ROUTES.scheduleCalendar,
+        { profileType: profileType!, profileApiId: profileApiId.toString() }
+      )}?date=${format(startOfToday(), QUERY_DATE_FORMAT)}`}
       onClick={() => window.dispatchEvent(goToCurrentDayEvent)}
     >
       {t(STRINGS_RES.on_today)} {format(startOfToday(), "dd.MM")}

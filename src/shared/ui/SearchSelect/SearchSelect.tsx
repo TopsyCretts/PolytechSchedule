@@ -4,7 +4,7 @@ import { SearchField } from "@/shared/ui"
 import type { SearchFormProps, SearchItem } from "@/shared/models/Search.ts"
 import SearchItemWithType from "@/shared/ui/SearchItem/SearchItemWithType.tsx"
 import { useState } from "react"
-import { useSearchableList } from "../../lib/useSearchableList"
+import { useSearchableList } from "../../hooks/useSearchableList.ts"
 import SearchList from "./SearchList.tsx"
 
 const SearchSelect = ({

@@ -19,7 +19,7 @@ import CrossIcon from "@/assets/icons/cross.svg?react"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import { isEnterKeyPressed } from "@/shared/lib/isEnterKeyPressed.ts"
-import useOpenModal from "@/shared/lib/useOpenModal.ts"
+import useOpenModal from "@/shared/hooks/useOpenModal.ts"
 
 const SelectContext = createContext<SelectValues | null>(null)
 

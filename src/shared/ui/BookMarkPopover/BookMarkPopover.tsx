@@ -1,6 +1,6 @@
 import "./BookMarkPopover.scss"
 import clsx from "clsx"
-import useOpenModal from "@/shared/lib/useOpenModal.ts"
+import useOpenModal from "@/shared/hooks/useOpenModal.ts"
 import { AnimatePresence, motion } from "framer-motion"
 import type { BaseComponentWithChildren } from "@/shared/models/BaseComponent.ts"
 import { useTranslation } from "react-i18next"

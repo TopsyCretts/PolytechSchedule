@@ -4,7 +4,7 @@ import { ThemeIcon } from "@/widgets/ThemeToggler/utils"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import Button from "@/shared/ui/Button"
-import { useTheme } from "@/shared/lib/useTheme.ts"
+import { useTheme } from "@/shared/hooks/useTheme.ts"
 
 interface ThemePickerProps {
   className?: string

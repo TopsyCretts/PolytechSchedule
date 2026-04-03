@@ -10,12 +10,11 @@ import {
   createTeacherProfile,
   ProfilesManagerStore,
 } from "@/features/profile/model/ProfilesManagerStore.ts"
-import { APP_ROUTES, routeWithParams } from "@/app/routes/routes.ts"
+import { APP_ROUTES } from "@/shared/constants/routes.ts"
 import { InstitutesStore } from "@/entities/institute/model/InstitutesStore.ts"
 import { TeachersStore } from "@/entities/teachers/model/TeachersStore.ts"
 import { LocalStorageRepository } from "@/shared/models/browser-storages"
 import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
-import { SCHEDULE_VIEW } from "@/entities/schedule/model/ScheduleData.ts"
 
 const profileLoader = async ({ params }: LoaderFunctionArgs) => {
   const newProfileApiId = params.profileApiId
@@ -72,17 +71,4 @@ const profileLoader = async ({ params }: LoaderFunctionArgs) => {
   return { tempProfile }
 }
 
-const getScheduleProfileRoute = (
-  profileId: string,
-  scheduleType: ProfileType,
-  destination: string = SCHEDULE_VIEW.calendar
-) => {
-  return routeWithParams(
-    APP_ROUTES.scheduleIndex,
-    [scheduleType, profileId],
-    undefined,
-    destination
-  )
-}
-
-export { profileLoader, getScheduleProfileRoute }
+export { profileLoader }

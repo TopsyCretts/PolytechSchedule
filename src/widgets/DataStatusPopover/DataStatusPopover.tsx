@@ -1,5 +1,5 @@
 import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
-import useOffline from "@/shared/lib/useOffline.ts"
+import useOffline from "@/shared/hooks/useOffline.ts"
 import RowPopover from "@/shared/ui/RowPopover"
 import { memo, type ReactNode } from "react"
 import clsx from "clsx"

@@ -1,12 +1,12 @@
 import { IconButton } from "@/shared/ui"
 import clsx from "clsx"
 import "./ProfileItem.scss"
-import { NavLink, useNavigate } from "react-router"
+import { generatePath, NavLink, useNavigate } from "react-router"
 import type { ProfileType } from "@/entities/profile/model/Profile.ts"
 import { useInjection } from "inversify-react"
 import { ProfilesManagerStore } from "@/features/profile/model/ProfilesManagerStore.ts"
 import { observer } from "mobx-react-lite"
-import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
+import { APP_ROUTES } from "@/shared/constants/routes.ts"
 
 interface ProfilesProps {
   className?: string
@@ -37,10 +37,10 @@ const ProfileItem = observer(
       const nearestProfile = await removeProfileAndReturnClosest(profileId)
       if (nearestProfile !== null) {
         navigate(
-          getScheduleProfileRoute(
-            nearestProfile.apiId.toString(),
-            nearestProfile.profileType
-          ),
+          generatePath(APP_ROUTES.scheduleCalendar, {
+            profileType: scheduleType,
+            profileApiId: nearestProfile.apiId.toString(),
+          }),
           { replace: true }
         )
       } else {
@@ -59,7 +59,10 @@ const ProfileItem = observer(
         )}
       >
         <NavLink
-          to={getScheduleProfileRoute(profileApiId.toString(), scheduleType)}
+          to={generatePath(APP_ROUTES.scheduleCalendar, {
+            profileApiId: profileApiId.toString(),
+            profileType: scheduleType,
+          })}
           className={"profile-item__link"}
           title={profileName}
         >

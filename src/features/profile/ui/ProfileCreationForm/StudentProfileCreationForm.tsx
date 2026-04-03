@@ -7,8 +7,7 @@ import type {
   StudentProfileCreationValues,
 } from "@/features/profile/model/types.ts"
 import type { SearchItem } from "@/shared/models/Search.ts"
-import { useNavigate } from "react-router"
-import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
+import { generatePath, useNavigate } from "react-router"
 import { useInjection } from "inversify-react"
 import { InstitutesStore } from "@/entities/institute/model/InstitutesStore.ts"
 import { observer } from "mobx-react-lite"
@@ -17,6 +16,7 @@ import { useGetGroupsByInstitutesQuery } from "@/entities/institute/api/institut
 import { PROFILE_TYPE } from "@/entities/profile/model/Profile.ts"
 import RetryFallback from "@/widgets/RetryFallback"
 import { ProfilesManagerStore } from "@/features/profile/model/ProfilesManagerStore.ts"
+import { APP_ROUTES } from "@/shared/constants/routes.ts"
 
 const mapGroupsToSearchItems = (groups: GroupData[] | null): SearchItem[] => {
   if (groups === null) {
@@ -88,7 +88,10 @@ const StudentProfileCreationForm = observer(
 
     const navigateToStudentProfile = (groupId: number | string) => {
       navigate(
-        getScheduleProfileRoute(groupId.toString(), PROFILE_TYPE.student),
+        generatePath(APP_ROUTES.scheduleCalendar, {
+          profileApiId: groupId.toString(),
+          profileType: PROFILE_TYPE.student,
+        }),
         { replace: true }
       )
     }

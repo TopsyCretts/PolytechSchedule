@@ -1,7 +1,7 @@
-import { type LoaderFunctionArgs, redirect } from "react-router"
+import { generatePath, type LoaderFunctionArgs, redirect } from "react-router"
 import { MATCH_MEDIA } from "@/shared/constants/media.ts"
-import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
 import { type ProfileType } from "@/entities/profile/model/Profile.ts"
+import { APP_ROUTES } from "@/shared/constants/routes.ts"
 
 export const weekLoader = async ({ request, params }: LoaderFunctionArgs) => {
   const apiId = params.profileApiId
@@ -11,7 +11,10 @@ export const weekLoader = async ({ request, params }: LoaderFunctionArgs) => {
   const isDesktop = MATCH_MEDIA.laptopAbove.matches
 
   if (isDesktop) {
-    const route = getScheduleProfileRoute(apiId!, profileType, "calendar")
+    const route = generatePath(APP_ROUTES.scheduleCalendar, {
+      profileType,
+      profileApiId: apiId!,
+    })
 
     return redirect(`${route}${searchParams.toString()}`)
   }

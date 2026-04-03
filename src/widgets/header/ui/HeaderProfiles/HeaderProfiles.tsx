@@ -9,7 +9,7 @@ import { ProfilesManagerStore } from "@/features/profile/model/ProfilesManagerSt
 import { observer } from "mobx-react-lite"
 import { useMatch, useParams } from "react-router"
 import { useEffect, useRef, useState } from "react"
-import { APP_ROUTES } from "@/app/routes/routes.ts"
+import { APP_ROUTES } from "@/shared/constants/routes.ts"
 import scrollContainerToSelectedElement from "@/shared/lib/scrollContainerToSelectedElement.ts"
 
 interface ProfilesProps {

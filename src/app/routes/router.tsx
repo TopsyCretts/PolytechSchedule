@@ -15,7 +15,7 @@ import ScheduleCalendarView from "@/pages/schedule-calendar"
 import SchedulePage from "@/pages/schedule"
 import ScheduleWeekSlider from "@/pages/schedule-week-slider"
 import weekLoader from "@/app/routes/schedule/weekLoader.ts"
-import { APP_ROUTES } from "@/app/routes/routes.ts"
+import { APP_ROUTES } from "@/shared/constants/routes.ts"
 
 const RouterErrorElement = lazy(() => import("@/shared/ui/RouterErrorElement"))
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"))
@@ -62,9 +62,7 @@ const router = createBrowserRouter(
       <Route
         path={"schedule/:profileType/:profileApiId/"}
         id={"schedule"}
-        loader={async ({ request, context, params }) =>
-          profileLoader({ request, context, params })
-        }
+        loader={profileLoader}
         element={<SchedulePage />}
         errorElement={<RouterErrorElement />}
       >

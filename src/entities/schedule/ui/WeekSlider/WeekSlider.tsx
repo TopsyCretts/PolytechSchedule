@@ -18,7 +18,7 @@ import type { ScheduleWeekData } from "@/entities/schedule/model/ScheduleData.ts
 import "swiper/css"
 import { type RefObject, type UIEvent, useCallback, useState } from "react"
 import "./WeekSlider.scss"
-import useMediaQueryListEvent from "@/shared/lib/useMediaQueryListEvent.ts"
+import useMediaQueryListEvent from "@/shared/hooks/useMediaQueryListEvent.ts"
 import { MATCH_MEDIA } from "@/shared/constants/media.ts"
 
 interface WeekSliderProps {
