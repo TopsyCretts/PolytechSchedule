@@ -3,7 +3,7 @@ import ScheduleWeekSelect from "@/pages/schedule-week-slider/ui/ScheduleWeekSele
 import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
 import clsx from "clsx"
 import { Button } from "@/shared/ui"
-import ArrowIcon from "@/assets/icons/arrow-left.svg?react"
+import ArrowIcon from "@/shared/assets/icons/arrow-left.svg?react"
 import DataStatusPopover from "@/widgets/DataStatusPopover"
 import { memo } from "react"
 import type { BaseComponent } from "@/shared/models/BaseComponent.ts"

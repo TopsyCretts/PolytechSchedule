@@ -31,7 +31,7 @@ const TeacherProfileCreationForm = observer(
 
     const { getOrCreateProfile } = useInjection(ProfilesManagerStore)
 
-    const { isError, isFetching, refetch } = useGetTeachersQuery()
+    const { isFetching, refetch } = useGetTeachersQuery()
 
     const { getTeachers: teachers } = useInjection<TeachersStore>(TeachersStore)
 
@@ -56,13 +56,15 @@ const TeacherProfileCreationForm = observer(
       )
     }
 
-    return isFetching && teachers.length === 0 ? (
-      <Spinner className={"profile-creation__loading-fallback"} />
-    ) : isError ? (
-      <RetryFallback
-        className={"profile-creation__retry-fallback"}
-        onRetry={refetch}
-      />
+    return teachers.length === 0 ? (
+      isFetching ? (
+        <Spinner className={"profile-creation__loading-fallback"} />
+      ) : (
+        <RetryFallback
+          className={"profile-creation__retry-fallback"}
+          onRetry={refetch}
+        />
+      )
     ) : (
       <form className={className}>
         <SearchSelect

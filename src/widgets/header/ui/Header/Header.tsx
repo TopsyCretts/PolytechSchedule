@@ -19,7 +19,7 @@ import type { ProfileType } from "@/entities/profile/model/Profile.ts"
 import useMediaQueryListEvent from "@/shared/hooks/useMediaQueryListEvent.ts"
 import { MATCH_MEDIA } from "@/shared/constants/media.ts"
 import { APP_ROUTES } from "@/shared/constants/routes.ts"
-import ArrowIcon from "@/assets/icons/arrow-long-right.svg?react"
+import ArrowIcon from "@/shared/assets/icons/arrow-long-right.svg?react"
 
 const Header = () => {
   const location = useMatch(APP_ROUTES.newProfile)

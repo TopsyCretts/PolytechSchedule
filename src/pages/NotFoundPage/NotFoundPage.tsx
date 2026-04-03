@@ -1,7 +1,7 @@
 import "./NotFoundPage.scss"
 import clsx from "clsx"
 import { Link } from "react-router"
-import NotfoundIcon from "@/assets/icons/404.svg"
+import NotfoundIcon from "@/shared/assets/icons/404.svg"
 import { Trans, useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
 

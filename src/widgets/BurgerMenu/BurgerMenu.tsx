@@ -9,7 +9,7 @@ import {
 } from "@/shared/constants/contstants.ts"
 import "@/widgets/ThemeToggler/ThemeToggler.scss"
 import { ThemeItem } from "@/widgets/ThemeToggler/utils"
-import BurgerIcon from "@/assets/icons/burger.svg?react"
+import BurgerIcon from "@/shared/assets/icons/burger.svg?react"
 import i18next from "i18next"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"

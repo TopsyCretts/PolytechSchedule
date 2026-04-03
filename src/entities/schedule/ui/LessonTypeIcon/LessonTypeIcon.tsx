@@ -1,9 +1,9 @@
 import type { LessonType } from "@/entities/schedule/model/ScheduleData.ts"
-import LectureIcon from "@/assets/icons/lecture.svg?react"
-import PracticalIcon from "@/assets/icons/practical.svg?react"
-import LaboratoryIcon from "@/assets/icons/labarotory.svg?react"
-import ExamIcon from "@/assets/icons/exam.svg?react"
-import UnknownIcon from "@/assets/icons/unknown_lesson_type.svg?react"
+import LectureIcon from "@/shared/assets/icons/lecture.svg?react"
+import PracticalIcon from "@/shared/assets/icons/practical.svg?react"
+import LaboratoryIcon from "@/shared/assets/icons/labarotory.svg?react"
+import ExamIcon from "@/shared/assets/icons/exam.svg?react"
+import UnknownIcon from "@/shared/assets/icons/unknown_lesson_type.svg?react"
 
 interface LessonTypeIconProps {
   className?: string

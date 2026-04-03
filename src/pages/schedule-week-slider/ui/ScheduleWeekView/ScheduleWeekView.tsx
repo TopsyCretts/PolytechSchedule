@@ -10,7 +10,7 @@ import ScheduleWeekViewController from "@/pages/schedule-week-slider/ui/Schedule
 import ScheduleWeekViewSubHeader from "@/pages/schedule-week-slider/ui/ScheduleWeekViewSubHeader"
 import ScheduleWeekViewControllerMobile from "@/pages/schedule-week-slider/ui/ScheduleWeekViewControllerMobile"
 import { AnimatePresence, motion } from "framer-motion"
-import ArrowIcon from "@/assets/icons/arrow-long-right.svg?react"
+import ArrowIcon from "@/shared/assets/icons/arrow-long-right.svg?react"
 import clsx from "clsx"
 import getWeekDataByWeekStart from "@/pages/schedule-week-slider/lib/getWeekDataByWeekStart.ts"
 import {

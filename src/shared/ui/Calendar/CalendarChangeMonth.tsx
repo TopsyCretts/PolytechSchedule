@@ -1,5 +1,5 @@
 import { format } from "date-fns"
-import ArrowLeftIcon from "@/assets/icons/arrow-left.svg?react"
+import ArrowLeftIcon from "@/shared/assets/icons/arrow-left.svg?react"
 import clsx from "clsx"
 import {
   useCalendar,

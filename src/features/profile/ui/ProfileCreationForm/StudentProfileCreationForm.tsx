@@ -43,7 +43,7 @@ const StudentProfileCreationForm = observer(
 
     const { getOrCreateProfile } = useInjection(ProfilesManagerStore)
 
-    const { isFetching, isError, refetch } = useGetGroupsByInstitutesQuery()
+    const { isFetching, refetch } = useGetGroupsByInstitutesQuery()
     const { getInstitutes: institutes, getGroupsByInstitute } =
       useInjection<InstitutesStore>(InstitutesStore)
 
@@ -67,25 +67,6 @@ const StudentProfileCreationForm = observer(
       []
     )
 
-    const handleGroupSelection = useCallback(
-      async (group: SearchItem | null) => {
-        if (group !== null) {
-          const groupId = Number(group.id)
-
-          setSelectedValues((prev) => ({
-            ...prev,
-            group: {
-              id: groupId,
-              name: group.searchableValue,
-            },
-          }))
-          await getOrCreateProfile(PROFILE_TYPE.student, groupId)
-          navigateToStudentProfile(group.id)
-        }
-      },
-      []
-    )
-
     const navigateToStudentProfile = (groupId: number | string) => {
       navigate(
         generatePath(APP_ROUTES.scheduleCalendar, {
@@ -96,13 +77,31 @@ const StudentProfileCreationForm = observer(
       )
     }
 
-    return isFetching && institutes.institutes.length === 0 ? (
-      <Spinner className={"profile-creation__loading-fallback"} />
-    ) : isError && institutes.institutes.length === 0 ? (
-      <RetryFallback
-        className={"profile-creation__retry-fallback"}
-        onRetry={refetch}
-      />
+    const handleGroupSelection = async (group: SearchItem | null) => {
+      if (group !== null) {
+        const groupId = Number(group.id)
+
+        setSelectedValues((prev) => ({
+          ...prev,
+          group: {
+            id: groupId,
+            name: group.searchableValue,
+          },
+        }))
+        await getOrCreateProfile(PROFILE_TYPE.student, groupId)
+        navigateToStudentProfile(group.id)
+      }
+    }
+
+    return institutes.institutes.length === 0 ? (
+      isFetching ? (
+        <Spinner className={"profile-creation__loading-fallback"} />
+      ) : (
+        <RetryFallback
+          className={"profile-creation__retry-fallback"}
+          onRetry={refetch}
+        />
+      )
     ) : (
       <form className={className}>
         <SearchSelect

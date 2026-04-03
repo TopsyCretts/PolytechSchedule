@@ -1,7 +1,7 @@
 import "./DayController.scss"
 import clsx from "clsx"
 import { format, type Locale } from "date-fns"
-import ArrowLeftIcon from "@/assets/icons/arrow-left.svg?react"
+import ArrowLeftIcon from "@/shared/assets/icons/arrow-left.svg?react"
 import Button from "@/shared/ui/Button"
 
 interface DayControllerProps {

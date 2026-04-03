@@ -15,14 +15,13 @@ import {
 } from "mobx"
 import { InstitutesStore } from "@/entities/institute/model/InstitutesStore.ts"
 import { TeachersStore } from "@/entities/teachers/model/TeachersStore.ts"
-import { DBRepository, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
 import { SCHEDULE_VIEW } from "@/entities/schedule/model/ScheduleData.ts"
-import { LocalStorageRepository } from "@/shared/models/browser-storages"
-import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
-import type { ProfileDB } from "@/app/store/indexDb/models/ProfileDB.ts"
+import { ProfileCacheService } from "@/features/profile/model/ProfileCacheService.ts"
 
 @injectable()
 export class ProfilesManagerStore {
+  private profileCacheService = new ProfileCacheService()
+
   @observable
   private profiles: Profile[] = []
 
@@ -49,7 +48,8 @@ export class ProfilesManagerStore {
 
   @action
   initProfiles() {
-    DBRepository.getAll(STORE_NAMES.profiles)
+    this.profileCacheService
+      .getAllProfiles()
       .then((profiles) => {
         runInAction(() => {
           this.profiles = [...profiles]
@@ -141,7 +141,7 @@ export class ProfilesManagerStore {
 
   @action
   async addProfile(newProfile: Profile) {
-    const newId = await this.saveProfileToDb(newProfile)
+    const newId = await this.profileCacheService.saveNewProfileToDb(newProfile)
     const localProfile = { ...newProfile, id: newId }
     runInAction(() => {
       this.profiles = [...this.profiles, localProfile]
@@ -160,7 +160,7 @@ export class ProfilesManagerStore {
 
     const nearestRightIndexAfterRemove = index
 
-    await this.removeProfile(profileId)
+    await this.profileCacheService.removeProfile(profileId)
 
     if (nearestRightIndexAfterRemove < this.profiles.length) {
       return this.profiles[nearestRightIndexAfterRemove]
@@ -173,21 +173,6 @@ export class ProfilesManagerStore {
     return null
   }
 
-  private async saveProfileToDb(profile: Profile) {
-    let profileDb: ProfileDB = {
-      name: profile.name,
-      apiId: profile.apiId,
-      profileType: profile.profileType,
-      lastUpdateAt: profile.lastUpdateAt ? profile.lastUpdateAt : null,
-      selectedViewType: profile.selectedViewType,
-    }
-    if ("institute" in profile) {
-      profileDb = { ...profileDb, institute: profile.institute }
-    }
-
-    return await DBRepository.saveProfile(profileDb)
-  }
-
   async updateLastUpdateTimeById(profileId: number) {
     const profile = this.profiles.find((profile) => profile.id === profileId)
     if (!profile) {
@@ -198,15 +183,10 @@ export class ProfilesManagerStore {
       this.currentProfile = { ...profile, lastUpdateAt: new Date() }
     }
 
-    return await DBRepository.saveProfile({
+    return this.profileCacheService.updateProfile({
       ...profile,
       lastUpdateAt: new Date(),
     })
-  }
-
-  private async removeProfile(id: number) {
-    await DBRepository.deleteProfile(id)
-    LocalStorageRepository.set(LOCAL_STORAGE_KEY.lastProfileId, null)
   }
 }
 

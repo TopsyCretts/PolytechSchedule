@@ -1,10 +1,9 @@
 import "./ProfileCreation.scss"
 import clsx from "clsx"
-import { Spinner, Switcher } from "@/shared/ui"
-import { Suspense, useMemo, useState } from "react"
+import { Switcher } from "@/shared/ui"
+import { useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
-import QueryErrorResetWrapper from "@/shared/hoc/QueryErrorResetWrapper/QueryErrorResetWrapper.tsx"
 import { PROFILE_TYPE } from "@/entities/profile/model/Profile.ts"
 import type { BaseComponent } from "@/shared/models/BaseComponent.ts"
 import {
@@ -39,21 +38,10 @@ const ProfileCreation = ({ className }: BaseComponent) => {
               onProfileCreation={() => {}}
             />
           ) : (
-            <QueryErrorResetWrapper
-              key={"teacher"}
-              fallbackClassName={"profile-creation__retry-fallback"}
-            >
-              <Suspense
-                fallback={
-                  <Spinner className={"profile-creation__loading-fallback"} />
-                }
-              >
-                <TeacherProfileCreationForm
-                  className={"profile-creation__form"}
-                  onProfileCreation={() => {}}
-                />
-              </Suspense>
-            </QueryErrorResetWrapper>
+            <TeacherProfileCreationForm
+              className={"profile-creation__form"}
+              onProfileCreation={() => {}}
+            />
           )}
         </div>
       </div>
