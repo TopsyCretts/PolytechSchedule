@@ -1,6 +1,6 @@
 import "./NewProfilePage.scss"
 import clsx from "clsx"
-import { ProfileCreation } from "@/widgets/create-profile/ui/ProfileCreation"
+import { ProfileCreation } from "@/features/profile"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
 

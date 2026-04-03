@@ -1,8 +1,7 @@
 @use "helpers/index" as *;
 
 :root {
-
-  @include mobile{
+  @include mobile {
     scrollbar-gutter: auto;
   }
 
@@ -20,7 +19,7 @@ body {
   height: 100dvh;
   max-height: 100dvh;
   font-family: var(--font-family-base), sans-serif;
-  font-size: remText(16);
+  font-size: remtext(16);
   font-weight: 400;
   letter-spacing: var(--letter-spacing);
   color: var(--color-text-themed);

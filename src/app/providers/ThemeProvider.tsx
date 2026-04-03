@@ -10,7 +10,7 @@ import {
   type ThemeContextValues,
   type ThemeType,
 } from "@/shared/models/Theme.ts"
-import { LocalStorageManager } from "@/app/store/browser-storages"
+import { LocalStorageRepository } from "@/shared/models/browser-storages"
 import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
 
 interface ThemeProviderProps {
@@ -27,7 +27,7 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
     return window.matchMedia("(prefers-color-scheme: dark)").matches
   }, [])
   const storedTheme = useMemo(() => {
-    return LocalStorageManager.get<string>(LOCAL_STORAGE_KEY.theme)
+    return LocalStorageRepository.get<string>(LOCAL_STORAGE_KEY.theme)
   }, [])
   const [theme, setTheme] = useState<ThemeType>(() => {
     if (storedTheme !== null && (storedTheme as ThemeType) !== undefined) {
@@ -43,7 +43,7 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
   }, [isSystemDark, storedTheme])
 
   const saveNewThemeValue = useCallback((newTheme: ThemeType) => {
-    LocalStorageManager.set(LOCAL_STORAGE_KEY.theme, newTheme)
+    LocalStorageRepository.set(LOCAL_STORAGE_KEY.theme, newTheme)
     setTheme(newTheme)
     document.documentElement.classList.toggle("dark-mode")
   }, [])

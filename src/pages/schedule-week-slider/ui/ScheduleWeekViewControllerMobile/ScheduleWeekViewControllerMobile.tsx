@@ -14,7 +14,6 @@ import {
 } from "date-fns"
 import clsx from "clsx"
 import { Button } from "@/shared/ui"
-import { capitalizeFirstLatter } from "@/shared/lib/capitalizeFirstLatter.ts"
 import type { BaseComponent } from "@/shared/models/BaseComponent.ts"
 
 interface ScheduleWeekViewControllerMobileProps extends BaseComponent {
@@ -58,9 +57,11 @@ const ScheduleWeekViewControllerMobile = memo(
             borderRadiusSize={"sm"}
           >
             <h4
-              className={"schedule-week-view-controller-mobile__title text-14"}
+              className={
+                "schedule-week-view-controller-mobile__title text-14 capitalize"
+              }
             >
-              {capitalizeFirstLatter(format(day, "EEEEEE", { locale }))}
+              {format(day, "EEEEEE", { locale })}
             </h4>
             <div
               className={"schedule-week-view-controller-mobile__body text-14"}

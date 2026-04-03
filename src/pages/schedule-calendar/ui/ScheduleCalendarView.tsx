@@ -1,6 +1,6 @@
 import { Calendar } from "@/shared/ui"
 import CalendarLessons from "@/pages/schedule-calendar/ui/CalendarLessons"
-import ScheduleDayItem from "@/shared/ui/ScheduleDayItem"
+import ScheduleDayItem from "@/entities/schedule/ui/ScheduleDayItem"
 import clsx from "clsx"
 import "./ScheduleCalendarView.scss"
 import { AnimatePresence, motion } from "framer-motion"

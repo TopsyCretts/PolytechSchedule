@@ -18,7 +18,7 @@
 
   &__header {
     justify-content: space-between;
-    margin-bottom: remText(5);
+    margin-bottom: remtext(5);
     padding-left: var(--spacing-md);
     white-space: nowrap;
   }
@@ -31,7 +31,7 @@
     height: var(--button-height);
 
     &:not(:last-child) {
-      margin-bottom: remText(5);
+      margin-bottom: remtext(5);
     }
   }
 
@@ -51,7 +51,7 @@
     @include flex-center(true);
     @include border-shadow-themed(var(--border-radius), true);
 
-    column-gap: remText(5);
+    column-gap: remtext(5);
     height: var(--button-height);
     padding-inline: var(--spacing-sm);
     color: inherit;
@@ -65,7 +65,7 @@
   }
 
   &__group {
-    border-top: remText(1) solid var(--color-gray-100);
+    border-top: remtext(1) solid var(--color-gray-100);
   }
 
   &__list {

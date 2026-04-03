@@ -1,4 +1,4 @@
-import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
+import type { ScheduleWeekData } from "@/entities/schedule/model/ScheduleData.ts"
 import { isEqual } from "date-fns"
 
 export const findEqualDayData = (weekData: ScheduleWeekData[], date: Date) => {

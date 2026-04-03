@@ -2,7 +2,7 @@
   @include flex-center;
 
   justify-content: space-between;
-  column-gap: remText(6);
+  column-gap: remtext(6);
   width: 100%;
 
   &__title {
@@ -19,7 +19,7 @@
 
     flex-direction: column;
     width: 100%;
-    min-width: remText(41);
+    min-width: remtext(41);
     max-width: var(--button-height);
     max-height: var(--button-height);
     padding-block: var(--spacing-xs);

@@ -1,36 +1,36 @@
 .book-mark-popover {
-  --bookMarkPopoverHeight: #{remText(52)};
+  --bookMarkPopoverHeight: #{remtext(52)};
   --bookMarkClipPath: polygon(
-      #{remText(10.43)} #{remText(5.46)},
-      #{remText(11.78)} #{remText(2.73)},
-      #{remText(14.56)} #{remText(1)},
-      #{remText(17.60)} #{remText(1)},
-      calc(100% - #{remText(1)}) #{remText(1)},
-      calc(100% - #{remText(1)}) #{remText(51)},
-      #{remText(17.51)} #{remText(51)},
-      #{remText(14.51)} #{remText(51)},
-      #{remText(11.77)} #{remText(49.32)},
-      #{remText(10.40)} #{remText(46.66)},
-      #{remText( 1.88)} #{remText(30.08)},
-      #{remText(0.73)} #{remText(27.83)},
-      #{remText(0.70)} #{remText(25.16)},
-      #{remText(1.83)} #{remText(22.89)}
+    #{remtext(10.43)} #{remtext(5.46)},
+    #{remtext(11.78)} #{remtext(2.73)},
+    #{remtext(14.56)} #{remtext(1)},
+    #{remtext(17.6)} #{remtext(1)},
+    calc(100% - #{remtext(1)}) #{remtext(1)},
+    calc(100% - #{remtext(1)}) #{remtext(51)},
+    #{remtext(17.51)} #{remtext(51)},
+    #{remtext(14.51)} #{remtext(51)},
+    #{remtext(11.77)} #{remtext(49.32)},
+    #{remtext(10.4)} #{remtext(46.66)},
+    #{remtext(1.88)} #{remtext(30.08)},
+    #{remtext(0.73)} #{remtext(27.83)},
+    #{remtext(0.7)} #{remtext(25.16)},
+    #{remtext(1.83)} #{remtext(22.89)}
   );
 
   @include flex-center;
 
   position: fixed;
   right: 0;
-  width: remText(38);
+  width: remtext(38);
   height: var(--bookMarkPopoverHeight);
 
   &__toggler {
     @include reset-button;
     @include flex-center(true);
 
-    width: remText(39);
+    width: remtext(39);
     height: var(--bookMarkPopoverHeight);
-    padding-left: remText(5);
+    padding-left: remtext(5);
     color: inherit;
     cursor: pointer;
   }
@@ -41,7 +41,7 @@
 
   &__body,
   &__title {
-    font-size: remText(14);
+    font-size: remtext(14);
     white-space: nowrap;
   }
 
@@ -79,12 +79,11 @@
   }
 
   &__content {
+    overflow: hidden;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: start;
-
-    flex-direction: column;
-    overflow: hidden;
     margin-right: var(--spacing-md);
   }
 

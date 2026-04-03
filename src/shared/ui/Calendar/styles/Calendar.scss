@@ -4,7 +4,7 @@
   @include border-shadow-themed(var(--border-radius-lg));
 
   width: 100%;
-  max-width: remText(843);
+  max-width: remtext(843);
   padding: var(--spacing-md) var(--spacing-xl);
 
   @include mobile {
@@ -16,10 +16,10 @@
 
     width: 100%;
     height: 100%;
-    max-height: remText(64);
+    max-height: remtext(64);
     margin-bottom: var(--spacing-sm);
     padding-bottom: var(--spacing-sm);
-    border-bottom: remText(2) solid var(--calendarHeaderBorderColor);
+    border-bottom: remtext(2) solid var(--calendarHeaderBorderColor);
   }
 
   &__inner {

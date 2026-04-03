@@ -8,73 +8,73 @@ $mobile-s: 480.98;
 $mobile-xs: 400.98;
 
 @mixin desktop-above {
-  @media (width > remText($desktop)) {
+  @media (width > remtext($desktop)) {
     @content;
   }
 }
 
 @mixin desktop {
-  @media (width <= remText($desktop)) {
+  @media (width <= remtext($desktop)) {
     @content;
   }
 }
 
 @mixin laptop-above {
-  @media (width > remText($laptop)) {
+  @media (width > remtext($laptop)) {
     @content;
   }
 }
 
 @mixin laptop {
-  @media (width <= remText($laptop)) {
+  @media (width <= remtext($laptop)) {
     @content;
   }
 }
 
 @mixin tablet-above {
-  @media (width > remText($tablet)) {
+  @media (width > remtext($tablet)) {
     @content;
   }
 }
 
 @mixin tablet {
-  @media (width <= remText($tablet)) {
+  @media (width <= remtext($tablet)) {
     @content;
   }
 }
 
 @mixin mobile-above {
-  @media (width > remText($mobile)) {
+  @media (width > remtext($mobile)) {
     @content;
   }
 }
 
 @mixin mobile {
-  @media (width <= remText($mobile)) {
+  @media (width <= remtext($mobile)) {
     @content;
   }
 }
 
 @mixin mobile-s-above {
-  @media (width > remText($mobile-s)) {
+  @media (width > remtext($mobile-s)) {
     @content;
   }
 }
 
 @mixin mobile-s {
-  @media (width <= remText($mobile-s)) {
+  @media (width <= remtext($mobile-s)) {
     @content;
   }
 }
 
 @mixin mobile-xs-above {
-  @media (width > remText($mobile-xs)) {
+  @media (width > remtext($mobile-xs)) {
     @content;
   }
 }
 
 @mixin mobile-xs {
-  @media (width <= remText($mobile-xs)) {
+  @media (width <= remtext($mobile-xs)) {
     @content;
   }
 }

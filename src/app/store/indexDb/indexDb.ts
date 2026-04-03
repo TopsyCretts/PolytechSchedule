@@ -1,11 +1,11 @@
 import { type DBSchema, type IDBPDatabase, openDB } from "idb"
-import type { InstituteData } from "@/entities/Institute.ts"
-import type { TeacherData } from "@/entities/Teachers.ts"
+import type { InstituteData } from "@/entities/institute/model/Institute.ts"
+import type { TeacherData } from "@/entities/teachers/model/Teachers.ts"
 import { DB_NAME, DB_VERSION } from "@/shared/constants/contstants.ts"
-import { type ScheduleData } from "@/entities/ScheduleData.ts"
+import { type ScheduleData } from "@/entities/schedule/model/ScheduleData.ts"
 import type { ScheduleDataDB } from "@/app/store/indexDb/models/ScheduleDataDB.ts"
 import type { ProfileDB } from "@/app/store/indexDb/models/ProfileDB.ts"
-import type { Profile } from "@/entities/Profile.ts"
+import type { Profile } from "@/entities/profile/model/Profile.ts"
 
 export const STORE_NAMES = {
   profiles: "profiles",

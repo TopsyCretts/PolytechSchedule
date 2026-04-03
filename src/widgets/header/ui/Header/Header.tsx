@@ -6,7 +6,7 @@ import LanguagePicker from "@/widgets/LanguagePicker"
 import ThemeToggler from "@/widgets/ThemeToggler"
 import BurgerMenu from "@/widgets/BurgerMenu"
 import type { HeaderControlsProps } from "@/widgets/header/lib/types.ts"
-import Profiles from "@/widgets/header/ui/Profiles"
+import HeaderProfiles from "@/widgets/header/ui/HeaderProfiles"
 import { Trans, useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import {
@@ -15,10 +15,10 @@ import {
 } from "@/shared/constants/contstants.ts"
 import HeaderProfileLabel from "@/widgets/header/ui/HeaderProfileLabel/HeaderProfileLabel.tsx"
 import { format, startOfToday } from "date-fns"
-import type { ProfileType } from "@/entities/Profile.ts"
+import type { ProfileType } from "@/entities/profile/model/Profile.ts"
 import useMediaQueryListEvent from "@/shared/lib/useMediaQueryListEvent.ts"
 import { MATCH_MEDIA } from "@/shared/constants/media.ts"
-import { SCHEDULE_VIEW } from "@/entities/ScheduleData.ts"
+import { SCHEDULE_VIEW } from "@/entities/schedule/model/ScheduleData.ts"
 import { APP_ROUTES, routeWithParams } from "@/app/routes/routes.ts"
 import ArrowIcon from "@/assets/icons/arrow-long-right.svg?react"
 
@@ -39,7 +39,7 @@ const Header = () => {
           <HeaderControls isHomePage={isHome} />
         </div>
         <div className="header__extra">
-          <Profiles className={"header__profiles"} />
+          <HeaderProfiles className={"header__profiles"} />
         </div>
       </div>
     </header>

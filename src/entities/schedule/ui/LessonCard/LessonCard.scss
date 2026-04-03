@@ -1,0 +1,168 @@
+.lesson-card {
+  display: flex;
+  column-gap: var(--spacing-md);
+  width: 100%;
+  max-width: 100%;
+
+  &__duration,
+  &__inner,
+  &__body {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+
+  &__duration {
+    @include square(remtext(60));
+
+    justify-content: space-between;
+    margin-right: remtext(10);
+
+    @include mobile {
+      @include square(remtext(50));
+    }
+  }
+
+  &__start-time {
+    @include fluid-text(20, 16);
+
+    font-weight: 700;
+
+    @include mobile {
+      font-weight: 400;
+    }
+  }
+
+  &__end-time {
+    @include fluid-text(16, 12);
+
+    color: var(--color-text-accent-themed);
+  }
+
+  &__inner,
+  &__body {
+    justify-content: center;
+    row-gap: var(--spacing-md);
+  }
+
+  &__inner {
+    @include border-shadow-themed(var(--border-radius-xl));
+
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-xl) var(--spacing-xl);
+    background-color: var(--lesson-card-bg);
+  }
+
+  &__path-indicator {
+    @include flex-center;
+
+    flex-direction: column;
+    row-gap: var(--spacing-md);
+    width: var(--icon-size);
+    padding-top: remtext(6);
+    color: var(--color-blue);
+    border-radius: 50%;
+
+    &::before {
+      --outlineColor: currentColor;
+
+      @include square(remtext(12));
+
+      content: "";
+      aspect-ratio: 1;
+      color: inherit;
+      background-color: currentColor;
+      border-radius: 50%;
+      outline: remtext(3) solid var(--outlineColor);
+      outline-offset: remtext(3);
+    }
+
+    &::after {
+      content: "";
+      width: remtext(4);
+      height: 100%;
+      background-color: currentColor;
+      border-radius: remtext(5);
+    }
+
+    @include mobile {
+      margin-right: remtext(10);
+    }
+  }
+
+  &__path-indicator--active {
+    color: var(--color-orange);
+  }
+
+  &__title {
+    @include fluid-text(20, 16);
+
+    font-weight: 700;
+
+    @include mobile {
+      font-weight: 400;
+    }
+  }
+
+  &__lesson-type,
+  &__remote {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__description {
+    display: flex;
+    gap: remtext(10) remtext(15);
+
+    *:not(:last-child) {
+      &::after {
+        @include square(remtext(5));
+
+        content: "";
+        margin-left: remtext(15);
+        background-color: currentColor;
+        border-radius: 50%;
+      }
+    }
+
+    @include mobile {
+      flex-direction: column;
+      row-gap: remtext(10);
+      font-size: remtext(14);
+
+      & * {
+        margin-left: 0;
+
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &__remote {
+    @include mobile {
+      font-size: remtext(14);
+    }
+  }
+
+  &__icon {
+    flex-shrink: 1;
+    margin-right: remtext(10);
+  }
+
+  &__link-list {
+    display: flex;
+    flex-flow: row wrap;
+    column-gap: remtext(10);
+  }
+
+  &__additional-info {
+    color: var(--color-text-accent-themed);
+  }
+
+  &--inactive {
+    opacity: 40%;
+  }
+}

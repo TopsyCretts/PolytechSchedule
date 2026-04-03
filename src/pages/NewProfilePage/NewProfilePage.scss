@@ -1,7 +1,7 @@
 .home-page {
-  padding-bottom: remText(200);
+  padding-bottom: remtext(200);
 
   @include mobile {
-    padding-bottom: remText(50);
+    padding-bottom: remtext(50);
   }
 }

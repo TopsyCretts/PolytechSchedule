@@ -9,11 +9,11 @@
   &__body {
     @include flex-center;
 
-    column-gap: remText(20);
-    padding-inline: remText(10);
+    column-gap: remtext(20);
+    padding-inline: remtext(10);
 
     @include mobile {
-      column-gap: remText(5);
+      column-gap: remtext(5);
     }
   }
 

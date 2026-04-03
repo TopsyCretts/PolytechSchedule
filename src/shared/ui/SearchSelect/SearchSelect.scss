@@ -8,12 +8,12 @@
     display: flex;
     flex-direction: column;
     scrollbar-gutter: stable;
-    row-gap: remText(10);
+    row-gap: remtext(10);
     width: 100%;
-    height: remText(405);
-    max-height: remText(405);
-    margin-top: remText(15);
-    padding-bottom: remText(20);
+    height: remtext(405);
+    max-height: remtext(405);
+    margin-top: remtext(15);
+    padding-bottom: remtext(20);
     scrollbar-width: thin;
 
     &::after {
@@ -23,7 +23,7 @@
       left: 0;
       width: 100%;
       max-width: 100%;
-      height: remText(40);
+      height: remtext(40);
       background: linear-gradient(
         180deg,
         transparent 0%,
@@ -36,8 +36,8 @@
     @include flex-center;
 
     width: 100%;
-    height: remText(405);
-    max-height: remText(405);
+    height: remtext(405);
+    max-height: remtext(405);
     color: var(--color-text-accent-themed);
   }
 }

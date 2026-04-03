@@ -8,7 +8,7 @@
     justify-content: center;
     gap: 0;
     width: 100%;
-    max-width: remText(870);
+    max-width: remtext(870);
     padding-inline: 0;
   }
 
@@ -34,7 +34,7 @@
     justify-content: start;
     row-gap: var(--spacing-lg);
     width: 100%;
-    max-width: calc(100% - #{remText(870)} - var(--spacing-xl));
+    max-width: calc(100% - #{remtext(870)} - var(--spacing-xl));
 
     &-item {
       width: 100%;

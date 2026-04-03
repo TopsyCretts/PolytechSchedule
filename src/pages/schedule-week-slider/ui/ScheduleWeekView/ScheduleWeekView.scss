@@ -10,7 +10,7 @@
     row-gap: var(--spacing-lg);
 
     @include mobile {
-      max-width: calc(#{remText(380)} + 2 * var(--container-padding-x));
+      max-width: calc(#{remtext(380)} + 2 * var(--container-padding-x));
       margin-inline: auto;
     }
 
@@ -33,7 +33,7 @@
     pointer-events: none;
 
     &--top {
-      top: remText(120);
+      top: remtext(120);
       rotate: -0.25turn;
     }
 

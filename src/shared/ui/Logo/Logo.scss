@@ -1,11 +1,11 @@
 .logo {
   @include flex-center(true);
 
-  column-gap: remText(15);
-  padding-right: remText(6);
+  column-gap: remtext(15);
+  padding-right: remtext(6);
 
   &__title {
-    padding-right: remText(3);
+    padding-right: remtext(3);
     color: inherit;
   }
 }

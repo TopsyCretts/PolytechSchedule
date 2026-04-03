@@ -1,8 +1,11 @@
-import type { DayData, ScheduleData } from "@/entities/ScheduleData.ts"
-import type { BaseProfile } from "@/entities/Profile.ts"
+import type {
+  DayData,
+  ScheduleData,
+} from "@/entities/schedule/model/ScheduleData.ts"
+import type { BaseProfile } from "@/entities/profile/model/Profile.ts"
 import type { Locale } from "date-fns"
-import type { TeacherData } from "@/entities/Teachers.ts"
-import type { GroupData } from "@/entities/Group.ts"
+import type { TeacherData } from "@/entities/teachers/model/Teachers.ts"
+import type { GroupData } from "@/entities/institute/model/Group.ts"
 import type { ProgressStatus } from "@/shared/models/DataStatus.ts"
 
 type SchedulePageProps = {

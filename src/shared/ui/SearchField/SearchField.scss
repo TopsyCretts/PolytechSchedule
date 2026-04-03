@@ -4,7 +4,7 @@
 
   &__label {
     margin-bottom: var(--spacing-lg);
-    font-size: remText(20);
+    font-size: remtext(20);
     color: var(--color-text-accent-themed);
 
     @include mobile {

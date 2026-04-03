@@ -1,7 +1,7 @@
 import { type LoaderFunctionArgs, redirect } from "react-router"
 import { MATCH_MEDIA } from "@/shared/constants/media.ts"
 import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
-import { type ProfileType } from "@/entities/Profile.ts"
+import { type ProfileType } from "@/entities/profile/model/Profile.ts"
 
 export const weekLoader = async ({ request, params }: LoaderFunctionArgs) => {
   const apiId = params.profileApiId

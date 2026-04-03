@@ -6,14 +6,14 @@
 
   &__content {
     overflow-y: auto;
-    max-height: remText(300);
+    max-height: remtext(300);
 
     @include mobile {
-      max-height: remText(300);
+      max-height: remtext(300);
     }
 
     @include mobile-s {
-      max-height: remText(250);
+      max-height: remtext(250);
     }
   }
 }

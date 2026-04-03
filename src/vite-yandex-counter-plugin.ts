@@ -38,7 +38,7 @@ function viteYandexCounterPlugin(options: Options = {}): Plugin {
       } else {
         console.warn(
           `Yandex.Metrika: ID not found in env variable "${envVariable}". ` +
-          `Check your .env.${config.mode} file`
+            `Check your .env.${config.mode} file`
         )
         resolvedId = undefined
       }

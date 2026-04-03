@@ -11,10 +11,13 @@ import type {
   ScheduleLayoutProps,
 } from "@/pages/schedule/model/SchedulePageProps.ts"
 import { useTranslation } from "react-i18next"
-import type { DayData, ScheduleDataStatus } from "@/entities/ScheduleData.ts"
+import type {
+  DayData,
+  ScheduleDataStatus,
+} from "@/entities/schedule/model/ScheduleData.ts"
 import { PROGRESS_STATUS } from "@/shared/models/DataStatus.ts"
 import { useDebounce } from "use-debounce"
-import { useGetScheduleByProfileQuery } from "@/pages/schedule/api/service.ts"
+import { useGetScheduleByProfileQuery } from "@/entities/schedule/api/service.ts"
 import { findEqualDayData } from "@/pages/schedule-calendar/lib/findEqualDayData.ts"
 import { LANGUAGES_MAP } from "@/shared/constants/contstants.ts"
 import { Spinner } from "@/shared/ui"

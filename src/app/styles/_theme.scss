@@ -42,11 +42,11 @@
   --blur-10: blur(10px);
   --blur-20: blur(20px);
 
-  --border-light: #{remText(1)} solid var(--color-light-opacity-5);
-  --border-dark: #{remText(1)} solid var(--color-dark-opacity-10);
-  --border-blue: #{remText(1)} solid var(--color-blue);
+  --border-light: #{remtext(1)} solid var(--color-light-opacity-5);
+  --border-dark: #{remtext(1)} solid var(--color-dark-opacity-10);
+  --border-blue: #{remtext(1)} solid var(--color-blue);
 
-  --button-border: #{remText(1)} solid var(--color-dark-opacity-10);
+  --button-border: #{remtext(1)} solid var(--color-dark-opacity-10);
   --button-border-themed: var(--button-border);
 
   --color-bg-themed: var(--color-light);

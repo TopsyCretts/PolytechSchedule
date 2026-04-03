@@ -3,19 +3,19 @@ import {
   type Profile,
   PROFILE_TYPE,
   type ProfileType,
-} from "@/entities/Profile.ts"
+} from "@/entities/profile/model/Profile.ts"
 import { mainContainer } from "@/app/store/mainContainer.ts"
 import {
   createStudentProfile,
   createTeacherProfile,
-  ProfilesStore,
-} from "@/app/store/profiles/ProfilesStore.ts"
+  ProfilesManagerStore,
+} from "@/features/profile/model/ProfilesManagerStore.ts"
 import { APP_ROUTES, routeWithParams } from "@/app/routes/routes.ts"
-import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
-import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
-import { LocalStorageManager } from "@/app/store/browser-storages"
+import { InstitutesStore } from "@/entities/institute/model/InstitutesStore.ts"
+import { TeachersStore } from "@/entities/teachers/model/TeachersStore.ts"
+import { LocalStorageRepository } from "@/shared/models/browser-storages"
 import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
-import { SCHEDULE_VIEW } from "@/entities/ScheduleData.ts"
+import { SCHEDULE_VIEW } from "@/entities/schedule/model/ScheduleData.ts"
 
 const profileLoader = async ({ params }: LoaderFunctionArgs) => {
   const newProfileApiId = params.profileApiId
@@ -39,13 +39,13 @@ const profileLoader = async ({ params }: LoaderFunctionArgs) => {
   await institutesStore.getIsInitialized
   await teachersStore.getIsInitialized
 
-  const profilesStore = mainContainer.get(ProfilesStore)
+  const profilesStore = mainContainer.get(ProfilesManagerStore)
   await profilesStore.getIsInitialized
 
   const savedProfile = profilesStore.getProfile(profileApiId, profileType)
 
   if (savedProfile) {
-    LocalStorageManager.set<number>(
+    LocalStorageRepository.set<number>(
       LOCAL_STORAGE_KEY.lastProfileId,
       savedProfile.id
     )

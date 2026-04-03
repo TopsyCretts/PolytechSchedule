@@ -31,7 +31,7 @@
 }
 
 .container-large {
-  @include container-max-width(remText(1368), var(--container-padding-x));
+  @include container-max-width(remtext(1368), var(--container-padding-x));
 }
 
 .container-extra-large {
@@ -131,4 +131,8 @@
 
 .border-radius-xl {
   border-radius: var(--border-radius-xl);
+}
+
+.capitalize {
+  text-transform: capitalize;
 }

@@ -4,41 +4,41 @@
   --font-family-base: "Open Sans", sans-serif;
   --letter-spacing: -0.01em;
 
-  --border-radius-xs: #{remText(4)};
-  --border-radius-sm: #{remText(8)};
-  --border-radius-md: #{remText(12)};
-  --border-radius-lg: #{remText(16)};
-  --border-radius-xl: #{remText(20)};
+  --border-radius-xs: #{remtext(4)};
+  --border-radius-sm: #{remtext(8)};
+  --border-radius-md: #{remtext(12)};
+  --border-radius-lg: #{remtext(16)};
+  --border-radius-xl: #{remtext(20)};
 
-  --container-width-xs: #{remText(482)};
-  --container-width-sm: #{remText(542)};
-  --container-width-md: #{remText(900)};
-  --container-width-lg: #{remText(1360)};
-  --container-padding-x: #{remText(16)};
+  --container-width-xs: #{remtext(482)};
+  --container-width-sm: #{remtext(542)};
+  --container-width-md: #{remtext(900)};
+  --container-width-lg: #{remtext(1360)};
+  --container-padding-x: #{remtext(16)};
 
-  --spacing-xs: #{remText(4)};
-  --spacing-sm: #{remText(8)};
-  --spacing-md: #{remText(12)};
-  --spacing-lg: #{remText(16)};
-  --spacing-xl: #{remText(20)};
-  --spacing-hg: #{remText(30)};
+  --spacing-xs: #{remtext(4)};
+  --spacing-sm: #{remtext(8)};
+  --spacing-md: #{remtext(12)};
+  --spacing-lg: #{remtext(16)};
+  --spacing-xl: #{remtext(20)};
+  --spacing-hg: #{remtext(30)};
 
-  --icon-size: #{remText(24)};
+  --icon-size: #{remtext(24)};
 
-  --calendar-cell-width: #{remText(100)};
-  --calendar-cell-min-width: #{remText(52)};
-  --calendar-cell-height: #{remText(130)};
+  --calendar-cell-width: #{remtext(100)};
+  --calendar-cell-min-width: #{remtext(52)};
+  --calendar-cell-height: #{remtext(130)};
   --calendar-grid-template-columns: repeat(
     7,
     minmax(var(--calendar-cell-min-width), var(--calendar-cell-width))
   );
 
-  --week-slide-width: #{remText(443)};
+  --week-slide-width: #{remtext(443)};
   --week-slide-padding-x: var(--spacing-md);
 
-  --button-height: #{remText(44)};
-  --input-height: #{remText(60)};
-  --switcher-height-sm: #{remText(48)};
+  --button-height: #{remtext(44)};
+  --input-height: #{remtext(60)};
+  --switcher-height-sm: #{remtext(48)};
 
   --z-index-backdrop: 100;
   --z-index-select: 200;

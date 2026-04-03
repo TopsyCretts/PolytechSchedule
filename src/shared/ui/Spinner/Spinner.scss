@@ -2,14 +2,14 @@
   @include flex-center;
 
   &__svg {
-    @include square(remText(50));
+    @include square(remtext(50));
 
     animation: spin 1s infinite linear;
   }
 
   &__path,
   &__indicator {
-    stroke-width: remText(6);
+    stroke-width: remtext(6);
     stroke-linecap: round;
   }
 

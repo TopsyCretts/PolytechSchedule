@@ -6,7 +6,7 @@
     height: 100%;
 
     @include mobile-above {
-      height: remText(600);
+      height: remtext(600);
     }
   }
 

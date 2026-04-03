@@ -1,10 +1,8 @@
 import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
-import { WeekSlider } from "@/shared/ui"
-import * as React from "react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { type SwiperRef } from "swiper/react"
 import type { SelectedWeekSlide } from "@/pages/schedule-week-slider/lib/types.ts"
-import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
+import type { ScheduleWeekData } from "@/entities/schedule/model/ScheduleData.ts"
 import { add, type Day, isAfter, isBefore, startOfToday, sub } from "date-fns"
 import { findWeekSlide } from "@/pages/schedule-week-slider/lib/findWeekSlide.ts"
 import "./ScheduleWeekView.scss"
@@ -19,6 +17,7 @@ import {
   maxWeekStartDate,
   minWeekStartDate,
 } from "@/pages/schedule-week-slider/lib/minAndMaxWeekStartDate.ts"
+import { WeekSlider } from "@/entities/schedule"
 
 interface VerticalSwipeState {
   isSwiping: boolean

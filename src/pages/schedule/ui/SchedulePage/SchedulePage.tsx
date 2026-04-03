@@ -4,13 +4,14 @@ import { useMemo } from "react"
 import { useInjection } from "inversify-react"
 import { observer } from "mobx-react-lite"
 import type { SchedulePageProps } from "@/pages/schedule/model/SchedulePageProps.ts"
-import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
-import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
+import { InstitutesStore } from "@/entities/institute/model/InstitutesStore.ts"
+import { TeachersStore } from "@/entities/teachers/model/TeachersStore.ts"
 import { ScheduleLayout } from "@/pages/schedule/ui/ScheduleLayout/ScheduleLayout.tsx"
-import { ProfilesStore } from "@/app/store/profiles/ProfilesStore.ts"
+import { ProfilesManagerStore } from "@/features/profile/model/ProfilesManagerStore.ts"
 
 const SchedulePage = observer(({ className }: SchedulePageProps) => {
-  const { getCurrentProfile: currentProfile } = useInjection(ProfilesStore)
+  const { getCurrentProfile: currentProfile } =
+    useInjection(ProfilesManagerStore)
 
   if (currentProfile === null) {
     throw new Response("Profile creation failed", { status: 404 })

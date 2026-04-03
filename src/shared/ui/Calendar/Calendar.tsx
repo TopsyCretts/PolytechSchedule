@@ -33,7 +33,6 @@ import {
 import CalendarChangeMonth from "./CalendarChangeMonth"
 import { ru } from "date-fns/locale"
 import { CALENDAR_SPECIAL_MONTH_FORMAT } from "@/shared/constants/contstants"
-import { capitalizeFirstLatter } from "@/shared/lib/capitalizeFirstLatter"
 import clsx from "clsx"
 import {
   maxWeekStartDate,
@@ -197,9 +196,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
         eachDayOfInterval({
           start: startOfWeek(new Date(), { weekStartsOn: 1 }),
           end: endOfWeek(new Date(), { weekStartsOn: 1 }),
-        }).map((day) =>
-          capitalizeFirstLatter(format(day, "EEEEEE", { locale }))
-        ),
+        }).map((day) => format(day, "EEEEEE", { locale })),
       [locale]
     )
 
@@ -251,7 +248,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
               <CalendarChangeMonth className="calendar__month-switch" />
             </header>
             <div className="calendar__inner">
-              <div className="calendar__weekdays">
+              <div className="calendar__weekdays capitalize">
                 {weekDaysString.map((day) => (
                   <span key={day}>{day}</span>
                 ))}

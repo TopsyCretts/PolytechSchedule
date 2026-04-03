@@ -24,8 +24,8 @@
   }
 
   &__trailing-icon {
-    padding: remText(4);
-    border-radius: remText(6);
+    padding: remtext(4);
+    border-radius: remtext(6);
 
     @include hover {
       color: var(--color-light);

@@ -1,4 +1,4 @@
-import { LocalStorageManager } from "@/app/store/browser-storages"
+import { LocalStorageRepository } from "@/shared/models/browser-storages"
 import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
 import { DBRepository, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
 import { redirect } from "react-router"
@@ -7,7 +7,7 @@ import { MATCH_MEDIA } from "@/shared/constants/media.ts"
 
 export const mainLoader = async () => {
   const lastUsedProfileId = Number(
-    LocalStorageManager.get<number>(LOCAL_STORAGE_KEY.lastProfileId)
+    LocalStorageRepository.get<number>(LOCAL_STORAGE_KEY.lastProfileId)
   )
 
   if (lastUsedProfileId !== null) {

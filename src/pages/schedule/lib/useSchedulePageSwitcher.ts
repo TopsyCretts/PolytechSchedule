@@ -2,10 +2,13 @@ import { useTranslation } from "react-i18next"
 import { useMatch, useNavigate } from "react-router"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import { getScheduleProfileRoute } from "@/app/routes/schedule/profileLoader.ts"
-import type { ProfileType } from "@/entities/Profile.ts"
+import type { ProfileType } from "@/entities/profile/model/Profile.ts"
 import { APP_ROUTES } from "@/app/routes/routes.ts"
 import type { SwitcherOption } from "@/shared/ui/Switcher/types.ts"
-import { SCHEDULE_VIEW, type ScheduleView } from "@/entities/ScheduleData.ts"
+import {
+  SCHEDULE_VIEW,
+  type ScheduleView,
+} from "@/entities/schedule/model/ScheduleData.ts"
 
 const useSchedulePageSwitcher = (
   profileApiId: number,

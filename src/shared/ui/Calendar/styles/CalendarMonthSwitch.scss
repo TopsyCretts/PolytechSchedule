@@ -1,25 +1,25 @@
 .month-switch {
   @include flex-center;
 
-  column-gap: remText(10);
+  column-gap: remtext(10);
 
   &__title {
     @include flex-center(true);
 
-    column-gap: remText(15);
-    min-width: remText(180);
+    column-gap: remtext(15);
+    min-width: remtext(180);
     height: var(--button-height);
   }
 
   &__month-name {
-    font-size: remText(20);
+    font-size: remtext(20);
     font-weight: 700;
   }
 
   &__year {
-    padding-top: remText(4);
-    padding-bottom: remText(1);
-    font-size: remText(16);
+    padding-top: remtext(4);
+    padding-bottom: remtext(1);
+    font-size: remtext(16);
   }
 
   &__right {

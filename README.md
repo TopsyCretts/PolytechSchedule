@@ -14,7 +14,7 @@ Build Tool: Vite
 
 Language: TypeScript
 
-Styling:  CSS
+Styling: CSS
 
 Routing: React Router
 
@@ -30,10 +30,10 @@ CI/CD: GitHub Actions
 
 Containerization: Docker, Docker Compose
 
-Hosting:  VPS
+Hosting: VPS
 
 🧪 Testing & Quality
 
 Linting: ESLint, Prettier
 
-Перейти на  ypolytech.ru
+Перейти на ypolytech.ru
