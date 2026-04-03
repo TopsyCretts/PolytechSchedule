@@ -68,7 +68,7 @@ const ScheduleLayout = ({
 
   const setCurrentDayDataByDate = useCallback(
     (date: Date) => {
-      setDateToUrl(date!)
+      setDateToUrl(date)
       setCurrentDayData(findEqualDayData(scheduleData.data.weeks, date))
     },
     [scheduleData.data.weeks, setDateToUrl]

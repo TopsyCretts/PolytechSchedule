@@ -45,9 +45,11 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
 
   const handleDateSelect = useCallback(
     (date: Date | null) => {
-      setCurrentDayDataByDate(date!)
-      if (isLaptop) {
-        navigateToWeek(date!)
+      if (date) {
+        setCurrentDayDataByDate(date)
+        if (isLaptop) {
+          navigateToWeek(date!)
+        }
       }
     },
     [isLaptop, navigateToWeek, setCurrentDayDataByDate]
@@ -113,7 +115,7 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
         />
         <AnimatePresence mode={"wait"}>
           <motion.div
-            key={currentDayData.date.getTime()}
+            key={currentDayData.date?.getTime() ?? "random-key"}
             className={clsx(
               "schedule-calendar-view__day-item-wrapper",
               "hidden-laptop"
@@ -124,7 +126,7 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
             transition={{ duration: 0.2 }}
           >
             <ScheduleDayItem
-              key={currentDayData.date.toString()}
+              key={currentDayData.date?.toString() ?? "random-key"}
               className={"schedule-calendar-view__day-item"}
               dayData={currentDayData}
               locale={locale}

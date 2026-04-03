@@ -21,6 +21,10 @@ const CalendarCell = memo(
     const isSelected =
       selectedDate !== null && isEqual(selectedDate, cellData.date)
 
+    const handleDateSelect = () => {
+      selectDate(cellData.date)
+    }
+
     return (
       <div
         className={clsx(
@@ -32,13 +36,9 @@ const CalendarCell = memo(
             "calendar-day--not-current-month"
         )}
         tabIndex={0}
-        onClick={() => {
-          selectDate(isSelected ? null : cellData.date)
-        }}
+        onClick={handleDateSelect}
         onKeyDown={(e) => {
-          isEnterKeyPressed(e, () =>
-            selectDate(isSelected ? null : cellData.date)
-          )
+          isEnterKeyPressed(e, handleDateSelect)
         }}
       >
         <time
