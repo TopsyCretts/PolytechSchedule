@@ -1,17 +1,15 @@
-@use "../../../styles/helpers/index" as *;
-
 .spinner {
   @include flex-center;
 
   &__svg {
-    @include square(rem(50));
+    @include square(remtext(50));
 
     animation: spin 1s infinite linear;
   }
 
   &__path,
   &__indicator {
-    stroke-width: rem(6);
+    stroke-width: remtext(6);
     stroke-linecap: round;
   }
 

@@ -1,7 +1,5 @@
-@use "../../../styles/helpers/index" as *;
-
 .row-popover {
-  --offlineIndicatorContentMargin: calc(var(--button-height) - #{rem(5)});
+  --offlineIndicatorContentMargin: calc(var(--button-height) - #{remtext(5)});
 
   @include flex-center;
   @include square(var(--button-height));
@@ -38,9 +36,9 @@
     overflow: hidden;
     display: flex;
     align-items: center;
-    max-width: rem(330);
+    max-width: remtext(330);
     height: var(--button-height);
-    padding: rem(10);
+    padding: remtext(10);
     color: inherit;
     background-color: var(--select-bg);
     border-radius: var(--border-radius-md);
@@ -53,7 +51,7 @@
 
   &__body,
   &__title {
-    font-size: rem(14);
+    font-size: remtext(14);
     white-space: nowrap;
   }
 
@@ -78,8 +76,8 @@
     }
 
     & .row-popover__inner {
-      column-gap: rem(10);
-      margin-top: calc(-1 * #{rem(1)});
+      column-gap: remtext(10);
+      margin-top: calc(-1 * #{remtext(1)});
     }
   }
 

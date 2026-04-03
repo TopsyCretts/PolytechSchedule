@@ -1,6 +1,6 @@
 import SearchItem from "./SearchItem"
-import StudentIcon from "@/assets/icons/student.svg?react"
-import TeacherIcon from "@/assets/icons/teacher.svg?react"
+import StudentIcon from "@/shared/assets/icons/student.svg?react"
+import TeacherIcon from "@/shared/assets/icons/teacher.svg?react"
 import type { SearchItemCoreProps } from "../SearchItem/types"
 import type { JSX } from "react"
 

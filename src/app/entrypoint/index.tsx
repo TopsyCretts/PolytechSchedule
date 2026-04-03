@@ -7,7 +7,7 @@ import { mainContainer } from "@/app/store/mainContainer.ts"
 import { Provider } from "inversify-react"
 import { queryClient } from "@/shared/api"
 import AppRouter from "../routes/router.tsx"
-import { OfflineProvider, ThemeProvider } from "@/app/providers"
+import { OfflineProvider, ThemeProvider } from "@/shared/models/providers"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

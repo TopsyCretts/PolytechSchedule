@@ -1,12 +1,10 @@
-@use "../../../styles/helpers/index" as *;
-
 .search-field {
   display: flex;
   flex-direction: column;
 
   &__label {
     margin-bottom: var(--spacing-lg);
-    font-size: rem(20);
+    font-size: remtext(20);
     color: var(--color-text-accent-themed);
 
     @include mobile {

@@ -15,6 +15,7 @@ import ScheduleCalendarView from "@/pages/schedule-calendar"
 import SchedulePage from "@/pages/schedule"
 import ScheduleWeekSlider from "@/pages/schedule-week-slider"
 import weekLoader from "@/app/routes/schedule/weekLoader.ts"
+import { APP_ROUTES } from "@/shared/constants/routes.ts"
 
 const RouterErrorElement = lazy(() => import("@/shared/ui/RouterErrorElement"))
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"))
@@ -33,7 +34,7 @@ const router = createBrowserRouter(
         loader={mainLoader}
         element={
           <Navigate
-            to="/new-profile"
+            to={APP_ROUTES.newProfile}
             replace
           />
         }
@@ -53,7 +54,7 @@ const router = createBrowserRouter(
         path={"*"}
         element={
           <Navigate
-            to={"/not-found"}
+            to={APP_ROUTES.notFound}
             replace
           />
         }
@@ -61,9 +62,7 @@ const router = createBrowserRouter(
       <Route
         path={"schedule/:profileType/:profileApiId/"}
         id={"schedule"}
-        loader={async ({ request, context, params }) =>
-          profileLoader({ request, context, params })
-        }
+        loader={profileLoader}
         element={<SchedulePage />}
         errorElement={<RouterErrorElement />}
       >
@@ -96,7 +95,7 @@ const router = createBrowserRouter(
           index
           element={
             <Navigate
-              to="/not-found"
+              to={APP_ROUTES.notFound}
               replace
             />
           }

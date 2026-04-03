@@ -1,7 +1,7 @@
 import type { ThemeIconProps } from "@/widgets/ThemeToggler/types"
 import type { JSX } from "react"
-import MoonIcon from "@/assets/icons/moon.svg?react"
-import SunIcon from "@/assets/icons/sun.svg?react"
+import MoonIcon from "@/shared/assets/icons/moon.svg?react"
+import SunIcon from "@/shared/assets/icons/sun.svg?react"
 import { THEME_TYPE } from "@/shared/models/Theme.ts"
 
 const ThemeIcon = ({ theme }: ThemeIconProps) => {

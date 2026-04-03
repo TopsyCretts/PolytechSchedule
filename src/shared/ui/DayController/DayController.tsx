@@ -1,8 +1,7 @@
 import "./DayController.scss"
 import clsx from "clsx"
 import { format, type Locale } from "date-fns"
-import ArrowLeftIcon from "@/assets/icons/arrow-left.svg?react"
-import { capitalizeFirstLatter } from "@/shared/lib/capitalizeFirstLatter.ts"
+import ArrowLeftIcon from "@/shared/assets/icons/arrow-left.svg?react"
 import Button from "@/shared/ui/Button"
 
 interface DayControllerProps {
@@ -44,22 +43,18 @@ const DayController = ({
           <ArrowLeftIcon />
         </Button>
       )}
-      <h3 className="day-controller__title text-16">
+      <h3 className="day-controller__title text-16 capitalize">
         <time dateTime={format(day, "MM-dd")}>
           {format(day, "d", {
             locale: locale,
           })}{" "}
-          {capitalizeFirstLatter(
-            format(day, "MMMM", {
-              locale: locale,
-            })
-          )}
+          {format(day, "MMMM", {
+            locale: locale,
+          })}
           {", "}
-          {capitalizeFirstLatter(
-            format(day, "EEEE", {
-              locale: locale,
-            })
-          )}
+          {format(day, "EEEE", {
+            locale: locale,
+          })}
         </time>
       </h3>
 

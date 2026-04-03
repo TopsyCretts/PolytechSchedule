@@ -1,16 +1,14 @@
-@use "../../../../styles/helpers/index" as *;
-
 .calendar-lesson {
   display: flex;
   align-items: center;
   width: 100%;
-  height: rem(19);
-  padding-inline: rem(4);
+  height: remtext(19);
+  padding-inline: remtext(4);
   text-align: start;
   background-color: #a0a5c0;
 
   @include mobile {
-    padding-inline: rem(1);
+    padding-inline: remtext(1);
   }
 
   &__title {

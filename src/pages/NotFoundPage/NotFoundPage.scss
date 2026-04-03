@@ -1,5 +1,3 @@
-@use "../../styles/helpers" as *;
-
 .not-found-page {
   @include flex-center;
 
@@ -11,18 +9,18 @@
     @include flex-center;
 
     flex-direction: column;
-    row-gap: rem(30);
+    row-gap: remtext(30);
 
     @include mobile {
-      row-gap: rem(10);
+      row-gap: remtext(10);
     }
   }
 
   &__image {
     width: fluid(578, 340);
     height: auto;
-    min-height: rem(146);
-    filter: drop-shadow(0 0 rem(15) rgba(0, 89, 255, 0.5));
+    min-height: remtext(146);
+    filter: drop-shadow(0 0 remtext(15) rgba(0, 89, 255, 0.5));
   }
 
   &__label {
@@ -32,7 +30,7 @@
   &__back-home {
     display: flex;
     flex-direction: column;
-    row-gap: rem(10);
+    row-gap: remtext(10);
   }
 
   &__home-link {

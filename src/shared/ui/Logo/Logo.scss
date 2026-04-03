@@ -1,13 +1,11 @@
-@use "../../../styles/helpers/index" as *;
-
 .logo {
   @include flex-center(true);
 
-  column-gap: rem(15);
-  padding-right: rem(6);
+  column-gap: remtext(15);
+  padding-right: remtext(6);
 
   &__title {
-    padding-right: rem(3);
+    padding-right: remtext(3);
     color: inherit;
   }
 }

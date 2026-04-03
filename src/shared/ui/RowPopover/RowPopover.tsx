@@ -3,7 +3,7 @@ import clsx from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
 import type { BaseComponentWithChildren } from "@/shared/models/BaseComponent.ts"
 import { useTranslation } from "react-i18next"
-import useOpenModal from "@/shared/lib/useOpenModal.ts"
+import useOpenModal from "@/shared/hooks/useOpenModal.ts"
 
 interface RowPopover extends BaseComponentWithChildren {
   togglerContent: React.ReactNode

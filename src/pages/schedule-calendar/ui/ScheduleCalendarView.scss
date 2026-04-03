@@ -1,5 +1,3 @@
-@use "../../../styles/helpers" as *;
-
 .schedule-calendar-view {
   display: flex;
   justify-content: start;
@@ -10,7 +8,7 @@
     justify-content: center;
     gap: 0;
     width: 100%;
-    max-width: rem(870);
+    max-width: remtext(870);
     padding-inline: 0;
   }
 
@@ -36,7 +34,7 @@
     justify-content: start;
     row-gap: var(--spacing-lg);
     width: 100%;
-    max-width: calc(100% - #{rem(870)} - var(--spacing-xl));
+    max-width: calc(100% - #{remtext(870)} - var(--spacing-xl));
 
     &-item {
       width: 100%;

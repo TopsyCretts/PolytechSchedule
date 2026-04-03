@@ -1,8 +1,8 @@
 import "./IconButton.scss"
 import clsx from "clsx"
-import CrossIcon from "@/assets/icons/cross.svg?react"
+import CrossIcon from "@/shared/assets/icons/cross.svg?react"
 import type { JSX } from "react"
-import ArrowRightIcon from "@/assets/icons/arrow-long-right.svg?react"
+import ArrowRightIcon from "@/shared/assets/icons/arrow-long-right.svg?react"
 import type { IconButtonProps } from "../IconButton/types.ts"
 
 const IconButton = ({

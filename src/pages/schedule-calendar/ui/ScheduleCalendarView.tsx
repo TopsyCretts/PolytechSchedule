@@ -1,24 +1,19 @@
 import { Calendar } from "@/shared/ui"
 import CalendarLessons from "@/pages/schedule-calendar/ui/CalendarLessons"
-import ScheduleDayItem from "@/shared/ui/ScheduleDayItem"
+import ScheduleDayItem from "@/entities/schedule/ui/ScheduleDayItem"
 import clsx from "clsx"
 import "./ScheduleCalendarView.scss"
 import { AnimatePresence, motion } from "framer-motion"
 import useScheduleData from "@/pages/schedule-calendar/lib/useScheduleData.ts"
 import { MATCH_MEDIA } from "@/shared/constants/media.ts"
-import { useNavigate } from "react-router"
-import { findEqualDayData } from "@/pages/schedule-calendar/lib/findEqualDayData.ts"
-import useMediaQueryListEvent from "@/shared/lib/useMediaQueryListEvent.ts"
-import { useEffect, useRef } from "react"
+import { generatePath, useNavigate } from "react-router"
+import useMediaQueryListEvent from "@/shared/hooks/useMediaQueryListEvent.ts"
+import { useCallback, useRef } from "react"
 import type { CalendarRef } from "@/shared/ui/Calendar/types.ts"
 import DayController from "@/shared/ui/DayController"
-import { format, isEqual, isToday } from "date-fns"
+import { format, isToday } from "date-fns"
 import DataStatusPopover from "@/widgets/DataStatusPopover"
-import { routeWithParams } from "@/app/routes/routes.ts"
-import {
-  useGetDateFromUrl,
-  useSetDateToUrl,
-} from "@/shared/lib/useDayFromSearchParams.ts"
+import { APP_ROUTES } from "@/shared/constants/routes.ts"
 import { QUERY_DATE_FORMAT } from "@/shared/constants/contstants.ts"
 
 interface ScheduleCalendarProps {
@@ -33,39 +28,32 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
     MATCH_MEDIA.laptop
   )
 
-  const { setDateToUrl } = useSetDateToUrl()
-
-  const { data, profile, currentDayData, setCurrentDayData, locale } =
+  const { data, profile, currentDayData, setCurrentDayDataByDate, locale } =
     useScheduleData()
 
-  const navigateToWeek = (date: Date) => {
-    navigate(
-      routeWithParams(
-        "/schedule",
-        [profile.profileType, profile.apiId.toString()],
-        { date: format(date, QUERY_DATE_FORMAT) },
-        "week"
+  const navigateToWeek = useCallback(
+    (date: Date) => {
+      navigate(
+        `${generatePath(APP_ROUTES.scheduleWeek, {
+          profileType: profile.profileType!,
+          profileApiId: profile.apiId.toString(),
+        })}?date=${format(date, QUERY_DATE_FORMAT)}`
       )
-    )
-  }
+    },
+    [navigate, profile]
+  )
 
-  const { dateFromUrl } = useGetDateFromUrl()
-
-  const handleDateSelect = (date: Date | null) => {
-    setDateToUrl(date!)
-    const dayData = findEqualDayData(data.weeks, date!)
-    setCurrentDayData(dayData)
-    if (isLaptop) {
-      navigateToWeek(date!)
-    }
-  }
-
-  useEffect(() => {
-    if (!isEqual(currentDayData.date, dateFromUrl!)) {
-      const dayData = findEqualDayData(data.weeks, dateFromUrl!)
-      setCurrentDayData(dayData)
-    }
-  }, [dateFromUrl])
+  const handleDateSelect = useCallback(
+    (date: Date | null) => {
+      if (date) {
+        setCurrentDayDataByDate(date)
+        if (isLaptop) {
+          navigateToWeek(date!)
+        }
+      }
+    },
+    [isLaptop, navigateToWeek, setCurrentDayDataByDate]
+  )
 
   const handleNextDay = () => {
     calendar.current?.goNextDay()
@@ -109,6 +97,7 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
           locale={locale}
           onMonthChange={() => {}}
           initialDate={currentDayData.date}
+          selectedDate={currentDayData.date}
           isSelectedDateCouldBeNull={isLaptop}
           onSelectedDateChange={handleDateSelect}
         />
@@ -126,7 +115,7 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
         />
         <AnimatePresence mode={"wait"}>
           <motion.div
-            key={currentDayData.date.getTime()}
+            key={currentDayData.date?.getTime() ?? "random-key"}
             className={clsx(
               "schedule-calendar-view__day-item-wrapper",
               "hidden-laptop"
@@ -137,7 +126,7 @@ const ScheduleCalendarView = ({ className }: ScheduleCalendarProps) => {
             transition={{ duration: 0.2 }}
           >
             <ScheduleDayItem
-              key={currentDayData.date.toString()}
+              key={currentDayData.date?.toString() ?? "random-key"}
               className={"schedule-calendar-view__day-item"}
               dayData={currentDayData}
               locale={locale}

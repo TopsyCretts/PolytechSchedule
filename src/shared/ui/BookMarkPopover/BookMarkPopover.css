@@ -1,20 +1,20 @@
 .book-mark-popover {
   --bookMarkPopoverHeight: 3.25rem;
   --bookMarkClipPath: polygon(
-      0.651875rem 0.34125rem,
-      0.73625rem 0.170625rem,
-      0.91rem 0.0625rem,
-      1.1rem 0.0625rem,
-      calc(100% - 0.0625rem) 0.0625rem,
-      calc(100% - 0.0625rem) 3.1875rem,
-      1.094375rem 3.1875rem,
-      0.906875rem 3.1875rem,
-      0.735625rem 3.0825rem,
-      0.65rem 2.91625rem,
-      0.1175rem 1.88rem,
-      0.045625rem 1.739375rem,
-      0.04375rem 1.5725rem,
-      0.114375rem 1.430625rem
+    0.651875rem 0.34125rem,
+    0.73625rem 0.170625rem,
+    0.91rem 0.0625rem,
+    1.1rem 0.0625rem,
+    calc(100% - 0.0625rem) 0.0625rem,
+    calc(100% - 0.0625rem) 3.1875rem,
+    1.094375rem 3.1875rem,
+    0.906875rem 3.1875rem,
+    0.735625rem 3.0825rem,
+    0.65rem 2.91625rem,
+    0.1175rem 1.88rem,
+    0.045625rem 1.739375rem,
+    0.04375rem 1.5725rem,
+    0.114375rem 1.430625rem
   );
   display: flex;
   justify-content: center;
@@ -40,7 +40,8 @@
 .book-mark-popover__icon {
   flex-shrink: 0;
 }
-.book-mark-popover__body, .book-mark-popover__title {
+.book-mark-popover__body,
+.book-mark-popover__title {
   font-size: 0.875rem;
   white-space: nowrap;
 }

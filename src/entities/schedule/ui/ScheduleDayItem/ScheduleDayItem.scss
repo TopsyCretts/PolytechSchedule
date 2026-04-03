@@ -1,0 +1,51 @@
+.schedule-day-item {
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: var(--spacing-lg);
+  min-height: 100%;
+  padding-top: var(--spacing-sm);
+
+  &__title {
+    @include flex-center(true);
+    @include border-shadow-themed(var(--border-radius-md));
+    @include fluid-text(16, 14);
+
+    min-width: remtext(220);
+    height: var(--button-height);
+    font-weight: 400;
+    background: var(--lesson-card-bg);
+  }
+
+  &__body {
+    @include stretch-container-to-available-size;
+
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    padding-inline: var(--spacing-sm);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--spacing-md);
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+  }
+
+  &__empty-lessons {
+    @include fluid-text(20, 14);
+
+    display: flex;
+    align-items: center;
+    height: fluid(400, 200);
+    text-align: center;
+    color: var(--color-text-accent-themed);
+  }
+}

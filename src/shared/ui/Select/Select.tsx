@@ -1,7 +1,7 @@
 import "./Select.scss"
 import clsx from "clsx"
 import { Button } from "@/shared/ui"
-import SelectorArrowsIcon from "@/assets/icons/selector-arrows.svg?react"
+import SelectorArrowsIcon from "@/shared/assets/icons/selector-arrows.svg?react"
 import type {
   SelectButtonTogglerProps,
   SelectContainerProps,
@@ -15,11 +15,11 @@ import type {
 } from "./types"
 import { createContext, useCallback, useContext, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import CrossIcon from "@/assets/icons/cross.svg?react"
+import CrossIcon from "@/shared/assets/icons/cross.svg?react"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import { isEnterKeyPressed } from "@/shared/lib/isEnterKeyPressed.ts"
-import useOpenModal from "@/shared/lib/useOpenModal.ts"
+import useOpenModal from "@/shared/hooks/useOpenModal.ts"
 
 const SelectContext = createContext<SelectValues | null>(null)
 

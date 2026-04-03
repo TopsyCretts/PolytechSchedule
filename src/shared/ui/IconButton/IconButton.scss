@@ -1,5 +1,3 @@
-@use "../../../styles/helpers/index" as *;
-
 .icon-button {
   @include reset-button;
   @include flex-center(true);

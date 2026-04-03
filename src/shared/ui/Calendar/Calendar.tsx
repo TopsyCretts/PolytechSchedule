@@ -26,7 +26,6 @@ import {
   createContext,
   forwardRef,
   useCallback,
-  useEffect,
   useImperativeHandle,
   useMemo,
   useState,
@@ -34,7 +33,6 @@ import {
 import CalendarChangeMonth from "./CalendarChangeMonth"
 import { ru } from "date-fns/locale"
 import { CALENDAR_SPECIAL_MONTH_FORMAT } from "@/shared/constants/contstants"
-import { capitalizeFirstLatter } from "@/shared/lib/capitalizeFirstLatter"
 import clsx from "clsx"
 import {
   maxWeekStartDate,
@@ -50,6 +48,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
   (
     {
       className,
+      selectedDate,
       onMonthChange,
       onSelectedDateChange,
       dataToDisplay,
@@ -71,6 +70,12 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
       return startOfMonth(initialDate!)
     })
 
+    const [internalSelectedDate, setInternalSelectedDate] =
+      useState<Date | null>(initialDate)
+
+    const controlledSelectedDate =
+      selectedDate !== undefined ? selectedDate : internalSelectedDate
+
     const isDateOutOfRange = useCallback((date: Date) => {
       const minWeekStart = minWeekStartDate()
       const maxWeekStart = maxWeekStartDate()
@@ -80,44 +85,25 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
       )
     }, [])
 
-    const [selectedDate, setSelectedDate] = useState<Date | null>(initialDate)
-
-    const [isMonthIncrementAvailable, setIsMonthIncrementAvailable] = useState(
-      !isDateOutOfRange(
-        add(endOfWeek(endOfMonth(startOfCurrentMonth), { weekStartsOn: 1 }), {
-          days: 1,
-        })
-      )
-    )
-
-    const [isMonthDecrementAvailable, setIsMonthDecrementAvailable] = useState(
-      !isDateOutOfRange(
-        sub(startOfWeek(startOfCurrentMonth, { weekStartsOn: 1 }), {
-          days: 1,
-        })
-      )
-    )
-
-    useEffect(() => {
-      setIsMonthIncrementAvailable(
+    const isMonthIncrementAvailable = useCallback(
+      () =>
         !isDateOutOfRange(
           add(endOfWeek(endOfMonth(startOfCurrentMonth), { weekStartsOn: 1 }), {
             days: 1,
           })
-        )
-      )
-      setIsMonthDecrementAvailable(
+        ),
+      [isDateOutOfRange, startOfCurrentMonth]
+    )
+
+    const isMonthDecrementAvailable = useCallback(
+      () =>
         !isDateOutOfRange(
           sub(startOfWeek(startOfCurrentMonth, { weekStartsOn: 1 }), {
             days: 1,
           })
-        )
-      )
-    }, [isDateOutOfRange, startOfCurrentMonth])
-
-    useEffect(() => {
-      setSelectedDate(initialDate)
-    }, [initialDate])
+        ),
+      [isDateOutOfRange, startOfCurrentMonth]
+    )
 
     const handleMonthChange = useCallback(
       (month: Date) => {
@@ -132,7 +118,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
         if (newDate === null && !isSelectedDateCouldBeNull) {
           return
         }
-        const currentMonthNumber = selectedDate?.getMonth()
+        const currentMonthNumber = controlledSelectedDate?.getMonth()
         const newMonthNumber = newDate?.getMonth()
         if (
           currentMonthNumber !== undefined &&
@@ -141,26 +127,26 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
         ) {
           handleMonthChange(startOfMonth(newDate!))
         }
-        setSelectedDate(newDate)
+        setInternalSelectedDate(newDate)
         onSelectedDateChange(newDate)
       },
       [
         isSelectedDateCouldBeNull,
-        selectedDate,
+        controlledSelectedDate,
         onSelectedDateChange,
         handleMonthChange,
       ]
     )
 
     const handleMonthIncrement = useCallback(() => {
-      if (isMonthIncrementAvailable) {
+      if (isMonthIncrementAvailable()) {
         const firstDayOfNextMonth = add(startOfCurrentMonth, { months: 1 })
         handleMonthChange(firstDayOfNextMonth)
       }
     }, [startOfCurrentMonth, handleMonthChange, isMonthIncrementAvailable])
 
     const handleMonthDecrement = useCallback(() => {
-      if (isMonthDecrementAvailable) {
+      if (isMonthDecrementAvailable()) {
         const firstDayOfPrevMonth = add(startOfCurrentMonth, { months: -1 })
         handleMonthChange(firstDayOfPrevMonth)
       }
@@ -169,7 +155,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
     const value = useMemo<CalendarContextValues>(
       () => ({
         currentMonth: startOfCurrentMonth,
-        selectedDate,
+        selectedDate: controlledSelectedDate,
         monthFormat: CALENDAR_SPECIAL_MONTH_FORMAT,
         locale,
         isMonthIncrementAvailable,
@@ -177,7 +163,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
       }),
       [
         startOfCurrentMonth,
-        selectedDate,
+        controlledSelectedDate,
         locale,
         isMonthIncrementAvailable,
         isMonthDecrementAvailable,
@@ -210,9 +196,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
         eachDayOfInterval({
           start: startOfWeek(new Date(), { weekStartsOn: 1 }),
           end: endOfWeek(new Date(), { weekStartsOn: 1 }),
-        }).map((day) =>
-          capitalizeFirstLatter(format(day, "EEEEEE", { locale }))
-        ),
+        }).map((day) => format(day, "EEEEEE", { locale })),
       [locale]
     )
 
@@ -221,8 +205,8 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
         goNextMonth: handleMonthIncrement,
         goPreviousMonth: handleMonthDecrement,
         goNextDay: () => {
-          if (selectedDate) {
-            const nextDay = add(selectedDate, { days: 1 })
+          if (controlledSelectedDate) {
+            const nextDay = add(controlledSelectedDate, { days: 1 })
             if (isDateOutOfRange(nextDay)) {
               return
             }
@@ -230,8 +214,8 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
           }
         },
         goPreviousDay: () => {
-          if (selectedDate) {
-            const previousDay = sub(selectedDate, { days: 1 })
+          if (controlledSelectedDate) {
+            const previousDay = sub(controlledSelectedDate, { days: 1 })
             if (isDateOutOfRange(previousDay)) {
               return
             }
@@ -241,17 +225,16 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
         selectDate: handleSelectedDateChange,
         isMonthIncrementAvailable,
         isMonthDecrementAvailable,
-        selectedDate,
+        selectedDate: controlledSelectedDate,
       }),
       [
         handleMonthIncrement,
         handleMonthDecrement,
         handleSelectedDateChange,
-        selectedDate,
-        startOfCurrentMonth,
         isMonthIncrementAvailable,
         isMonthDecrementAvailable,
-        selectedDate,
+        controlledSelectedDate,
+        isDateOutOfRange,
       ]
     )
 
@@ -265,7 +248,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
               <CalendarChangeMonth className="calendar__month-switch" />
             </header>
             <div className="calendar__inner">
-              <div className="calendar__weekdays">
+              <div className="calendar__weekdays capitalize">
                 {weekDaysString.map((day) => (
                   <span key={day}>{day}</span>
                 ))}

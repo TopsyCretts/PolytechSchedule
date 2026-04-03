@@ -1,12 +1,10 @@
-@use "../../../../styles/helpers" as *;
-
 .calendar-day {
   @include border-shadow-themed(var(--border-radius-lg));
 
   overflow: hidden;
   width: 100%;
   height: 100%;
-  max-height: rem(130);
+  max-height: remtext(130);
   padding-block: var(--spacing-sm);
   background-color: var(--color-light-opacity-10);
   cursor: pointer;
@@ -19,10 +17,10 @@
   &__header {
     @include flex-center;
 
-    max-height: rem(25);
+    max-height: remtext(25);
 
     @include mobile {
-      max-height: rem(18);
+      max-height: remtext(18);
     }
   }
 

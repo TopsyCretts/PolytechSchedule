@@ -1,0 +1,138 @@
+@use "helpers/index" as *;
+
+.container,
+.container-extra-small,
+.container-small,
+.container-large,
+.container-extra-large {
+  margin-inline: auto;
+  padding-inline: var(--container-padding-x);
+}
+
+.container {
+  @include container-max-width(
+    var(--container-width-md),
+    var(--container-padding-x)
+  );
+}
+
+.container-extra-small {
+  @include container-max-width(
+    var(--container-width-xs),
+    var(--container-padding-x)
+  );
+}
+
+.container-small {
+  @include container-max-width(
+    var(--container-width-sm),
+    var(--container-padding-x)
+  );
+}
+
+.container-large {
+  @include container-max-width(remtext(1368), var(--container-padding-x));
+}
+
+.container-extra-large {
+  @include container-max-width(
+    var(--container-width-lg),
+    var(--container-padding-x)
+  );
+}
+
+.backdrop {
+  position: fixed;
+  z-index: var(--z-index-backdrop);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  pointer-events: auto;
+}
+
+.visually-hidden {
+  @include visually-hidden;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.hidden-mobile-s {
+  @include mobile-s {
+    display: none !important;
+  }
+}
+
+.visible-mobile-s {
+  @include mobile-s-above {
+    display: none !important;
+  }
+}
+
+.hidden-mobile {
+  @include mobile {
+    display: none !important;
+  }
+}
+
+.visible-mobile {
+  @include mobile-above {
+    display: none !important;
+  }
+}
+
+.visible-laptop {
+  @include laptop-above {
+    display: none !important;
+  }
+}
+
+.hidden-laptop {
+  @include laptop {
+    display: none !important;
+  }
+}
+
+.hidden-tablet {
+  @include tablet {
+    display: none !important;
+  }
+}
+
+.visible-tablet {
+  @include tablet-above {
+    display: none !important;
+  }
+}
+
+.overflow-x-hidden {
+  -ms-overflow-x: hidden;
+  overflow-x: hidden;
+}
+
+.border-radius-xs {
+  border-radius: var(--border-radius-xs);
+}
+
+.border-radius-sm {
+  border-radius: var(--border-radius-sm);
+}
+
+.border-radius-md {
+  border-radius: var(--border-radius-md);
+}
+
+.border-radius-lg {
+  border-radius: var(--border-radius-lg);
+}
+
+.border-radius-xl {
+  border-radius: var(--border-radius-xl);
+}
+
+.capitalize {
+  text-transform: capitalize;
+}

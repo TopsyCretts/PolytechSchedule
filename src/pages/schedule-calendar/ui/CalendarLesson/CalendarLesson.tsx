@@ -1,6 +1,6 @@
 import "./CalendarLesson.scss"
 import clsx from "clsx"
-import type { LessonType } from "@/entities/ScheduleData.ts"
+import type { LessonType } from "@/entities/schedule/model/ScheduleData.ts"
 
 interface CalendarLessonProps {
   className?: string

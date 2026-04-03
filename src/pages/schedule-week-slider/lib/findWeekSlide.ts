@@ -1,4 +1,4 @@
-import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
+import type { ScheduleWeekData } from "@/entities/schedule/model/ScheduleData.ts"
 import type { SelectedWeekSlide } from "@/pages/schedule-week-slider/lib/types.ts"
 import { getDay, startOfWeek } from "date-fns"
 import getWeekDataByWeekStart from "@/pages/schedule-week-slider/lib/getWeekDataByWeekStart.ts"

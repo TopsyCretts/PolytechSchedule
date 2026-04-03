@@ -1,7 +1,7 @@
 import js from "@eslint/js"
 import globals from "globals"
-import reactHooks from "eslint-plugin-react-hooks"
-import reactRefresh from "eslint-plugin-react-refresh"
+import reactHooksPlugin from "eslint-plugin-react-hooks"
+import reactRefreshPlugin from "eslint-plugin-react-refresh"
 import tseslint from "typescript-eslint"
 import prettierPlugin from "eslint-plugin-prettier"
 import prettierConfig from "eslint-config-prettier"
@@ -27,15 +27,26 @@ export default defineConfig([
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
-      reactHooks.configs["recommended-latest"],
-      reactRefresh.configs.vite,
-      prettierConfig,
+      prettierConfig, // eslint-config-prettier уже совместим с flat config
     ],
     plugins: {
+      // Объектный формат: имя плагина → объект плагина
+      "react-hooks": reactHooksPlugin,
+      "react-refresh": reactRefreshPlugin,
       prettier: prettierPlugin,
     },
     rules: {
+      // Правила Prettier как плагина
       ...prettierPlugin.configs.recommended.rules,
+
+      // React Hooks (вручную, так как recommended-latest несовместим)
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+
+      // React Refresh
+      "react-refresh/only-export-components": "warn",
+
+      // Ваши кастомные правила
       "no-console": "warn",
       eqeqeq: "warn",
       curly: "warn",
@@ -51,7 +62,7 @@ export default defineConfig([
         ecmaFeatures: {
           jsx: true,
         },
-        project: false,
+        project: false, // отключаем проверку типов для ускорения
       },
     },
   },

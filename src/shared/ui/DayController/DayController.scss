@@ -1,5 +1,3 @@
-@use "../../../styles/helpers" as *;
-
 .day-controller {
   @include flex-center;
 
@@ -9,14 +7,14 @@
     @include flex-center(true);
     @include border-shadow-themed(var(--border-radius-md));
 
-    min-width: rem(220);
+    min-width: remtext(220);
     height: var(--button-height);
     font-weight: 700;
     background-color: var(--select-bg);
     transition-duration: var(--transition-duration);
 
     @include mobile {
-      font-size: rem(14);
+      font-size: remtext(14);
     }
   }
 
@@ -26,7 +24,7 @@
 
   &--active {
     & .day-controller__title {
-      border: rem(1) solid var(--color-orange);
+      border: remtext(1) solid var(--color-orange);
     }
   }
 }

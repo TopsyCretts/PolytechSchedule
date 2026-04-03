@@ -1,5 +1,5 @@
-import { add, isEqual, startOfDay } from "date-fns"
-import type { ScheduleWeekData } from "@/entities/ScheduleData.ts"
+import { endOfWeek, isEqual, startOfDay } from "date-fns"
+import type { ScheduleWeekData } from "@/entities/schedule/model/ScheduleData.ts"
 
 const getWeekDataByWeekStart = (
   weeksData: ScheduleWeekData[],
@@ -9,11 +9,15 @@ const getWeekDataByWeekStart = (
     isEqual(startOfDay(weekStart), startOfDay(week.start))
   )
   if (weekData) {
-    return weekData
+    return {
+      ...weekData,
+      start: weekStart,
+      end: endOfWeek(weekStart, { weekStartsOn: 1 }),
+    }
   }
   return {
     start: weekStart,
-    end: add(weekStart, { days: 6 }),
+    end: endOfWeek(weekStart, { weekStartsOn: 1 }),
     days: [],
   }
 }

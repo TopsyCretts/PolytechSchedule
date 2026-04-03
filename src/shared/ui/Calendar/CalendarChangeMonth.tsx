@@ -1,6 +1,5 @@
 import { format } from "date-fns"
-import { capitalizeFirstLatter } from "@/shared/lib/capitalizeFirstLatter.ts"
-import ArrowLeftIcon from "@/assets/icons/arrow-left.svg?react"
+import ArrowLeftIcon from "@/shared/assets/icons/arrow-left.svg?react"
 import clsx from "clsx"
 import {
   useCalendar,
@@ -31,12 +30,10 @@ const CalendarChangeMonth = ({ className }: CalendarChangeMonthProps) => {
         className="month-switch__title"
         dateTime={format(currentMonth, "yyyy-MM", { locale: locale })}
       >
-        <span className="month-switch__month-name">
-          {capitalizeFirstLatter(
-            format(currentMonth, "LLLL", {
-              locale: locale,
-            })
-          )}
+        <span className="month-switch__month-name capitalize">
+          {format(currentMonth, "LLLL", {
+            locale: locale,
+          })}
         </span>
         <span className="month-switch__year">
           {format(currentMonth, "yo", {

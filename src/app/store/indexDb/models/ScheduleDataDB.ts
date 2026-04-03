@@ -1,5 +1,5 @@
-import type { TeacherData } from "@/entities/Teachers.ts"
-import type { GroupData } from "@/entities/Group.ts"
+import type { TeacherData } from "@/entities/teachers/model/Teachers.ts"
+import type { GroupData } from "@/entities/institute/model/Group.ts"
 import type {
   DayData,
   LessonData,
@@ -7,7 +7,7 @@ import type {
   ScheduleData,
   ScheduleView,
   ScheduleWeekData,
-} from "@/entities/ScheduleData.ts"
+} from "@/entities/schedule/model/ScheduleData.ts"
 
 interface ScheduleDataDB {
   weeks: ScheduleWeekDataDB[]

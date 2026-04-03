@@ -1,5 +1,3 @@
-@use "../../../../styles/helpers/index" as *;
-
 .schedule-week-view {
   @include stretch-container-to-available-size;
 
@@ -12,7 +10,7 @@
     row-gap: var(--spacing-lg);
 
     @include mobile {
-      max-width: calc(#{rem(380)} + 2 * var(--container-padding-x));
+      max-width: calc(#{remtext(380)} + 2 * var(--container-padding-x));
       margin-inline: auto;
     }
 
@@ -35,7 +33,7 @@
     pointer-events: none;
 
     &--top {
-      top: rem(120);
+      top: remtext(120);
       rotate: -0.25turn;
     }
 

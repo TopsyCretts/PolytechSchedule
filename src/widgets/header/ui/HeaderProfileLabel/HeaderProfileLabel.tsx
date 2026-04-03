@@ -1,10 +1,10 @@
 import { useParams } from "react-router"
 import { AnimatePresence, motion } from "framer-motion"
-import { PROFILE_TYPE } from "@/entities/Profile.ts"
+import { PROFILE_TYPE } from "@/entities/profile/model/Profile.ts"
 import { observer } from "mobx-react-lite"
 import { useInjection } from "inversify-react"
-import { InstitutesStore } from "@/app/store/institutes/InstitutesStore.ts"
-import { TeachersStore } from "@/app/store/teachers/TeachersStore.ts"
+import { InstitutesStore } from "@/entities/institute/model/InstitutesStore.ts"
+import { TeachersStore } from "@/entities/teachers/model/TeachersStore.ts"
 import "./HeaderProfileLabel.scss"
 
 const HeaderProfileLabel = observer(() => {

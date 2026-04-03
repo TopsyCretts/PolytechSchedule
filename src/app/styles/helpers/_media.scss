@@ -1,0 +1,100 @@
+@use "functions" as *;
+
+$desktop: 1920.98;
+$laptop: 1400.98;
+$tablet: 1023.98;
+$mobile: 767.99;
+$mobile-s: 480.98;
+$mobile-xs: 400.98;
+
+@mixin desktop-above {
+  @media (width > remtext($desktop)) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (width <= remtext($desktop)) {
+    @content;
+  }
+}
+
+@mixin laptop-above {
+  @media (width > remtext($laptop)) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (width <= remtext($laptop)) {
+    @content;
+  }
+}
+
+@mixin tablet-above {
+  @media (width > remtext($tablet)) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (width <= remtext($tablet)) {
+    @content;
+  }
+}
+
+@mixin mobile-above {
+  @media (width > remtext($mobile)) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (width <= remtext($mobile)) {
+    @content;
+  }
+}
+
+@mixin mobile-s-above {
+  @media (width > remtext($mobile-s)) {
+    @content;
+  }
+}
+
+@mixin mobile-s {
+  @media (width <= remtext($mobile-s)) {
+    @content;
+  }
+}
+
+@mixin mobile-xs-above {
+  @media (width > remtext($mobile-xs)) {
+    @content;
+  }
+}
+
+@mixin mobile-xs {
+  @media (width <= remtext($mobile-xs)) {
+    @content;
+  }
+}
+
+@mixin dark-theme {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+
+  @media (hover: none) {
+    &:active {
+      @content;
+    }
+  }
+}

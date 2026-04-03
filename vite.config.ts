@@ -91,6 +91,11 @@ export default defineConfig(() => {
       },
     },
     css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "@/app/styles/helpers" as *;`,
+        },
+      },
       postcss: "./postcss.config.cjs",
     },
     server: {
