@@ -1,4 +1,4 @@
-import type { ScheduleView } from "@/entities/schedule/model/ScheduleData.ts"
+import type { ScheduleView } from "@/shared/api/entities/ScheduleData.ts"
 
 const PROFILE_TYPE = {
   student: "student",

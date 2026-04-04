@@ -1,7 +1,7 @@
 import "./LessonCard.scss"
 import clsx from "clsx"
 import { generatePath, Link } from "react-router"
-import type { LessonData } from "@/entities/schedule/model/ScheduleData.ts"
+import type { LessonData } from "@/shared/api/entities/ScheduleData.ts"
 import {
   PROFILE_TYPE,
   type ProfileType,

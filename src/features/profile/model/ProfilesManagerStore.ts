@@ -15,7 +15,7 @@ import {
 } from "mobx"
 import { InstitutesStore } from "@/entities/institute/model/InstitutesStore.ts"
 import { TeachersStore } from "@/entities/teachers/model/TeachersStore.ts"
-import { SCHEDULE_VIEW } from "@/entities/schedule/model/ScheduleData.ts"
+import { SCHEDULE_VIEW } from "@/shared/api/entities/ScheduleData.ts"
 import { ProfileCacheService } from "@/features/profile/model/ProfileCacheService.ts"
 
 @injectable()

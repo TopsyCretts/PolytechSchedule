@@ -1,82 +1,64 @@
-import { queryOptions, useQuery } from "@tanstack/react-query"
-import { toScheduleData } from "@/entities/schedule/api/mappers.ts"
-import type { GroupData } from "@/entities/institute/model/Group.ts"
-import type { TeacherData } from "@/entities/teachers/model/Teachers.ts"
+import { type QueryKey, queryOptions, useQuery } from "@tanstack/react-query"
+import type { GroupData } from "@/shared/api/entities/Group.ts"
+import type { TeacherData } from "@/shared/api/entities/Teacher.ts"
 import {
   type BaseProfile,
   PROFILE_TYPE,
 } from "@/entities/profile/model/Profile.ts"
 import { DBRepository } from "@/app/store/indexDb/indexDb.ts"
-import { toScheduleUi } from "@/app/store/indexDb/models/ScheduleDataDB.ts"
-import type {
-  ScheduleData,
-  ScheduleDataStatus,
-} from "@/entities/schedule/model/ScheduleData.ts"
-import {
-  PROGRESS_STATUS,
-  type ProgressStatus,
-} from "@/shared/models/DataStatus.ts"
+import { dbToScheduleData } from "@/app/store/indexDb/models/ScheduleDataDB.ts"
 import { mainContainer } from "@/app/store/mainContainer.ts"
 import { ProfilesManagerStore } from "@/features/profile/model/ProfilesManagerStore.ts"
 import { AppApiStore } from "@/shared/api/AppApiStore.ts"
+import { queryClient } from "@/shared/api"
 
 const getScheduleByProfileOptions = (
   profile: BaseProfile,
-  onCacheData: (scheduleData: ScheduleDataStatus) => void,
   actualGroups: GroupData[],
-  actualTeachers: TeacherData[],
-  initialStatus: ProgressStatus
-) =>
-  queryOptions({
-    queryKey: ["schedule", profile.profileType, profile.apiId, profile.id],
-    queryFn: async (): Promise<ScheduleDataStatus | undefined> => {
+  actualTeachers: TeacherData[]
+) => {
+  const queryKey: QueryKey = [
+    "schedule",
+    profile.profileType,
+    profile.apiId,
+    profile.id,
+  ]
+  return queryOptions({
+    queryKey,
+    queryFn: async () => {
       const existingScheduleData = await DBRepository.getSchedule(profile.id)
-      let existingScheduleDataUi: ScheduleData | null = null
 
       const isCacheValid = existingScheduleData !== undefined
 
       if (isCacheValid) {
-        existingScheduleDataUi = toScheduleUi(existingScheduleData)
-        onCacheData({
-          data: existingScheduleDataUi,
-          status:
-            initialStatus === PROGRESS_STATUS.error
-              ? initialStatus
-              : PROGRESS_STATUS.loading,
-        })
+        queryClient.setQueryData(
+          queryKey,
+          dbToScheduleData(existingScheduleData)
+        )
       }
 
       const api = mainContainer.get(AppApiStore).getApiInstance
+      const newScheduleData =
+        profile.profileType === PROFILE_TYPE.student
+          ? await api.getScheduleByGroupId(
+              profile.name,
+              actualGroups,
+              actualTeachers
+            )
+          : await api.getScheduleByTeacherId(
+              profile.apiId,
+              actualGroups,
+              actualTeachers
+            )
 
-      try {
-        const response =
-          profile.profileType === PROFILE_TYPE.student
-            ? await api.getScheduleByGroupId(profile.name)
-            : await api.getScheduleByTeacherId(profile.apiId)
-
-        const newScheduleData = await toScheduleData(
-          response,
-          actualGroups,
-          actualTeachers
-        )
-
-        if (profile.id > 0) {
-          await DBRepository.saveSchedule(profile.id, newScheduleData)
-          await mainContainer
-            .get(ProfilesManagerStore)
-            .updateLastUpdateTimeById(profile.id)
-        }
-
-        return { data: newScheduleData, status: PROGRESS_STATUS.success }
-      } catch (error) {
-        if (isCacheValid) {
-          onCacheData({
-            data: existingScheduleDataUi!,
-            status: PROGRESS_STATUS.error,
-          })
-        }
-        throw error
+      if (profile.id > 0) {
+        await DBRepository.saveSchedule(profile.id, newScheduleData)
+        await mainContainer
+          .get(ProfilesManagerStore)
+          .updateLastUpdateTimeById(profile.id)
       }
+
+      return newScheduleData
     },
     refetchOnWindowFocus: false,
     select: (data) => data,
@@ -86,22 +68,13 @@ const getScheduleByProfileOptions = (
     networkMode: "always",
     refetchOnReconnect: "always",
   })
+}
 
 const useGetScheduleByProfileQuery = (
   profile: BaseProfile,
-  onCacheData: (scheduleData: ScheduleDataStatus) => void,
   actualGroups: GroupData[],
-  actualTeachers: TeacherData[],
-  initialStatus: ProgressStatus
+  actualTeachers: TeacherData[]
 ) =>
-  useQuery(
-    getScheduleByProfileOptions(
-      profile,
-      onCacheData,
-      actualGroups,
-      actualTeachers,
-      initialStatus
-    )
-  )
+  useQuery(getScheduleByProfileOptions(profile, actualGroups, actualTeachers))
 
 export { useGetScheduleByProfileQuery, getScheduleByProfileOptions }

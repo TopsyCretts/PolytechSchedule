@@ -35,7 +35,6 @@ const profileLoader = async ({ params }: LoaderFunctionArgs) => {
   const institutesStore = mainContainer.get(InstitutesStore)
   const teachersStore = mainContainer.get(TeachersStore)
 
-  await institutesStore.getIsInitialized
   await teachersStore.getIsInitialized
 
   const profilesStore = mainContainer.get(ProfilesManagerStore)

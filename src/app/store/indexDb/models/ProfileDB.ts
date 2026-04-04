@@ -1,5 +1,5 @@
 import type { ProfileType } from "@/entities/profile/model/Profile.ts"
-import type { ScheduleView } from "@/entities/schedule/model/ScheduleData.ts"
+import type { ScheduleView } from "@/shared/api/entities/ScheduleData.ts"
 
 type BaseProfileDB = {
   apiId: number

@@ -2,7 +2,7 @@ import type { ThemeObject } from "@/shared/models/Theme.ts"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import type { Locale } from "date-fns"
 import { enUS, fr, ru } from "date-fns/locale"
-import type { LessonType } from "@/entities/schedule/model/ScheduleData.ts"
+import type { LessonType } from "@/shared/api/entities/ScheduleData.ts"
 
 const themeArray: ThemeObject[] = [
   {

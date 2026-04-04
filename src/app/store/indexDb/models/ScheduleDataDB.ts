@@ -1,5 +1,5 @@
-import type { TeacherData } from "@/entities/teachers/model/Teachers.ts"
-import type { GroupData } from "@/entities/institute/model/Group.ts"
+import type { TeacherData } from "@/shared/api/entities/Teacher.ts"
+import type { GroupData } from "@/shared/api/entities/Group.ts"
 import type {
   DayData,
   LessonData,
@@ -7,7 +7,7 @@ import type {
   ScheduleData,
   ScheduleView,
   ScheduleWeekData,
-} from "@/entities/schedule/model/ScheduleData.ts"
+} from "@/shared/api/entities/ScheduleData.ts"
 
 interface ScheduleDataDB {
   weeks: ScheduleWeekDataDB[]
@@ -37,7 +37,7 @@ interface LessonDataDB {
   additionalInfo?: string
 }
 
-export const toScheduleUi = (dbData: ScheduleDataDB): ScheduleData => {
+export const dbToScheduleData = (dbData: ScheduleDataDB): ScheduleData => {
   return {
     ...dbData,
     weeks: dbData.weeks.map((w): ScheduleWeekData => {

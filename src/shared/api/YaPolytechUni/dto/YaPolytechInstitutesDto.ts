@@ -1,4 +1,4 @@
-interface InstitutesDto {
+interface YaPolytechInstitutesDto {
   items: InstituteDto[]
 }
 
@@ -13,4 +13,4 @@ interface GroupDto {
   name: string
 }
 
-export type { InstituteDto, InstitutesDto, GroupDto }
+export type { InstituteDto, YaPolytechInstitutesDto, GroupDto }

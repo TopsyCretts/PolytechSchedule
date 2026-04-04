@@ -1,6 +1,5 @@
-import type { TeacherData } from "@/entities/teachers/model/Teachers.ts"
-import type { GroupData } from "@/entities/institute/model/Group.ts"
-import type { DataStatus } from "@/shared/models/DataStatus.ts"
+import type { TeacherData } from "@/shared/api/entities/Teacher.ts"
+import type { GroupData } from "@/shared/api/entities/Group.ts"
 
 const SCHEDULE_VIEW = {
   calendar: "calendar",
@@ -47,11 +46,8 @@ const LESSON_TYPE = {
 
 type LessonType = keyof typeof LESSON_TYPE
 
-type ScheduleDataStatus = DataStatus<ScheduleData>
-
 export type {
   ScheduleData,
-  ScheduleDataStatus,
   ScheduleWeekData,
   ScheduleView,
   LessonData,

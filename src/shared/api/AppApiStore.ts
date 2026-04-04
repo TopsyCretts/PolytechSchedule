@@ -1,7 +1,7 @@
 import { injectable } from "inversify"
 import type { BaseApi } from "@/shared/api/BaseApi.ts"
 import { computed } from "mobx"
-import { YaPolytechUniApi } from "@/shared/api/YaPolytechUniApi.ts"
+import { YaPolytechUniApi } from "@/shared/api/YaPolytechUni/YaPolytechUniApi.ts"
 
 @injectable()
 export class AppApiStore {

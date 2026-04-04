@@ -1,80 +1,51 @@
 import { injectable } from "inversify"
-import {
-  action,
-  computed,
-  makeAutoObservable,
-  observable,
-  runInAction,
-} from "mobx"
-import type { InstitutesData } from "@/entities/institute/model/Institute.ts"
-import type { GroupData } from "@/entities/institute/model/Group.ts"
+import { action, computed, makeAutoObservable } from "mobx"
+import type {
+  InstituteData,
+  InstitutesData,
+} from "@/shared/api/entities/Institute.ts"
+import type { GroupData } from "@/shared/api/entities/Group.ts"
 import { DBRepository, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
-import { LocalStorageRepository } from "@/shared/models/browser-storages"
-import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
+import MobXQuery from "@/shared/api/MobXQuery.ts"
+import { getGroupsByInstitutesQueryOptions } from "@/entities/institute/api/institutesService.ts"
+import { queryClient } from "@/shared/api"
 
 @injectable()
 export class InstitutesStore {
-  @observable
-  private institutesData: InstitutesData = {
-    lastUpdate: null,
-    institutes: [],
-  }
-
-  @observable
-  private readonly isInitialized: Promise<boolean>
-
-  private resolveInitialized!: (value: boolean) => void
-  private rejectInitialized!: () => void
-
-  constructor() {
-    this.isInitialized = new Promise<boolean>((resolve, reject) => {
-      this.resolveInitialized = resolve
-      this.rejectInitialized = reject
-    })
-
-    makeAutoObservable(this, {}, { autoBind: true })
-    this.init()
-  }
-
-  private init() {
-    DBRepository.getAll(STORE_NAMES.institutes)
-      .catch(() => {
-        this.rejectInitialized()
-      })
-      .then((institutes) => {
-        if (institutes) {
-          runInAction(
-            () =>
-              (this.institutesData = {
-                institutes: institutes,
-                lastUpdate: LocalStorageRepository.get(
-                  LOCAL_STORAGE_KEY.institutesLastUpdate
-                ),
-              })
-          )
-        }
-        this.resolveInitialized(true)
-      })
-  }
+  private institutesQuery = new MobXQuery(
+    getGroupsByInstitutesQueryOptions,
+    queryClient
+  )
 
   @computed
-  get getIsInitialized() {
-    return this.isInitialized
+  get getSuspendedInstitutes() {
+    return this.institutesQuery.suspendedData
+  }
+  @computed
+  get getInstitutes() {
+    return this.institutesQuery.data
+  }
+
+  constructor() {
+    makeAutoObservable(this, {}, { autoBind: true })
+    void (async () => {
+      const data = await DBRepository.getAll(STORE_NAMES.institutes)
+      if (data.length) {
+        queryClient.setQueryData(
+          getGroupsByInstitutesQueryOptions().queryKey,
+          data.sort((a, b) => a.name.localeCompare(b.name, "ru")),
+          { updatedAt: 0 }
+        )
+      }
+    })()
   }
 
   @action
   setInstitutesData(data: InstitutesData) {
-    this.institutesData = { ...data }
     DBRepository.saveAllInstitutes(data.institutes).then()
   }
 
-  getGroupsByInstitute(instituteId: number): GroupData[] | null {
-    const institute = this.institutesData.institutes.find(
-      (institute) => institute.id === instituteId
-    )
-    if (institute === undefined) {
-      return null
-    }
+  getGroupsByInstitute(institute: InstituteData): GroupData[] | null {
     const groups = institute.groups
     if (groups.length === 0) {
       return null
@@ -82,22 +53,21 @@ export class InstitutesStore {
     return institute.groups
   }
 
-  getAllGroups(institutes: InstitutesData): GroupData[] {
-    return institutes.institutes.map((institute) => institute.groups).flat()
+  getAllGroups(institutes: InstituteData[]): GroupData[] {
+    return institutes.map((institute) => institute.groups).flat()
   }
 
   @computed
-  get getInstitutes() {
-    return this.institutesData
-  }
-
   getInstituteByGroupId(groupId: number) {
-    for (const institute of this.institutesData.institutes) {
-      const group = institute.groups.find((group) => group.id === groupId)
-      if (group !== undefined) {
-        return { institute: institute.name, group }
+    const institutes = this.getInstitutes
+    if (institutes) {
+      for (const institute of institutes) {
+        const group = institute.groups.find((group) => group.id === groupId)
+        if (group !== undefined) {
+          return { institute: institute.name, group }
+        }
       }
+      return null
     }
-    return null
   }
 }

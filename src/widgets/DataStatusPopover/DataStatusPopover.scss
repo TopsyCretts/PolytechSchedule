@@ -13,7 +13,8 @@
 .data-status-popover-spinner {
   @include square(var(--button-height));
 
-  & .spinner__svg {
+  .spinner__svg,
+  .spinner__wrapper {
     width: var(--icon-size) !important;
     height: var(--icon-size) !important;
   }

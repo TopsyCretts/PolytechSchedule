@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 import { useCallback, useState } from "react"
-import { SearchSelect, Spinner } from "@/shared/ui"
+import { SearchSelect } from "@/shared/ui"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import type {
   ProfileCreationFormProps,
@@ -11,10 +11,8 @@ import { generatePath, useNavigate } from "react-router"
 import { useInjection } from "inversify-react"
 import { InstitutesStore } from "@/entities/institute/model/InstitutesStore.ts"
 import { observer } from "mobx-react-lite"
-import type { GroupData } from "@/entities/institute/model/Group.ts"
-import { useGetGroupsByInstitutesQuery } from "@/entities/institute/api/institutesService.ts"
+import type { GroupData } from "@/shared/api/entities/Group.ts"
 import { PROFILE_TYPE } from "@/entities/profile/model/Profile.ts"
-import RetryFallback from "@/widgets/RetryFallback"
 import { ProfilesManagerStore } from "@/features/profile/model/ProfilesManagerStore.ts"
 import { APP_ROUTES } from "@/shared/constants/routes.ts"
 
@@ -43,8 +41,7 @@ const StudentProfileCreationForm = observer(
 
     const { getOrCreateProfile } = useInjection(ProfilesManagerStore)
 
-    const { isFetching, refetch } = useGetGroupsByInstitutesQuery()
-    const { getInstitutes: institutes, getGroupsByInstitute } =
+    const { getSuspendedInstitutes: institutes, getGroupsByInstitute } =
       useInjection<InstitutesStore>(InstitutesStore)
 
     const [selectedValues, setSelectedValues] =
@@ -93,22 +90,13 @@ const StudentProfileCreationForm = observer(
       }
     }
 
-    return institutes.institutes.length === 0 ? (
-      isFetching ? (
-        <Spinner className={"profile-creation__loading-fallback"} />
-      ) : (
-        <RetryFallback
-          className={"profile-creation__retry-fallback"}
-          onRetry={refetch}
-        />
-      )
-    ) : (
+    return (
       <form className={className}>
         <SearchSelect
           id={"institutes"}
           className={"profile-creation__institutes-select"}
           label={t(STRINGS_RES.institute_other)}
-          searchItems={institutes.institutes.map(
+          searchItems={institutes.map(
             (item): SearchItem => ({
               id: item.id,
               searchableValue: item.name,
@@ -124,7 +112,9 @@ const StudentProfileCreationForm = observer(
             className={"profile-creation__groups-select"}
             label={t(STRINGS_RES.group_other)}
             searchItems={mapGroupsToSearchItems(
-              getGroupsByInstitute(selectedValues.institute.id)
+              getGroupsByInstitute(
+                institutes.find((i) => i.id === selectedValues.institute?.id)!
+              )
             )}
             placeholder={t(STRINGS_RES.enter_the_group)}
             onSelectedChange={handleGroupSelection}

@@ -1,15 +1,13 @@
-import { SearchSelect, Spinner } from "@/shared/ui"
+import { SearchSelect } from "@/shared/ui"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import type { ProfileCreationFormProps } from "@/features/profile/model/types.ts"
-import { useGetTeachersQuery } from "@/entities/teachers/api/teachersService.ts"
 import type { SearchItem } from "@/shared/models/Search.ts"
 import { useInjection } from "inversify-react"
 import { TeachersStore } from "@/entities/teachers/model/TeachersStore.ts"
-import type { TeacherData } from "@/entities/teachers/model/Teachers.ts"
+import type { TeacherData } from "@/shared/api/entities/Teacher.ts"
 import { generatePath, useNavigate } from "react-router"
 import { PROFILE_TYPE } from "@/entities/profile/model/Profile.ts"
-import RetryFallback from "@/widgets/RetryFallback"
 import { ProfilesManagerStore } from "@/features/profile/model/ProfilesManagerStore.ts"
 import { observer } from "mobx-react-lite"
 import { APP_ROUTES } from "@/shared/constants/routes.ts"
@@ -31,9 +29,8 @@ const TeacherProfileCreationForm = observer(
 
     const { getOrCreateProfile } = useInjection(ProfilesManagerStore)
 
-    const { isFetching, refetch } = useGetTeachersQuery()
-
-    const { getTeachers: teachers } = useInjection<TeachersStore>(TeachersStore)
+    const { getSuspendedTeachers: teachers } =
+      useInjection<TeachersStore>(TeachersStore)
 
     const handleTeacherSelection = async (newTeacher: SearchItem | null) => {
       if (newTeacher === null) {
@@ -56,16 +53,7 @@ const TeacherProfileCreationForm = observer(
       )
     }
 
-    return teachers.length === 0 ? (
-      isFetching ? (
-        <Spinner className={"profile-creation__loading-fallback"} />
-      ) : (
-        <RetryFallback
-          className={"profile-creation__retry-fallback"}
-          onRetry={refetch}
-        />
-      )
-    ) : (
+    return (
       <form className={className}>
         <SearchSelect
           id={"teachers"}

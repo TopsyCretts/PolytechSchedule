@@ -7,7 +7,7 @@ import type { SwitcherOption } from "@/shared/ui/Switcher/types.ts"
 import {
   SCHEDULE_VIEW,
   type ScheduleView,
-} from "@/entities/schedule/model/ScheduleData.ts"
+} from "@/shared/api/entities/ScheduleData.ts"
 
 const useSchedulePageSwitcher = (
   profileApiId: number,

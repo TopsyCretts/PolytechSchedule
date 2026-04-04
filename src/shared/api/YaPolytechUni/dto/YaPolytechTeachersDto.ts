@@ -1,4 +1,4 @@
-interface TeachersDto {
+interface YaPolytechTeachersDto {
   isCash: boolean
   items: TeacherDto[]
 }
@@ -8,4 +8,4 @@ interface TeacherDto {
   name: string
 }
 
-export type { TeachersDto, TeacherDto }
+export type { YaPolytechTeachersDto, TeacherDto }

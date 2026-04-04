@@ -1,6 +1,6 @@
 import "./ScheduleDayItem.scss"
 import clsx from "clsx"
-import type { DayData } from "@/entities/schedule/model/ScheduleData.ts"
+import type { DayData } from "@/shared/api/entities/ScheduleData.ts"
 import type { ProfileType } from "@/entities/profile/model/Profile.ts"
 import { format, type Locale } from "date-fns"
 import { useTranslation } from "react-i18next"

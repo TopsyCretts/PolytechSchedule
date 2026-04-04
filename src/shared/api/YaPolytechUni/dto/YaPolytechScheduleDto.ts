@@ -1,4 +1,4 @@
-import type { TeacherDto } from "@/shared/api/dto/TeachersDto.ts"
+import type { TeacherDto } from "@/shared/api/YaPolytechUni/dto/YaPolytechTeachersDto.ts"
 
 interface TeacherScheduleDto {
   teacher: TeacherDto
