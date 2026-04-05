@@ -24,18 +24,19 @@ export class YaPolytechApiMapper extends ApiMapper<
   GroupDto,
   TeacherDto
 > {
-  toGroupData(dto: GroupDto): GroupData {
+  toGroupData = (dto: GroupDto): GroupData => {
     return {
       id: dto.groupId,
       name: dto.name,
     }
   }
 
-  toInstituteData(dto: InstituteDto): InstituteData {
+  toInstituteData = (dto: InstituteDto): InstituteData => {
+    const groups = dto.groups.map(this.toGroupData)
     return {
       id: dto.id,
       name: dto.name,
-      groups: dto.groups.map(this.toGroupData),
+      groups: groups,
     }
   }
 

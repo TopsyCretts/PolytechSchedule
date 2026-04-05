@@ -5,12 +5,11 @@ import {
   type BaseProfile,
   PROFILE_TYPE,
 } from "@/entities/profile/model/Profile.ts"
-import { DBRepository } from "@/app/store/indexDb/indexDb.ts"
-import { dbToScheduleData } from "@/app/store/indexDb/models/ScheduleDataDB.ts"
-import { mainContainer } from "@/app/store/mainContainer.ts"
+import { mainContainer } from "@/shared/models/providers/mainContainer.ts"
 import { ProfilesManagerStore } from "@/features/profile/model/ProfilesManagerStore.ts"
 import { AppApiStore } from "@/shared/api/AppApiStore.ts"
 import { queryClient } from "@/shared/api"
+import { ProfileCacheService } from "@/features/profile/model/ProfileCacheService.ts"
 
 const getScheduleByProfileOptions = (
   profile: BaseProfile,
@@ -26,15 +25,14 @@ const getScheduleByProfileOptions = (
   return queryOptions({
     queryKey,
     queryFn: async () => {
-      const existingScheduleData = await DBRepository.getSchedule(profile.id)
+      const profileCacheService = mainContainer.get(ProfileCacheService)
+      const existingScheduleData =
+        await profileCacheService.getScheduleByProfileId(profile.id)
 
       const isCacheValid = existingScheduleData !== undefined
 
       if (isCacheValid) {
-        queryClient.setQueryData(
-          queryKey,
-          dbToScheduleData(existingScheduleData)
-        )
+        queryClient.setQueryData(queryKey, existingScheduleData)
       }
 
       const api = mainContainer.get(AppApiStore).getApiInstance
@@ -52,7 +50,10 @@ const getScheduleByProfileOptions = (
             )
 
       if (profile.id > 0) {
-        await DBRepository.saveSchedule(profile.id, newScheduleData)
+        await profileCacheService.updateProfileSchedule(
+          profile.id,
+          newScheduleData
+        )
         await mainContainer
           .get(ProfilesManagerStore)
           .updateLastUpdateTimeById(profile.id)

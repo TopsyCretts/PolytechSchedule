@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query"
 import { LocalStorageRepository } from "@/shared/models/browser-storages"
-import { mainContainer } from "@/app/store/mainContainer.ts"
+import { mainContainer } from "@/shared/models/providers/mainContainer.ts"
 import { TeachersStore } from "@/entities/teachers/model/TeachersStore.ts"
 import type { TeachersData } from "@/shared/api/entities/Teacher.ts"
 import axios from "axios"

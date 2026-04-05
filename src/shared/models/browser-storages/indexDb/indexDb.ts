@@ -1,11 +1,17 @@
 import { type DBSchema, type IDBPDatabase, openDB } from "idb"
 import type { InstituteData } from "@/shared/api/entities/Institute.ts"
 import type { TeacherData } from "@/shared/api/entities/Teacher.ts"
-import { DB_NAME, DB_VERSION } from "@/shared/constants/contstants.ts"
+import {
+  ACTUAL_DATABASES,
+  DB_VERSION,
+  UNIVERSITY_NAMES,
+  type UniversityName,
+} from "@/shared/constants/contstants.ts"
 import { type ScheduleData } from "@/shared/api/entities/ScheduleData.ts"
-import type { ScheduleDataDB } from "@/app/store/indexDb/models/ScheduleDataDB.ts"
-import type { ProfileDB } from "@/app/store/indexDb/models/ProfileDB.ts"
+import type { ScheduleDataDB } from "@/shared/models/browser-storages/indexDb/types/ScheduleDataDB.ts"
+import type { ProfileDB } from "@/shared/models/browser-storages/indexDb/types/ProfileDB.ts"
 import type { Profile } from "@/entities/profile/model/Profile.ts"
+import { injectable } from "inversify"
 
 export const STORE_NAMES = {
   profiles: "profiles",
@@ -37,15 +43,30 @@ interface ScheduleDB extends DBSchema {
   }
 }
 
-class DatabaseRepository {
+@injectable()
+export class DatabaseRepository {
   private db: IDBPDatabase<ScheduleDB> | null = null
+
+  constructor(private dbName: UniversityName = UNIVERSITY_NAMES.yaPolytechDb) {
+    indexedDB.databases().then((dbs) => {
+      dbs.forEach((db) => {
+        if (db.name && !ACTUAL_DATABASES.includes(db.name)) {
+          indexedDB.deleteDatabase(db.name)
+        }
+      })
+    })
+  }
+
+  set setDbName(dbName: UniversityName) {
+    this.dbName = dbName
+  }
 
   async init(): Promise<IDBPDatabase<ScheduleDB>> {
     if (this.db) {
       return this.db
     }
 
-    this.db = await openDB<ScheduleDB>(DB_NAME, DB_VERSION, {
+    this.db = await openDB<ScheduleDB>(this.dbName, DB_VERSION, {
       upgrade: async (db, oldVersion, newVersion) => {
         // Если старая версия не равна новой, удаляем все
         if (oldVersion !== newVersion && oldVersion > 0) {

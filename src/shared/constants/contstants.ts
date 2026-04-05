@@ -67,7 +67,12 @@ const CALENDAR_SPECIAL_MONTH_FORMAT = "MMMM-yyyy" as const
 
 const QUERY_DATE_FORMAT = "yyyy-MM-dd" as const
 
-const DB_NAME = "schedule-db"
+const UNIVERSITY_NAMES = { yaPolytechDb: "yaPolytechDb" } as const
+
+const ACTUAL_DATABASES = Object.keys(UNIVERSITY_NAMES)
+
+type UniversityName = keyof typeof UNIVERSITY_NAMES
+
 const DB_VERSION = 3
 
 const LOCAL_STORAGE_KEY = {
@@ -85,8 +90,10 @@ export {
   ORIGINAL_SITE,
   LESSONS_MAP,
   CALENDAR_SPECIAL_MONTH_FORMAT,
-  DB_NAME,
+  UNIVERSITY_NAMES,
+  type UniversityName,
   DB_VERSION,
+  ACTUAL_DATABASES,
   LOCAL_STORAGE_KEY,
   QUERY_DATE_FORMAT,
 }

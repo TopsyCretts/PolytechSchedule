@@ -1,5 +1,5 @@
 import { LocalStorageRepository } from "@/shared/models/browser-storages"
-import { mainContainer } from "@/app/store/mainContainer.ts"
+import { mainContainer } from "@/shared/models/providers/mainContainer.ts"
 import { InstitutesStore } from "@/entities/institute/model/InstitutesStore.ts"
 import { type InstitutesData } from "@/shared/api/entities/Institute.ts"
 import { queryOptions } from "@tanstack/react-query"

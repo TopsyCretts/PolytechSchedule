@@ -5,13 +5,19 @@ import type {
   InstitutesData,
 } from "@/shared/api/entities/Institute.ts"
 import type { GroupData } from "@/shared/api/entities/Group.ts"
-import { DBRepository, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
+import { DatabaseRepository } from "@/shared/models/browser-storages/indexDb/indexDb.ts"
 import MobXQuery from "@/shared/api/MobXQuery.ts"
 import { getGroupsByInstitutesQueryOptions } from "@/entities/institute/api/institutesService.ts"
 import { queryClient } from "@/shared/api"
+import { InstituteCacheService } from "@/entities/institute/model/InstituteCacheService.ts"
+import { UNIVERSITY_NAMES } from "@/shared/constants/contstants.ts"
 
 @injectable()
 export class InstitutesStore {
+  private instituteCacheService = new InstituteCacheService(
+    new DatabaseRepository(UNIVERSITY_NAMES.yaPolytechDb)
+  )
+
   private institutesQuery = new MobXQuery(
     getGroupsByInstitutesQueryOptions,
     queryClient
@@ -29,7 +35,7 @@ export class InstitutesStore {
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true })
     void (async () => {
-      const data = await DBRepository.getAll(STORE_NAMES.institutes)
+      const data = await this.instituteCacheService.getAllInstitutes()
       if (data.length) {
         queryClient.setQueryData(
           getGroupsByInstitutesQueryOptions().queryKey,
@@ -42,7 +48,7 @@ export class InstitutesStore {
 
   @action
   setInstitutesData(data: InstitutesData) {
-    DBRepository.saveAllInstitutes(data.institutes).then()
+    this.instituteCacheService.saveInstitutes(data.institutes).then()
   }
 
   getGroupsByInstitute(institute: InstituteData): GroupData[] | null {

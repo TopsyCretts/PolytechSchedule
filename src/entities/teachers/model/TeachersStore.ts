@@ -3,24 +3,27 @@ import type {
   TeacherData,
   TeachersData,
 } from "@/shared/api/entities/Teacher.ts"
-import { injectable } from "inversify"
-import { DBRepository, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
+import { inject, injectable } from "inversify"
 import MobXQuery from "@/shared/api/MobXQuery.ts"
 import { getTeachersQueryOptions } from "@/entities/teachers"
 import { queryClient } from "@/shared/api"
+import { TeachersCacheService } from "@/entities/teachers/model/TeachersCacheService.ts"
 
 @injectable()
 export class TeachersStore {
   private teachersQuery = new MobXQuery(getTeachersQueryOptions, queryClient)
 
-  constructor() {
+  constructor(
+    @inject(TeachersCacheService)
+    private teachersCacheService: TeachersCacheService
+  ) {
     makeAutoObservable(this, {}, { autoBind: true })
     this.init()
   }
 
   private init() {
     void (async () => {
-      const data = await DBRepository.getAll(STORE_NAMES.teachers)
+      const data = await this.teachersCacheService.getAllTeachers()
       if (data.length) {
         queryClient.setQueryData(
           getTeachersQueryOptions().queryKey,
@@ -34,7 +37,7 @@ export class TeachersStore {
   }
 
   setTeachersData(data: TeachersData) {
-    DBRepository.saveAllTeachers(data.teachers).then()
+    this.teachersCacheService.saveTeachers(data.teachers).then()
   }
 
   @computed
