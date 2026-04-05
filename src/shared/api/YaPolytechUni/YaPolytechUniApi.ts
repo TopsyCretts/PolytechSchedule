@@ -24,7 +24,6 @@ export class YaPolytechUniApi extends BaseApi {
         params: { additional: true },
       }
     )
-
     return response.data.items.map(this.apiMapper.toInstituteData)
   }
   async getTeachers(): Promise<TeacherData[]> {

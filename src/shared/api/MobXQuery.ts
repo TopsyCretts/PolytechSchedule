@@ -1,10 +1,11 @@
-import { computed, createAtom, makeAutoObservable, reaction } from "mobx"
+import { computed, makeAutoObservable, observable, runInAction } from "mobx"
 import {
   type DefaultError,
   type QueryClient,
   type QueryKey,
   QueryObserver,
   type QueryObserverOptions,
+  type QueryObserverResult,
 } from "@tanstack/react-query"
 
 class MobXQuery<
@@ -14,11 +15,8 @@ class MobXQuery<
   TQueryData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
 > {
-  private atom = createAtom(
-    "MobXQuery",
-    () => this.startTracking(),
-    () => this.stopTracking()
-  )
+  @observable private currentResult: QueryObserverResult<TData, TError> | null =
+    null
 
   private queryObserver: QueryObserver<
     TQueryFnData,
@@ -43,12 +41,17 @@ class MobXQuery<
       this.queryClient,
       this.defaultQueryOptions
     )
+    this.queryObserver.subscribe((result) => {
+      runInAction(() => (this.currentResult = result))
+    })
   }
 
+  @computed
   get result() {
-    this.atom.reportObserved()
-    this.setDefaultQueryOptionsToQueryObserver()
-    return this.queryObserver.getOptimisticResult(this.defaultQueryOptions)
+    return (
+      this.currentResult ??
+      this.queryObserver.getOptimisticResult(this.defaultQueryOptions)
+    )
   }
 
   @computed
@@ -58,47 +61,25 @@ class MobXQuery<
 
   @computed
   get suspendedData() {
-    if (!this.result?.data) {
+    const data = this.result?.data
+    if (!data) {
       if (this.result?.error) {
         throw this.result.error
       }
       throw this.queryObserver.fetchOptimistic(this.defaultQueryOptions)
     }
 
-    return this.result.data
+    return data
   }
 
   @computed
-  isLoading() {
+  get isLoading() {
     return this.result.isPending
   }
 
-  private unsubscribe = () => {}
-
-  private startTracking() {
-    const unsubscribeReaction = reaction(
-      () => this.defaultQueryOptions,
-      () => {
-        this.setDefaultQueryOptionsToQueryObserver()
-      }
-    )
-
-    const unsubscribeObserver = this.queryObserver.subscribe(() => {
-      this.atom.reportChanged()
-    })
-
-    this.unsubscribe = () => {
-      unsubscribeReaction()
-      unsubscribeObserver()
-    }
-  }
-
-  private stopTracking() {
-    this.unsubscribe()
-  }
-
-  private setDefaultQueryOptionsToQueryObserver() {
-    this.queryObserver.setOptions(this.defaultQueryOptions)
+  async resetError() {
+    const queryKey = this.defaultQueryOptions.queryKey
+    await this.queryClient.resetQueries({ queryKey, exact: true })
   }
 
   private get defaultQueryOptions() {

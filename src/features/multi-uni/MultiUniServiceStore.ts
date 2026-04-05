@@ -21,7 +21,7 @@ export class MultiUniServiceStore {
     queryClient.cancelQueries().then()
     let apiInstance: BaseApi
     switch (university) {
-      case UNIVERSITY_NAMES.yaPolytechDb:
+      case UNIVERSITY_NAMES["schedule-db"]:
         apiInstance = new YaPolytechUniApi()
         break
       default:

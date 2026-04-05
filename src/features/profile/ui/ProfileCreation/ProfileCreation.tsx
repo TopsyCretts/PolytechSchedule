@@ -12,8 +12,12 @@ import {
 } from "@/features/profile/ui/ProfileCreationForm"
 import { QueryResetSuspenseBoundary } from "@/shared/api/QueryResetSuspenseBoundary.tsx"
 import RetryFallback from "@/widgets/RetryFallback"
+import { observer } from "mobx-react-lite"
+import { useInjection } from "inversify-react"
+import { InstitutesStore } from "@/entities/institute"
+import { TeachersStore } from "@/entities/teachers"
 
-const ProfileCreation = ({ className }: BaseComponent) => {
+const ProfileCreation = observer(({ className }: BaseComponent) => {
   const { t } = useTranslation()
   const items = useMemo(() => {
     return [
@@ -22,6 +26,10 @@ const ProfileCreation = ({ className }: BaseComponent) => {
     ]
   }, [t])
 
+  const { resetError: resetInstitutesError } =
+    useInjection<InstitutesStore>(InstitutesStore)
+  const { resetError: resetTeachersError } =
+    useInjection<TeachersStore>(TeachersStore)
   const [currentItem, setCurrentItem] = useState(items[1])
 
   return (
@@ -35,14 +43,14 @@ const ProfileCreation = ({ className }: BaseComponent) => {
             onItemChange={setCurrentItem}
           />
           {currentItem.value === PROFILE_TYPE.student ? (
-            <ProfileCreationErrorBoundary>
+            <ProfileCreationErrorBoundary onReset={resetInstitutesError}>
               <StudentProfileCreationForm
                 className={"profile-creation__form"}
                 onProfileCreation={() => {}}
               />
             </ProfileCreationErrorBoundary>
           ) : (
-            <ProfileCreationErrorBoundary>
+            <ProfileCreationErrorBoundary onReset={resetTeachersError}>
               <TeacherProfileCreationForm
                 className={"profile-creation__form"}
                 onProfileCreation={() => {}}
@@ -53,18 +61,24 @@ const ProfileCreation = ({ className }: BaseComponent) => {
       </div>
     </section>
   )
-}
+})
 
 export default ProfileCreation
 
-const ProfileCreationErrorBoundary = ({ children }: PropsWithChildren) => {
+const ProfileCreationErrorBoundary = ({
+  children,
+  onReset,
+}: PropsWithChildren<{ onReset: () => void }>) => {
   return (
     <QueryResetSuspenseBoundary
       loader={<Spinner className={"profile-creation__loading-fallback"} />}
       retryFallback={({ resetErrorBoundary }) => (
         <RetryFallback
           className={"profile-creation__retry-fallback"}
-          onRetry={resetErrorBoundary}
+          onRetry={() => {
+            onReset()
+            resetErrorBoundary()
+          }}
         />
       )}
     >

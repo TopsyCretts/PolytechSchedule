@@ -9,7 +9,7 @@ import { AppApiStore } from "@/shared/api/AppApiStore.ts"
 
 const getInstitutes = async () => {
   await new Promise((resolve) => {
-    setTimeout(resolve, 2000)
+    setTimeout(resolve, 1000)
   })
   const api = mainContainer.get(AppApiStore).getApiInstance
   const data = await api.getGroupsByInstitutes()

@@ -67,7 +67,7 @@ const CALENDAR_SPECIAL_MONTH_FORMAT = "MMMM-yyyy" as const
 
 const QUERY_DATE_FORMAT = "yyyy-MM-dd" as const
 
-const UNIVERSITY_NAMES = { yaPolytechDb: "yaPolytechDb" } as const
+const UNIVERSITY_NAMES = { "schedule-db": "schedule-db" } as const
 
 const ACTUAL_DATABASES = Object.keys(UNIVERSITY_NAMES)
 

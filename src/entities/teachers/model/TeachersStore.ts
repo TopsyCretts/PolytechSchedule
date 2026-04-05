@@ -1,4 +1,4 @@
-import { computed, makeAutoObservable } from "mobx"
+import { computed, makeAutoObservable, observable } from "mobx"
 import type {
   TeacherData,
   TeachersData,
@@ -11,6 +11,7 @@ import { TeachersCacheService } from "@/entities/teachers/model/TeachersCacheSer
 
 @injectable()
 export class TeachersStore {
+  @observable
   private teachersQuery = new MobXQuery(getTeachersQueryOptions, queryClient)
 
   constructor(
@@ -38,6 +39,10 @@ export class TeachersStore {
 
   setTeachersData(data: TeachersData) {
     this.teachersCacheService.saveTeachers(data.teachers).then()
+  }
+
+  async resetError() {
+    await this.teachersQuery.resetError()
   }
 
   @computed

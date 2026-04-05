@@ -47,7 +47,9 @@ interface ScheduleDB extends DBSchema {
 export class DatabaseRepository {
   private db: IDBPDatabase<ScheduleDB> | null = null
 
-  constructor(private dbName: UniversityName = UNIVERSITY_NAMES.yaPolytechDb) {
+  constructor(
+    private dbName: UniversityName = UNIVERSITY_NAMES["schedule-db"]
+  ) {
     indexedDB.databases().then((dbs) => {
       dbs.forEach((db) => {
         if (db.name && !ACTUAL_DATABASES.includes(db.name)) {

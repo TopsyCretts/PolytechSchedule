@@ -1,23 +1,18 @@
-import { injectable } from "inversify"
-import { action, computed, makeAutoObservable } from "mobx"
+import { inject, injectable } from "inversify"
+import { action, computed, makeAutoObservable, observable } from "mobx"
 import type {
   InstituteData,
   InstitutesData,
 } from "@/shared/api/entities/Institute.ts"
 import type { GroupData } from "@/shared/api/entities/Group.ts"
-import { DatabaseRepository } from "@/shared/models/browser-storages/indexDb/indexDb.ts"
 import MobXQuery from "@/shared/api/MobXQuery.ts"
 import { getGroupsByInstitutesQueryOptions } from "@/entities/institute/api/institutesService.ts"
 import { queryClient } from "@/shared/api"
 import { InstituteCacheService } from "@/entities/institute/model/InstituteCacheService.ts"
-import { UNIVERSITY_NAMES } from "@/shared/constants/contstants.ts"
 
 @injectable()
 export class InstitutesStore {
-  private instituteCacheService = new InstituteCacheService(
-    new DatabaseRepository(UNIVERSITY_NAMES.yaPolytechDb)
-  )
-
+  @observable
   private institutesQuery = new MobXQuery(
     getGroupsByInstitutesQueryOptions,
     queryClient
@@ -27,12 +22,20 @@ export class InstitutesStore {
   get getSuspendedInstitutes() {
     return this.institutesQuery.suspendedData
   }
+
   @computed
   get getInstitutes() {
     return this.institutesQuery.data
   }
 
-  constructor() {
+  async resetError() {
+    await this.institutesQuery.resetError()
+  }
+
+  constructor(
+    @inject(InstituteCacheService)
+    private instituteCacheService: InstituteCacheService
+  ) {
     makeAutoObservable(this, {}, { autoBind: true })
     void (async () => {
       const data = await this.instituteCacheService.getAllInstitutes()
