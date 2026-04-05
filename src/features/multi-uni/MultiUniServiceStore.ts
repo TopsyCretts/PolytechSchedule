@@ -7,6 +7,7 @@ import {
 } from "@/shared/constants/contstants.ts"
 import type { BaseApi } from "@/shared/api/BaseApi.ts"
 import { YaPolytechUniApi } from "@/shared/api/YaPolytechUni/YaPolytechUniApi.ts"
+import { queryClient } from "@/shared/api"
 
 @injectable()
 export class MultiUniServiceStore {
@@ -17,6 +18,7 @@ export class MultiUniServiceStore {
 
   setUpUniversityConfig(university: UniversityName): void {
     this.database.setDbName = university
+    queryClient.cancelQueries().then()
     let apiInstance: BaseApi
     switch (university) {
       case UNIVERSITY_NAMES.yaPolytechDb:
