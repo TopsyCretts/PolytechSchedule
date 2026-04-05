@@ -20,8 +20,6 @@ import { ProfileCacheService } from "@/features/profile/model/ProfileCacheServic
 
 @injectable()
 export class ProfilesManagerStore {
-  private profileCacheService = new ProfileCacheService()
-
   @observable
   private profiles: Profile[] = []
 
@@ -36,7 +34,9 @@ export class ProfilesManagerStore {
 
   constructor(
     @inject(InstitutesStore) private institutesStore: InstitutesStore,
-    @inject(TeachersStore) private teachersStore: TeachersStore
+    @inject(TeachersStore) private teachersStore: TeachersStore,
+    @inject(ProfileCacheService)
+    private profileCacheService: ProfileCacheService
   ) {
     makeAutoObservable(this, {}, { autoBind: true })
     this.isInitialized = new Promise<boolean>((resolve, reject) => {
@@ -77,7 +77,12 @@ export class ProfilesManagerStore {
   }
 
   @action
-  setCurrentProfileById(profileId: number): void {
+  set setProfileCacheService(value: ProfileCacheService) {
+    this.profileCacheService = value
+  }
+
+  @action
+  setCurrentProfileById(profileId: number) {
     const profile = this.profiles.find((profile) => profile.id === profileId)
 
     if (profile) {
@@ -86,7 +91,7 @@ export class ProfilesManagerStore {
   }
 
   @action
-  setCurrentProfile(profile: Profile): void {
+  setCurrentProfile(profile: Profile) {
     this.currentProfile = { ...profile }
   }
 
@@ -103,7 +108,7 @@ export class ProfilesManagerStore {
     switch (type) {
       case PROFILE_TYPE.student: {
         const data = this.institutesStore.getInstituteByGroupId(newProfileApiId)
-        if (data !== null) {
+        if (data) {
           const profileBluePrint = createStudentProfile(
             newProfileApiId,
             data.group.name,

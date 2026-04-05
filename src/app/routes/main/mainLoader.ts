@@ -1,6 +1,9 @@
 import { LocalStorageRepository } from "@/shared/models/browser-storages"
 import { LOCAL_STORAGE_KEY } from "@/shared/constants/contstants.ts"
-import { DBRepository, STORE_NAMES } from "@/app/store/indexDb/indexDb.ts"
+import {
+  DBRepository,
+  STORE_NAMES,
+} from "@/shared/models/browser-storages/indexDb/indexDb.ts"
 import { generatePath, redirect } from "react-router"
 import { MATCH_MEDIA } from "@/shared/constants/media.ts"
 import { APP_ROUTES } from "@/shared/constants/routes.ts"

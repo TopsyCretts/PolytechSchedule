@@ -68,10 +68,14 @@ const ScheduleWeekView = () => {
       } else {
         setAnimationDirection(-1)
       }
-      setCurrentWeek((prev) => ({
+      const newWeekActiveDateIndex = initialDay ?? currentWeek.activeDateIndex
+      setCurrentWeek({
         weekData: weekData,
-        activeDateIndex: initialDay ?? prev.activeDateIndex,
-      }))
+        activeDateIndex: newWeekActiveDateIndex,
+      })
+      setCurrentDayDataByDate(
+        add(newWeekStart, { days: newWeekActiveDateIndex })
+      )
     },
     [currentWeek]
   )
