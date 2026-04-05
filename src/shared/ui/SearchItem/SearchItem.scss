@@ -8,6 +8,12 @@
   border: var(--border-themed);
   border-radius: var(--border-radius-md);
   cursor: pointer;
+  margin-inline: 3px;
+  transition: var(--transition-duration);
+
+  @include hover {
+    background-color: var(--color-light-opacity-5);
+  }
 
   &__heading,
   svg * {
