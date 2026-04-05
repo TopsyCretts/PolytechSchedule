@@ -17,9 +17,9 @@ const SchedulePage = observer(({ className }: SchedulePageProps) => {
     throw new Response("Profile creation failed", { status: 404 })
   }
 
-  const { getInstitutes: institutes, getAllGroups } =
+  const { getInstitutes: institutes = [], getAllGroups } =
     useInjection(InstitutesStore)
-  const { getTeachers: teachers } = useInjection(TeachersStore)
+  const { getTeachers: teachers = [] } = useInjection(TeachersStore)
 
   const actualGroups = useMemo(() => {
     return getAllGroups(institutes)
