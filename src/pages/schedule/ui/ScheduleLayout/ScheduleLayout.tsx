@@ -11,11 +11,7 @@ import type {
   ScheduleLayoutProps,
 } from "@/pages/schedule/model/SchedulePageProps.ts"
 import { useTranslation } from "react-i18next"
-import type {
-  DayData,
-  ScheduleDataStatus,
-} from "@/entities/schedule/model/ScheduleData.ts"
-import { PROGRESS_STATUS } from "@/shared/models/DataStatus.ts"
+import type { DayData } from "@/shared/api/entities/ScheduleData.ts"
 import { useDebounce } from "use-debounce"
 import { useGetScheduleByProfileQuery } from "@/entities/schedule/api/service.ts"
 import { findEqualDayData } from "@/pages/schedule-calendar/lib/findEqualDayData.ts"
@@ -35,8 +31,7 @@ import { startOfToday } from "date-fns"
 const ScheduleContext = createContext<ScheduleContextValues | null>(null)
 
 const DEFAULT_VALUE = {
-  data: { weeks: [] },
-  status: PROGRESS_STATUS.init,
+  weeks: [],
 }
 
 const ScheduleLayout = ({
@@ -48,20 +43,14 @@ const ScheduleLayout = ({
   const { t, i18n } = useTranslation()
   const { dateFromUrl } = useGetDateFromUrl()
   const [debouncedKeyForLoading] = useDebounce(profile.apiId + profile.id, 300)
-  const [scheduleData, setScheduleData] =
-    useState<ScheduleDataStatus>(DEFAULT_VALUE)
+  const {
+    data: scheduleData = DEFAULT_VALUE,
+    isFetching,
+    isError,
+    refetch,
+  } = useGetScheduleByProfileQuery(profile, actualGroups, teachers)
   const [currentDayData, setCurrentDayData] = useState<DayData>(() =>
-    findEqualDayData(DEFAULT_VALUE.data.weeks, dateFromUrl)
-  )
-
-  const { data, isFetching, isError, refetch } = useGetScheduleByProfileQuery(
-    profile,
-    (cachedData: ScheduleDataStatus) => {
-      setScheduleData(cachedData)
-    },
-    actualGroups,
-    teachers,
-    scheduleData.status
+    findEqualDayData(scheduleData.weeks, dateFromUrl)
   )
 
   const { setDateToUrl } = useSetDateToUrl()
@@ -69,9 +58,9 @@ const ScheduleLayout = ({
   const setCurrentDayDataByDate = useCallback(
     (date: Date) => {
       setDateToUrl(date)
-      setCurrentDayData(findEqualDayData(scheduleData.data.weeks, date))
+      setCurrentDayData(findEqualDayData(scheduleData.weeks, date))
     },
-    [scheduleData.data.weeks, setDateToUrl]
+    [scheduleData.weeks, setDateToUrl]
   )
 
   useEffect(() => {
@@ -85,39 +74,24 @@ const ScheduleLayout = ({
   }, [setCurrentDayDataByDate])
 
   useEffect(() => {
-    if (data) {
-      setScheduleData(data)
-    }
-  }, [data])
-
-  useEffect(() => {
-    setCurrentDayData(
-      findEqualDayData(scheduleData.data.weeks, currentDayData.date)
-    )
+    setCurrentDayData(findEqualDayData(scheduleData.weeks, currentDayData.date))
   }, [scheduleData])
-
-  useEffect(() => {
-    if (isError) {
-      setScheduleData((prev) => ({
-        data: prev.data,
-        status: PROGRESS_STATUS.error,
-      }))
-    }
-  }, [isError])
 
   const value = useMemo<ScheduleContextValues>(
     () => ({
-      data: scheduleData.data,
+      data: scheduleData,
       profile,
       currentDayData,
       setCurrentDayDataByDate,
       locale: LANGUAGES_MAP[i18n.language].locale,
-      status: scheduleData.status,
+      isLoading: isFetching,
+      isError,
       resetError: refetch,
     }),
     [
-      scheduleData.data,
-      scheduleData.status,
+      scheduleData,
+      isError,
+      isFetching,
       profile,
       currentDayData,
       setCurrentDayDataByDate,
@@ -126,7 +100,7 @@ const ScheduleLayout = ({
     ]
   )
 
-  const isWeeksEmpty = scheduleData.data.weeks.length === 0
+  const isWeeksEmpty = scheduleData.weeks.length === 0
 
   let content: ReactNode
 

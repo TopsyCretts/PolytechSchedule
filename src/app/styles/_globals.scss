@@ -1,6 +1,8 @@
 @use "helpers/index" as *;
 
 :root {
+  -webkit-tap-highlight-color: transparent;
+
   @include mobile {
     scrollbar-gutter: auto;
   }
@@ -9,7 +11,7 @@
     overflow: hidden;
     scrollbar-gutter: auto;
 
-    @include mobile-above {
+    @include tablet-above {
       padding-right: 11px;
     }
   }

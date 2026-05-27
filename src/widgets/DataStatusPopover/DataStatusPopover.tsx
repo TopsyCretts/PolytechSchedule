@@ -9,8 +9,8 @@ import InfoIcon from "@/shared/assets/icons/info.svg?react"
 import CheckIcon from "@/shared/assets/icons/rounded-check.svg?react"
 import { useTranslation } from "react-i18next"
 import "./DataStatusPopover.scss"
-import { PROGRESS_STATUS } from "@/shared/models/DataStatus.ts"
 import BookMarkPopover from "@/shared/ui/BookMarkPopover"
+import { Spinner } from "@/shared/ui"
 
 type ScheduleDataErrorPopoverProps = {
   className: string
@@ -23,9 +23,9 @@ const DataStatusPopover = memo(
     const { t } = useTranslation()
 
     const { isOffline } = useOffline()
-    const { status, profile } = useScheduleData()
+    const { isError, profile, isLoading } = useScheduleData()
 
-    const isSomethingWrong = isOffline || status === PROGRESS_STATUS.error
+    const isSomethingWrong = isOffline || isError
 
     let title: string
 
@@ -39,7 +39,13 @@ const DataStatusPopover = memo(
       title = STRINGS_RES.schedule_is_current
     }
 
-    const toggler: ReactNode = isSomethingWrong ? <InfoIcon /> : <CheckIcon />
+    const toggler: ReactNode = isSomethingWrong ? (
+      <InfoIcon />
+    ) : isLoading ? (
+      <Spinner className={"data-status-popover-spinner"} />
+    ) : (
+      <CheckIcon />
+    )
 
     let content: ReactNode
 
@@ -56,6 +62,8 @@ const DataStatusPopover = memo(
       } else {
         content = t(STRINGS_RES.profile_has_not_updated_previously)
       }
+    } else if (isLoading) {
+      content = "Загрузка"
     }
 
     const classes = clsx(
@@ -66,11 +74,10 @@ const DataStatusPopover = memo(
         : "data-status-popover--success"
     )
 
-    return status !== PROGRESS_STATUS.success &&
-      !isSomethingWrong ? null : type === "row" ? (
+    return type === "row" ? (
       <RowPopover
         className={classes}
-        togglerContent={isSomethingWrong ? <InfoIcon /> : <CheckIcon />}
+        togglerContent={toggler}
         isReversed={isReversed}
         titleI18nKey={title}
       >

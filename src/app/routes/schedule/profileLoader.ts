@@ -4,7 +4,7 @@ import {
   PROFILE_TYPE,
   type ProfileType,
 } from "@/entities/profile/model/Profile.ts"
-import { mainContainer } from "@/app/store/mainContainer.ts"
+import { mainContainer } from "@/shared/models/providers/mainContainer.ts"
 import {
   createStudentProfile,
   createTeacherProfile,
@@ -34,9 +34,6 @@ const profileLoader = async ({ params }: LoaderFunctionArgs) => {
 
   const institutesStore = mainContainer.get(InstitutesStore)
   const teachersStore = mainContainer.get(TeachersStore)
-
-  await institutesStore.getIsInitialized
-  await teachersStore.getIsInitialized
 
   const profilesStore = mainContainer.get(ProfilesManagerStore)
   await profilesStore.getIsInitialized

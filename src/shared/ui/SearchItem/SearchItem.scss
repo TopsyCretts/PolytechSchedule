@@ -3,11 +3,17 @@
   align-items: center;
   column-gap: var(--spacing-md);
   height: var(--button-height);
+  margin-inline: 3px;
   padding-inline: var(--spacing-md);
   background-color: var(--color-light-opacity-10);
   border: var(--border-themed);
   border-radius: var(--border-radius-md);
   cursor: pointer;
+  transition: var(--transition-duration);
+
+  @include hover {
+    background-color: var(--color-light-opacity-5);
+  }
 
   &__heading,
   svg * {

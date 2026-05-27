@@ -13,7 +13,7 @@ import {
 } from "date-fns"
 import ScheduleDayItem from "@/entities/schedule/ui/ScheduleDayItem"
 import type { ProfileType } from "@/entities/profile/model/Profile.ts"
-import type { ScheduleWeekData } from "@/entities/schedule/model/ScheduleData.ts"
+import type { ScheduleWeekData } from "@/shared/api/entities/ScheduleData.ts"
 // @ts-ignore
 import "swiper/css"
 import { type RefObject, type UIEvent, useCallback, useState } from "react"

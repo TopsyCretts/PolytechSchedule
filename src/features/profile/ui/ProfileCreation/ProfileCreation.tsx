@@ -1,7 +1,7 @@
 import "./ProfileCreation.scss"
 import clsx from "clsx"
-import { Switcher } from "@/shared/ui"
-import { useMemo, useState } from "react"
+import { Spinner, Switcher } from "@/shared/ui"
+import { type PropsWithChildren, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { STRINGS_RES } from "@/shared/constants/strings.ts"
 import { PROFILE_TYPE } from "@/entities/profile/model/Profile.ts"
@@ -10,8 +10,14 @@ import {
   StudentProfileCreationForm,
   TeacherProfileCreationForm,
 } from "@/features/profile/ui/ProfileCreationForm"
+import { QueryResetSuspenseBoundary } from "@/shared/api/QueryResetSuspenseBoundary.tsx"
+import RetryFallback from "@/widgets/RetryFallback"
+import { observer } from "mobx-react-lite"
+import { useInjection } from "inversify-react"
+import { InstitutesStore } from "@/entities/institute"
+import { TeachersStore } from "@/entities/teachers"
 
-const ProfileCreation = ({ className }: BaseComponent) => {
+const ProfileCreation = observer(({ className }: BaseComponent) => {
   const { t } = useTranslation()
   const items = useMemo(() => {
     return [
@@ -20,6 +26,10 @@ const ProfileCreation = ({ className }: BaseComponent) => {
     ]
   }, [t])
 
+  const { resetError: resetInstitutesError } =
+    useInjection<InstitutesStore>(InstitutesStore)
+  const { resetError: resetTeachersError } =
+    useInjection<TeachersStore>(TeachersStore)
   const [currentItem, setCurrentItem] = useState(items[1])
 
   return (
@@ -33,20 +43,46 @@ const ProfileCreation = ({ className }: BaseComponent) => {
             onItemChange={setCurrentItem}
           />
           {currentItem.value === PROFILE_TYPE.student ? (
-            <StudentProfileCreationForm
-              className={"profile-creation__form"}
-              onProfileCreation={() => {}}
-            />
+            <ProfileCreationErrorBoundary onReset={resetInstitutesError}>
+              <StudentProfileCreationForm
+                className={"profile-creation__form"}
+                onProfileCreation={() => {}}
+              />
+            </ProfileCreationErrorBoundary>
           ) : (
-            <TeacherProfileCreationForm
-              className={"profile-creation__form"}
-              onProfileCreation={() => {}}
-            />
+            <ProfileCreationErrorBoundary onReset={resetTeachersError}>
+              <TeacherProfileCreationForm
+                className={"profile-creation__form"}
+                onProfileCreation={() => {}}
+              />
+            </ProfileCreationErrorBoundary>
           )}
         </div>
       </div>
     </section>
   )
-}
+})
 
 export default ProfileCreation
+
+const ProfileCreationErrorBoundary = ({
+  children,
+  onReset,
+}: PropsWithChildren<{ onReset: () => void }>) => {
+  return (
+    <QueryResetSuspenseBoundary
+      loader={<Spinner className={"profile-creation__loading-fallback"} />}
+      retryFallback={({ resetErrorBoundary }) => (
+        <RetryFallback
+          className={"profile-creation__retry-fallback"}
+          onRetry={() => {
+            onReset()
+            resetErrorBoundary()
+          }}
+        />
+      )}
+    >
+      {children}
+    </QueryResetSuspenseBoundary>
+  )
+}

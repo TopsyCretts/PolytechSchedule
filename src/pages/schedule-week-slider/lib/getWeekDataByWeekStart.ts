@@ -1,5 +1,5 @@
 import { endOfWeek, isEqual, startOfDay } from "date-fns"
-import type { ScheduleWeekData } from "@/entities/schedule/model/ScheduleData.ts"
+import type { ScheduleWeekData } from "@/shared/api/entities/ScheduleData.ts"
 
 const getWeekDataByWeekStart = (
   weeksData: ScheduleWeekData[],
