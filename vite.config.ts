@@ -75,6 +75,7 @@ const pwaOptions: Partial<VitePWAOptions> = {
 
 export default defineConfig(() => {
   return {
+    base: process.env.VITE_BASE_PATH ?? "/",
     plugins: [
       react(),
       svgr({
