@@ -7,6 +7,7 @@
     "dev": "vite --mode development",
     "build": "tsc -b && vite build --mode production",
     "build:staging": "tsc -b && vite build --mode staging",
+    "build:gh-pages": "tsc -b && vite build --mode gh-pages",
     "preview": "vite preview",
     "lint:js": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:js:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
